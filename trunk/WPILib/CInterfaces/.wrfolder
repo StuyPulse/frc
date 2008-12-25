@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wrxml>
+    <attributes>
+        <mapAttribute>
+            <listAttribute key="BLD::Info|Incl|PPC603gnu">
+                <stringAttribute value="-I.."/>
+                <stringAttribute value="-I$(WIND_BASE)/target/h"/>
+                <stringAttribute value="-I$(WIND_BASE)/target/h/wrn/coreip"/>
+            </listAttribute>
+            <listAttribute key="BuildSupportForBuildSpecs">
+                <stringAttribute value="PPC603gnu"/>
+            </listAttribute>
+        </mapAttribute>
+    </attributes>
+</wrxml>
