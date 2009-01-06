@@ -9,4 +9,4 @@
 
 // Define joystick methods, as well as autonomous "setOffset()" or "rotate(int deg)" as they would work for a two motor tank drive train (one motor to a side)
 
-// Remember, using the inherited setSpeed() method will automatically smooth out to your requests.
+// Remember, using the inherited setMotor() method will automatically smooth out to your requests.
