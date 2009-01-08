@@ -1,16 +1,14 @@
-#include "DriveTrain"
+#include "WPILib.h"
 
 class Michael1 : SimpleRobot {
 	
 public:
-	DriveTrian dt;
+	RobotDrive dt;
 	
-	//DriverStation ds;
-	Joystick *left_stick;
-	Joystick *right_stick
+	void Autonomous(void);
+	void OperatorControl(void);
 	
-private:
-	Victor left_motor;
-	Victor right_motor;
-	
+	Joystick left_stick;
+	Joystick right_stick
+
 }
