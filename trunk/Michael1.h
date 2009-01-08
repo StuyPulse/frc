@@ -12,4 +12,4 @@ public:
 	Joystick *left_stick;
 	Joystick *right_stick;
 
-}
+};
