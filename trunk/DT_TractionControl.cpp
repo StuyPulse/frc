@@ -1,4 +1,4 @@
-// Extends BaseDriveTrain
+
 
 
 // Has weight and wheel_cof instance variables
