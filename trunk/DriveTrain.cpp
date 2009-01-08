@@ -1,15 +1,15 @@
-BaseDriveTrain::BaseDriveTrain()
+DriveTrain::DriveTrain()
 {
 	
 }
 
-void BaseDriveTrain::setMotor(int index, float speed)
+void DriveTrain::setMotor(int index, float speed)
 {
 	motors.at(index)->Set(speed);
 }
 
 
-void BaseDriveTrain::setMotors(int[] indices, float speed)
+void DriveTrain::setMotors(int[] indices, float speed)
 {
 	for (int i = 0; i < &motors.length; i++){
 		setMotor(i, speed);

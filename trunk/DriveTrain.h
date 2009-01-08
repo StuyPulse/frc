@@ -1,10 +1,10 @@
 #include <vector>
 
-class BaseDriveTrain
+class DriveTrain
 {
 	
 public:
-	virtual ~BaseDriveTrain(); //possibly accept an array of speed controllers
+	virtual ~DriveTrain(); //possibly accept an array of speed controllers
 	
 	virtual void setMotor(int i, double speed);
 	virtual void setMotor(int[] i, double speed);

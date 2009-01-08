@@ -1,16 +1,13 @@
-class TractionControlledDriveTrain : BaseDriveTrain
+class DriveTrainTC : DriveTrain
 {
 	
 public:
-	void setWheelWeight(double weight);
-	void setWheelCof(double cof);
+	virtual ~DriveTrainTC();
 	
+	void setCof(double cof);
 	virtual void setMotor(int i, double speed);
 	
 private:
-	double wheel_weight;
-	double wheel_cof;
-	
-	TractionControlledDriveTrain();
+	double cof;
 	
 }
