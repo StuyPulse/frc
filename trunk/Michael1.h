@@ -1,14 +1,15 @@
 #include "WPILib.h"
 
-class Michael1 : SimpleRobot {
-	
+class Michael1 : public SimpleRobot
+{
 public:
-	RobotDrive dt;
+	Michael1();
 	
 	void Autonomous(void);
 	void OperatorControl(void);
 	
-	Joystick left_stick;
-	Joystick right_stick
+	RobotDrive *dt;
+	Joystick *left_stick;
+	Joystick *right_stick;
 
 }

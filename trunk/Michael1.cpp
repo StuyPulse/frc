@@ -1,31 +1,32 @@
+#include "Michael1.h"
 
-
-Michael1::Michael1(void): dt(1, 2) //implements dt constructor
-{
+Michael1::Michael1() { // <-- controller
+	dt = new RobotDrive(1,2); // <-- view
+	//model \/
 	left_stick = new Joystick(1);
 	right_stick = new Joystick(2);
+	
 	GetWatchdog().SetExpiration(100);
 }
 
 
-Michael1::Autonomous(void)
+void Michael1::Autonomous(void)
 {
 	GetWatchdog().SetEnabled(false);
-	dt.Drive(0.5, 0.0); 	// drive forwards half speed
+	dt->Drive(0.5, 0.0); 	// drive forwards half speed
 	Wait(2.0); 				//    for 2 seconds
-	dt.Drive(0.0, 0.0); 	// stop robot
+	dt->Drive(0.0, 0.0); 	// stop robot
 }
 
 
-Michael1::OperatorControl(void)
+void Michael1::OperatorControl(void)
 {
 	GetWatchdog().SetEnabled(true);
 	while (IsOperatorControl())
 	{
 		GetWatchdog().Feed();
-		dt.TankDrive(left_stick, right_stick); // drive with arcade style (use right stick)
+		dt->TankDrive(left_stick, right_stick); // drive with arcade style (use right stick)
 	}
 }
-	
-	
+
 START_ROBOT_CLASS(Michael1);
