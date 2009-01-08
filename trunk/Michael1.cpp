@@ -1,11 +1,17 @@
 #include "Michael1.h"
 
-Michael1::Michael1() { // <-- controller
-	dt = new RobotDrive(1,2); // <-- view
-	//model \/
+// Controller
+
+Michael1::Michael1()
+{
+	// View
+	dt = new RobotDrive(1,2);
+	
+	// Model
 	left_stick = new Joystick(1);
 	right_stick = new Joystick(2);
 	
+	// other calls
 	GetWatchdog().SetExpiration(100);
 }
 
