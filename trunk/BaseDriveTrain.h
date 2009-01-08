@@ -2,16 +2,12 @@ class BaseDriveTrain
 {
 	
 public:
-	virtual ~BaseDriveTrain()
+	virtual ~BaseDriveTrain(); //possibly accept an array of speed controllers
 	
 	virtual void setMotor(int i, double speed);
 	virtual void setMotor(int[] i, double speed);
 	
 protected:
-	SpeedController*[] motors;
-	
-private:
-	BaseDriveTrain(); //make sure nobody instansiates a BaseDriveTrain
-	
-	
+	std::vector <*SpeedController> motors; //pointer to array of pointers to SpeedControllers
+
 }
