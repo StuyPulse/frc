@@ -1,10 +1,5 @@
-class Michael1DriveTrain : TractionControlledDriveTrain {
-	
+class Michael1DriveTrain : DriveTrain
+{
 public:
-	Michael1DriveTrain(*SpeedController left, *SpeedController right);
-	void tankDrive(float left, float right);
-	void arcadeDrive(float speed, float direction);
-
-
-	
+	Michael1DriveTrain(int left_pwm, int right_pwm);
 }

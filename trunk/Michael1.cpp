@@ -6,28 +6,24 @@
  * Autonomous and OperatorControl methods at the right time as controlled by the switches on
  * the driver station or the field controls.
  */ 
-class RobotDemo : public SimpleRobot
+Michael1::Michael1(void): stick(1)
 {
-	RobotDrive myRobot; // robot drive system
-	Joystick stick; // only joystick
+	GetWatchdog().SetExpiration(100);
+	
+	dt = new Michael1DriveTrain(1,2);
+	
+	left_joystick = new Joystick(1);
+	right_joystick = new Joystick(2);
+}
 
-public:
-	RobotDemo(void):
-		myRobot(1, 2),	// these must be initialized in the same order
-		stick(1)		// as they are declared above.
-	{
-		GetWatchdog().SetExpiration(100);
-	}
-
-	/**
-	 * Drive left & right motors for 2 seconds then stop
-	 */
-	void Autonomous(void)
+void Michael1::Autonomous(void)
 	{
 		GetWatchdog().SetEnabled(false);
-		myRobot.Drive(0.5, 0.0); 	// drive forwards half speed
-		Wait(2.0); 				//    for 2 seconds
-		myRobot.Drive(0.0, 0.0); 	// stop robot
+		dt.setMotor(0, 1);
+		dt.setMotor(0, -1);
+		Wait(2.0);
+		dt.setMotor(0, 1);
+		dt.setMotor(0, -1);
 	}
 
 	/**

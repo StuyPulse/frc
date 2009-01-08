@@ -3,7 +3,11 @@
 class Michael1 : SimpleRobot {
 	
 public:
-	Michael1DriveTrain driveTrain;
+	DriveTrian dt;
+	
+	//DriverStation ds;
+	Joystick *left_stick;
+	Joystick *right_stick
 	
 private:
 	Victor left_motor;
