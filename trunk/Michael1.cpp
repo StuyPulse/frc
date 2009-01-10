@@ -1,4 +1,6 @@
+#include "WPILib.h"
 #include "Michael1.h"
+#include "TractionRobotDrive.h"
 
 // Controller
 
@@ -17,7 +19,7 @@ Michael1::Michael1()
 
 
 void Michael1::Autonomous(void)
-{
+{	
 	GetWatchdog().SetEnabled(false);
 	dt->Drive(0.5, 0.0); 	// drive forwards half speed
 	Wait(2.0); 				//    for 2 seconds

@@ -1,13 +1,11 @@
-class DriveTrainTC : DriveTrain
+class TractionRobotDrive
 {
 	
 public:
-	virtual ~DriveTrainTC();
-	
-	void setCof(double cof);
-	virtual void setMotor(int i, double speed);
+	TractionRobotDrive();
+	RobotDrive *driveTrain;
 	
 private:
 	double cof;
 	
-}
+};
