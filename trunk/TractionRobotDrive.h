@@ -4,7 +4,7 @@
 class TractionRobotDrive : public DriveTrain {
 	
 public:
-	TractionRobotDrive();
+	TractionRobotDrive(UINT32 left, UINT32 right, double _cof);
 	
 private:
 	double cof;
