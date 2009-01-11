@@ -1,3 +1,7 @@
+#include "WPILib.h"
+#include "DriveTrain.h"
+#include "TractionRobotDrive.h"
+
 class Michael1 : public SimpleRobot
 {
 public:
@@ -5,7 +9,7 @@ public:
 	void Autonomous(void);
 	void OperatorControl(void);
 	
-	RobotDrive *dt;
+	DriveTrain *dt;
 	Joystick *left_stick;
 	Joystick *right_stick;
 	

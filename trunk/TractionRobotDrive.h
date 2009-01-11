@@ -1,9 +1,10 @@
-class TractionRobotDrive
-{
+#include "WPILib.h"
+#include "DriveTrain.h"
+
+class TractionRobotDrive : public DriveTrain {
 	
 public:
 	TractionRobotDrive();
-	RobotDrive *driveTrain;
 	
 private:
 	double cof;
