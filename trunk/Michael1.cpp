@@ -31,7 +31,10 @@ void Michael1::Autonomous(void)
 	while (IsAutonomous())
 	{
 		GetWatchdog().Feed();
-		
+		if(cam->GetNewImage()){
+			//we have an image, process it!
+			//will get called every 100ms (10fps)
+		}
 	}
 	
 }
