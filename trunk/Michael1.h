@@ -1,5 +1,3 @@
-#include "WPILib.h"
-
 class Michael1 : public SimpleRobot
 {
 public:
@@ -13,5 +11,5 @@ public:
 	DigitalOutput *ariels_light;
 	Joystick *left_stick;
 	Joystick *right_stick;
-
+	Camera *cam;
 };

@@ -1,49 +1,57 @@
+#include <iostream.h>
+#include "math.h"
+#include "WPILib.h"
+#include "Camera.h"
 #include "Michael1.h"
 
-// Controller
 
 Michael1::Michael1()
 {
-	// View
+// We're Alive!
+	printf("Hello!\n\n\n");
+// Outputs
 	dt = new RobotDrive(1,2);
 	ds = DriverStation::GetInstance();
 	ariels_light = new DigitalOutput(1);
-	// Model
+// Inputs
 	left_stick = new Joystick(1);
 	right_stick = new Joystick(2);
-	
-	// other calls
+//	Camera
+	cam = new Camera(true); //boolean parameter is PC server
+// other calls
 	GetWatchdog().SetExpiration(100);
 }
 
 
 void Michael1::Autonomous(void)
 {
-	GetWatchdog().SetEnabled(false);
-	while (IsAutonomous()) {
-	//if (StartCameraTask(10, 0, k160x120, ROT_0) == -1) {
-		ariels_light->Set(1);
-		Wait(2);
-		ariels_light->Set(0);
-		Wait(2);
+	GetWatchdog().SetEnabled(true);
+	ariels_light->Set(1);
+	
+	while (IsAutonomous())
+	{
+		GetWatchdog().Feed();
+		
 	}
-	//} else {
-	//	ariels_light->Set(0);
-	//}
+	
 }
 
 
 void Michael1::OperatorControl(void)
 {
 	GetWatchdog().SetEnabled(true);
+	ariels_light->Set(0);
+	
 	while (IsOperatorControl())
 	{
 		GetWatchdog().Feed();
 		dt->SetLeftRightMotorSpeeds(
-				-1*right_stick->GetY(),
-				-1*left_stick->GetY()
+				-right_stick->GetY(),
+				-left_stick->GetY()
 		); // drive with arcade style (use right stick)
 	}
 }
+
+
 
 START_ROBOT_CLASS(Michael1);
