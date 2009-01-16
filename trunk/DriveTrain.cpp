@@ -7,18 +7,14 @@ DriveTrain::DriveTrain(UINT32 left, UINT32 right, bool invertLeft, bool invertRi
 	invert_right = invertRight;
 }
 
+//	TankDrive (uses Y axis)
 void DriveTrain::SetMotors(Joystick *left, Joystick *right) {
 	float l = left->GetY();
 	float r = right->GetY();
-	if (invert_left){
-		l *= -1;
-	}
-	if (invert_right){
-		r *= -1;
-	}
-	motors->SetLeftRightMotorSpeeds(r, l);
+	SetMotors(l, r);
 }
 
+//	Lets you specify a float directly instead of being stuck with Y Axiss
 void DriveTrain::SetMotors(float left, float right) {
 	if (invert_left){
 		left *= -1;

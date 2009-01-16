@@ -6,7 +6,8 @@
 #define RESOLUTION k320x240
 #define ROTATION ROT_180
 
-Camera::Camera(bool serv){
+Camera::Camera(bool serv)
+{
 	imgTimestamp = 0.0;
 	oldTimestamp = 0.0;
 	if( StartCameraTask(FRAMES_SEC, COMPRESSION, RESOLUTION, ROTATION) == -1){
@@ -20,7 +21,8 @@ Camera::Camera(bool serv){
 }
 
 //loads new image from camera into Camera object
-bool Camera::GetNewImage(){
+bool Camera::GetNewImage()
+{
 	if ( !GetImage(img, &imgTimestamp) )  { 
 	 printf("error getting image from camera\n");
 	}
@@ -30,4 +32,9 @@ bool Camera::GetNewImage(){
 		oldTimestamp = imgTimestamp;
 		return true;
 	}
+}
+
+double Camera::getTimestamp()
+{
+	return(imgTimestamp);
 }

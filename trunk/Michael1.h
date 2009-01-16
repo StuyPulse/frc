@@ -7,7 +7,7 @@ public:
 	void OperatorControl(void);
 	
 	DriverStation *ds;
-	RobotDrive *dt;
+	DriveTrain *dt;
 	DigitalOutput *ariels_light;
 	Joystick *left_stick;
 	Joystick *right_stick;

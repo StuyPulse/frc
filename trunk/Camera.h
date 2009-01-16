@@ -9,7 +9,9 @@ class Camera
 public:
 	Camera(bool); // parameter denotes to start a PC Server
 	bool GetNewImage(); // returns true on new image, false on no new image
-	
+	double getTimestamp(); // returns imgTimestamp
+
+protected:
 	Image *img;
 	double imgTimestamp;
 	double oldTimestamp;
