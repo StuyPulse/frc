@@ -22,7 +22,7 @@ Camera::Camera(bool serv){
 //loads new image from camera into Camera object
 bool Camera::GetNewImage(){
 	if ( !GetImage(img, &imgTimestamp) )  { 
-	 printf("error getting image from camera");
+	 printf("error getting image from camera\n");
 	}
 	if (imgTimestamp <= oldTimestamp){
 		return false;
