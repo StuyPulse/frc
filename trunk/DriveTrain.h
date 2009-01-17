@@ -11,16 +11,6 @@ public:
 	bool SetSpeed(float speed, float dir);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
 	
-	typedef struct {
-		double displ_l[3];
-		double displ_r[3];
-		double accel_l;
-		double accel_r;
-		double time[3];
-	} slipage_info;
-	
-	Timer *timer;
-	slipage_info slip;
 	Encoder *encoder_right;
 	Encoder *encoder_left;
 	Gyro *gyro;
@@ -28,5 +18,19 @@ public:
 	
 	bool invert_left;
 	bool invert_right;
-	
+
+private:
+	typedef struct {
+	  /* if a quantity is in an array, the value of the array
+	     at an index is the value of that quantity at the
+	     time that has the same index
+	  */
+	  double displ_l[3]; //displacement of the left hand side
+	  double displ_r[3]; //           "  "   " right   "    "
+	  double accel_r;    //acceleration  "   "     "   "    "
+	  double accel_l;    //           "  "   " left    "    "
+	  double time[3];    //time
+	} slipage_info;
+	Timer *timer;
+	slipage_info slip;
 };

@@ -36,6 +36,7 @@ void DriveTrain::SetMotors(float left, float right) {
 
 bool DriveTrain::SetSpeed(float speed, float dir){
 	bool atspeed = false;
+	                /* We have to set some initial values */
 			if(slip.time[0] == 0){
 				slip.time[0] = timer->Get();
 				slip.displ_l[0] = encoder_left->GetDistance();
@@ -46,11 +47,15 @@ bool DriveTrain::SetSpeed(float speed, float dir){
 				slip.displ_l[1] = encoder_left->GetDistance();
 				slip.displ_r[1] = encoder_right->GetDistance();
 			}
+			/* after here, we're doing it for real */
 			else {
 				slip.time[2]= timer->Get();
 				slip.displ_l[2] = encoder_left->GetDistance();
 				slip.displ_r[2] = encoder_right->GetDistance();
-				//v_f = v_i + a_f * (f - i) & s_f = s_i + v_f * (f - i)
+			/*
+			  the following code is derived from:
+			   v_f = v_i + a_f * (f - i) & s_f = s_i + v_f * (f - i)
+			*/
 			slip.accel_l = 
 				((slip.displ_l[2] - slip.displ_l[1])
 				* (slip.time[1] - slip.time[0])
@@ -88,7 +93,7 @@ bool DriveTrain::SetSpeed(float speed, float dir){
 			else {
 				printf("\t\t\tNO SLIPPING\n");
 			}*/
-			printf("%f", slip.accel_r + slip.accel_l
+			printf("%f\n", slip.accel_r + slip.accel_l
 				- 2 * accel->GetAcceleration()
 				* 980.0);
 			}
