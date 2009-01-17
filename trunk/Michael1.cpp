@@ -18,7 +18,7 @@ Michael1::Michael1()
 	left_stick = new Joystick(1);
 	right_stick = new Joystick(2);
 //	Camera
-	cam = new Michael1Camera(false); //boolean parameter is PC server
+	cam = new Michael1Camera(true); //boolean parameter is PC server
 // other calls
 	GetWatchdog().SetExpiration(100);
 }
@@ -27,11 +27,12 @@ Michael1::Michael1()
 void Michael1::Autonomous(void)
 {
 	printf("\n\n\tStart Autonomous:\n\n");
-	GetWatchdog().SetEnabled(true);
+	GetWatchdog().SetEnabled(false);
 	
 	while (IsAutonomous())
 	{
-		GetWatchdog().Feed();
+		//GetWatchdog().Feed();
+		Wait(.1);
 		if(cam->FindTargets()){
 			ariels_light->Set(1);
 		} else {

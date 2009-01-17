@@ -14,6 +14,7 @@ Camera::Camera(bool serv)
 		printf("failed to init camera\n");
 	} else {
 		if (serv){
+			Wait(2.0);
 			pcvs = new PCVideoServer(); 
 			pcvs->Start();
 		}
