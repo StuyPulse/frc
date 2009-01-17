@@ -18,7 +18,7 @@ Michael1::Michael1()
 	left_stick = new Joystick(1);
 	right_stick = new Joystick(2);
 //	Camera
-	cam = new Michael1Camera(true); //boolean parameter is PC server
+	cam = new Michael1Camera(false); //boolean parameter is PC server
 // other calls
 	GetWatchdog().SetExpiration(100);
 }
@@ -28,13 +28,14 @@ void Michael1::Autonomous(void)
 {
 	printf("\n\n\tStart Autonomous:\n\n");
 	GetWatchdog().SetEnabled(true);
-	ariels_light->Set(1);
 	
 	while (IsAutonomous())
 	{
 		GetWatchdog().Feed();
-		if(cam->GetNewImage()){
-			printf("We have a new frame!\n");
+		if(cam->FindTargets()){
+			ariels_light->Set(1);
+		} else {
+			ariels_light->Set(0);
 		}
 	}
 	
@@ -43,9 +44,9 @@ void Michael1::Autonomous(void)
 
 void Michael1::OperatorControl(void)
 {
-	printf("\n\n\tStart Autonomous:\n\n");
+	printf("\n\n\tStart Teleop:\n\n");
 	GetWatchdog().SetEnabled(true);
-	ariels_light->Set(0);
+	ariels_light->Set(1);
 	
 	while (IsOperatorControl())
 	{

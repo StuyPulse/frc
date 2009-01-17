@@ -4,5 +4,9 @@ class Michael1Camera : public Camera
 {
 public:
 	Michael1Camera(bool);
+	bool FindTargets();
+	ParticleAnalysisReport par;
 
+private:
+	TrackingThreshold tdata;
 };

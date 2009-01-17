@@ -18,3 +18,7 @@ protected:
 	PCVideoServer *pcvs;
 
 };
+
+typedef struct {
+	bool alliance; // true = ours, false = opposing
+} Targets;

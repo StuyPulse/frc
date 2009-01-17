@@ -30,6 +30,13 @@ bool Camera::GetNewImage()
 		return false;
 	} else {
 		oldTimestamp = imgTimestamp;
+		Point p;
+		p.x = 50;
+		p.y = 50;
+		PixelValue *pv = new PixelValue();
+		frcGetPixelValue(img, p, pv);
+		double d = pv->hsl.H;
+		printf("The value is %f", d);
 		return true;
 	}
 }

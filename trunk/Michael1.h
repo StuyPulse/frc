@@ -11,5 +11,5 @@ public:
 	DigitalOutput *ariels_light;
 	Joystick *left_stick;
 	Joystick *right_stick;
-	Camera *cam;
+	Michael1Camera *cam;
 };
