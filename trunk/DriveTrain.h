@@ -3,18 +3,18 @@
 class DriveTrain {
 	
 public:
-	DriveTrain(UINT32 left, UINT32 right, bool invertLeft, bool invertRight);
-	RobotDrive *motors;
+	DriveTrain();
 	
-	void SetMotors(Joystick *left, Joystick *right);
+	void TankDrive(Joystick *left, Joystick *right);
 	void SetMotors(float left, float right);
-	bool SetSpeed(float speed, float dir);
+	bool GoshasCode();
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
-	
-	Encoder *encoder_right;
 	Encoder *encoder_left;
+	Encoder *encoder_right;
 	Gyro *gyro;
 	Accelerometer *accel;
+	SpeedController *motor_left;
+	SpeedController *motor_right;
 	
 	bool invert_left;
 	bool invert_right;

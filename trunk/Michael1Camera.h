@@ -8,5 +8,6 @@ public:
 	ParticleAnalysisReport par;
 
 private:
-	TrackingThreshold tdata;
+	TrackingThreshold td_green;
+	TrackingThreshold td_pink;
 };

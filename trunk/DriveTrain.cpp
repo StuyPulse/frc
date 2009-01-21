@@ -1,40 +1,42 @@
 #include "DriveTrain.h"
 
-DriveTrain::DriveTrain(UINT32 left, UINT32 right, bool invertLeft, bool invertRight)
+DriveTrain::DriveTrain()
 {
-	motors = new RobotDrive::RobotDrive(left, right, 1.0);
-	invert_left = invertLeft;
-	invert_right = invertRight;
+	motor_left = new Victor(1);
+	invert_left = false;
+	motor_right = new Jaguar(2);
+	invert_right = true;
+	
 	timer = new Timer();
 	timer->Start();
-}
-
-void DriveTrain::AssociateSensors(Encoder *_left, Encoder *_right, Gyro *_gyro, Accelerometer *_accel){
-	encoder_left = _left;
-	encoder_right = _right;
-	gyro = _gyro;
-	accel = _accel;
-}
-
-//	TankDrive (uses Y axis)
-void DriveTrain::SetMotors(Joystick *left, Joystick *right) {
-	float l = left->GetY();
-	float r = right->GetY();
-	SetMotors(l, r);
+	encoder_left = new Encoder(4,2,4,3);
+	encoder_right = encoder_left;
+	gyro = new Gyro(2);
+	accel = new Accelerometer(1);
 }
 
 //	Lets you specify a float directly instead of being stuck with Y Axiss
-void DriveTrain::SetMotors(float left, float right) {
+void DriveTrain::SetMotors(float left, float right)
+{
 	if (invert_left){
 		left *= -1;
 	}
 	if (invert_right){
 		right *= -1;
 	}
-	motors->SetLeftRightMotorSpeeds(right, left);
+	motor_left->Set(left);
+	motor_right->Set(right);
 }
 
-bool DriveTrain::SetSpeed(float speed, float dir){
+//	TankDrive (uses Y axis)
+void DriveTrain::TankDrive(Joystick *left, Joystick *right)
+{
+	float l = left->GetY();
+	float r = right->GetY();
+	SetMotors(l, r);
+}
+
+bool DriveTrain::GoshasCode(){
 	bool atspeed = false;
 	                /* We have to set some initial values */
 			if(slip.time[0] == 0){
@@ -98,5 +100,6 @@ bool DriveTrain::SetSpeed(float speed, float dir){
 				* 980.0);
 			}
 	return atspeed;
+	
 }
 
