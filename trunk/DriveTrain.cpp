@@ -54,34 +54,42 @@ bool DriveTrain::GoshasCode(){
 				slip.time[2]= timer->Get();
 				slip.displ_l[2] = encoder_left->GetDistance();
 				slip.displ_r[2] = encoder_right->GetDistance();
-			/*
-			  the following code is derived from:
-			   v_f = v_i + a_f * (f - i) & s_f = s_i + v_f * (f - i)
-			*/
-			slip.accel_l = 
+
+			/*slip.accel_l =
 				((slip.displ_l[2] - slip.displ_l[1])
 				* (slip.time[1] - slip.time[0])
 				- (slip.displ_l[1] - slip.displ_l[0])
 				* (slip.time[2] - slip.time[1]))
 				/ ((slip.time[2] - slip.time[1])
 				* (slip.time[2] - slip.time[1])
-				* (slip.time[1] - slip.time[0]));
-			slip.accel_r = 
+				* (slip.time[1] - slip.time[0]))*/
+			  //let's restate that
+				//ok suppose we have times i < m < f and s = diplacement, v = velocity, a = acceleration
+				slip.accel_l/*a_f*/ = ((((slip.displ_l[2]/*s_f*/ - slip.displ_l[1]/*s_m*/) / (slip.time[2]/*f*/ - slip.time[1]/*m*/))/*v_f*/
+							- ((slip.displ_l[1]/*s_m*/ - slip.displ_l[0]/*s_i*/) / (slip.time[1]/*m*/ - slip.time[0]/*i*/))/*v_m*/)
+						       / (slip.time[1]/*f*/ - slip.time[0]/*m*/));
+
+			/*slip.accel_r = 
 				((slip.displ_r[2] - slip.displ_r[1])
 				* (slip.time[1] - slip.time[0])
 				- (slip.displ_r[1] - slip.displ_r[0])
 				* (slip.time[2] - slip.time[1]))
 				/ ((slip.time[2] - slip.time[1])
 				* (slip.time[2] - slip.time[1])
-				* (slip.time[1] - slip.time[0]));
-			
-			slip.displ_r[0] = slip.displ_r[1];
-			slip.displ_r[1] = slip.displ_r[2];
-			slip.displ_l[0] = slip.displ_l[1];
-			slip.displ_l[1] = slip.displ_l[2];
-			
-			slip.time[0] = slip.time[1];
-			slip.time[1] = slip.time[2];
+				* (slip.time[1] - slip.time[0]));*/
+			//let's restate that
+				//ok suppose we have times i < m < f and s = diplacement, v = velocity, a = acceleration
+                                slip.accel_r/*a_f*/ = ((((slip.displ_r[2]/*s_f*/ - slip.displ_r[1]/*s_m*/) / (slip.time[2]/*f*/ - slip.time[1]/*m*/))/*v_f*/
+							- ((slip.displ_r[1]/*s_m*/ - slip.displ_r[0]/*s_i*/) / (slip.time[1]/*m*/ - slip.time[0]/*i*/))/*v_m*/)
+                                                       / (slip.time[1]/*f*/ - slip.time[0]/*m*/));
+				/*let's push our values down by one section of time*/
+				slip.displ_r[0] = slip.displ_r[1];
+				slip.displ_r[1] = slip.displ_r[2];
+				slip.displ_l[0] = slip.displ_l[1];
+				slip.displ_l[1] = slip.displ_l[2];
+				/*likewise, let's push down our times so that they correspond with the values*/
+				slip.time[0] = slip.time[1];
+				slip.time[1] = slip.time[2];
 			
 			/*
 			if((slip.accel_r + slip.accel_l
