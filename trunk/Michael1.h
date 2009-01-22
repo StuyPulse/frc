@@ -12,12 +12,12 @@ public:
 	void OperatorControl(void);
 	
 	//Inputs
-	Michael1Camera* cam;
-	Joystick* left_stick;
-	Joystick* right_stick;
+	Michael1Camera cam;
+	Joystick left_stick;
+	Joystick right_stick;
 	
 	//Outputs
-	DriveTrain* dt; // contains motor_left, motor_right
-	DigitalOutput* ariels_light;
+	DriveTrain dt; // contains motor_left, motor_right
+	DigitalOutput ariels_light;
 	
 };
