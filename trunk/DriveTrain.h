@@ -7,7 +7,8 @@ public:
 	
 	void TankDrive(Joystick *left, Joystick *right);
 	void SetMotors(float left, float right);
-	bool GoshasCode();
+	void UpdateSlip();
+	void slipControl(bool);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
 	Encoder *encoder_left;
 	Encoder *encoder_right;
@@ -33,4 +34,5 @@ private:
 	} slipage_info;
 	Timer *timer;
 	slipage_info slip;
+	bool slipControlEnabled;
 };

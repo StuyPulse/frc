@@ -1,6 +1,5 @@
 #include "Michael1.h"
 
-
 Michael1::Michael1()
 {
 	// We're Alive!
@@ -15,6 +14,7 @@ Michael1::Michael1()
 
 	// Robot Components
 	dt = new DriveTrain(); //configure drive train in drivetrain.cpp
+	
 	cam = new Michael1Camera(false);
 	
 	// WPILib crap
@@ -25,13 +25,19 @@ Michael1::Michael1()
 void Michael1::Autonomous(void)
 {
 	printf("\n\n\tStart Autonomous:\n\n");
-	GetWatchdog().SetEnabled(true);
+	GetWatchdog().SetEnabled(false);
+	ariels_light->Set(0);
+	dt->slipControl(true);
 	
 	while (IsAutonomous())
 	{
-		GetWatchdog().Feed();
+		Wait(0.1);
+		//printf("Encoder: %f, ", dt->encoder_left->GetDistance());
+		//printf("Gyro: %f, ", dt->gyro->GetAngle());
+		//printf("Accel: %f", dt->accel->GetAcceleration());
+		//printf("\n\n");
 		dt->TankDrive(left_stick, right_stick);
-		dt->GoshasCode();
+		dt->UpdateSlip(); //calling slipControl(true) should spawn a task which does this.
 		/*Wait(.1);
 		if(cam->FindTargets()){
 			ariels_light->Set(1);
@@ -40,19 +46,19 @@ void Michael1::Autonomous(void)
 		}
 		*/
 	}
-	
+
 }
 
 
 void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
-	GetWatchdog().SetEnabled(true);
+	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(1);
+	dt->slipControl(false);
 	
 	while (IsOperatorControl())
 	{
-		GetWatchdog().Feed();
 		dt->TankDrive(left_stick, right_stick);
 	}
 }
