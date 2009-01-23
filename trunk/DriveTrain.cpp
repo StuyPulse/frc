@@ -49,9 +49,31 @@ void DriveTrain::SetMotors(float left, float right)
 	if (invert_right){
 		right *= -1;
 	}
-	//if (slipControlEnabled)
+	// remember, left and right give us acceleration intent
 	motor_left->Set(left);
 	motor_right->Set(right);
+}
+
+#define GAIN 0.05
+void DriveTrain::SmoothMotors(float left, float right){
+	if (invert_left){
+		left *= -1;
+	}
+	if (invert_right){
+		right *= -1;
+	}
+		
+	if(left > motor_left->Get()){
+		motor_left->Set(motor_left->Get() + GAIN);
+	    } else if (left < motor_left->Get()){
+			motor_left->Set(motor_left->Get() - GAIN);
+		}
+	if(right > motor_right->Get()){
+			motor_right->Set(motor_right->Get() + GAIN);
+		} else if (right < motor_right->Get()){
+			motor_right->Set(motor_right->Get() - GAIN);
+		}
+
 }
 
 //	TankDrive (uses Y axis)
@@ -59,7 +81,11 @@ void DriveTrain::TankDrive(Joystick *left, Joystick *right)
 {
 	float l = left->GetY();
 	float r = right->GetY();
-	SetMotors(l, r);
+	if (slipControlEnabled){
+		SmoothMotors(l, r);
+	} else {
+		SetMotors(l, r); //set motors to raw values
+	}
 }
 
 void DriveTrain::UpdateSlip(){

@@ -26,18 +26,21 @@ void Michael1::Autonomous(void)
 {
 	printf("\n\n\tStart Autonomous:\n\n");
 	GetWatchdog().SetEnabled(false);
-	ariels_light->Set(0);
+	ariels_light->Set(1);
+	
 	dt->slipControl(true);
 	
 	while (IsAutonomous())
 	{
-		Wait(0.1);
+		Wait(0.1); //important
+		dt->TankDrive(left_stick, right_stick);
+		//dt->UpdateSlip(); //calling slipControl(true) should spawn a task which does this.
+		
 		//printf("Encoder: %f, ", dt->encoder_left->GetDistance());
 		//printf("Gyro: %f, ", dt->gyro->GetAngle());
 		//printf("Accel: %f", dt->accel->GetAcceleration());
-		//printf("\n\n");
-		dt->TankDrive(left_stick, right_stick);
-		dt->UpdateSlip(); //calling slipControl(true) should spawn a task which does this.
+		//printf("\n\n");s
+		
 		/*Wait(.1);
 		if(cam->FindTargets()){
 			ariels_light->Set(1);
@@ -54,7 +57,7 @@ void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
 	GetWatchdog().SetEnabled(false);
-	ariels_light->Set(1);
+	ariels_light->Set(0);
 	dt->slipControl(false);
 	
 	while (IsOperatorControl())

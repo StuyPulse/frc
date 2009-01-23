@@ -9,6 +9,7 @@ public:
 	void SetMotors(float left, float right);
 	void UpdateSlip();
 	void slipControl(bool);
+	void SmoothMotors(float, float);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
 	Encoder *encoder_left;
 	Encoder *encoder_right;
