@@ -20,4 +20,6 @@ public:
 	DriveTrain *dt; // contains motor_left, motor_right
 	DigitalOutput *ariels_light;
 	
+	//Timer
+	Timer *time;
 };

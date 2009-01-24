@@ -1,5 +1,8 @@
 #include "WPILib.h"
 
+#define SLIP_UPDATE_INTERVAL 0.1
+
+
 class DriveTrain {
 	
 public:
@@ -15,28 +18,24 @@ public:
 	Encoder *encoder_right;
 	Gyro *gyro;
 	Accelerometer *accel;
-	SpeedController *motor_left;
-	SpeedController *motor_right;
 	
 	bool invert_left;
 	bool invert_right;
 
 private:
+	SpeedController *motor_left;
+	SpeedController *motor_right;
+	
 	typedef struct {
-	  /* if a quantity is in an array, the value of the array
-	     at an index is the value of that quantity at the
-	     time that has the same index
-	  */
-	  double displ_l[3]; //displacement of the left hand side
-	  double displ_r[3]; //           "  "   " right   "    "
-		double vel_l[3];
-		double vel_r[3];
-	  double accel_r;    //acceleration  "   "     "   "    "
-	  double accel_l;    //           "  "   " left    "    "
-	  double time[3];    //time
-	  int timesRun;
-	} slipage_info;
-	Timer *timer;
-	slipage_info slip;
-	bool slipControlEnabled;
+	  double displ_l[2];	// displacement (cm) since encoder init
+	  double displ_r[2];
+	  double vel_l[2];		// velocity between displacements[0] and [1]
+	  double vel_r[2];
+	  double enc_accel_r;	// calculated encoder acceleration
+	  double enc_accel_l;
+	  double accel[2];		// two time intervals of accelerometer readings
+	  double diff;			// difference in cm/s^2 between encoders and accel
+	} SlippageInfo;
+	
+	SlippageInfo slip;
 };

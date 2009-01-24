@@ -14,8 +14,10 @@ Michael1::Michael1()
 
 	// Robot Components
 	dt = new DriveTrain(); //configure drive train in drivetrain.cpp
-	
 	cam = new Michael1Camera(false);
+	
+	time = new Timer();
+	time->Start();
 	
 	// WPILib crap
 	GetWatchdog().SetExpiration(100);
@@ -30,23 +32,8 @@ void Michael1::Autonomous(void)
 		
 	while (IsAutonomous())
 	{
-		Wait(0.1); //important
+		Wait(0.1);
 		dt->SmoothTankDrive(left_stick, right_stick);
-		//dt->UpdateSlip();
-		//dt->UpdateSlip(); //calling slipControl(true) should spawn a task which does this.
-		
-		//printf("Encoder: %f, ", dt->encoder_left->GetDistance());
-		//printf("Gyro: %f, ", dt->gyro->GetAngle());
-		//printf("Accel: %f", dt->accel->GetAcceleration());
-		//printf("\n\n");s
-		
-		/*Wait(.1);
-		if(cam->FindTargets()){
-			ariels_light->Set(1);
-		} else {
-			ariels_light->Set(0);
-		}
-		*/
 	}
 
 }
@@ -57,10 +44,18 @@ void Michael1::OperatorControl(void)
 	printf("\n\n\tStart Teleop:\n\n");
 	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(0);
+	double oldTime = 0;
 	
 	while (IsOperatorControl())
 	{
 		dt->TankDrive(left_stick, right_stick);
+		
+		double newTime = time->Get();
+		if(newTime - oldTime >= 0.1){
+			dt->UpdateSlip();
+			oldTime = newTime;
+		}
+		
 	}
 }
 
