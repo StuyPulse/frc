@@ -27,13 +27,12 @@ void Michael1::Autonomous(void)
 	printf("\n\n\tStart Autonomous:\n\n");
 	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(1);
-	
-	dt->slipControl(true);
-	
+		
 	while (IsAutonomous())
 	{
 		Wait(0.1); //important
-		dt->TankDrive(left_stick, right_stick);
+		dt->SmoothTankDrive(left_stick, right_stick);
+		//dt->UpdateSlip();
 		//dt->UpdateSlip(); //calling slipControl(true) should spawn a task which does this.
 		
 		//printf("Encoder: %f, ", dt->encoder_left->GetDistance());
@@ -58,7 +57,6 @@ void Michael1::OperatorControl(void)
 	printf("\n\n\tStart Teleop:\n\n");
 	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(0);
-	dt->slipControl(false);
 	
 	while (IsOperatorControl())
 	{

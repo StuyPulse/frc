@@ -6,9 +6,9 @@ public:
 	DriveTrain();
 	
 	void TankDrive(Joystick *left, Joystick *right);
+	void SmoothTankDrive(Joystick *left, Joystick *right);
 	void SetMotors(float left, float right);
 	void UpdateSlip();
-	void slipControl(bool);
 	void SmoothMotors(float, float);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
 	Encoder *encoder_left;
@@ -29,9 +29,12 @@ private:
 	  */
 	  double displ_l[3]; //displacement of the left hand side
 	  double displ_r[3]; //           "  "   " right   "    "
+		double vel_l[3];
+		double vel_r[3];
 	  double accel_r;    //acceleration  "   "     "   "    "
 	  double accel_l;    //           "  "   " left    "    "
 	  double time[3];    //time
+	  int timesRun;
 	} slipage_info;
 	Timer *timer;
 	slipage_info slip;
