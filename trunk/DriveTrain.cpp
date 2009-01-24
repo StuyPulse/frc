@@ -1,12 +1,5 @@
 #include "DriveTrain.h"
-#include <time.h>
 
- 
-//#define PHASE_1	//test displacement encoders
-//#define PHASE_2	//test velocity based on encoders
-//#define PHASE_3	//test acceleration (t_2 - t_1) based on encoders
-//#define PHASE_4	//test acceleration (t_2/2-t_0/2) based on encoders
-//#define PHASE_5	//compare acceleration from encoders and acceleration
 
 DriveTrain::DriveTrain()
 {

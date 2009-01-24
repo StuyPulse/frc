@@ -1,4 +1,5 @@
 #include <iostream.h>
+#include <time.h>
 #include "math.h"
 #include "WPILib.h"
 #include "DriveTrain.h"
