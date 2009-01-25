@@ -51,7 +51,7 @@ void Michael1::OperatorControl(void)
 		dt->TankDrive(left_stick, right_stick);
 		
 		double newTime = time->Get();
-		if(newTime - oldTime >= SLIP_UPDATE_INTERVAL){
+		if(newTime - oldTime >= UPDATE_INTERVAL){
 			dt->UpdateSlip();
 			oldTime = newTime;
 		}
