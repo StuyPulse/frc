@@ -6,7 +6,7 @@
 #define RESOLUTION k320x240
 #define ROTATION ROT_180
 
-Camera::Camera(bool serv)
+StuyCamera::StuyCamera(bool serv)
 {
 	imgTimestamp = 0.0;
 	oldTimestamp = 0.0;
@@ -22,7 +22,7 @@ Camera::Camera(bool serv)
 }
 
 //loads new image from camera into Camera object
-bool Camera::GetNewImage()
+bool StuyCamera::GetNewImage()
 {
 	if ( !GetImage(img, &imgTimestamp) )  { 
 	 printf("error getting image from camera\n");
@@ -42,7 +42,7 @@ bool Camera::GetNewImage()
 	}
 }
 
-double Camera::getTimestamp()
+double StuyCamera::getTimestamp()
 {
 	return(imgTimestamp);
 }

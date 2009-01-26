@@ -1,6 +1,6 @@
 #include "StuyCamera.h"
 
-class Michael1Camera : public Camera
+class Michael1Camera : public StuyCamera
 {
 public:
 	Michael1Camera(bool);

@@ -1,6 +1,6 @@
 #include "Michael1Camera.h"
 
-Michael1Camera::Michael1Camera(bool serv) : Camera(serv){
+Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
 	sprintf (td_pink.name, "PINK");
 	td_pink.hue.minValue = 220;   
 	td_pink.hue.maxValue = 255;  
