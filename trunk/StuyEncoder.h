@@ -11,7 +11,7 @@ typedef struct {
 class StuyEncoder {
 	
 public:
-	StuyEncoder(int slot, int port);
+	StuyEncoder(int slot, int port, double dist_per_tick);
 	StuyEncoder(Encoder* encoder);
 	void Start(float updateInterval, int numAveraged);
 	double GetAccel();

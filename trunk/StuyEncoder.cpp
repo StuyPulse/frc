@@ -1,7 +1,9 @@
 #include "StuyEncoder.h"
 
-StuyEncoder::StuyEncoder(int slot, int port){
+StuyEncoder::StuyEncoder(int slot, int port, double dist_per_tick){
 	encoder = new Encoder(slot, port);
+	encoder->SetDistancePerTick(dist_per_tick);
+	encoder->Start();
 }
 
 StuyEncoder::StuyEncoder(Encoder* encoder){
@@ -12,7 +14,7 @@ void StuyEncoder::Start(float updateInterval, int numAveraged){
 	this->updateInterval = updateInterval;
 	this->numAveraged = numAveraged;
 	
-	//start updateTask task every updateInterval
+	// run updateTask task every updateInterval
 	
 }
 

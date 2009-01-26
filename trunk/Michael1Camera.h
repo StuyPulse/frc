@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "StuyCamera.h"
 
 class Michael1Camera : public Camera
 {

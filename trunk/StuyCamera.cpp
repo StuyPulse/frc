@@ -1,5 +1,5 @@
 #include "WPILib.h"
-#include "Camera.h"
+#include "StuyCamera.h"
 
 #define FRAMES_SEC 10
 #define COMPRESSION 0
