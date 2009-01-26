@@ -1,4 +1,5 @@
 #include "WPILib.h"
+#include "StuyEncoder.h"
 
 #define UPDATE_INTERVAL 0.1
 #define NUM_ACCEL_SAMPLES 20
