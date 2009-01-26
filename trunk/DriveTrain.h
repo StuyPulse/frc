@@ -12,6 +12,7 @@ public:
 	void SmoothTankDrive(Joystick *left, Joystick *right);
 	void SetMotors(float left, float right);
 	void UpdateSlip();
+	void GetAverages();
 	void SmoothMotors(float, float);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
 	Encoder *encoder_left;
@@ -28,19 +29,16 @@ private:
 	SpeedController *motor_right;
 	
 	typedef struct {
-	  double displ_l[2];	// displacement (cm) since encoder init
-	  double displ_r[2];
-	  double vel_l[2];		// velocity between displacements[0] and [1]
-	  double vel_r[2];
-	  double enc_accel_r[NUM_ACCEL_SAMPLES];	// calculated encoder acceleration
-	  double enc_accel_l[NUM_ACCEL_SAMPLES];
-	  double enc_accel_r_avg;
-	  double enc_accel_l_avg;
-	  double accel[NUM_ACCEL_SAMPLES];		// two time intervals of accelerometer readings
-	  double accel_avg;
-	  double diff;			// difference in cm/s^2 between encoders and accel
-	  int sampleNumber;
-	} SlippageInfo;
+	  double displ[2];	// displacement (cm) since encoder init
+	  double vel[2];		// velocity between displacements[0] and [1]
+	  double accel[NUM_ACCEL_SAMPLES];	// calculated encoder acceleration
+	} EncoderHist;
 	
-	SlippageInfo slip;
+	typedef struct {
+	  double accel[NUM_ACCEL_SAMPLES];
+	} AccelHist;
+	
+	EncoderHist rightEncHist;
+	EncoderHist leftEncHist;
+	AccelHist accelHist;
 };
