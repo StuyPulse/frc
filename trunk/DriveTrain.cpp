@@ -1,13 +1,13 @@
 #include "DriveTrain.h"
 
 
-DriveTrain::DriveTrain()
+DriveTrain::DriveTrain(int left, int right, int slot)
 {
-	motor_left = new Victor(4, 1);
-	invert_left = true;
+	motor_left = new Victor(slot, left);
+	invert_left = false;
 	
-	motor_right = new Victor(4, 2);
-	invert_right = false;
+	motor_right = new Victor(slot, right);
+	invert_right = true;
 	
 	encoder_left = new Encoder(4,2,4,3); //(slot, pin, slot, pin)
 	encoder_right = new Encoder(4,4,4,5); //(slot, pin, slot, pin)
@@ -35,12 +35,11 @@ void DriveTrain::SetMotors(float left, float right)
 	if (invert_right){
 		right *= -1;
 	}
-	// remember, left and right give us acceleration intent
 	motor_left->Set(left);
 	motor_right->Set(right);
 }
 
-#define GAIN 0.03
+#define GAIN 0.05
 void DriveTrain::SmoothMotors(float left, float right){
 	if (invert_left){
 		left *= -1;
