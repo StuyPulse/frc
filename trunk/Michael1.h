@@ -5,11 +5,16 @@
 #include "DriveTrain.h"
 #include "Michael1Camera.h"
 
+#define TURN 1
+#define JSTK 2
+#define WAIT 3
+#define FWD 4
 
 typedef struct {
-	float time;
-	float left;
-	float right;
+	int cmd;
+	float param1;
+	float param2;
+	float param3;
 } Script;
 
 

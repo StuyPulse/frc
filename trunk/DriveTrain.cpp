@@ -1,18 +1,19 @@
 #include "DriveTrain.h"
+#include <math.h>
 
 
 DriveTrain::DriveTrain(int left, int right, int slot)
 {
 	motor_left = new Victor(slot, left);
-	invert_left = false;
+	invert_left = true;
 	
 	motor_right = new Victor(slot, right);
-	invert_right = true;
+	invert_right = false;
 	
 	encoder_left = new Encoder(4,2,4,3); //(slot, pin, slot, pin)
 	encoder_right = new Encoder(4,4,4,5); //(slot, pin, slot, pin)
-	encoder_left->SetDistancePerTick(6 * 3.1415926535 * 2.54 / 1000);
-	encoder_right->SetDistancePerTick(6 * 3.1415926535 * 2.54 / 1000);
+	encoder_left->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
+	encoder_right->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
 	encoder_left->Start();
 	encoder_right->Start();
 	
@@ -21,6 +22,8 @@ DriveTrain::DriveTrain(int left, int right, int slot)
 	accel->SetSensitivity(0.3);
 	
 	gyro = new Gyro(1, 2); //(slot, pin)
+	gyro->SetSensitivity(0.007);
+	//clockwise = positive
 	
 	coast = new DigitalOutput(4, 6);
 	coast->Set(1);
@@ -39,7 +42,38 @@ void DriveTrain::SetMotors(float left, float right)
 	motor_right->Set(right);
 }
 
-#define GAIN 0.05
+void DriveTrain::Turn(float angle){
+	gyro->Reset();
+	float speed = 0;
+	while(1) {
+		speed = fabs(1-(gyro->GetAngle()/angle));
+		//printf("%f\n", speed);
+		if((angle - gyro->GetAngle()) < -5){
+			SetMotors(-0.5*speed, 0.5*speed);
+			//printf("CW  ");
+		} else if ((angle - gyro->GetAngle()) > 5){
+			SetMotors(0.5*speed, -0.5*speed);
+			//printf("CCW ");
+		} else {
+			SetMotors(0,0);
+			break;
+		}
+	}
+}
+
+void DriveTrain::GoDistance(float distance){
+	encoder_right->Reset();
+	encoder_left->Reset();
+	while (-0.5*(encoder_left->GetDistance() + encoder_right->GetDistance()) < distance){
+		SetMotors(0.2,0.2);
+	}
+	coast->Set(0);
+	SetMotors(0,0);
+	Wait(1);
+	coast->Set(1);
+}
+
+#define GAIN 0.04
 void DriveTrain::SmoothMotors(float left, float right){
 	if (invert_left){
 		left *= -1;
@@ -64,15 +98,15 @@ void DriveTrain::SmoothMotors(float left, float right){
 //	TankDrive (uses Y axis)
 void DriveTrain::TankDrive(Joystick *left, Joystick *right)
 {
-	float l = left->GetY();
-	float r = right->GetY();
+	float l = -1 * left->GetY();
+	float r = -1 * right->GetY();
 	SetMotors(l, r);
 }
 
 void DriveTrain::SmoothTankDrive(Joystick *left, Joystick *right)
 {
-	float l = left->GetY();
-	float r = right->GetY();
+	float l = -1 * left->GetY();
+	float r = -1 * right->GetY();
 	SmoothMotors(l, r);
 }
 

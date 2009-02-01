@@ -1,8 +1,8 @@
 #include "StuyEncoder.h"
 
-StuyEncoder::StuyEncoder(int slot, int port, double dist_per_tick){
+StuyEncoder::StuyEncoder(int slot, int port, double dist_per_pulse){
 	encoder = new Encoder(slot, port);
-	encoder->SetDistancePerTick(dist_per_tick);
+	encoder->SetDistancePerPulse(dist_per_pulse);
 	encoder->Start();
 }
 

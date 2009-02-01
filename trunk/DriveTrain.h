@@ -13,6 +13,8 @@ public:
 	void SmoothTankDrive(Joystick *left, Joystick *right);
 	void SetMotors(float left, float right);
 	void UpdateSlip();
+	void Turn(float);
+	void GoDistance(float);
 	void GetAverages();
 	void SmoothMotors(float, float);
 	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
