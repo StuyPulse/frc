@@ -1,11 +1,12 @@
 #include "Michael1.h"
+#include "Ports.h"
 
 
 Script scpt[] = {
 //	{CMD, p1, p2, p3},
 	{TURN, 40, 0, 0},
 	{WAIT, .5, 0, 0},
-	{FWD, 600, 0, 0}
+	{GOFW, 600, 0, 0}
 };
 
 
@@ -15,19 +16,19 @@ Michael1::Michael1()
 	printf("Hello!\n\n\n");
 	
 	// Human Controllers
-	left_stick = new Joystick(1);
-	right_stick = new Joystick(2);
-	shooter_stick = new Joystick(3);
+	left_stick = new Joystick(LEFT_DRIVE_JOYSTICK);
+	right_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
+	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
 
 	// Human Indicators
-	ariels_light = new DigitalOutput(1);
+	ariels_light = new DigitalOutput(ARIELS_LIGHT);
 
 	// Ball Handling System
-	intake = new Victor(4, 3);
-	shooter = new Victor(4, 4);
+	intake = new Victor(INTAKE_ROLLER);
+	shooter = new Victor(SHOOTER_ROLLER);
 	
 	// Robot Components
-	dt = new DriveTrain(1, 2, 4); //configure drive train in drivetrain.cpp
+	dt = new DriveTrain();
 	cam = new Michael1Camera(false);
 	
 	time = new Timer();
@@ -64,7 +65,7 @@ void Michael1::Autonomous(void)
 			dt->SetMotors(0,0);
 			Wait(scpt[index].param1);
 			break;
-		case FWD:
+		case GOFW:
 			dt->GoDistance(scpt[index].param1);
 			break;
 		}

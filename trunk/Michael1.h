@@ -8,7 +8,7 @@
 #define TURN 1
 #define JSTK 2
 #define WAIT 3
-#define FWD 4
+#define GOFW 4
 
 typedef struct {
 	int cmd;

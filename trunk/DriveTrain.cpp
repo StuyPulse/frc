@@ -1,27 +1,28 @@
 #include "DriveTrain.h"
+#include "Ports.h"
 #include <math.h>
 
 
-DriveTrain::DriveTrain(int left, int right, int slot)
+DriveTrain::DriveTrain()
 {
-	motor_left = new Victor(slot, left);
+	motor_left = new Victor(LEFT_DRIVE_MOTOR);
 	invert_left = true;
 	
-	motor_right = new Victor(slot, right);
+	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
 	invert_right = false;
 	
-	encoder_left = new Encoder(4,2,4,3); //(slot, pin, slot, pin)
-	encoder_right = new Encoder(4,4,4,5); //(slot, pin, slot, pin)
+	encoder_left = new Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B); //(slot, pin, slot, pin)
+	encoder_right = new Encoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B); //(slot, pin, slot, pin)
 	encoder_left->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
 	encoder_right->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
 	encoder_left->Start();
 	encoder_right->Start();
 	
-	accel = new Accelerometer(1, 1); //(slot, pin)
+	accel = new Accelerometer(ACCELEROMETER); //(slot, pin)
 	accel->SetZero(1.508);
 	accel->SetSensitivity(0.3);
 	
-	gyro = new Gyro(1, 2); //(slot, pin)
+	gyro = new Gyro(GYRO); //(slot, pin)
 	gyro->SetSensitivity(0.007);
 	//clockwise = positive
 	

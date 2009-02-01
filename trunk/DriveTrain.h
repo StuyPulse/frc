@@ -7,7 +7,7 @@
 class DriveTrain {  
 	
 public:
-	DriveTrain(int, int, int);
+	DriveTrain();
 	
 	void TankDrive(Joystick *left, Joystick *right);
 	void SmoothTankDrive(Joystick *left, Joystick *right);
