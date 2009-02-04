@@ -17,7 +17,7 @@ Command s1[] = {
 
 Command s2[] = {
 //	{CMD, p1, p2, p3},
-	{TURN, 45, 0, 0},
+	{TURN, 40, 0, 0},
 	{WAIT, 2, 0, 0},
 	{TURN, -45, 0, 0},
 	{WAIT, 2, 0, 0},
