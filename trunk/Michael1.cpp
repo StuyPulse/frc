@@ -11,10 +11,10 @@ Michael1::Michael1()
 	left_stick = new Joystick(LEFT_DRIVE_JOYSTICK);
 	right_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
 	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
-	autonswitch[0]= new DigitalInput(4,7); //1's bit
-	autonswitch[1]= new DigitalInput(4,8); //2's bit
-	autonswitch[2]= new DigitalInput(4,9); //4's bit
-	autonswitch[3]= new DigitalInput(4,10);//8's bit
+	autonswitch[0]= new DigitalInput(4,AUTON_SELECTOR_1); //1's bit
+	autonswitch[1]= new DigitalInput(4,AUTON_SELECTOR_2); //2's bit
+	autonswitch[2]= new DigitalInput(4,AUTON_SELECTOR_3); //4's bit
+	autonswitch[3]= new DigitalInput(4,AUTON_SELECTOR_4);//8's bit
 	
 	
 	// Human Indicators

@@ -22,6 +22,10 @@
 #define LEFT_ENCODER_B 3
 #define RIGHT_ENCODER_A 4
 #define RIGHT_ENCODER_B 5
+#define AUTON_SELECTOR_1 6
+#define AUTON_SELECTOR_2 7
+#define AUTON_SELECTOR_3 8
+#define AUTON_SELECTOR_4 9
 
 
 
