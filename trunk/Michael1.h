@@ -4,21 +4,7 @@
 #include "WPILib.h"
 #include "DriveTrain.h"
 #include "Michael1Camera.h"
-
-#define TURN 1
-#define JSTK 2
-#define WAIT 3
-#define GOFW 4
-
-typedef struct {
-	int cmd;
-	float param1;
-	float param2;
-	float param3;
-} Script;
-
-
-
+#include "Scripts.h"
 
 class Michael1 : public SimpleRobot
 {
@@ -32,6 +18,7 @@ public:
 	Joystick *left_stick;
 	Joystick *right_stick;
 	Joystick *shooter_stick;
+	DigitalInput *autonswitch[4];
 	
 	//Outputs
 	DriveTrain *dt; // contains motor_left, motor_right

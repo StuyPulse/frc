@@ -2,14 +2,6 @@
 #include "Ports.h"
 
 
-Script scpt[] = {
-//	{CMD, p1, p2, p3},
-	{TURN, 40, 0, 0},
-	{WAIT, .5, 0, 0},
-	{GOFW, 600, 0, 0}
-};
-
-
 Michael1::Michael1()
 {
 	// We're Alive!
@@ -19,7 +11,12 @@ Michael1::Michael1()
 	left_stick = new Joystick(LEFT_DRIVE_JOYSTICK);
 	right_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
 	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
-
+	autonswitch[0]= new DigitalInput(4,7); //1's bit
+	autonswitch[1]= new DigitalInput(4,8); //2's bit
+	autonswitch[2]= new DigitalInput(4,9); //4's bit
+	autonswitch[3]= new DigitalInput(4,10);//8's bit
+	
+	
 	// Human Indicators
 	ariels_light = new DigitalOutput(ARIELS_LIGHT);
 
@@ -44,34 +41,41 @@ void Michael1::Autonomous(void)
 	printf("\n\n\tStart Autonomous:\n\n");
 	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(1);
-	int index = 0;
-	int size = sizeof(scpt)/sizeof(scpt[0]);
+	
+	int autonSwitchValue = (autonswitch[0]->Get())+ (autonswitch[1]->Get()*2)+(autonswitch[2]->Get()*4)+(autonswitch[3]->Get()*8);
+	
+	printf("[0]=%d, [1]=%d, [2]=%d, [3]=%d, decimal=%d\n", autonswitch[0]->Get(), autonswitch[1]->Get(), autonswitch[2]->Get(), autonswitch[3]->Get(), autonSwitchValue); 
+	
+	bool finished = false;
+	autonSwitchValue=0;	
+	Command* scpt = &(scripts[autonSwitchValue][0]);
 	
 	while (IsAutonomous())
 	{
-		if (size == index){
-			dt->SetMotors(0,0);
-			break;
-		}
-		switch(scpt[index].cmd){
+		switch(scpt->cmd){
 		case TURN:
-			dt->Turn(scpt[index].param1);
+			dt->Turn(scpt->param1);
 			break;
 		case JSTK:
-			dt->SetMotors(scpt[index].param1, scpt[index].param2);
-			Wait(scpt[index].param3);
+			dt->SetMotors(scpt->param1, scpt->param2);
+			Wait(scpt->param3);
 			break;
 		case WAIT:
 			dt->SetMotors(0,0);
-			Wait(scpt[index].param1);
+			Wait(scpt->param1);
 			break;
-		case GOFW:
-			dt->GoDistance(scpt[index].param1);
+		case FWD:
+			dt->GoDistance(scpt->param1);
+			break;
+		default:
+			dt->SetMotors(0,0);
+			finished = true;
+		}
+		if (finished){
 			break;
 		}
-		index++;
+		scpt++;
 	}
-
 }
 
 
