@@ -43,6 +43,7 @@ void DriveTrain::SetMotors(float left, float right)
 	motor_right->Set(right);
 }
 
+#define TURN_GAIN 1
 void DriveTrain::Turn(float angle){
 	gyro->Reset();
 	float speed = 0;
@@ -50,10 +51,10 @@ void DriveTrain::Turn(float angle){
 		speed = fabs(1-(gyro->GetAngle()/angle));
 		//printf("%f\n", speed);
 		if((angle - gyro->GetAngle()) < -5){
-			SetMotors(-0.5*speed, 0.5*speed);
+			SetMotors(-1*TURN_GAIN*speed, TURN_GAIN*speed);
 			//printf("CW  ");
 		} else if ((angle - gyro->GetAngle()) > 5){
-			SetMotors(0.5*speed, -0.5*speed);
+			SetMotors(TURN_GAIN*speed, -1*TURN_GAIN*speed);
 			//printf("CCW ");
 		} else {
 			SetMotors(0,0);
