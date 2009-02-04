@@ -41,17 +41,15 @@ void Michael1::Autonomous(void)
 	printf("\n\n\tStart Autonomous:\n\n");
 	GetWatchdog().SetEnabled(false);
 	ariels_light->Set(1);
-	
-	int autonSwitchValue = (autonswitch[0]->Get())+ (autonswitch[1]->Get()*2)+(autonswitch[2]->Get()*4)+(autonswitch[3]->Get()*8);
-	
-	printf("[0]=%d, [1]=%d, [2]=%d, [3]=%d, decimal=%d\n", autonswitch[0]->Get(), autonswitch[1]->Get(), autonswitch[2]->Get(), autonswitch[3]->Get(), autonSwitchValue); 
+	int autonSwitchValue = (abs(1-autonswitch[1]->Get()))+(abs(1-autonswitch[2]->Get())*2)+(abs(1-autonswitch[3]->Get())*4);
+	autonSwitchValue--;
+	printf("switch = %d\n", autonSwitchValue);
+	bool finished = false;
 	
 	while(1){
 		ariels_light->Set(cam->TrackTarget());
 	}
-	
-	bool finished = false;
-	autonSwitchValue=0;	
+
 	Command* scpt = &(scripts[autonSwitchValue][0]);
 	
 	while (IsAutonomous())
