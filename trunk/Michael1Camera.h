@@ -1,13 +1,14 @@
 #include "StuyCamera.h"
+#include "Target.h"
 
 class Michael1Camera : public StuyCamera
 {
 public:
 	Michael1Camera(bool);
-	bool FindTargets();
-	ParticleAnalysisReport par;
+	bool TrackTarget();
 
 private:
-	TrackingThreshold td_green;
-	TrackingThreshold td_pink;
+	TrackingThreshold td1, td2;
+	ParticleAnalysisReport par1, par2;
+
 };

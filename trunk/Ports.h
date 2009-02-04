@@ -12,6 +12,8 @@
 #define RIGHT_DRIVE_MOTOR 2
 #define INTAKE_ROLLER 3
 #define SHOOTER_ROLLER 4
+#define CAM_HORIZONTAL 9
+#define CAM_VERTICAL 10
 
 
 

@@ -46,6 +46,10 @@ void Michael1::Autonomous(void)
 	
 	printf("[0]=%d, [1]=%d, [2]=%d, [3]=%d, decimal=%d\n", autonswitch[0]->Get(), autonswitch[1]->Get(), autonswitch[2]->Get(), autonswitch[3]->Get(), autonSwitchValue); 
 	
+	while(1){
+		ariels_light->Set(cam->TrackTarget());
+	}
+	
 	bool finished = false;
 	autonSwitchValue=0;	
 	Command* scpt = &(scripts[autonSwitchValue][0]);

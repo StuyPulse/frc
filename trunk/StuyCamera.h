@@ -15,6 +15,8 @@ public:
 
 protected:
 	Image *img;
+	Servo *horizontalServo;
+	Servo *verticalServo;
 	double imgTimestamp;
 	double oldTimestamp;
 	PCVideoServer *pcvs;
