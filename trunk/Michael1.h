@@ -12,6 +12,8 @@ public:
 	Michael1();
 	void Autonomous(void);
 	void OperatorControl(void);
+	int AutonSwitchValue();
+	void RunScript(Command*);
 	
 	//Inputs
 	Michael1Camera *cam;
