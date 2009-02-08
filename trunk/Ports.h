@@ -12,7 +12,8 @@
 #define RIGHT_DRIVE_MOTOR 2
 #define INTAKE_ROLLER 4
 #define SHOOTER_ROLLER 3
-#define CAM_HORIZONTAL 9
+#define SERVO 9
+#define CAM_HORIZONTAL 11
 #define CAM_VERTICAL 10
 
 
@@ -20,12 +21,12 @@
 //Digital Sidecar DigIO (slot 4)
 
 #define ARIELS_LIGHT 1
-#define LEFT_ENCODER_A 2
-#define LEFT_ENCODER_B 3
+#define LEFT_ENCODER_A 11
+#define LEFT_ENCODER_B 12
 #define RIGHT_ENCODER_A 4
 #define RIGHT_ENCODER_B 5
-#define CENTER_ENCODER_A 10
-#define CENTER_ENCODER_B 11
+#define CENTER_ENCODER_A 2
+#define CENTER_ENCODER_B 3
 #define AUTON_SELECTOR_1 6
 #define AUTON_SELECTOR_2 7
 #define AUTON_SELECTOR_3 8

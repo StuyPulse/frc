@@ -23,6 +23,8 @@ public:
 	//Outputs
 	DriveTrain *dt; // contains motor_left, motor_right
 	DigitalOutput *ariels_light;
+	DriverStation *ds;
+	Servo *servo;
 	
 	SpeedController *intake;
 	SpeedController *shooter;

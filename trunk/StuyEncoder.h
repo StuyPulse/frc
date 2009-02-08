@@ -5,6 +5,7 @@ class StuyEncoder : public Encoder
 public:
 	StuyEncoder(UINT32, UINT32);
 	void Update(); //should be moved to private, and put in a task spawned by constructor
+	//double GetDistance(); // inherited from Encoder class
 	double GetVelocity();
 	double GetAcceleration();
 	double interval;

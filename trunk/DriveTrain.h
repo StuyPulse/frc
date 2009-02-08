@@ -24,6 +24,7 @@ public:
 	StuyEncoder *encoder_left;
 	StuyEncoder *encoder_right;
 	StuyEncoder *encoder_center;
+	Gyro *gyro;
 	
 	bool invert_left;
 	bool invert_right;
@@ -35,7 +36,6 @@ private:
 	
 	SpeedController *motor_left;
 	SpeedController *motor_right;
-	Gyro *gyro;
 	Accelerometer *accel;
 	
 };

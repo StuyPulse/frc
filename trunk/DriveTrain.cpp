@@ -11,12 +11,12 @@ DriveTrain::DriveTrain()
 	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
 	invert_right = false;
 	
-	encoder_left = new StuyEncoder(LEFT_ENCODER_A, LEFT_ENCODER_B); //(slot, pin, slot, pin)
-	encoder_right = new StuyEncoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B); //(slot, pin, slot, pin)
-	encoder_center = new StuyEncoder(CENTER_ENCODER_A, CENTER_ENCODER_B); //(slot, pin, slot, pin)
-	encoder_left->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
-	encoder_right->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
-	encoder_center->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
+	encoder_left = new StuyEncoder(LEFT_ENCODER_A, LEFT_ENCODER_B);
+	encoder_right = new StuyEncoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B);
+	encoder_center = new StuyEncoder(CENTER_ENCODER_A, CENTER_ENCODER_B);
+	encoder_left->SetDistancePerPulse(-1 * ((6.0/12.0) * 3.1415926535) / ((44.0/12.0)*128.0));
+	encoder_right->SetDistancePerPulse(((6.0/12.0) * 3.1415926535) / ((44.0/12.0)*128.0));
+	encoder_center->SetDistancePerPulse(((4.0/12.0) * 3.1415926535) / 500.0);
 	encoder_left->Start();
 	encoder_right->Start();
 	encoder_center->Start();
@@ -38,9 +38,9 @@ DriveTrain::DriveTrain()
 // Abstracted Methods
 
 #define TURN_FULL 1
-#define TURN_P 1
+#define TURN_P 2
 #define TURN_I 1
-#define TURN_D 1
+#define TURN_D 0
 void DriveTrain::Turn(float angle){
 	gyro->Reset();
 	double lastAngle = 0;
@@ -50,10 +50,10 @@ void DriveTrain::Turn(float angle){
 			lastAngle = gyro->GetAngle();
 		
 		double pid = TURN_FULL * (p - d);
-		if((angle - gyro->GetAngle()) < -2){
-			SetMotors(-1*pid, pid);
-		} else if ((angle - gyro->GetAngle()) > 2){
+		if((angle - gyro->GetAngle()) < -5){
 			SetMotors(pid, -1*pid);
+		} else if ((angle - gyro->GetAngle()) > 5){
+			SetMotors(-1*pid, pid);
 		} else {
 			SetMotors(0, 0);
 			break;
@@ -63,9 +63,8 @@ void DriveTrain::Turn(float angle){
 }
 
 void DriveTrain::GoDistance(float distance){
-	encoder_right->Reset();
-	encoder_left->Reset();
-	while (-0.5*(encoder_left->GetDistance() + encoder_right->GetDistance()) < distance){
+	encoder_center->Reset();
+	while (encoder_center->GetDistance() < distance){
 		SetMotors(0.2,0.2);
 	}
 	coast->Set(0);
@@ -103,11 +102,12 @@ void DriveTrain::SlipTankDrive(Joystick *left, Joystick *right)
 
 #define SLIP_GAIN 0.02 //something
 void DriveTrain::CorrectSlip(float left, float right){
-	float slip_left = encoder_left->GetVelocity() - encoder_center->GetVelocity();
+	/*float slip_left = encoder_left->GetVelocity() - encoder_center->GetVelocity();
 	float slip_right = encoder_right->GetVelocity() - encoder_center->GetVelocity();
 	float setleft = left - (slip_left * SLIP_GAIN);
 	float setright = right - (slip_right * SLIP_GAIN); 
 	SetMotors(setleft, setright);
+	*/
 }
 
 #define GAIN 0.04

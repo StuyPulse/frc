@@ -13,25 +13,13 @@ typedef struct {
 
 Command s1[] = {
 //	{CMD, p1, p2, p3},
-	{TURN, 40, 0, 0},
-	{WAIT, 1, 0, 0},
-	{TURN, -45, 0, 0},
-	{WAIT, 1, 0, 0},
 	{TURN, 90, 0, 0},
-	{WAIT, 1, 0, 0},
-	{TURN, -180, 0, 0},
-	{END, 0, 0, 0}	
+	{END, 0, 0, 0}
 };
 
 Command s2[] = {
 //	{CMD, p1, p2, p3},
-	{TURN, 40, 0, 0},
-	{WAIT, 1, 0, 0},
-	{TURN, -45, 0, 0},
-	{WAIT, 1, 0, 0},
-	{TURN, 90, 0, 0},
-	{WAIT, 1, 0, 0},
-	{TURN, -180, 0, 0},
+	{FWD, 6, 0, 0},
 	{END, 0, 0, 0}
 };
 

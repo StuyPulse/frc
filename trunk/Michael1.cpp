@@ -9,8 +9,8 @@ Michael1::Michael1()
 	
 	// Driver's Station Inputs
 	left_stick = new Joystick(LEFT_DRIVE_JOYSTICK);
-	right_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
-	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
+	shooter_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
+	right_stick = new Joystick(SHOOTER_JOYSTICK);
 	
 	// Robot Inputs
 	autonswitch[0]= new DigitalInput(4,AUTON_SELECTOR_1); //1's bit
@@ -22,10 +22,13 @@ Michael1::Michael1()
 	ariels_light = new DigitalOutput(ARIELS_LIGHT);
 	intake = new Victor(INTAKE_ROLLER);
 	shooter = new Victor(SHOOTER_ROLLER);
+	servo = new Servo(SERVO);
 	
 	// Helper Objects
 	dt = new DriveTrain();
 	cam = new Michael1Camera(false);
+	
+	ds = DriverStation::GetInstance();
 	
 	// System-Wide timer. Never to be reset.
 	time = new Timer();
@@ -99,25 +102,27 @@ void Michael1::OperatorControl(void)
 	printf("\n\n\tStart Teleop:\n\n");
 	ariels_light->Set(0);
 	double oldTime = 0;
-	GetWatchdog().SetEnabled(true);
+	GetWatchdog().SetEnabled(false);
 
+	servo->Set(0.5);
 	
 	while (IsOperatorControl())
 	{	
-		GetWatchdog().Feed();
-		
 		double newTime = time->Get();
 		if(newTime - oldTime >= 0.1){
+			/*
 			dt->encoder_center->Update();
 			dt->encoder_left->Update();
 			dt->encoder_right->Update();
+			*/
 			oldTime = newTime;
+			printf("Left: %f, Center: %f, Right: %f, gyro: %f\n", dt->encoder_left->GetDistance(), dt->encoder_center->GetDistance(), dt->encoder_right->GetDistance(), dt->gyro->GetAngle());
 		}
 		
 		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
 			dt->SlipTankDrive(left_stick, right_stick);
 		} else {
-			dt->TankDrive(left_stick, right_stick);
+			dt->SetMotors(left_stick->GetY(), left_stick->GetX());
 		}
 					
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
@@ -128,15 +133,17 @@ void Michael1::OperatorControl(void)
 					
 		//shooter
 		if (shooter_stick->GetTrigger() || shooter_stick->GetRawButton(3)){
-			shooter->Set((0.5 - shooter_stick->GetY()) * -1);
+			shooter->Set(-0.75);
 		} else {
-			shooter->Set(0);
+			shooter->Set(shooter_stick->GetY() * 0.5);
 		}
 		
 		//intake
-		if (shooter_stick->GetRawButton(6) || shooter_stick->GetRawButton(11))
-			intake->Set(shooter_stick->GetThrottle());
-		if (shooter_stick->GetRawButton(7) || shooter_stick->GetRawButton(10))
+		if (ds->GetDigitalIn(6))
+			intake->Set(1);
+		else if (ds->GetDigitalIn(4))
+			intake->Set(-1);
+		else
 			intake->Set(0);		
 		
 	}
