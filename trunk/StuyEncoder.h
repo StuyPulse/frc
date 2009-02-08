@@ -1,25 +1,22 @@
 #include "WPILib.h"
 
-
-
-typedef struct {
-	double displ[2];	// displacement (cm) since encoder init
-	double vel[2];		// velocity between displacements[0] and [1]
-	double accel[20];	// calculated encoder acceleration
-} EncoderHist;
-	
-class StuyEncoder {
-	
+class StuyEncoder : public Encoder
+{
 public:
-	StuyEncoder(int slot, int port, double dist_per_pulse);
-	StuyEncoder(Encoder* encoder);
-	void Start(float updateInterval, int numAveraged);
-	double GetAccel();
+	StuyEncoder(UINT32, UINT32);
+	void Update(); //should be moved to private, and put in a task spawned by constructor
+	double GetVelocity();
+	double GetAcceleration();
+	double interval;
+
 	
 private:
-	float updateInterval;
-	int numAveraged;
-	EncoderHist *hist;
-	Encoder *encoder;
-	void updateTask();
+	typedef struct {
+	  double displ[2];	// displacement (cm) since encoder init
+	  double vel[2];	// velocity between displacements[0] and [1]
+	  double accel;	// calculated encoder acceleration
+	} metrics;
+	
+	metrics hist;
+	
 };

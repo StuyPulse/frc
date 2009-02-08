@@ -33,11 +33,12 @@ Michael1::Michael1()
 	
 	// WPILib crap
 	GetWatchdog().SetExpiration(100);
-	GetWatchdog().SetEnabled(false);
 }
 
 void Michael1::Autonomous(void)
 {
+	GetWatchdog().SetEnabled(false);
+
 	printf("\n\n\tStart Autonomous:\n\n");
 	
 	ariels_light->Set(1);
@@ -98,45 +99,45 @@ void Michael1::OperatorControl(void)
 	printf("\n\n\tStart Teleop:\n\n");
 	ariels_light->Set(0);
 	double oldTime = 0;
+	GetWatchdog().SetEnabled(true);
+
 	
 	while (IsOperatorControl())
 	{	
+		GetWatchdog().Feed();
+		
 		double newTime = time->Get();
-		if(newTime - oldTime >= UPDATE_INTERVAL){
-			//printf("left: %f, right: %f\n", dt->encoder_left->GetDistance(), dt->encoder_right->GetDistance());
-			printf("\n\ny axis: %f\n\n", shooter_stick->GetY());
-			//driver
-			if (left_stick->GetTrigger() || right_stick->GetTrigger()){
-				dt->SlipTankDrive(left_stick, right_stick);
-			} else {
-				dt->TankDrive(left_stick, right_stick);
-			}
-			
-			if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
-				dt->coast->Set(0);
-			} else {
-				dt->coast->Set(1);
-			}
-			
-			if (shooter_stick->GetRawButton(9)){
-				dt->gyro->Reset();
-			}
-			
-			//shooter
-			if (shooter_stick->GetTrigger() || shooter_stick->GetRawButton(3)){
-				shooter->Set((0.5 - shooter_stick->GetY()) * -1);
-			} else {
-				shooter->Set(0);
-			}
-			
-			//intake
-			if (shooter_stick->GetRawButton(6) || shooter_stick->GetRawButton(11))
-				intake->Set(shooter_stick->GetThrottle());
-			if (shooter_stick->GetRawButton(7) || shooter_stick->GetRawButton(10))
-				intake->Set(0);			
-			
+		if(newTime - oldTime >= 0.1){
+			dt->encoder_center->Update();
+			dt->encoder_left->Update();
+			dt->encoder_right->Update();
 			oldTime = newTime;
-		}	
+		}
+		
+		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
+			dt->SlipTankDrive(left_stick, right_stick);
+		} else {
+			dt->TankDrive(left_stick, right_stick);
+		}
+					
+		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
+			dt->coast->Set(0);
+		} else {
+			dt->coast->Set(1);
+		}
+					
+		//shooter
+		if (shooter_stick->GetTrigger() || shooter_stick->GetRawButton(3)){
+			shooter->Set((0.5 - shooter_stick->GetY()) * -1);
+		} else {
+			shooter->Set(0);
+		}
+		
+		//intake
+		if (shooter_stick->GetRawButton(6) || shooter_stick->GetRawButton(11))
+			intake->Set(shooter_stick->GetThrottle());
+		if (shooter_stick->GetRawButton(7) || shooter_stick->GetRawButton(10))
+			intake->Set(0);		
 		
 	}
 }

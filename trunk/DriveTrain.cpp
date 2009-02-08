@@ -11,9 +11,9 @@ DriveTrain::DriveTrain()
 	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
 	invert_right = false;
 	
-	encoder_left = new Encoder(LEFT_ENCODER_A, LEFT_ENCODER_B); //(slot, pin, slot, pin)
-	encoder_right = new Encoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B); //(slot, pin, slot, pin)
-	encoder_center = new Encoder(CENTER_ENCODER_A, CENTER_ENCODER_B); //(slot, pin, slot, pin)
+	encoder_left = new StuyEncoder(LEFT_ENCODER_A, LEFT_ENCODER_B); //(slot, pin, slot, pin)
+	encoder_right = new StuyEncoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B); //(slot, pin, slot, pin)
+	encoder_center = new StuyEncoder(CENTER_ENCODER_A, CENTER_ENCODER_B); //(slot, pin, slot, pin)
 	encoder_left->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
 	encoder_right->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
 	encoder_center->SetDistancePerPulse(6 * 3.1415926535 * 2.54 / 250);
@@ -103,8 +103,8 @@ void DriveTrain::SlipTankDrive(Joystick *left, Joystick *right)
 
 #define SLIP_GAIN 0.02 //something
 void DriveTrain::CorrectSlip(float left, float right){
-	float slip_left = (leftEncHist.vel[1]) - (centerEncHist.vel[1]);
-	float slip_right = (rightEncHist.vel[1]) - (centerEncHist.vel[1]);
+	float slip_left = encoder_left->GetVelocity() - encoder_center->GetVelocity();
+	float slip_right = encoder_right->GetVelocity() - encoder_center->GetVelocity();
 	float setleft = left - (slip_left * SLIP_GAIN);
 	float setright = right - (slip_right * SLIP_GAIN); 
 	SetMotors(setleft, setright);
@@ -130,60 +130,6 @@ void DriveTrain::SmoothMotors(float left, float right){
 			motor_right->Set(motor_right->Get() - GAIN);
 		}
 
-}
-
-
-
-// this must be executed every SLIP_UPDATE_INTERVAL
-void DriveTrain::UpdateSlip(){
-	// push old sample back
-	for(int i = 1; i < NUM_ACCEL_SAMPLES; i++){
-		leftEncHist.accel[i-1] = leftEncHist.accel[i];
-		rightEncHist.accel[i-1] = rightEncHist.accel[i];
-		centerEncHist.accel[i-1] = centerEncHist.accel[i];
-		accelHist.accel[i-1] = accelHist.accel[i];
-	}
-	leftEncHist.displ[0] = leftEncHist.displ[1];
-	rightEncHist.displ[0] = rightEncHist.displ[1];
-	centerEncHist.displ[0] = centerEncHist.displ[1];
-	leftEncHist.vel[0] = leftEncHist.vel[1];
-	rightEncHist.vel[0] = rightEncHist.vel[1];
-	centerEncHist.vel[0] = centerEncHist.vel[1];
-	
-	// read current encoder displacement
-	leftEncHist.displ[1] = encoder_left->GetDistance();
-	rightEncHist.displ[1] = encoder_right->GetDistance();
-	centerEncHist.displ[1] = encoder_center-> GetDistance();
-	
-	// differentiate to get velocity
-	leftEncHist.vel[1] = (leftEncHist.displ[1] - leftEncHist.displ[0]) / (UPDATE_INTERVAL);
-	rightEncHist.vel[1] = (rightEncHist.displ[1] - rightEncHist.displ[0]) / (UPDATE_INTERVAL);
-	centerEncHist.vel[1] = (centerEncHist.displ[1] - centerEncHist.displ[0]) / (UPDATE_INTERVAL);
-	
-	// differentiate to get acceleration
-	leftEncHist.accel[NUM_ACCEL_SAMPLES-1] = (leftEncHist.vel[1] - leftEncHist.vel[0]) / (UPDATE_INTERVAL);
-	rightEncHist.accel[NUM_ACCEL_SAMPLES-1] = (rightEncHist.vel[1] - rightEncHist.vel[0]) / (UPDATE_INTERVAL);
-	accelHist.accel[NUM_ACCEL_SAMPLES-1] = accel->GetAcceleration() * 980.0;
-	// I didn't bother to do center encoder accel...
-	
-	GetAverages();
-	
-}
-
-void DriveTrain::GetAverages(){
-	double averageRightEncAccel = 0;
-	double averageLeftEncAccel = 0;
-	double averageAccelerometer = 0;
-	for (int i = 0; i<NUM_ACCEL_SAMPLES; i++){
-		averageRightEncAccel += leftEncHist.accel[i];
-		averageLeftEncAccel += rightEncHist.accel[i];
-		averageAccelerometer += accelHist.accel[i];
-	}
-	averageRightEncAccel /= NUM_ACCEL_SAMPLES;
-	averageLeftEncAccel /= NUM_ACCEL_SAMPLES;
-	averageAccelerometer /= NUM_ACCEL_SAMPLES;
-	
-	printf("%f,%f\n",averageAccelerometer, averageLeftEncAccel);
 }
 
 //	Lets you specify a float directly instead of being stuck with Y Axiss

@@ -12,9 +12,7 @@ public:
 	Michael1();
 	void Autonomous(void);
 	void OperatorControl(void);
-	int AutonSwitchValue();
-	void RunScript(Command*);
-	
+
 	//Inputs
 	Michael1Camera *cam;
 	Joystick *left_stick;
@@ -29,6 +27,11 @@ public:
 	SpeedController *intake;
 	SpeedController *shooter;
 	
+private:
+	int AutonSwitchValue();
+	void RunScript(Command*);
+	
 	//Timer
 	Timer *time;
+	
 };
