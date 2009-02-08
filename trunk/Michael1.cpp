@@ -9,8 +9,8 @@ Michael1::Michael1()
 	
 	// Driver's Station Inputs
 	left_stick = new Joystick(LEFT_DRIVE_JOYSTICK);
-	shooter_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
-	right_stick = new Joystick(SHOOTER_JOYSTICK);
+	right_stick = new Joystick(RIGHT_DRIVE_JOYSTICK);
+	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
 	
 	// Robot Inputs
 	autonswitch[0]= new DigitalInput(4,AUTON_SELECTOR_1); //1's bit
