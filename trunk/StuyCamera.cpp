@@ -11,8 +11,8 @@ StuyCamera::StuyCamera(bool serv)
 {
 	horizontalServo = new Servo(CAM_HORIZONTAL);
 	verticalServo = new Servo(CAM_VERTICAL);
-	horizontalServo->Set(0);
-	verticalServo->Set(0);
+	horizontalServo->Set(0.5);
+	verticalServo->Set(0.5);
 	imgTimestamp = 0.0;
 	oldTimestamp = 0.0;
 	if( StartCameraTask(FRAMES_SEC, COMPRESSION, RESOLUTION, ROTATION) == -1){

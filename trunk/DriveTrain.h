@@ -11,15 +11,21 @@ public:
 	
 	void TankDrive(Joystick *left, Joystick *right);
 	void SmoothTankDrive(Joystick *left, Joystick *right);
+	void SlipTankDrive(Joystick *left, Joystick *left);
+	
 	void SetMotors(float left, float right);
+	void SmoothMotors(float left, float right);
+	void CorrectSlip(float left, float right);
+	
 	void UpdateSlip();
+	void GetAverages();
+	
 	void Turn(float);
 	void GoDistance(float);
-	void GetAverages();
-	void SmoothMotors(float, float);
-	void AssociateSensors(Encoder*, Encoder*, Gyro*, Accelerometer*);
+		
 	Encoder *encoder_left;
 	Encoder *encoder_right;
+	Encoder *encoder_center;
 	Gyro *gyro;
 	Accelerometer *accel;
 	DigitalOutput *coast;
@@ -43,5 +49,6 @@ private:
 	
 	EncoderHist rightEncHist;
 	EncoderHist leftEncHist;
+	EncoderHist centerEncHist;
 	AccelHist accelHist;
 };

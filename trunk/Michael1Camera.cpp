@@ -25,6 +25,9 @@ Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
 
 bool Michael1Camera::TrackTarget(){
 	if ( FindTwoColors(td1, td2, ABOVE, &par1) ){
+		printf("X: %f, Y: %f", par1.center_mass_x_normalized, par1.center_mass_y_normalized);
+		horizontalServo->Set(horizontalServo->Get() + (par1.center_mass_x_normalized/2)*0.2);
+		verticalServo->Set(verticalServo->Get() - (par1.center_mass_y_normalized/2)*0.2);
 		return true;
 	} else {
 		return false;

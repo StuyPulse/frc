@@ -52,7 +52,7 @@ void Michael1::Autonomous(void)
  */
 void Michael1::RunScript(Command* scpt){
 	bool finished = false;
-
+	
 	while (IsAutonomous())
 		{
 			switch(scpt->cmd){
@@ -103,11 +103,11 @@ void Michael1::OperatorControl(void)
 	{	
 		double newTime = time->Get();
 		if(newTime - oldTime >= UPDATE_INTERVAL){
-			printf("left: %f, right: %f\n", dt->encoder_left->GetDistance(), dt->encoder_right->GetDistance());
-			
+			//printf("left: %f, right: %f\n", dt->encoder_left->GetDistance(), dt->encoder_right->GetDistance());
+			printf("\n\ny axis: %f\n\n", shooter_stick->GetY());
 			//driver
 			if (left_stick->GetTrigger() || right_stick->GetTrigger()){
-				dt->SmoothTankDrive(left_stick, right_stick);
+				dt->SlipTankDrive(left_stick, right_stick);
 			} else {
 				dt->TankDrive(left_stick, right_stick);
 			}
@@ -121,11 +121,10 @@ void Michael1::OperatorControl(void)
 			if (shooter_stick->GetRawButton(9)){
 				dt->gyro->Reset();
 			}
-			printf("%f", dt->gyro->GetAngle());
 			
 			//shooter
 			if (shooter_stick->GetTrigger() || shooter_stick->GetRawButton(3)){
-				shooter->Set(0.5 - shooter_stick->GetY());
+				shooter->Set((0.5 - shooter_stick->GetY()) * -1);
 			} else {
 				shooter->Set(0);
 			}
@@ -137,7 +136,7 @@ void Michael1::OperatorControl(void)
 				intake->Set(0);			
 			
 			oldTime = newTime;
-		}
+		}	
 		
 	}
 }
