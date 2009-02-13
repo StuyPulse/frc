@@ -17,16 +17,18 @@ Michael1::Michael1()
 	autonswitch[1]= new DigitalInput(4,AUTON_SELECTOR_2); //2's bit
 	autonswitch[2]= new DigitalInput(4,AUTON_SELECTOR_3); //4's bit
 	autonswitch[3]= new DigitalInput(4,AUTON_SELECTOR_4);//8's bit
-	
+	alliance_selector = new DigitalInput(4,ALLIANCE_SELECTOR);
 	// Robot Outputs
 	ariels_light = new DigitalOutput(ARIELS_LIGHT);
 	intake = new Victor(INTAKE_ROLLER);
 	shooter = new Victor(SHOOTER_ROLLER);
-	servo = new Servo(SERVO);
-	
+	servo_1 = new Servo(SERVO1);
+	servo_2 = new Servo(SERVO2);
+	 	
 	// Helper Objects
+	arcade = new RobotDrive(1, 2);
 	dt = new DriveTrain();
-	cam = new Michael1Camera(false);
+	cam = new Michael1Camera(false, AllianceSwitchValue());
 	
 	ds = DriverStation::GetInstance();
 	
@@ -44,9 +46,9 @@ void Michael1::Autonomous(void)
 
 	printf("\n\n\tStart Autonomous:\n\n");
 	
-	ariels_light->Set(1);
-	RunScript( &(scripts[AutonSwitchValue()][0]) );
-	
+	//ariels_light->Set(1);
+	RunScript( &(scripts[1][0]) );
+	Wait(3);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
 
@@ -89,42 +91,67 @@ void Michael1::RunScript(Command* scpt){
  * 4 pin digital switch.
  */
 int Michael1::AutonSwitchValue(){
-	int b1 = abs(1-autonswitch[1]->Get());
-	int b2 = abs(1-autonswitch[2]->Get());
-	int b4 = abs(1-autonswitch[3]->Get());
+	int b1, b2, b4;
+	b1 = abs(1-autonswitch[1]->Get());
+	b2 = abs(1-autonswitch[2]->Get());
+	b4 = abs(1-autonswitch[3]->Get());
+	printf("b1: %d, b2: %d, b4: %d\n", b1, b2, b4);
 	//int b8 = abs(1-autonswitch[0]->Get());
 	return (b1 + b2*2 + b4*4 /* + b8*8 */ );
 }
 
+int Michael1::AllianceSwitchValue(){
+	return alliance_selector->Get();
+}
 
 void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
-	ariels_light->Set(0);
+	//ariels_light->Set(0);
 	double oldTime = 0;
 	GetWatchdog().SetEnabled(false);
-
-	servo->Set(0.5);
+	ds->SetDigitalOut(3,false);
+	//servo->Set(0.5);
+	//gyro->Reset();
 	
 	while (IsOperatorControl())
 	{	
 		double newTime = time->Get();
 		if(newTime - oldTime >= 0.1){
-			/*
 			dt->encoder_center->Update();
 			dt->encoder_left->Update();
 			dt->encoder_right->Update();
-			*/
 			oldTime = newTime;
-			printf("Left: %f, Center: %f, Right: %f, gyro: %f\n", dt->encoder_left->GetDistance(), dt->encoder_center->GetDistance(), dt->encoder_right->GetDistance(), dt->gyro->GetAngle());
 		}
+		//double x = cam->par1.center_mass_x_normalized;
+		//double y = cam->par1.center_mass_y_normalized;
+		//ShowActivity("X axis: %f  Y axis: %f", x, y);
 		
+		ShowActivity("%f", dt->gyro->GetAngle());
+		
+		cam->TrackTarget();
+		bool pin[5];
+		pin[0] = pin[1] = pin[2] = pin[3] = pin[4] = false;
+		if(cam->TrackTarget())
+			pin[cam->oktoshoot()-1] = true;
+		ds->SetDigitalOut(1, pin[0]);
+		ds->SetDigitalOut(2, pin[1]);
+		ds->SetDigitalOut(3, pin[2]);
+		ds->SetDigitalOut(4, pin[3]);
+		ds->SetDigitalOut(5, pin[4]);
+
+
 		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
 			dt->SlipTankDrive(left_stick, right_stick);
 		} else {
-			dt->SetMotors(left_stick->GetY(), left_stick->GetX());
-		}
-					
+			dt->TankDrive(left_stick, right_stick);
+		}		
+	/* Servo testing
+		servo_1 -> Set(left_stick->GetY());
+		servo_2 -> Set(-1*left_stick->GetY());
+		
+		ShowActivity("%f", (left_stick->GetY()));*/
+		//Servo set 1 and 0 and -1
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
 			dt->coast->Set(0);
 		} else {
@@ -137,7 +164,10 @@ void Michael1::OperatorControl(void)
 		} else {
 			shooter->Set(shooter_stick->GetY() * 0.5);
 		}
-		
+		/*OI switch box
+		 * Left 1u,2d
+		 * mid  5u, 3d
+		 * rig	6u, 4d*/
 		//intake
 		if (ds->GetDigitalIn(6))
 			intake->Set(1);
@@ -146,6 +176,21 @@ void Michael1::OperatorControl(void)
 		else
 			intake->Set(0);		
 		
+		
+		//Servos
+		if(ds->GetDigitalIn(5)){
+			servo_1->Set(0);
+			servo_2->Set(1);
+		}
+		else if (ds->GetDigitalIn(3)){
+			servo_1->Set(1);
+			servo_2->Set(0);
+		}
+		else
+		{
+			servo_1->Set(.5);
+			servo_2->Set(.5);
+		}
 	}
 }
 

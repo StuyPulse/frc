@@ -8,6 +8,7 @@ DriveTrain::DriveTrain()
 	motor_left = new Victor(LEFT_DRIVE_MOTOR);
 	invert_left = true;
 	
+	
 	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
 	invert_right = false;
 	
@@ -35,43 +36,63 @@ DriveTrain::DriveTrain()
 
 
 
+
 // Abstracted Methods
 
 #define TURN_FULL 1
-#define TURN_P 2
-#define TURN_I 1
-#define TURN_D 0
+#define TURN_P .5  // range 0.02 -> 0.1
+#define TURN_D 0 // range 0.01 -> 0.05
 void DriveTrain::Turn(float angle){
 	gyro->Reset();
 	double lastAngle = 0;
-	while(1) {
+	int i = 0;
+	while(i <= 10) {
 		double p = TURN_P * ((angle - gyro->GetAngle())/angle);
 		double d = TURN_D * (gyro->GetAngle()-lastAngle);
-			lastAngle = gyro->GetAngle();
+		lastAngle = gyro->GetAngle();
 		
 		double pid = TURN_FULL * (p - d);
-		if((angle - gyro->GetAngle()) < -5){
-			SetMotors(pid, -1*pid);
-		} else if ((angle - gyro->GetAngle()) > 5){
+		if((angle - gyro->GetAngle()) < -10){
 			SetMotors(-1*pid, pid);
-		} else {
+			i = 0;
+		} else if ((angle - gyro->GetAngle()) > 10){
+			SetMotors(-1*pid, pid);
+			i = 0;
+		} else if ((angle - gyro->GetAngle()) < 10 && (angle - gyro->GetAngle()) > -10){
+			i++;
+			if (i >= 10){
 			SetMotors(0, 0);
-			break;
+			}
 		}
 		Wait(0.1);
 	}
 }
-
+#define T 0.1 //time per loop
+#define PG 0.06
+//proportional
+#define DG 0 //differential
 void DriveTrain::GoDistance(float distance){
 	encoder_center->Reset();
+	gyro->Reset();
+	double lastAngle = 0;
+	double left, right;
 	while (encoder_center->GetDistance() < distance){
-		SetMotors(0.2,0.2);
+		double p = PG * gyro->GetAngle();
+		double d = DG * ((gyro->GetAngle()-lastAngle)/T);
+		lastAngle = gyro->GetAngle();
+		left = (0.5 + p - d);
+		right = (0.5 - p + d);
+		SetMotors(left, right);
+		Wait(T);
 	}
 	coast->Set(0);
 	SetMotors(0,0);
 	Wait(1);
 	coast->Set(1);
 }
+/* pidleft = K * gyro + .2
+ * pidright = K * gyro + .2
+ * K is proportion and use DEFINE*/
 
 
 

@@ -12,7 +12,8 @@
 #define RIGHT_DRIVE_MOTOR 2
 #define INTAKE_ROLLER 4
 #define SHOOTER_ROLLER 3
-#define SERVO 9
+#define SERVO1 9
+#define SERVO2 10
 #define CAM_HORIZONTAL 11
 #define CAM_VERTICAL 10
 
@@ -31,7 +32,7 @@
 #define AUTON_SELECTOR_2 7
 #define AUTON_SELECTOR_3 8
 #define AUTON_SELECTOR_4 9
-
+#define ALLIANCE_SELECTOR 14
 
 
 //Analog Sensors

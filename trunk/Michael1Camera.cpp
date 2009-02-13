@@ -1,6 +1,6 @@
 #include "Michael1Camera.h"
 
-Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
+Michael1Camera::Michael1Camera(bool serv, int Alliance) : StuyCamera(serv){
 	/* image data for tracking - override default parameters if needed */
 			/* recommend making PINK the first color because GREEN is more 
 			 * subsceptible to hue variations due to lighting type so may
@@ -25,12 +25,30 @@ Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
 
 bool Michael1Camera::TrackTarget(){
 	if ( FindTwoColors(td1, td2, ABOVE, &par1) ){
-		printf("X: %f, Y: %f", par1.center_mass_x_normalized, par1.center_mass_y_normalized);
-		horizontalServo->Set(horizontalServo->Get() + (par1.center_mass_x_normalized/2)*0.2);
-		verticalServo->Set(verticalServo->Get() - (par1.center_mass_y_normalized/2)*0.2);
+		ShowActivity("X: %f, Y: %f", par1.center_mass_x_normalized, par1.center_mass_y_normalized);
+		//horizontalServo->Set(horizontalServo->Get() + (par1.center_mass_x_normalized/2)*0.2);
+		//verticalServo->Set(verticalServo->Get() - (par1.center_mass_y_normalized/2)*0.2);
 		return true;
 	} else {
 		return false;
+	}
+}
+
+int Michael1Camera::oktoshoot(){
+	if(FindTwoColors(td1, td2, ABOVE, &par1)){
+		if ((par1.center_mass_x_normalized<=0.2)&&(par1.center_mass_x_normalized>=-.2)){ 
+			return 3;
+		}else if((par1.center_mass_x_normalized<=.5)&&(par1.center_mass_x_normalized>.2)){
+			return 2;
+		}else if(par1.center_mass_x_normalized>.5){
+			return 1;
+		}else if((par1.center_mass_x_normalized<-.2)&&(par1.center_mass_x_normalized>=-.5)){
+			return 4;
+		}else if(par1.center_mass_x_normalized<-.5){
+			return 5;
+		}
+	}else{
+		return 0;
 	}
 }
 
