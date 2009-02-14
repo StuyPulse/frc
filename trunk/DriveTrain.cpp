@@ -42,7 +42,7 @@ DriveTrain::DriveTrain()
 #define TURN_T .1 // time per loop
 #define TURN_P .022  // Prop Gain <range xxx -> xxx>
 #define TURN_I 0.022 //Integral Gain
-
+#define TURN_D 0.01 // Differential Gain
 void DriveTrain::Turn(float angle){
 	gyro->Reset();
 	int breakout = 0;
