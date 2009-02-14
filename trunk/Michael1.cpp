@@ -45,7 +45,7 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	RunScript( &(scripts[1][0]) );
+	RunScript( &(scripts[AutonSwitchValue()][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
@@ -89,13 +89,13 @@ void Michael1::RunScript(Command* scpt){
  * 4 pin digital switch.
  */
 int Michael1::AutonSwitchValue(){
-	int b1, b2, b4;
-	b1 = abs(1-autonswitch[1]->Get());
-	b2 = abs(1-autonswitch[2]->Get());
-	b4 = abs(1-autonswitch[3]->Get());
-	printf("b1: %d, b2: %d, b4: %d\n", b1, b2, b4);
-	//int b8 = abs(1-autonswitch[0]->Get());
-	return (b1 + b2*2 + b4*4 /* + b8*8 */ );
+	int b1, b2, b4, b8;
+	b1 = abs(1-autonswitch[0]->Get());
+	b2 = abs(1-autonswitch[1]->Get());
+	b4 = abs(1-autonswitch[2]->Get());
+	b8 = abs(1-autonswitch[3]->Get());
+	//printf("b1: %d, b2: %d, b4: %d, b8: %d\n", b1, b2, b4, b8);
+	return (b1 + b2*2 + b4*4 + b8*8 - 1 );
 }
 
 int Michael1::AllianceSwitchValue(){
@@ -117,8 +117,11 @@ void Michael1::OperatorControl(void)
 			dt->encoder_left->Update();
 			dt->encoder_right->Update();
 			oldTime = newTime;
+			//printf ("%d \n", AutonSwitchValue());
+		
 		}
-				
+		
+						
 		//dan's goggles
 		cam->TrackTarget();
 		bool pin[5];
@@ -130,7 +133,7 @@ void Michael1::OperatorControl(void)
 		ds->SetDigitalOut(3, pin[2]);
 		ds->SetDigitalOut(4, pin[3]);
 		ds->SetDigitalOut(5, pin[4]);
-
+		ShowActivity("** Particle image percent %f **",cam->distancetoshoot());
 		//joystick motor control
 		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
 			dt->slipMode = true;

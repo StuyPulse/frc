@@ -40,9 +40,9 @@ DriveTrain::DriveTrain()
 // Abstracted Methods
 
 #define TURN_T .1 // time per loop
-#define TURN_P .022  // Prop Gain <range xxx -> xxx>
-#define TURN_I 0.022 //Integral Gain
-#define TURN_D 0.01 // Differential Gain
+#define TURN_P .03  // Prop Gain <range xxx -> xxx>
+#define TURN_I 0.03  //Integral Gain was .02
+#define TURN_D 0.01 //Differential Gain
 void DriveTrain::Turn(float angle){
 	gyro->Reset();
 	int breakout = 0;
@@ -55,8 +55,9 @@ void DriveTrain::Turn(float angle){
 		i = i + err * TURN_T;
 		d = (err-lastErr)/TURN_T;
 		lastErr = err;
+		if(fabs(err) > 20)
+			i = 0; 
 		double leftmotor= p*TURN_P + d*TURN_D + i*TURN_I;
-
 		
 		if(fabs(angle - gyro->GetAngle()) > 1.5){
 			SetMotors(leftmotor, -leftmotor);
@@ -73,20 +74,32 @@ void DriveTrain::Turn(float angle){
 	}
 }
 #define FWD_T .1 // time per loop
-#define FWD_P .04  // range 0.02 -> 0.1
+#define FWD_P .05  // range 0.02 -> 0.1
 #define FWD_D 0 // range 0.01 -> 0.05
+#define FWD_I 0 
 void DriveTrain::GoDistance(float distance){
 	encoder_center->Reset();
 	gyro->Reset();
-	double lastAngle = 0;
-	double left, right;
-	while (encoder_center->GetDistance() < distance){
-		double p = FWD_P * gyro->GetAngle();
-		double d = FWD_D * ((gyro->GetAngle()-lastAngle)/FWD_T);
-		lastAngle = gyro->GetAngle();
-		left = (0.5 + p - d);
-		right = (0.5 - p + d);
-		SetMotors((1*(left/2)), (1*(right/2)));
+	double p, i, d, err, lastErr;
+	double multiplier = 0.5;
+	p = i = d = err = 0;
+	lastErr = gyro->GetAngle();
+	while(encoder_center->GetDistance() < distance) {
+		err = gyro->GetAngle();
+		p = err;
+		i = i + err * FWD_T;
+		d = (err-lastErr)/FWD_T;
+		lastErr = err;
+		double diff= p*FWD_P + d*FWD_D + i*FWD_I;
+		if (encoder_center->GetDistance() > distance - 7)
+		{
+			multiplier = (distance - encoder_center->GetDistance()) / 14;
+			if (multiplier < .2)
+			{
+				multiplier = 0.2;
+			}
+		}
+		SetMotors((multiplier + diff), (multiplier-diff));
 		Wait(FWD_T);
 	}
 	coast->Set(0);
