@@ -45,7 +45,7 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	RunScript( &(scripts[AutonSwitchValue()][0]) );
+	RunScript( &(scripts[AutonSwitchValue() - 1][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
@@ -89,13 +89,15 @@ void Michael1::RunScript(Command* scpt){
  * 4 pin digital switch.
  */
 int Michael1::AutonSwitchValue(){
-	int b1, b2, b4, b8;
+	int b1, b2, b4, b8, answer;
 	b1 = abs(1-autonswitch[0]->Get());
 	b2 = abs(1-autonswitch[1]->Get());
 	b4 = abs(1-autonswitch[2]->Get());
 	b8 = abs(1-autonswitch[3]->Get());
 	//printf("b1: %d, b2: %d, b4: %d, b8: %d\n", b1, b2, b4, b8);
-	return (b1 + b2*2 + b4*4 + b8*8 - 1 );
+	answer = (b1 + b2*2 + b4*4 + b8*8);
+	printf("%d", answer);
+	return answer;
 }
 
 int Michael1::AllianceSwitchValue(){
@@ -135,12 +137,18 @@ void Michael1::OperatorControl(void)
 		ds->SetDigitalOut(5, pin[4]);
 		ShowActivity("** Particle image percent %f **",cam->distancetoshoot());
 		//joystick motor control
-		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
-			dt->slipMode = true;
+		if (ds->GetDigitalIn(1)){
+			if (left_stick->GetTrigger() || right_stick->GetTrigger()){
+				//dt->slipMode = true;
+				dt->TankDrive(left_stick, right_stick);
+			} else {
+				//dt->slipMode = false;
+				dt->SetMotors(-(left_stick->GetY() / 2), -(right_stick->GetY() / 2));
+			}
 		} else {
-			dt->slipMode = false;
-		}		
-		dt->TankDrive(left_stick, right_stick);
+			dt->TankDrive(left_stick, right_stick);
+		}
+		
 
 		//brakes
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
