@@ -45,10 +45,8 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	
-	//ariels_light->Set(1);
 	RunScript( &(scripts[1][0]) );
-	Wait(3);
+	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
 
@@ -107,12 +105,9 @@ int Michael1::AllianceSwitchValue(){
 void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
-	//ariels_light->Set(0);
 	double oldTime = 0;
 	GetWatchdog().SetEnabled(false);
 	ds->SetDigitalOut(3,false);
-	//servo->Set(0.5);
-	//gyro->Reset();
 	
 	while (IsOperatorControl())
 	{	
@@ -123,12 +118,8 @@ void Michael1::OperatorControl(void)
 			dt->encoder_right->Update();
 			oldTime = newTime;
 		}
-		//double x = cam->par1.center_mass_x_normalized;
-		//double y = cam->par1.center_mass_y_normalized;
-		//ShowActivity("X axis: %f  Y axis: %f", x, y);
-		
-		ShowActivity("%f", dt->gyro->GetAngle());
-		
+				
+		//dan's goggles
 		cam->TrackTarget();
 		bool pin[5];
 		pin[0] = pin[1] = pin[2] = pin[3] = pin[4] = false;
@@ -140,18 +131,15 @@ void Michael1::OperatorControl(void)
 		ds->SetDigitalOut(4, pin[3]);
 		ds->SetDigitalOut(5, pin[4]);
 
-
+		//joystick motor control
 		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
-			dt->SlipTankDrive(left_stick, right_stick);
+			dt->slipMode = true;
 		} else {
-			dt->TankDrive(left_stick, right_stick);
+			dt->slipMode = false;
 		}		
-	/* Servo testing
-		servo_1 -> Set(left_stick->GetY());
-		servo_2 -> Set(-1*left_stick->GetY());
-		
-		ShowActivity("%f", (left_stick->GetY()));*/
-		//Servo set 1 and 0 and -1
+		dt->TankDrive(left_stick, right_stick);
+
+		//brakes
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
 			dt->coast->Set(0);
 		} else {
@@ -164,10 +152,12 @@ void Michael1::OperatorControl(void)
 		} else {
 			shooter->Set(shooter_stick->GetY() * 0.5);
 		}
-		/*OI switch box
-		 * Left 1u,2d
+		
+		/* OI switch box
+		 * Left 1u, 2d
 		 * mid  5u, 3d
 		 * rig	6u, 4d*/
+		
 		//intake
 		if (ds->GetDigitalIn(6))
 			intake->Set(1);

@@ -31,7 +31,12 @@ typedef struct {
 Command s2[] = {
 //	{CMD, p1, p2, p3},
 //	Change back to forward first
-	{FWD, 15, 0, 0},
+	{FWD, 1.3, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 45, 0, 0},
+	{WAIT, .25, 0, 0},  //HALVED ALL FWDS
+	{FWD, 17, 0, 0},
+	{TURN, 90, 0, 0},
 	{END, 0, 0, 0}
 };
 

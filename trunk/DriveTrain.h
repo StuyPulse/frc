@@ -8,9 +8,7 @@ public:
 	
 	// Teleop Methods
 	void TankDrive(Joystick *left, Joystick *right);
-	void SmoothTankDrive(Joystick *left, Joystick *right);
-	void SlipTankDrive(Joystick *left, Joystick *left);
-	
+
 	void SetMotors(float left, float right);
 	void SmoothMotors(float left, float right);
 	void CorrectSlip(float left, float right);
@@ -26,6 +24,7 @@ public:
 	StuyEncoder *encoder_center;
 	Gyro *gyro;
 	
+	bool slipMode;
 	bool invert_left;
 	bool invert_right;
 
