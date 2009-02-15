@@ -1,5 +1,4 @@
 #include "WPILib.h"
-#include "StuyEncoder.h"
 #include "DriveMotor.h"
 
 #define NORMAL_DRIVE 0

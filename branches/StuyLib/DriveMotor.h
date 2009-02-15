@@ -1,5 +1,6 @@
 #include "StuyEncoder.h"
 #include "WPILib.h"
+
 #define VICTOR 1
 #define JAGUAR 2
 
