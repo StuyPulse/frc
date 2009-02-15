@@ -8,10 +8,11 @@ public:
 	BinarySwitch(int size, ...);
 	int Get();
 	int GetBit(int);
-	std::vector< DigitalInput* > inputs;
 
 	
 private:
 	int size;
+	std::vector< DigitalInput* > inputs;
+
 	
 };
