@@ -5,6 +5,7 @@
 #include "DriveTrain.h"
 #include "Michael1Camera.h"
 #include "Scripts.h"
+#include "BinarySwitch.h"
 
 class Michael1 : public SimpleRobot
 {
@@ -19,7 +20,7 @@ public:
 	Joystick *left_stick;
 	Joystick *right_stick;
 	Joystick *shooter_stick;
-	DigitalInput *autonswitch[4];
+	BinarySwitch *autonswitch;
 	DigitalInput *alliance_selector;
 	//Outputs
 	DriveTrain *dt; // contains motor_left, motor_right

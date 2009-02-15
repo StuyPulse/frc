@@ -13,10 +13,7 @@ Michael1::Michael1()
 	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
 	
 	// Robot Inputs
-	autonswitch[0]= new DigitalInput(4,AUTON_SELECTOR_1); //1's bit
-	autonswitch[1]= new DigitalInput(4,AUTON_SELECTOR_2); //2's bit
-	autonswitch[2]= new DigitalInput(4,AUTON_SELECTOR_3); //4's bit
-	autonswitch[3]= new DigitalInput(4,AUTON_SELECTOR_4);//8's bit
+	autonswitch = new BinarySwitch(4, AUTON_SELECTOR_1, AUTON_SELECTOR_2, AUTON_SELECTOR_3, AUTON_SELECTOR_4);
 	alliance_selector = new DigitalInput(4,ALLIANCE_SELECTOR);
 	// Robot Outputs
 	ariels_light = new DigitalOutput(ARIELS_LIGHT);
@@ -44,7 +41,7 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	RunScript( &(scripts[AutonSwitchValue()][0]) );
+	RunScript( &(scripts[autonswitch->Get()][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
@@ -82,25 +79,6 @@ void Michael1::RunScript(Command* scpt){
 			}
 			scpt++;
 		}
-}
-
-/* Return decimal value of binary
- * 4 pin digital switch.
- */
-int Michael1::AutonSwitchValue(){
-	int b1, b2, b4, b8, answer;
-	b1 = abs(1-autonswitch[0]->Get());
-	b2 = abs(1-autonswitch[1]->Get());
-	b4 = abs(1-autonswitch[2]->Get());
-	b8 = abs(1-autonswitch[3]->Get());
-	//printf("b1: %d, b2: %d, b4: %d, b8: %d\n", b1, b2, b4, b8);
-	answer = (b1 + b2*2 + b4*4 + b8*8);
-	printf("%d", answer);
-	return answer;
-}
-
-int Michael1::AllianceSwitchValue(){
-	return alliance_selector->Get();
 }
 
 void Michael1::OperatorControl(void)
