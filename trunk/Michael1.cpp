@@ -26,7 +26,6 @@ Michael1::Michael1()
 	servo_2 = new Servo(SERVO2);
 	 	
 	// Helper Objects
-	arcade = new RobotDrive(1, 2);
 	dt = new DriveTrain();
 	cam = new Michael1Camera(false, AllianceSwitchValue());
 	
@@ -115,12 +114,8 @@ void Michael1::OperatorControl(void)
 	{	
 		double newTime = time->Get();
 		if(newTime - oldTime >= 0.1){
-			dt->encoder_center->Update();
-			dt->encoder_left->Update();
-			dt->encoder_right->Update();
-			oldTime = newTime;
-			//printf ("%d \n", AutonSwitchValue());
-		
+			dt->UpdateSensors();
+			oldTime = newTime;		
 		}
 		
 						

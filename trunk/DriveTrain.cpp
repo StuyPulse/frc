@@ -8,7 +8,6 @@ DriveTrain::DriveTrain()
 	motor_left = new Victor(LEFT_DRIVE_MOTOR);
 	invert_left = true;
 	
-	
 	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
 	invert_right = false;
 	
@@ -114,20 +113,10 @@ void DriveTrain::TankDrive(Joystick *left, Joystick *right)
 {
 	float l = -1 * left->GetY();
 	float r = -1 * right->GetY();
+	
 	SetMotors(l, r);
 }
 
-
-#define SLIP_GAIN 0.02 //something
-void DriveTrain::CorrectSlip(float left, float right){
-	/*float slip_left = encoder_left->GetVelocity() - encoder_center->GetVelocity();
-	float slip_right = encoder_right->GetVelocity() - encoder_center->GetVelocity();
-	//float setleft = left - (slip_left * SLIP_GAIN);
-	//float setright = right - (slip_right * SLIP_GAIN); 
-
-	motor_left->Set(left);
-	motor_right->Set(right);*/
-}
 
 #define GAIN 0.04
 void DriveTrain::SmoothMotors(float left, float right){
@@ -154,10 +143,13 @@ void DriveTrain::SetMotors(float left, float right){
 		right *= -1;
 	}
 	
-	if (slipMode){
-		CorrectSlip(left, right);
-	} else {
-		motor_left->Set(left);
-		motor_right->Set(right);
-	}
+	motor_left->Set(left);
+	motor_right->Set(right);
+}
+
+// Instead of using a timed task, call this ever 10th of a second
+void DriveTrain::UpdateSensors(){
+	encoder_center->Update();
+	encoder_left->Update();
+	encoder_right->Update();
 }

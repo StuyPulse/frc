@@ -8,21 +8,18 @@ public:
 	
 	// Teleop Methods
 	void TankDrive(Joystick *left, Joystick *right);
-
-	void SetMotors(float left, float right);
 	void SmoothMotors(float left, float right);
-	void CorrectSlip(float left, float right);
 	
 	// Autonomous Methods
 	void Turn(float);
 	void GoDistance(float);
 	
-	DigitalOutput *coast;
+	// Low Level Methods
+	void SetMotors(float left, float right);
+	void UpdateSensors();
 	
-	StuyEncoder *encoder_left;
-	StuyEncoder *encoder_right;
-	StuyEncoder *encoder_center;
-	Gyro *gyro;
+	// Owned Components
+	DigitalOutput *coast;
 	
 	bool slipMode;
 	bool invert_left;
@@ -30,11 +27,12 @@ public:
 
 private:
 	
-	void UpdateSlip();
-	void GetAverages();
-	
 	SpeedController *motor_left;
 	SpeedController *motor_right;
 	Accelerometer *accel;
+	StuyEncoder *encoder_left;
+	StuyEncoder *encoder_right;
+	StuyEncoder *encoder_center;
+	Gyro *gyro;
 	
 };

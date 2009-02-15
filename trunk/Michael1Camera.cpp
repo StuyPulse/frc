@@ -35,7 +35,7 @@ bool Michael1Camera::TrackTarget(){
 }
 
 int Michael1Camera::oktoshoot(){
-	if(FindTwoColors(td1, td2, ABOVE, &par1)){
+	if(FindTwoColors(td1, td2, ABOVE, &par1))
 		if ((par1.center_mass_x_normalized<=0.2)&&(par1.center_mass_x_normalized>=-.2)){ 
 			return 3;
 		}else if((par1.center_mass_x_normalized<=.5)&&(par1.center_mass_x_normalized>.2)){
@@ -47,10 +47,9 @@ int Michael1Camera::oktoshoot(){
 		}else if(par1.center_mass_x_normalized<-.5){
 			return 5;
 		}
-	}else{
-		return 0; 
-	}
+	return 0; 
 }
+	
 float Michael1Camera::distancetoshoot(){
 	TrackTarget();
 	return par1.particleToImagePercent;
