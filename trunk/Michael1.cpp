@@ -2,6 +2,18 @@
 #include "Ports.h"
 
 
+/*
+  void Michael1::Turntoshoot(){
+	while(cam->TrackTarget() && cam->oktoshoot()!= 3){
+		if(cam->oktoshoot() < 3){
+			dt->SetMotors(.05, .05);
+		}else if(cam->oktoshoot() >3){
+			dt->SetMotors(-.05, -.05);
+			}
+		}
+}
+*/
+
 Michael1::Michael1()
 {
 	// We're Alive!
@@ -108,7 +120,6 @@ void Michael1::OperatorControl(void)
 		ds->SetDigitalOut(3, pin[2]);
 		ds->SetDigitalOut(4, pin[3]);
 		ds->SetDigitalOut(5, pin[4]);
-		ShowActivity("** Particle image percent %f **",cam->distancetoshoot());
 		//joystick motor control
 		if (ds->GetDigitalIn(1)){
 			if (left_stick->GetTrigger() || right_stick->GetTrigger()){

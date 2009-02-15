@@ -49,10 +49,4 @@ int Michael1Camera::oktoshoot(){
 		}
 	return 0; 
 }
-	
-float Michael1Camera::distancetoshoot(){
-	TrackTarget();
-	return par1.particleToImagePercent;
-	}
-
 
