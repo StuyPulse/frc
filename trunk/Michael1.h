@@ -13,7 +13,6 @@ public:
 	Michael1();
 	void Autonomous(void);
 	void OperatorControl(void);
-	int AllianceSwitchValue();
 	//Inputs
 	RobotDrive *arcade;
 	Michael1Camera *cam;

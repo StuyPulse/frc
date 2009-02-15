@@ -6,10 +6,10 @@
 DriveTrain::DriveTrain()
 {
 	motor_left = new Victor(LEFT_DRIVE_MOTOR);
-	invert_left = true;
+	invert_left = false;
 	
 	motor_right = new Victor(RIGHT_DRIVE_MOTOR);
-	invert_right = false;
+	invert_right = true;
 	
 	encoder_left = new StuyEncoder(LEFT_ENCODER_A, LEFT_ENCODER_B);
 	encoder_right = new StuyEncoder(RIGHT_ENCODER_A, RIGHT_ENCODER_B);

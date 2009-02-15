@@ -1,6 +1,6 @@
 #include "Michael1Camera.h"
 
-Michael1Camera::Michael1Camera(bool serv, int Alliance) : StuyCamera(serv){
+Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
 	/* image data for tracking - override default parameters if needed */
 			/* recommend making PINK the first color because GREEN is more 
 			 * subsceptible to hue variations due to lighting type so may

@@ -4,7 +4,7 @@
 class Michael1Camera : public StuyCamera
 {
 public:
-	Michael1Camera(bool, int);
+	Michael1Camera(bool);
 	int oktoshoot();
 	bool TrackTarget();
 	ParticleAnalysisReport par1, par2;

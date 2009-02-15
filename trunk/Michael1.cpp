@@ -25,7 +25,7 @@ Michael1::Michael1()
 	shooter_stick = new Joystick(SHOOTER_JOYSTICK);
 	
 	// Robot Inputs
-	autonswitch = new BinarySwitch(4, AUTON_SELECTOR_1, AUTON_SELECTOR_2, AUTON_SELECTOR_3, AUTON_SELECTOR_4);
+	autonswitch = new BinarySwitch(4, AUTON_SELECTOR_4, AUTON_SELECTOR_3, AUTON_SELECTOR_2, AUTON_SELECTOR_1);
 	alliance_selector = new DigitalInput(4,ALLIANCE_SELECTOR);
 	// Robot Outputs
 	ariels_light = new DigitalOutput(ARIELS_LIGHT);
@@ -36,7 +36,7 @@ Michael1::Michael1()
 	 	
 	// Helper Objects
 	dt = new DriveTrain();
-	cam = new Michael1Camera(false, AllianceSwitchValue());
+	cam = new Michael1Camera(false);
 	
 	ds = DriverStation::GetInstance();
 	
@@ -53,7 +53,11 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	RunScript( &(scripts[autonswitch->Get()][0]) );
+	while(1){
+		printf("autonswitch: %d%d%d%d -> %d\n", autonswitch->GetBit(0),autonswitch->GetBit(1),autonswitch->GetBit(2),autonswitch->GetBit(3), autonswitch->Get());
+		Wait(0.2);
+	}
+	//RunScript( &(scripts[autonswitch->Get()][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
@@ -154,7 +158,7 @@ void Michael1::OperatorControl(void)
 		 * rig	6u, 4d*/
 		
 		//intake
-		if (ds->GetDigitalIn(6))
+		if (ds->GetDigitalIn(6) || fabs(shooter->Get()) > 0)
 			intake->Set(1);
 		else if (ds->GetDigitalIn(4))
 			intake->Set(-1);

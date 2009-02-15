@@ -13,15 +13,14 @@ BinarySwitch::BinarySwitch(int size, ...){
 int BinarySwitch::Get(){
 	int sum = 0;
 	for (UINT32 b = 0; b < inputs.size(); b++){
-		sum += static_cast<int>(inputs.at(b)->Get() * pow(2, b));
+		sum += static_cast<int>(GetBit(b) * pow(2, abs(inputs.size()-1-b)));
 	}
 	return sum;
 }
 
 int BinarySwitch::GetBit(int b){
-	b -= 1;
 	if (b < size && b >= 0){
-		return inputs.at(b)->Get();
+		return abs(1-inputs.at(b)->Get());
 	}
 	return -1;
 }
