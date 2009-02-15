@@ -48,7 +48,7 @@ int Michael1Camera::oktoshoot(){
 			return 5;
 		}
 	}else{
-		return 0;
+		return 0; 
 	}
 }
 float Michael1Camera::distancetoshoot(){

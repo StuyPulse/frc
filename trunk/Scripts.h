@@ -45,22 +45,57 @@ Command s3[] = {
 	{END, 0, 0, 0}
 };
 
+//From left lower to left top
 Command s4[] = {
-	{JSTK, 1, -1, 1000},
-	{END, 0, 0, 0}
-};
-
-Command s5[] = {
+	{FWD, 1.3, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, -45, 0, 0},
+	{WAIT, .25, 0, 0},
+	{FWD, 18, 0, 0},
+	{WAIT, .25, 0, 0},
 	{TURN, -45, 0, 0},
 	{END, 0, 0, 0}
 };
 
+//top middle to top left
+Command s5[] = {
+	{FWD, 1.3, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 90, 0, 0},
+	{WAIT, .25, 0, 0},
+	{FWD, 17, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 45, 0, 0},
+	{END, 0, 0, 0}
+};
+
+//lower right to top right 
 Command s6[] = {
+	{FWD, 1.3, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 45, 0, 0},
+	{WAIT, .25, 0, 0},
+	{FWD, 17, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 45, 0, 0},
 	{END, 0, 0, 0}
 };
 
+// top middle to top right
 Command s7[] = {
+	{FWD, 1.3, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 90, 0, 0},
+	{WAIT, .25, 0, 0},
+	{FWD, 16, 0, 0},
+	{WAIT, .25, 0, 0},
+	{TURN, 45, 0, 0},
 	{END, 0, 0, 0}
 };
 
-Command* scripts[] = { s1, s2, s3, s4, s5, s6, s7 };
+Command s0[] = {
+	{JSTK, 1, -1, 15},
+	{END, 0, 0, 0}
+};
+
+Command* scripts[] = {s0, s1, s2, s3, s4, s5, s6, s7 };

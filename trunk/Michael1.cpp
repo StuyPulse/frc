@@ -45,7 +45,7 @@ void Michael1::Autonomous(void)
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	RunScript( &(scripts[AutonSwitchValue() - 1][0]) );
+	RunScript( &(scripts[AutonSwitchValue()][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
