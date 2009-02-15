@@ -3,11 +3,9 @@
 
 
 BinarySwitch::BinarySwitch(int size, ...){
-	int i;
-	DigitalInput bn(1);
 	va_list vl;
 	va_start(vl,size);
-	for (i=0;i<size;i++)
+	for (int i=0;i<size;i++)
 		inputs.push_back( new DigitalInput(va_arg(vl, int)) );
 	va_end(vl);
 }
