@@ -44,12 +44,12 @@
  * this is loose enough for any image size but could be tightened 
  * (reduced) to reduce false alarms
  */
-#define FRC_MAX_IMAGE_SEPARATION 30
+#define FRC_MAX_IMAGE_SEPARATION 30 //Original value 20
 
 /** Tolerance for two-color target particle size (factor) 
  * keep this relatively large so that differences in color or light
  * do not affect target recognition */
-#define FRC_SIZE_FACTOR 7
+#define FRC_SIZE_FACTOR 7 //Orgiinal Value 3
 
 /** Maximum number of color particles to find */
 #define FRC_MAX_HITS 10
@@ -59,7 +59,7 @@
  * tolerance at .001, the image must be 77 pixels.
  * Uses a percentage instead of a fixed # of pixels so different
  * image sizes will work the same way */
-#define FRC_COLOR_TO_IMAGE_PERCENT 0.0005
+#define FRC_COLOR_TO_IMAGE_PERCENT 0.0005 //Original value .001
 
 /*  Structures */
 /** This structure holds information about the particles found 

@@ -117,6 +117,7 @@ void Michael1::OperatorControl(void)
 			dt->UpdateSensors();
 			oldTime = newTime;	
 			printf("%f \n", dt->gyro->GetAngle());
+			//ShowActivity("Center_mass_x %f, Center_mass_y %f Height %f, Width %f", cam->par1.center_mass_x, cam->par1.center_mass_y, cam->par1.imageHeight, cam->par1.imageWidth);
 		}
 		
 						
