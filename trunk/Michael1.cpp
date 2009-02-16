@@ -50,14 +50,18 @@ Michael1::Michael1()
 
 void Michael1::Autonomous(void)
 {
+	time->Reset();
 	GetWatchdog().SetEnabled(false);
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	while(1){
+	/*while(1){
 		printf("autonswitch: %d%d%d%d -> %d\n", autonswitch->GetBit(0),autonswitch->GetBit(1),autonswitch->GetBit(2),autonswitch->GetBit(3), autonswitch->Get());
-		Wait(0.2);
+		Wait(1.0);
 	}
-	//RunScript( &(scripts[autonswitch->Get()][0]) );
+	*/
+	servo_1->Set(0);
+	servo_2->Set(1);
+	RunScript( &(scripts[autonswitch->Get()][0]) );
 	Wait(1);
 	printf("\n\n\tFinished Autonomous\n\n");
 }
@@ -73,18 +77,18 @@ void Michael1::RunScript(Command* scpt){
 		{
 			switch(scpt->cmd){
 			case TURN:
-				dt->Turn(scpt->param1);
+				dt->Turn(scpt->param1,14.5 - time->Get());
 				break;
 			case JSTK:
 				dt->SetMotors(scpt->param1, scpt->param2);
-				Wait(scpt->param3);
+				Wait(14.5 - time->Get());
 				break;
 			case WAIT:
 				dt->SetMotors(0,0);
 				Wait(scpt->param1);
 				break;
 			case FWD:
-				dt->GoDistance(scpt->param1);
+				dt->GoDistance(scpt->param1,14.5 - time->Get());
 				break;
 			default:
 				dt->SetMotors(0,0);
@@ -103,13 +107,16 @@ void Michael1::OperatorControl(void)
 	double oldTime = 0;
 	GetWatchdog().SetEnabled(false);
 	ds->SetDigitalOut(3,false);
+	dt->gyro->Reset();
+	
 	
 	while (IsOperatorControl())
 	{	
 		double newTime = time->Get();
 		if(newTime - oldTime >= 0.1){
 			dt->UpdateSensors();
-			oldTime = newTime;		
+			oldTime = newTime;	
+			printf("%f \n", dt->gyro->GetAngle());
 		}
 		
 						
@@ -177,8 +184,8 @@ void Michael1::OperatorControl(void)
 		}
 		else
 		{
-			servo_1->Set(.5);
-			servo_2->Set(.5);
+			servo_1->Set(1);
+			servo_2->Set(0);
 		}
 	}
 }

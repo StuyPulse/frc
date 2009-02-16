@@ -11,8 +11,8 @@ public:
 	void SmoothMotors(float left, float right);
 	
 	// Autonomous Methods
-	void Turn(float);
-	void GoDistance(float);
+	void Turn(float,float);
+	void GoDistance(float,float);
 	
 	// Low Level Methods
 	void SetMotors(float left, float right);
@@ -24,6 +24,7 @@ public:
 	bool slipMode;
 	bool invert_left;
 	bool invert_right;
+	Gyro *gyro;
 
 private:
 	
@@ -33,6 +34,6 @@ private:
 	StuyEncoder *encoder_left;
 	StuyEncoder *encoder_right;
 	StuyEncoder *encoder_center;
-	Gyro *gyro;
+
 	
 };

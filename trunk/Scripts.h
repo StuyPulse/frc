@@ -93,9 +93,11 @@ Command s7[] = {
 	{END, 0, 0, 0}
 };
 
-Command s8[] = {
+Command s0[] = {
+	{FWD, 15, 0, 0},
+	{WAIT, 0.25, 0, 0},
 	{JSTK, 1, -1, 15},
 	{END, 0, 0, 0}
 };
 
-Command* scripts[] = {s1, s2, s3, s4, s5, s6, s7, s8 };
+Command* scripts[] = {s0, s1, s2, s3, s4, s5, s6, s7};

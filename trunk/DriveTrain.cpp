@@ -42,7 +42,7 @@ DriveTrain::DriveTrain()
 #define TURN_P .03  // Prop Gain <range xxx -> xxx>
 #define TURN_I 0.03  //Integral Gain was .02
 #define TURN_D 0.01 //Differential Gain
-void DriveTrain::Turn(float angle){
+void DriveTrain::Turn(float angle, float breaktime){
 	gyro->Reset();
 	int breakout = 0;
 	double p, i, d, err, lastErr;
@@ -59,7 +59,7 @@ void DriveTrain::Turn(float angle){
 		double leftmotor= p*TURN_P + d*TURN_D + i*TURN_I;
 		
 		if(fabs(angle - gyro->GetAngle()) > 1.5){
-			SetMotors(leftmotor, -leftmotor);
+			SetMotors(-leftmotor, leftmotor);
 			breakout = 0;
 		} else {
 			breakout++;
@@ -67,6 +67,11 @@ void DriveTrain::Turn(float angle){
 				SetMotors(0, 0);
 				break;
 			}
+		}
+		breaktime -= TURN_T;
+		if (breaktime <= 0)
+		{
+			break;
 		}
 		
 		Wait(TURN_T);
@@ -76,11 +81,11 @@ void DriveTrain::Turn(float angle){
 #define FWD_P .05  // range 0.02 -> 0.1
 #define FWD_D 0 // range 0.01 -> 0.05
 #define FWD_I 0 
-void DriveTrain::GoDistance(float distance){
+void DriveTrain::GoDistance(float distance, float breaktime){
 	encoder_center->Reset();
 	gyro->Reset();
 	double p, i, d, err, lastErr;
-	double multiplier = 0.5;
+	double multiplier = 0.3;
 	p = i = d = err = 0;
 	lastErr = gyro->GetAngle();
 	while(encoder_center->GetDistance() < distance) {
@@ -98,8 +103,13 @@ void DriveTrain::GoDistance(float distance){
 				multiplier = 0.2;
 			}
 		}
-		SetMotors((multiplier + diff), (multiplier-diff));
+		SetMotors((multiplier - diff), (multiplier + diff));
 		Wait(FWD_T);
+		breaktime -= TURN_T;
+		if (breaktime <= 0)
+		{
+			break;
+		}
 	}
 	coast->Set(0);
 	SetMotors(0,0);
