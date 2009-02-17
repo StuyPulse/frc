@@ -5,8 +5,8 @@
 #include "PCVideoServer.h" 
 #include "TrackAPI.h"
 
-PixelValue *pixel_value_scratch;
-Image *img;
+extern PixelValue *pixel_value_scratch;
+extern Image *img;
 
 class StuyCamera
 {
