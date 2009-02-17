@@ -7,12 +7,12 @@
 #define RESOLUTION k320x240
 #define ROTATION ROT_180
 
-PixelValue *pixel_value_scratch;
 Image *img;
+PixelValue *testPixel;
 
 StuyCamera::StuyCamera(bool serv)
 {
-	pixel_value_scratch = new PixelValue();
+	testPixel = new PixelValue();
 	horizontalServo = new Servo(CAM_HORIZONTAL);
 	verticalServo = new Servo(CAM_VERTICAL);
 	horizontalServo->Set(0.5);
@@ -41,8 +41,8 @@ bool StuyCamera::GetNewImage()
 	Point* p = new Point();
 	p->x = 10;
 	p->y = 10;
-	frcGetPixelValue(img, *p, pixel_value_scratch);
-	printf("Value is: %d\n", pixel_value_scratch->hsl.L);
+	frcGetPixelValue(img, *p, testPixel);
+	printf("Value is: %d\n", testPixel->hsl.L);
 }
 
 double StuyCamera::getTimestamp()
