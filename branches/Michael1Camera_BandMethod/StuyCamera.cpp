@@ -7,6 +7,8 @@
 #define RESOLUTION k320x240
 #define ROTATION ROT_180
 
+PixelValue *pixel_value_scratch;
+Image *img;
 
 StuyCamera::StuyCamera(bool serv)
 {

@@ -1,5 +1,8 @@
 #include "Michael1Camera.h"
 
+extern PixelValue *pixel_value_scratch;
+extern Image *img;
+
 Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv){
 	/* image data for tracking - override default parameters if needed */
 			/* recommend making PINK the first color because GREEN is more 
