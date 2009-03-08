@@ -13,6 +13,8 @@ public:
 	Michael1();
 	void Autonomous(void);
 	void OperatorControl(void);
+	int checkzone(int);
+	bool HSLinThreshold(PixelValue* val, TrackingThreshold* range);
 	//Inputs
 	RobotDrive *arcade;
 	Michael1Camera *cam;

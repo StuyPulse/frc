@@ -9,7 +9,7 @@ class StuyCamera
 {
 public:
 	StuyCamera(bool); // parameter denotes to start a PC Server
-	bool GetNewImage(); // returns true on new image, false on no new image
+	//bool GetNewImage(); // returns true on new image, false on no new image
 	double getTimestamp(); // returns imgTimestamp
 
 protected:

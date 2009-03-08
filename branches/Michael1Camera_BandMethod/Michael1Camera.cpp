@@ -1,38 +1,16 @@
 #include "Michael1Camera.h"
 
-extern Image *img;
-PixelValue *pixel_value_scratch;
-
 
 Michael1Camera::Michael1Camera(bool serv) : StuyCamera(serv)
 {
-	pixel_value_scratch = new PixelValue();
 	
 	// PINK
-	sprintf (pink.name, "PINK");
-	pink.hue.minValue = 220;   
-	pink.hue.maxValue = 255;  
-	pink.saturation.minValue = 75;   
-	pink.saturation.maxValue = 255;      
-	pink.luminance.minValue = 85;  
-	pink.luminance.maxValue = 255;
-	// GREEN
-	sprintf (green.name, "GREEN");
-	green.hue.minValue = 55;   
-	green.hue.maxValue = 125;  
-	green.saturation.minValue = 58;   
-	green.saturation.maxValue = 255;    
-	green.luminance.minValue = 92;  
-	green.luminance.maxValue = 255;
 	
 }
 
-bool Michael1Camera::HSLinThreshold(PixelValue* val, TrackingThreshold* range){
-	bool inH = (val->hsl.H >= range->hue.minValue) && (val->hsl.H <= range->hue.maxValue);
-	bool inS = (val->hsl.S >= range->saturation.minValue) && (val->hsl.S <= range->saturation.maxValue);
-	bool inL = (val->hsl.L >= range->luminance.minValue) && (val->hsl.L <= range->luminance.maxValue);
-	return (inH && inS && inL);
-}
+
+
+/*
 
 #define COL_PERCENT 0.5
 void Michael1Camera::UpdateCols(){
@@ -77,3 +55,4 @@ float Michael1Camera::SegmentConfidence(int l, int r){
 	}
 	return hits/(r - l);
 }
+*/

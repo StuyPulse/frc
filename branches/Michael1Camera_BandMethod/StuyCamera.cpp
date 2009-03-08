@@ -7,7 +7,7 @@
 #define RESOLUTION k320x240
 #define ROTATION ROT_180
 
-Image *img;
+//Image *img;
 PixelValue *testPixel;
 
 StuyCamera::StuyCamera(bool serv)
@@ -31,7 +31,7 @@ StuyCamera::StuyCamera(bool serv)
 	}
 	
 }
-
+/*
 //loads new image from camera into Camera object
 bool StuyCamera::GetNewImage()
 {
@@ -44,7 +44,7 @@ bool StuyCamera::GetNewImage()
 	frcGetPixelValue(img, *p, testPixel);
 	printf("Value is: %d\n", testPixel->hsl.L);
 }
-
+*/
 double StuyCamera::getTimestamp()
 {
 	return(imgTimestamp);
