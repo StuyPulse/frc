@@ -50,11 +50,26 @@ Michael1::Michael1()
 
 void Michael1::Autonomous(void)
 {
-	time->Reset();
+
 	GetWatchdog().SetEnabled(false);
+	
+	switch(autonswitch->Get()){
+		case 0:
+			dt->SetMotors(0.2, 0.4);
+			break;
+		case 1:
+			dt->SetMotors(0.4, 0.2);
+			break;
+		default:
+			dt->SetMotors(1.0,1.0);
+	}
+	
+	
+	
+	
 
 	printf("\n\n\tStart Autonomous:\n\n");
-	/*while(1){
+/*	/*while(1){
 		printf("autonswitch: %d%d%d%d -> %d\n", autonswitch->GetBit(0),autonswitch->GetBit(1),autonswitch->GetBit(2),autonswitch->GetBit(3), autonswitch->Get());
 		Wait(1.0);
 	}
@@ -100,7 +115,7 @@ void Michael1::RunScript(Command* scpt){
 			scpt++;
 		}
 }
-
+*/
 void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
