@@ -3,16 +3,16 @@
 
 
 /*
-  void Michael1::Turntoshoot(){
-	while(cam->TrackTarget() && cam->oktoshoot()!= 3){
-		if(cam->oktoshoot() < 3){
-			dt->SetMotors(.05, .05);
-		}else if(cam->oktoshoot() >3){
-			dt->SetMotors(-.05, -.05);
-			}
-		}
-}
-*/
+ void Michael1::Turntoshoot(){
+ while(cam->TrackTarget() && cam->oktoshoot()!= 3){
+ if(cam->oktoshoot() < 3){
+ dt->SetMotors(.05, .05);
+ }else if(cam->oktoshoot() >3){
+ dt->SetMotors(-.05, -.05);
+ }
+ }
+ }
+ */
 
 Michael1::Michael1()
 {
@@ -33,7 +33,7 @@ Michael1::Michael1()
 	shooter = new Victor(SHOOTER_ROLLER);
 	servo_1 = new Servo(SERVO1);
 	servo_2 = new Servo(SERVO2);
-	 	
+	
 	// Helper Objects
 	dt = new DriveTrain();
 	cam = new Michael1Camera(false);
@@ -50,72 +50,56 @@ Michael1::Michael1()
 
 void Michael1::Autonomous(void)
 {
-
 	GetWatchdog().SetEnabled(false);
 	
 	switch(autonswitch->Get()){
-		case 0:
-			dt->SetMotors(0.4, 0.1);
+		case 2: //arc to the right
+			dt->SetMotors(0.5,0.1);
 			break;
-		case 1:
-			dt->SetMotors(0.1, 0.4);
+		case 3: //arc to the left
+			dt->SetMotors(0.1,0.5);
 			break;
-		default:
-			dt->SetMotors(1.0,1.0);
+		default: //arc to the right
+			dt->SetMotors(0.5,0.1);
 	}
-	
-	
-	
-	
-
-	printf("\n\n\tStart Autonomous:\n\n");
-/*	/*while(1){
-		printf("autonswitch: %d%d%d%d -> %d\n", autonswitch->GetBit(0),autonswitch->GetBit(1),autonswitch->GetBit(2),autonswitch->GetBit(3), autonswitch->Get());
-		Wait(1.0);
-	}
-	*/
-	servo_1->Set(0);
-	servo_2->Set(1);
-	RunScript( &(scripts[autonswitch->Get()][0]) );
-	Wait(1);
-	printf("\n\n\tFinished Autonomous\n\n");
+	// printf("\n\n\tFinished Autonomous\n\n");
 }
 
-/* RunScript is blocking (pauses thread until script is complete)
- * Takes a pointer to a Command in a Command array (Script).
- * Iterates over said array until reaches "END" command.
+
+
+
+
+/* void Michael1::RunScript(Command* scpt){
+ bool finished = false;
+ 
+ while (IsAutonomous())
+ {
+ switch(scpt->cmd){
+ case TURN:
+ dt->Turn(scpt->param1,14.5 - time->Get());
+ break;
+ case JSTK:
+ dt->SetMotors(scpt->param1, scpt->param2);
+ Wait(14.5 - time->Get());
+ break;
+ case WAIT:
+ dt->SetMotors(0,0);
+ Wait(scpt->param1);
+ break;
+ case FWD:
+ dt->GoDistance(scpt->param1,14.5 - time->Get());
+ break;
+ default:
+ dt->SetMotors(0,0);
+ finished = true;
+ }
+ if (finished){
+ break;
+ }
+ scpt++;
+ }
+ }
  */
-void Michael1::RunScript(Command* scpt){
-	bool finished = false;
-	
-	while (IsAutonomous())
-		{
-			switch(scpt->cmd){
-			case TURN:
-				dt->Turn(scpt->param1,14.5 - time->Get());
-				break;
-			case JSTK:
-				dt->SetMotors(scpt->param1, scpt->param2);
-				Wait(14.5 - time->Get());
-				break;
-			case WAIT:
-				dt->SetMotors(0,0);
-				Wait(scpt->param1);
-				break;
-			case FWD:
-				dt->GoDistance(scpt->param1,14.5 - time->Get());
-				break;
-			default:
-				dt->SetMotors(0,0);
-				finished = true;
-			}
-			if (finished){
-				break;
-			}
-			scpt++;
-		}
-}
-*/
 void Michael1::OperatorControl(void)
 {
 	printf("\n\n\tStart Teleop:\n\n");
@@ -135,7 +119,7 @@ void Michael1::OperatorControl(void)
 			//ShowActivity("Center_mass_x %f, Center_mass_y %f Height %f, Width %f", cam->par1.center_mass_x, cam->par1.center_mass_y, cam->par1.imageHeight, cam->par1.imageWidth);
 		}
 		
-						
+		
 		//dan's goggles
 		cam->TrackTarget();
 		bool pin[5];
@@ -148,37 +132,39 @@ void Michael1::OperatorControl(void)
 		ds->SetDigitalOut(4, pin[3]);
 		ds->SetDigitalOut(5, pin[4]);
 		//joystick motor control
-		if (ds->GetDigitalIn(1)){
-			if (left_stick->GetTrigger() || right_stick->GetTrigger()){
-				//dt->slipMode = true;
-				dt->TankDrive(left_stick, right_stick);
-			} else {
-				//dt->slipMode = false;
-				dt->SetMotors(-(left_stick->GetY() / 2), -(right_stick->GetY() / 2));
-			}
-		} else {
+		//if (ds->GetDigitalIn(1)){
+		if (left_stick->GetTrigger() || right_stick->GetTrigger()){
+			//dt->slipMode = true;
 			dt->TankDrive(left_stick, right_stick);
+		} else {
+			//dt->slipMode = false;
+			dt->SetMotors(-(left_stick->GetY() / 2), -(right_stick->GetY() / 2));
 		}
+		/*} else {
+		 dt->TankDrive(left_stick, right_stick);
+		 }*/
 		
 		
-		
-		
-
 		//brakes
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
 			dt->coast->Set(0);
 		} else {
 			dt->coast->Set(1);
 		}
-					
+		
 		//shooter
+		
+		
+		
 		if (shooter_stick->GetTrigger())
 		{
-			shooter->Set(-0.75);
-		}  
-		else {
+			shooter->Set(-1);
+		} 
+		else 
+		{
 			shooter->Set(shooter_stick->GetY() * 0.5);
 		}
+		
 		
 		/* OI switch box
 		 * Left 1u, 2d
@@ -190,31 +176,28 @@ void Michael1::OperatorControl(void)
 			intake->Set(1);
 		else if (ds->GetDigitalIn(4))
 			intake->Set(-1);
-		
-					
 		if (shooter_stick->GetRawButton(3))
 		{
 			intake->Set(-1);
 		}
 		else
-		{
-		intake->Set(0);
-		}
+			intake->Set(0);		
+		
 		
 		//Servos
-		if(ds->GetDigitalIn(5)){
-			servo_1->Set(0);
-			servo_2->Set(1);
-		}
-		else if (ds->GetDigitalIn(3)){
-			servo_1->Set(1);
-			servo_2->Set(0);
-		}
-		else
-		{
-			servo_1->Set(1);
-			servo_2->Set(0);
-		}
+		/*if(shooter_stick->GetRawButton(6)){
+		 servo_1->Set(0);
+		 servo_2->Set(1);
+		 }
+		 else if (shooter_stick->GetRawButton(7)){
+		 servo_1->Set(1);
+		 servo_2->Set(0);
+		 }
+		 else
+		 {*/
+		servo_1->Set(0);
+		servo_2->Set(1);
+		//}
 	}
 }
 
