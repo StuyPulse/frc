@@ -55,10 +55,10 @@ void Michael1::Autonomous(void)
 	
 	switch(autonswitch->Get()){
 		case 0:
-			dt->SetMotors(0.2, 0.4);
+			dt->SetMotors(0.4, 0.1);
 			break;
 		case 1:
-			dt->SetMotors(0.4, 0.2);
+			dt->SetMotors(0.1, 0.4);
 			break;
 		default:
 			dt->SetMotors(1.0,1.0);
@@ -160,6 +160,9 @@ void Michael1::OperatorControl(void)
 			dt->TankDrive(left_stick, right_stick);
 		}
 		
+		
+		
+		
 
 		//brakes
 		if (left_stick->GetRawButton(2) || right_stick->GetRawButton(2)){
@@ -169,9 +172,11 @@ void Michael1::OperatorControl(void)
 		}
 					
 		//shooter
-		if (shooter_stick->GetTrigger() || shooter_stick->GetRawButton(3)){
+		if (shooter_stick->GetTrigger())
+		{
 			shooter->Set(-0.75);
-		} else {
+		}  
+		else {
 			shooter->Set(shooter_stick->GetY() * 0.5);
 		}
 		
@@ -185,9 +190,16 @@ void Michael1::OperatorControl(void)
 			intake->Set(1);
 		else if (ds->GetDigitalIn(4))
 			intake->Set(-1);
-		else
-			intake->Set(0);		
 		
+					
+		if (shooter_stick->GetRawButton(3))
+		{
+			intake->Set(-1);
+		}
+		else
+		{
+		intake->Set(0);
+		}
 		
 		//Servos
 		if(ds->GetDigitalIn(5)){
