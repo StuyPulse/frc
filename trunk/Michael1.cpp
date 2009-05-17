@@ -52,17 +52,22 @@ void Michael1::Autonomous(void)
 {
 	GetWatchdog().SetEnabled(false);
 	
-	switch(autonswitch->Get()){
-		case 2: //arc to the right
-			dt->SetMotors(0.5,0.1);
-			break;
-		case 3: //arc to the left
-			dt->SetMotors(0.1,0.5);
-			break;
-		default: //arc to the right
-			dt->SetMotors(0.5,0.1);
-	}
-	// printf("\n\n\tFinished Autonomous\n\n");
+	/*	switch(autonswitch->Get()){
+	 case 2: //arc to the right
+	 dt->SetMotors(0.5,0.1);
+	 break;
+	 case 3: //arc to the left
+	 dt->SetMotors(0.1,0.5);
+	 break;
+	 default: //arc to the right
+	 dt->SetMotors(1.0,1.0);
+	 } */
+	
+	
+	if (autonswitch->Get() == 3)  //arc to the left
+		dt->SetMotors(0.1, 0.5);   
+	else                          // arc to the right
+		dt->SetMotors(0.5,0.1);  
 }
 
 
