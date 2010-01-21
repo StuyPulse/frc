@@ -1,0 +1,9 @@
+Suggested settings for Donovan's autonomous routine:
+
+1) 30 inches forward while running acquirer
+2) step 1 -> stop acquirer, shoot
+3) step 2 -> 6ft forward while running acquirer
+4) backwards 16ft
+5) step 2 -> 3ft forward while running acuirer
+6) step 5 -> stop acquirer, shoot
+7) step 6 -> 3ft forward while running acquirer
