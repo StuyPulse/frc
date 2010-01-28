@@ -1,0 +1,6 @@
+MIDlet-Name: CircleTrackerDemo
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: FIRST
+MIDlet-1: CircleTrackerDemo, , edu.wpi.first.wpilibj.samples.CircleTrackerDemo
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1
