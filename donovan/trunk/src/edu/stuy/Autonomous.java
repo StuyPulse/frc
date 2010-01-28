@@ -1,10 +1,20 @@
 package edu.stuy;
 
+
+
 /**
  * These are the different methods for autonomus mode.
  * @author Prog
  */
 public class Autonomous {
+
+    Donovan donnie;
+    Move move;
+
+    public Autonomous(Donovan d){
+        donnie = d;
+        move = new Move();
+    }
 
     public void runSettingNum(int settingNum) {
         switch(settingNum) {
@@ -22,7 +32,8 @@ public class Autonomous {
      * This will move robot forward 30 inches while running acquirer
      */
     public void setting1() {
-
+        donnie.roller.start();
+        move.forwardInches(30);
     }
 
     /**
@@ -30,7 +41,7 @@ public class Autonomous {
      */
     public void setting2() {
         setting1();
-
+        kick();
     }
 
     /**
@@ -38,36 +49,51 @@ public class Autonomous {
      */
     public void setting3() {
         setting2();
-
+        donnie.roller.start();
+        move.forwardFeet(6);
     }
 
     /**
      * This will move robot back 16 feet
+     * CHECK IF THIS INSTRUCTION IS CORRECT
      */
     public void setting4() {
-
+        move.backFeet(16);
     }
+
     /**
      * This will perform setting2 and then go 3 feet forward while running acquirer
      */
     public void setting5() {
         setting2();
-
+        donnie.roller.start();
+        move.forwardFeet(3);
     }
+
     /**
      * This will perform setting5 and then stop the acquirer and shoot
      */
     public void setting6() {
         setting5();
-
+        kick();
     }
+
     /**
      * This will perform setting6 and then move robot
      * forward 3 feet while running acquirer
      */
     public void setting7() {
         setting6();
-
+        donnie.roller.start();
+        move.forwardFeet(3);
     }
 
+    /**
+     * This stops the acquirer and kicks the ball
+     * We don't know what order those things should happen in
+     */
+    private void kick() {
+        donnie.kicker.shoot();
+        donnie.roller.stop();
+    }
 }

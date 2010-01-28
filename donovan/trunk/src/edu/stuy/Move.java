@@ -1,5 +1,8 @@
 package edu.stuy;
 
+//Should these methods be in DonovanDriveTrain.java ?
+//Do we really need a Move class?
+
 /**
  * This is for the robot to drive itself
  * @author Prog

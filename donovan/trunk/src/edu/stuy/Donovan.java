@@ -5,8 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//This comment edited to test tortoise svn
-
 package edu.stuy;
 
 
@@ -25,6 +23,23 @@ import edu.wpi.first.wpilibj.Watchdog;
  * directory.
  */
 public class Donovan extends SimpleRobot {
+
+    Joystick lstick;
+    Joystick rstick;
+    Joystick shootStick;
+    DonovanDriveTrain dt;
+    Acquirer roller;
+    Kicker kicker;
+
+    public Donovan(){
+        lstick = new Joystick(1); //usb port
+        rstick = new Joystick(2); //usb port
+        shootStick = new Joystick(3); //usb port
+        dt = new DonovanDriveTrain(1,2,3,4); //digital channel
+        roller = new Acquirer(5); //digital channel
+        kicker = new Kicker(6); //digital channel
+    }
+
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
@@ -36,6 +51,19 @@ public class Donovan extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-
+        getWatchdog().setEnabled(true);
+        while(isOperatorControl() && isEnabled()){
+            dt.tankDrive(lstick, rstick);
+            if(shootStick.getButton(Joystick.ButtonType.kTrigger)){
+                kicker.shoot();
+            }
+            if(shootStick.getRawButton(1)){  //don't know which button this is
+                roller.start();
+            }
+            else{
+                roller.stop();
+            }
+            getWatchdog().feed();
+        }
     }
 }

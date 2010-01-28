@@ -13,9 +13,16 @@ import edu.wpi.first.wpilibj.*;
  * @author !Alejandro
  */
 public class DonovanDriveTrain extends RobotDrive{
+    
     private Gyro gyro;
+
     public DonovanDriveTrain(int motor1,int motor2,int motor3,int motor4,int gyroport){
         super(motor1, motor2, motor3, motor4);
         gyro = new Gyro(gyroport);
     }
+
+    public DonovanDriveTrain(int motor1, int motor2, int motor3, int motor4){
+        super(motor1, motor2, motor3, motor4);
+    }
+
 }
