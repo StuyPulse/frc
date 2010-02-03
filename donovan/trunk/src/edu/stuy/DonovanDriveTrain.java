@@ -22,7 +22,8 @@ public class DonovanDriveTrain extends RobotDrive{
     }
 
     public DonovanDriveTrain(int motor1, int motor2, int motor3, int motor4){
-        super(motor1, motor2, motor3, motor4);
+        //super(motor1, motor2, motor3, motor4);
+        super(motor1, motor2);
     }
 
 }
