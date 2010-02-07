@@ -43,14 +43,14 @@ public class CircleTrackerDemo extends IterativeRobot {
         drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
-    Joystick js = new Joystick(1);
     Joystick js2 = new Joystick(2);
-    PIDController turnController = new PIDController(.08, 0.0, 0.5, gyro, new PIDOutput() {
+    Joystick js = new Joystick(1);
+    PIDController turnController = new PIDController(0.035, /*0.0002*/0.0, 0.0, gyro, new PIDOutput() {
 
         public void pidWrite(double output) {
             drive.arcadeDrive(0, output);
         }
-    }, .005);
+    }, 0.005);
     TrackerDashboard trackerDashboard = new TrackerDashboard();
 
     /**
@@ -88,21 +88,32 @@ public class CircleTrackerDemo extends IterativeRobot {
     boolean lastTrigger = false;
 
     /**
+     * COCK
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+       /* int counter = 0;
+        
+        if (counter == 1000)
+        {
+            System.out.println("Gyro Angle: " + gyro.pidGet());
+            counter = 0;
+        } */
         long startTime = Timer.getUsClock();
         if (!js.getTrigger()) {
             if (lastTrigger)
                 turnController.disable();
             lastTrigger = false;
-            drive.tankDrive(js,js2);
+            drive.tankDrive(js, js2);
         } else {
             if (!lastTrigger) {
                 turnController.enable();
                 turnController.setSetpoint(gyro.pidGet());
             }
             lastTrigger = true;
+        }
+
+        
             try {
                 if (cam.freshImage()) {// && turnController.onTarget()) {
                     double gyroAngle = gyro.pidGet();
@@ -113,6 +124,7 @@ public class CircleTrackerDemo extends IterativeRobot {
                     image.free();
                     if (targets.length == 0 || targets[0].m_score < kScoreThreshold) {
                         System.out.println("No target found");
+                        
                         Target[] newTargets = new Target[targets.length + 1];
                         newTargets[0] = new Target();
                         newTargets[0].m_majorRadius = 0;
@@ -121,7 +133,10 @@ public class CircleTrackerDemo extends IterativeRobot {
                         for (int i = 0; i < targets.length; i++) {
                             newTargets[i + 1] = targets[i];
                         }
+
                         trackerDashboard.updateVisionDashboard(0.0, gyro.getAngle(), 0.0, 0.0, newTargets);
+
+                        
                     } else {
                         System.out.println(targets[0]);
                         System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
@@ -136,6 +151,6 @@ public class CircleTrackerDemo extends IterativeRobot {
             }
             System.out.println("Time : " + (Timer.getUsClock() - startTime) / 1000000.0);
             System.out.println("Gyro Angle: " + gyro.getAngle());
-        }
+            //counter ++;
     }
 }
