@@ -33,6 +33,11 @@ public class Donovan extends SimpleRobot {
     DonTrackerDashboard trackerDashboard = new DonTrackerDashboard();
     double kScoreThreshold = .01;
 
+    Autonomous auton;
+    BinarySwitch autonSelect;
+
+    
+
 
     public Donovan(){
         lstick = new Joystick(1); //usb port
@@ -48,13 +53,15 @@ public class Donovan extends SimpleRobot {
 
         dt.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         dt.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+
     }
 
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        
+        auton.runSettingNum(autonSelect.getAutonSwitch());
+
     }
 
     /**
