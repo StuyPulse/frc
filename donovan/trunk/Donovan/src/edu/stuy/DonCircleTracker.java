@@ -36,7 +36,7 @@ public class DonCircleTracker {
         cam = AxisCamera.getInstance();
         cam.writeResolution(AxisCamera.ResolutionT.k320x240);
         cam.writeBrightness(0);
-        donnie.gyro.setSensitivity(.007);
+        donnie.gyro.setSensitivity(-.007);
         
         turnController = new PIDController(pVal, iVal, dVal, donnie.gyro, new PIDOutput() {
             public void pidWrite(double output) {
