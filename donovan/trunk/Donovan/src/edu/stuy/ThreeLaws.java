@@ -7,7 +7,7 @@ package edu.stuy;
 
 /**
  *
- * @author Ginkgo
+ * @author Isaac Asimov
  */
 public interface ThreeLaws {
     public void doNoHarm();

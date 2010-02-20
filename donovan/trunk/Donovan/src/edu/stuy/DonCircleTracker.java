@@ -4,7 +4,6 @@
  */
 package edu.stuy;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -18,31 +17,33 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 public class DonCircleTracker {
 
     private Donovan donnie;
-    double kScoreThreshold;
+    double kScoreThreshold = .01;
     AxisCamera cam;
     PIDController turnController;
     DonTrackerDashboard trackerDashboard;
 
     //set to good default values
-    double pVal = .05;
-    double iVal = 0;
-    double dVal = 0;
+    double pVal = 0.025;
+    double iVal = 0.00075;
+    double dVal = 0.0;
 
     public DonCircleTracker(Donovan d) {
         donnie = d;
-        trackerDashboard = new DonTrackerDashboard();
-        kScoreThreshold = .01;
+        
+        //kScoreThreshold = .01; //we do this higher up in the declaration
         Timer.delay(10.0);
         cam = AxisCamera.getInstance();
         cam.writeResolution(AxisCamera.ResolutionT.k320x240);
         cam.writeBrightness(0);
-        donnie.gyro.setSensitivity(-.007);
+        
         
         turnController = new PIDController(pVal, iVal, dVal, donnie.gyro, new PIDOutput() {
             public void pidWrite(double output) {
                 donnie.dt.arcadeDrive(0, output);
             }
         }, 0.005);
+        trackerDashboard = new DonTrackerDashboard();
+        //donnie.gyro.setSensitivity(-0.007); //this also occurs in Donovan.java
         turnController.setInputRange(-360.0, 360.0);
         turnController.setTolerance(1 / 90. * 100);
         turnController.disable();
@@ -53,6 +54,7 @@ public class DonCircleTracker {
     public void doCamera() {
         try {
             if (cam.freshImage()) {// && turnController.onTarget()) {
+                
                 double gyroAngle = donnie.gyro.pidGet();
                 ColorImage image = cam.getImage();
                 Thread.yield();
@@ -60,7 +62,7 @@ public class DonCircleTracker {
                 Thread.yield();
                 image.free();
                 if (targets.length == 0 || targets[0].m_score < kScoreThreshold) {
-                    System.out.println("No target found");
+                   // System.out.println("No target found");
 
                     DonovanTarget[] newTargets = new DonovanTarget[targets.length + 1];
                     newTargets[0] = new DonovanTarget();
@@ -76,14 +78,10 @@ public class DonCircleTracker {
 
                 } else {
                   //  System.out.println(targets[0]);
-                    System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
-
-                    System.out.println("Please set p, i, and d values...");
-                    turnController.setPID(pVal, iVal, dVal);
-                    
+                   // System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
                     turnController.setSetpoint(gyroAngle + targets[0].getHorizontalAngle());
 
-                    System.out.println("calling lightLEDs");
+                   // System.out.println("calling lightLEDs");
                     donnie.oi.lightLEDs(targets[0]);
 
                      trackerDashboard.updateVisionDashboard(0.0, donnie.gyro.getAngle(), 0.0, targets[0].m_xPos / targets[0].m_xMax, targets);
@@ -95,16 +93,27 @@ public class DonCircleTracker {
             ex.printStackTrace();
         }
         //System.out.println("Time : " + (Timer.getUsClock() - startTime) / 1000000.0);
-        System.out.println("Gyro Angle: " + donnie.gyro.getAngle());
+       // System.out.println("Gyro Angle: " + donnie.gyro.getAngle());
         //counter ++;
     }
 
     public void startAligning() {
+        
         turnController.enable();
         turnController.setSetpoint(donnie.gyro.pidGet());
     }
 
     public void stopAligning() {
+        turnController.disable();
+    }
+
+    public void alignAuto() {
+        long time = Timer.getUsClock();
+        while(!turnController.onTarget()) {
+            if(Timer.getUsClock() - 3000000 < time)
+                turnController.enable();
+            else break;
+        }
         turnController.disable();
     }
 }

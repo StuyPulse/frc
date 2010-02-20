@@ -19,7 +19,6 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
     Encoder encoderRight;
     Servo shifterLeft;
     Servo shifterRight;
-    Servo a_Frame;
     final double DISTANCE_PER_PULSE = 12.0 / 530.0; // 250 pulses per revolution, 530 pulses per foot
 
     public DonovanDriveTrain(int motor1, int motor2, int gyroport) {
@@ -49,7 +48,6 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
         encoderRight = new Encoder(ENCODER_CHANNEL_2A, ENCODER_CHANNEL_2B, true);
         shifterLeft = new Servo(SHIFTERLEFT_CHANNEL);
         shifterRight = new Servo(SHIFTERRIGHT_CHANNEL);
-        a_Frame = new Servo(A_FRAME_CHANNEL);
 
         encoderLeft.setDistancePerPulse(DISTANCE_PER_PULSE);
         encoderRight.setDistancePerPulse(DISTANCE_PER_PULSE);
@@ -90,7 +88,7 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
         while (getAvgDistance() < inches) {
             arcadeDrive(-0.5, 0); //speed may need adjustment
         }
-arcadeDrive(0,0);
+        arcadeDrive(0, 0);
     }
 
     /**
@@ -105,7 +103,7 @@ arcadeDrive(0,0);
         while (getAvgDistance() > -inches) {
             arcadeDrive(0.5, 0); //speed may need adjustment
         }
-arcadeDrive(0,0);
+        arcadeDrive(0, 0);
 
 
     }
@@ -158,5 +156,9 @@ arcadeDrive(0,0);
         shifterRight.set(0);
         System.out.println("I set your gears low");
         highGear = false;
+    }
+
+    public boolean getGear(){
+        return highGear;
     }
 }

@@ -30,10 +30,12 @@ public interface Ports {
 
     int SHIFTERLEFT_CHANNEL = 6;
     int SHIFTERRIGHT_CHANNEL = 5;
-    int A_FRAME_CHANNEL = 7;
+    int A_FRAME_CHANNEL = 8;
+
+    int WINCH_CHANNEL = 10;
 
     int ACQUIRER_CHANNEL = 9;
-    int KICKMOTOR_CHANNEL = 10;
+    int KICKMOTOR_CHANNEL = 7;
 
     /*** DIGITAL IO ***/
     int LIMSWITCH_CHANNEL = 5;
@@ -47,14 +49,30 @@ public interface Ports {
 
     /*** ANALOG ***/
     int GYRO_CHANNEL = 1;
-    int ACCEL_CHANNEL = 2;
+    int ACCEL_CHANNEL = 2; //does not exist
 
     /*** FIRSTtouch ***/
-    int A_FRAME = 9;
-    int ACQUIRER_SWITCH_A = 11;
-    int ACQUIRER_SWITCH_B = 12;
-    int WINCH_REEL = 13;
-    int KICK = 14;
-    int EMERGENCY_COCK = 15;
+    int A_FRAME_SWITCH = 2;
+    int ACQUIRER_SWITCH_A = 8; //reverse?
+    int ACQUIRER_SWITCH_B = 6; //forward?
+    int WINCH_SWITCH = 4;
+    int KICK_SWITCH = 3;
+    int E_COCK_SWITCH = 1;
 
+    int INDICATOR_LIGHT = 11; //connected to LED3 pin,
+
+    int LED1 = 7; //order possibly reversed
+    int LED2 = 9; //all set to outputs
+    int LED3 = 11;
+    int LED4 = 13;
+    int LED5 = 15;
+
+    int BIT_4_CHANNEL = 16; //possibly reversed
+    int BIT_3_CHANNEL = 14;
+    int BIT_2_CHANNEL = 12;
+    int BIT_1_CHANNEL = 10;
+
+
+    boolean COCKED = true;
+    boolean NOT_COCKED = false;
 }

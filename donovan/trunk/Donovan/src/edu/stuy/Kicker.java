@@ -16,40 +16,25 @@ public class Kicker extends Victor implements Ports {
         super(channel);
         limSwitch = new DigitalInput(LIMSWITCH_CHANNEL);
         donnie = d;
-
     }
 
     /**
-     *
-     *
      * This method shoots the ball the same way no matter
      * where in the field the robot is.  It will cock if 
      * it hasn't been cocked already.
-     *  
-     *
      */
     public void shoot() {
         cock();
-      /*  while (limSwitch.get()) {
+        while (limSwitch.get()) {
             set(1.0);
-
         }
-       */
-       set(0.0);
-    }
-
-    public void stop() {
         set(0.0);
-    }
-
-    public void runKicker() {
-        set(0.5);
     }
     /*
      * This moves the cam so that the kicker is pulled back and ready to fire
      */
     public void cock() {
-        while (/*!limSwitch.get()*/ true) {
+        while (!limSwitch.get()) {
             set(0.25);
             if (!donnie.shootStick.getTrigger()) {
                 break;
@@ -57,4 +42,22 @@ public class Kicker extends Victor implements Ports {
         }
         set(0.0);
     }
+
+    public void stop() {
+        set(0.0);
+    }
+
+    /**
+     * Used for testing when the limit switch is not properly installed
+     */
+    public void runKicker() {
+        set(1.0);
+    }
+
+    public boolean getCockStatus(){
+        return limSwitch.get();
+    }
+
+
 }
+ 
