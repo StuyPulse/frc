@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
  *
  * @author Prog
  */
-public class DonCircleTracker {
+public class DonCircleTracker implements Ports {
 
     private Donovan donnie;
     double kScoreThreshold = .01;
@@ -23,9 +23,9 @@ public class DonCircleTracker {
     DonTrackerDashboard trackerDashboard;
 
     //set to good default values
-    double pVal = 0.025;
-    double iVal = 0.00075;
-    double dVal = 0.0;
+    //double pVal = 0.025;
+    //double iVal = 0.00075;
+    //double dVal = 0.0;
 
     public DonCircleTracker(Donovan d) {
         donnie = d;
@@ -37,12 +37,12 @@ public class DonCircleTracker {
         cam.writeBrightness(0);
         
         
-        turnController = new PIDController(pVal, iVal, dVal, donnie.gyro, new PIDOutput() {
+        turnController = new PIDController(PVAL, IVAL, DVAL, donnie.gyro, new PIDOutput() {
             public void pidWrite(double output) {
                 donnie.dt.arcadeDrive(0, output);
             }
         }, 0.005);
-        trackerDashboard = new DonTrackerDashboard();
+        trackerDashboard = new DonTrackerDashboard(/*donnie*/);
         //donnie.gyro.setSensitivity(-0.007); //this also occurs in Donovan.java
         turnController.setInputRange(-360.0, 360.0);
         turnController.setTolerance(1 / 90. * 100);
@@ -109,8 +109,8 @@ public class DonCircleTracker {
 
     public void alignAuto() {
         long time = Timer.getUsClock();
-        while(!turnController.onTarget()) {
-            if(Timer.getUsClock() - 3000000 < time)
+        while((!turnController.onTarget())&& donnie.isEnabled()) {
+            if((Timer.getUsClock() - 3000000 < time) && donnie.isAutonomous() && donnie.isEnabled())
                 turnController.enable();
             else break;
         }

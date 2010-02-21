@@ -53,8 +53,8 @@ public interface Ports {
 
     /*** FIRSTtouch ***/
     int A_FRAME_SWITCH = 2;
-    int ACQUIRER_SWITCH_A = 8; //reverse?
-    int ACQUIRER_SWITCH_B = 6; //forward?
+    int ACQUIRER_SWITCH_A = 6; //reverse?
+    int ACQUIRER_SWITCH_B = 8; //forward?
     int WINCH_SWITCH = 4;
     int KICK_SWITCH = 3;
     int E_COCK_SWITCH = 1;
@@ -70,9 +70,15 @@ public interface Ports {
     int BIT_4_CHANNEL = 16; //possibly reversed
     int BIT_3_CHANNEL = 14;
     int BIT_2_CHANNEL = 12;
-    int BIT_1_CHANNEL = 10;
+     int BIT_1_CHANNEL = 10;
 
+   /************* DEFINES ***********/
+    boolean COCKED = false;
+    boolean NOT_COCKED = true;
 
-    boolean COCKED = true;
-    boolean NOT_COCKED = false;
+    /*********** PID VALUES ************/
+    double PVAL = .025;
+    double IVAL = 0.00075;
+    double DVAL = 0.0;
+
 }

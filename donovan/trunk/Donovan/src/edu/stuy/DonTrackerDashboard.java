@@ -18,11 +18,14 @@ import java.util.TimerTask;
 
 /**
  *  Provide a method to update dashboard data.
+ * Also, experimental Dashboard code.
  * @author dtjones
  */
 public class DonTrackerDashboard {
-
-    public DonTrackerDashboard() {
+    //Donovan donnie;
+    public DonTrackerDashboard(/*Donovan d*/) {
+        //donnie = d;
+        //To get cock and gear booleans from kicker and dt.
         Timer dashTimer = new Timer();
         dashTimer.schedule(new TimerTask() {
 
@@ -103,6 +106,9 @@ public class DonTrackerDashboard {
             lowDashData.finalizeCluster();
 
             lowDashData.addByte(Solenoid.getAll());
+            /*lowDashData.addBoolean(!donnie.kicker.getCockStatus());
+            lowDashData.addBoolean(donnie.dt.getGear());*/
+            //Sends cock and gear data to remote dashboard.
         }
         lowDashData.finalizeCluster();
         lowDashData.commit();

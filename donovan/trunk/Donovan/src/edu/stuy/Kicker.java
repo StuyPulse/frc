@@ -11,11 +11,13 @@ public class Kicker extends Victor implements Ports {
     //May need sensors
     DigitalInput limSwitch;
     Donovan donnie;
+    boolean limSwitchBroken;
 
     public Kicker(int channel, Donovan d) {
         super(channel);
         limSwitch = new DigitalInput(LIMSWITCH_CHANNEL);
         donnie = d;
+        limSwitchBroken = false;
     }
 
     /**
@@ -24,21 +26,38 @@ public class Kicker extends Victor implements Ports {
      * it hasn't been cocked already.
      */
     public void shoot() {
-        cock();
-        while (limSwitch.get()) {
-            set(1.0);
+        if (limSwitchBroken) {
+            System.out.println("manual control - running kicker");
+            runKicker();
+            return ;
         }
-        set(0.0);
+
+            cock();
+            long time = Timer.getUsClock();
+            System.out.println("kicking");
+            set(1.0);
+            Timer.delay(0.5);
+//            while (limSwitch.get() == NOT_COCKED && (Timer.getUsClock() - time < 2000000)) {
+//                set(1.0);
+//            }
+//            set(0.0);
+            cock();
     }
     /*
      * This moves the cam so that the kicker is pulled back and ready to fire
      */
+
     public void cock() {
-        while (!limSwitch.get()) {
-            set(0.25);
-            if (!donnie.shootStick.getTrigger()) {
-                break;
-            }
+        if (limSwitchBroken) {
+            System.out.println("manaual control - cock button disabled");
+            return ;
+        }
+        System.out.println("cocking");
+        long time = Timer.getUsClock();
+        while (limSwitch.get() == NOT_COCKED && (Timer.getUsClock() - time < 2000000)) { //COCKED defined in Ports
+            set(0.75);
+            //may need a short delay?
+            
         }
         set(0.0);
     }
@@ -54,10 +73,8 @@ public class Kicker extends Victor implements Ports {
         set(1.0);
     }
 
-    public boolean getCockStatus(){
+    public boolean getCockStatus() {
         return limSwitch.get();
     }
-
-
 }
  

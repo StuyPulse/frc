@@ -54,7 +54,7 @@ public class Autonomous {
      */
     public void setting1() {
         donnie.roller.start();
-        donnie.dt.forwardInches(30);
+        donnie.dt.forwardInchesStraight(60); //temp dist
 
     }
 
@@ -62,8 +62,8 @@ public class Autonomous {
      * This will perform setting1, shoot and then stop the acquirer
      */
     public void setting2() {
-        setting1();
-        // donnie.kicker.runKicker();
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(30);
         kick();
     }
 
@@ -71,9 +71,13 @@ public class Autonomous {
      * This will perform setting2 and then move 6 feet forward while running acquirer
      */
     public void setting3() {
-        setting2();
         donnie.roller.start();
-        donnie.dt.forwardInches(72); //6 feet
+        donnie.dt.forwardInchesStraight(30);
+        kick();
+
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(72); //6 feet
     }
 
     /**
@@ -88,16 +92,26 @@ public class Autonomous {
      * This will perform setting2 and then go 3 feet forward while running acquirer
      */
     public void setting5() {
-        setting2();
         donnie.roller.start();
-        donnie.dt.forwardInches(36); //3 feet
+        donnie.dt.forwardInchesStraight(30);
+        kick();
+
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
     }
 
     /**
      * This will perform setting5 and then stop the acquirer and shoot
      */
     public void setting6() {
-        setting5();
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(30);
+        kick();
+
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
         kick();
     }
 
@@ -106,9 +120,18 @@ public class Autonomous {
      * forward 3 feet while running acquirer
      */
     public void setting7() {
-        setting6();
         donnie.roller.start();
-        donnie.dt.forwardInches(36); //3 feet
+        donnie.dt.forwardInchesStraight(30);
+        kick();
+
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
+        kick();
+
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
     }
 
     public void setting8() {
@@ -121,21 +144,29 @@ public class Autonomous {
      * then 3 feet to the next two
      */
     public void setting9() {
-        setting2();
-        setting6();
-        setting6();
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(30);
+        kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
+        kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesStraight(36); //3 feet
+        kick();
     }
 
     /**
      * This aligns to target, kicks the ball and stops the acquirer
-     * 
      */
     private void kick() {
         donnie.tracker.alignAuto();
-        //donnie.kicker.shoot();
-        donnie.kicker.runKicker();
+        donnie.kicker.shoot();
+//        donnie.kicker.runKicker();
         donnie.roller.stop();
-        Timer.delay(3);
-        donnie.kicker.stop();
+//        Timer.delay(3);
+//        donnie.kicker.stop();
+
     }
 }

@@ -26,7 +26,6 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     Acquirer roller;
     Kicker kicker;
     Hanger hanger;
-   
     Gyro gyro;
     DonTrackerDashboard trackerDashboard;
     DonCircleTracker tracker;
@@ -38,19 +37,20 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
         lstick = new Joystick(LSTICK_PORT); //usb port
         rstick = new Joystick(RSTICK_PORT); //usb port
         shootStick = new Joystick(SHOOTSTICK_PORT); //usb port
-        dt = new DonovanDriveTrain(DRIVE_1_CHANNEL, DRIVE_2_CHANNEL, DRIVE_3_CHANNEL, DRIVE_4_CHANNEL); //digital channelss
-        roller = new Acquirer(ACQUIRER_CHANNEL); //digital channel
-        kicker = new Kicker(KICKMOTOR_CHANNEL, this); //digital channel
-        hanger = new Hanger(WINCH_CHANNEL, A_FRAME_CHANNEL);
-       
-
         gyro = new Gyro(GYRO_CHANNEL);
         gyro.setSensitivity(-0.007); //this is also done in DonCircleTracker
+        dt = new DonovanDriveTrain(DRIVE_1_CHANNEL, DRIVE_2_CHANNEL, DRIVE_3_CHANNEL, DRIVE_4_CHANNEL, this); //digital channelss
+        roller = new Acquirer(ACQUIRER_CHANNEL, this); //digital channel
+        kicker = new Kicker(KICKMOTOR_CHANNEL, this); //digital channel
+        hanger = new Hanger(WINCH_CHANNEL, A_FRAME_CHANNEL);
+
+
+
         auton = new Autonomous(this);
 
         lcd = DriverStationLCD.getInstance();
         oi = new DonovanOI(this);
-        trackerDashboard = new DonTrackerDashboard();
+        trackerDashboard = new DonTrackerDashboard(/*this*/);
         tracker = new DonCircleTracker(this);
 
 //        dt.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
@@ -77,8 +77,13 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
         getWatchdog().setEnabled(false);
         //getWatchdog().setExpiration(15);
         if (isAutonomous() && isEnabled()) {
-            auton.runSettingNum(2);
+            kicker.cock();
+
+            //auton.runSettingNum(2);
             // getWatchdog().feed();
+            System.out.println(oi.getAutonSwitch());
+            auton.runSettingNum(oi.getAutonSwitch());
+
         }
     }
 
@@ -90,6 +95,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
         lastTop = false;
+        kicker.cock();
         while (isOperatorControl() && isEnabled()) {
             //System.out.println("left encoder: " + dt.getLeftEnc() + " right encoder: " + dt.getRightEnc());
 
@@ -97,7 +103,6 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
             /************ Driver Controls **************/
-
             dt.tankDrive(lstick, rstick);
 
             if (lstick.getTrigger()) {
@@ -120,70 +125,65 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 lastTop = true;
             }
 
+            if (rstick.getRawButton(9)) {
+                System.out.println(kicker.getCockStatus());
+            }
+
             /*
             if (lstick.getRawButton(6) || rstick.getRawButton(6) || shootStick.getRawButton(6)) {
-                oi.testLEDs();
+            oi.testLEDs();
             } else {
-                oi.resetLEDs();
+            oi.resetLEDs();
             }
 
             if (lstick.getRawButton(11) || rstick.getRawButton(11) || shootStick.getRawButton(11)) {
-                dt.resetEncoders();
-           }
-            */
+            dt.resetEncoders();
+            }
+             */
 
 
 
             /************ Shooter Controls **************/
-
+            //Acquirer listed under Panel Controls
             if (shootStick.getRawButton(4)) {
-                
+
                 hanger.startWinch();
-            }
-            else if (shootStick.getRawButton(5)){
-               
+            } else if (shootStick.getRawButton(5)) {
+
                 hanger.reverseWinch();
-            }
-            else {
-               
+            } else {
+
                 hanger.stopWinch();
             }
 
             if (shootStick.getTrigger()) {
                 kicker.shoot();
-            }
-            
-            if (shootStick.getRawButton(2)){
-                hanger.deployAFrame();
-            }
-
-            if (shootStick.getRawButton(3)) {
-                roller.start();
-            } else {
-                roller.stop();
-            }
-
-
-
-
-          
-
-
-            if(shootStick.getRawButton(10)){
+            } else if (kicker.limSwitchBroken) {
                 kicker.stop();
             }
 
 
+            if (shootStick.getRawButton(2)) {
+                hanger.deployAFrame();
+            }
+
+
+            if (shootStick.getRawButton(10)) { //|| shootStick.getRawButton(11)){
+                System.out.println("switching to manual control");
+                kicker.limSwitchBroken = true; //switch to manual control
+                kicker.stop();
+            }
+
+            if (shootStick.getRawButton(11)) { //|| shootStick.getRawButton(11)){
+                System.out.println("switching back to auto control");
+                kicker.limSwitchBroken = false; //switch to manual control
+            }
+
+
             /************ Panel Controls **************/
-
-           //System.out.println("Binary switch: " + oi.getAutonSwitch());
-          
-
-
-
-
-           if (oi.getA_Frame()) {
-               //System.out.println("Get a frame!");
+            //System.out.println("Binary switch: " + oi.getAutonSwitch());
+            if (oi.getA_Frame()) {
+                //System.out.println("Get a frame!");
                 hanger.deployAFrame();
             }
 
@@ -191,49 +191,40 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 //System.out.println("Get a wench!");
                 hanger.startWinch();
             } else {
-               
-              hanger.stopWinch();
+
+                hanger.stopWinch();
             }
 
             if (oi.getKick()) {
                 //System.out.println("get a kick!");
                 kicker.shoot();
+            } else if (kicker.limSwitchBroken) {
+                kicker.stop();
             }
 
             if (oi.getCock()) {
-               //System.out.println("get a cock!");
-                 kicker.cock();
+                //System.out.println("get a cock!");
+                kicker.cock();
             }
 
             if (oi.getAcquirerForward()) {
-               //System.out.println("acquirer forward!");
-                 roller.start();
+                System.out.println("acquirer forward!");
+                roller.start();
+            } else if (oi.getAcquirerReverse()) {
+                System.out.println("acquirer in reverse!");
+                roller.startReverse();
+            } else if (shootStick.getRawButton(3)) {
+                System.out.println("jstk aquire fwd");
+                roller.start();
             } else {
                 roller.stop();
             }
-            
-            if (oi.getAcquirerReverse()) {
-               //System.out.println("acquirer in reverse!");
-                 roller.startReverse();
-            } else {
-                roller.stop();
-            }
-            updateDashboard();
         }
     }
-
-
 
     public void doNoHarm() {
     }
 
     public void obeyOrders() {
-    }
-
-    public void updateDashboard(){
-//        Dashboard lowDashData = DriverStation.getInstance().getDashboardPackerLow();
-//        lowDashData.addBoolean(kicker.getCockStatus());
-//        lowDashData.addBoolean(dt.getGear());
-//        lowDashData.commit();
     }
 }
