@@ -108,6 +108,8 @@ public class DonCircleTracker implements Ports {
     }
 
     public void alignAuto(){
+        //NOT TESTED YET: commented version below was last to be run
+        //on actual robot
         long time = Timer.getUsClock();
         while((Timer.getUsClock() - 3000000 < time) && donnie.isAutonomous() && donnie.isEnabled()) {
             doCamera();
