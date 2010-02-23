@@ -29,6 +29,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     Gyro gyro;
     DonTrackerDashboard trackerDashboard;
     DonCircleTracker tracker;
+    PIDController straightController;
     DonovanOI oi;
     Autonomous auton;
     DriverStationLCD lcd;
@@ -43,6 +44,15 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
         roller = new Acquirer(ACQUIRER_CHANNEL, this); //digital channel
         kicker = new Kicker(KICKMOTOR_CHANNEL, this); //digital channel
         hanger = new Hanger(WINCH_CHANNEL, A_FRAME_CHANNEL);
+        
+        straightController = new PIDController(PVAL, IVAL, DVAL, gyro, new PIDOutput() {
+            public void pidWrite(double output) {
+                dt.arcadeDrive(-0.5, output);
+            }
+        }, 0.005);
+        straightController.setInputRange(-360.0, 360.0);
+        straightController.setTolerance(1 / 90. * 100);
+        straightController.disable();
 
 
 
@@ -50,7 +60,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
         lcd = DriverStationLCD.getInstance();
         oi = new DonovanOI(this);
-        trackerDashboard = new DonTrackerDashboard(/*this*/);
+        trackerDashboard = new DonTrackerDashboard(this);
         tracker = new DonCircleTracker(this);
 
 //        dt.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
@@ -81,7 +91,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
             //auton.runSettingNum(2);
             // getWatchdog().feed();
-            System.out.println(oi.getAutonSwitch());
+            //System.out.println(oi.getAutonSwitch());
             auton.runSettingNum(oi.getAutonSwitch());
 
         }
@@ -96,6 +106,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
         lastTop = false;
         kicker.cock();
+        int c = 0;
         while (isOperatorControl() && isEnabled()) {
             //System.out.println("left encoder: " + dt.getLeftEnc() + " right encoder: " + dt.getRightEnc());
 
@@ -104,6 +115,14 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
             /************ Driver Controls **************/
             dt.tankDrive(lstick, rstick);
+
+            /*
+            if(c%100 == 0){
+            System.out.println("leftstick: " + lstick.getRawAxis(1));
+            System.out.println("rightstick: " + rstick.getRawAxis(1));
+            }
+            c++;
+             */
 
             if (lstick.getTrigger()) {
                 dt.setLow(); // to low gear
@@ -125,9 +144,12 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 lastTop = true;
             }
 
+            /*
             if (rstick.getRawButton(9)) {
                 System.out.println(kicker.getCockStatus());
             }
+             * */
+
 
             /*
             if (lstick.getRawButton(6) || rstick.getRawButton(6) || shootStick.getRawButton(6)) {
@@ -169,13 +191,13 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
             if (shootStick.getRawButton(10)) { //|| shootStick.getRawButton(11)){
-                System.out.println("switching to manual control");
+                //System.out.println("switching to manual control");
                 kicker.limSwitchBroken = true; //switch to manual control
                 kicker.stop();
             }
 
             if (shootStick.getRawButton(11)) { //|| shootStick.getRawButton(11)){
-                System.out.println("switching back to auto control");
+                //System.out.println("switching back to auto control");
                 kicker.limSwitchBroken = false; //switch to manual control
             }
 
@@ -208,13 +230,13 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             }
 
             if (oi.getAcquirerForward()) {
-                System.out.println("acquirer forward!");
+                //System.out.println("acquirer forward!");
                 roller.start();
             } else if (oi.getAcquirerReverse()) {
-                System.out.println("acquirer in reverse!");
+                //System.out.println("acquirer in reverse!");
                 roller.startReverse();
             } else if (shootStick.getRawButton(3)) {
-                System.out.println("jstk aquire fwd");
+                //System.out.println("jstk aquire fwd");
                 roller.start();
             } else {
                 roller.stop();

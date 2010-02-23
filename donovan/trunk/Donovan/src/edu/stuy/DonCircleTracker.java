@@ -42,7 +42,7 @@ public class DonCircleTracker implements Ports {
                 donnie.dt.arcadeDrive(0, output);
             }
         }, 0.005);
-        trackerDashboard = new DonTrackerDashboard(/*donnie*/);
+        trackerDashboard = new DonTrackerDashboard(donnie);
         //donnie.gyro.setSensitivity(-0.007); //this also occurs in Donovan.java
         turnController.setInputRange(-360.0, 360.0);
         turnController.setTolerance(1 / 90. * 100);
@@ -107,13 +107,24 @@ public class DonCircleTracker implements Ports {
         turnController.disable();
     }
 
-    public void alignAuto() {
+    public void alignAuto(){
+        long time = Timer.getUsClock();
+        while((Timer.getUsClock() - 3000000 < time) && donnie.isAutonomous() && donnie.isEnabled()) {
+            doCamera();
+            turnController.enable();
+        }
+        turnController.disable();
+
+            /*
         long time = Timer.getUsClock();
         while((!turnController.onTarget())&& donnie.isEnabled()) {
+            doCamera();
             if((Timer.getUsClock() - 3000000 < time) && donnie.isAutonomous() && donnie.isEnabled())
                 turnController.enable();
             else break;
         }
         turnController.disable();
+             * */
+
     }
 }

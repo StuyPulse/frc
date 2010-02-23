@@ -27,7 +27,7 @@ public class Hanger implements Ports {
         if (aFrameDeployed) {
             winch.set(-1.0);
         } else {
-            System.out.println("AFrame not yet deployed");
+            //System.out.println("AFrame not yet deployed");
         }
     }
 
@@ -39,7 +39,7 @@ public class Hanger implements Ports {
         if (aFrameDeployed) {
             winch.set(0.25);
         } else {
-            System.out.println("AFrame not yet deployed");
+            //System.out.println("AFrame not yet deployed");
         }
     }
 

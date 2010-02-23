@@ -59,9 +59,9 @@ public class DonovanOI implements Ports {
         double angle = target.getHorizontalAngle();
         if (angle >= 14) {
             return 1;
-        } else if (angle > 3.5) {
+        } else if (angle > 2) {
             return 2;
-        } else if (angle > -3.5) {
+        } else if (angle > -2) {
             return 3;
         } else if (angle > -14) {
             return 4;
@@ -172,7 +172,7 @@ public class DonovanOI implements Ports {
             {
                 switchNum += binaryValue[i];
             }
-            if (switchNum > 10) {
+            if (switchNum > 11) {
                 switchNum = 1; // that BinarySwitch() doesn't return a nonexistent switchNum
             }
             return switchNum;

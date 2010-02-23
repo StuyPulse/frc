@@ -27,14 +27,14 @@ public class Kicker extends Victor implements Ports {
      */
     public void shoot() {
         if (limSwitchBroken) {
-            System.out.println("manual control - running kicker");
+            //System.out.println("manual control - running kicker");
             runKicker();
             return ;
         }
 
             cock();
             long time = Timer.getUsClock();
-            System.out.println("kicking");
+            //System.out.println("kicking");
             set(1.0);
             Timer.delay(0.5);
 //            while (limSwitch.get() == NOT_COCKED && (Timer.getUsClock() - time < 2000000)) {
@@ -49,10 +49,10 @@ public class Kicker extends Victor implements Ports {
 
     public void cock() {
         if (limSwitchBroken) {
-            System.out.println("manaual control - cock button disabled");
+            //System.out.println("manaual control - cock button disabled");
             return ;
         }
-        System.out.println("cocking");
+        //System.out.println("cocking");
         long time = Timer.getUsClock();
         while (limSwitch.get() == NOT_COCKED && (Timer.getUsClock() - time < 2000000)) { //COCKED defined in Ports
             set(0.75);

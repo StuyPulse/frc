@@ -19,6 +19,9 @@ public class Autonomous {
 
     public void runSettingNum(int settingNum) {
         switch (settingNum) {
+            case 0:
+                setting0();
+                break;
             case 1:
                 setting1();
                 break;
@@ -46,7 +49,21 @@ public class Autonomous {
             case 9:
                 setting9();
                 break;
+            case 10:
+                setting10();
+                break;
+            case 11:
+                setting11();
+                break;
         }
+    }
+
+    public void setting0() {
+        /*donnie.roller.start();
+        donnie.dt.forwardInchesCharlie(30);
+        kick();
+         *
+         */
     }
 
     /**
@@ -54,8 +71,8 @@ public class Autonomous {
      */
     public void setting1() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(60); //temp dist
-
+        donnie.dt.forwardInchesOscar(30);
+        donnie.roller.stop();
     }
 
     /**
@@ -63,7 +80,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInches(30);
         kick();
     }
 
@@ -72,12 +89,13 @@ public class Autonomous {
      */
     public void setting3() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInchesOscar(30);
+
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(72); //6 feet
+        donnie.dt.forwardInchesOscar(72); //6 feet
     }
 
     /**
@@ -92,13 +110,20 @@ public class Autonomous {
      * This will perform setting2 and then go 3 feet forward while running acquirer
      */
     public void setting5() {
+        donnie.tracker.alignAuto();
+        System.out.println("done aligning");
+        donnie.kicker.shoot();
+
+        /*
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInches(30);
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInches(36); //3 feet
+         * */
+
     }
 
     /**
@@ -106,12 +131,12 @@ public class Autonomous {
      */
     public void setting6() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInchesOscar(30);
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInchesOscar(36); //3 feet
         kick();
     }
 
@@ -121,17 +146,17 @@ public class Autonomous {
      */
     public void setting7() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInchesOscar(30);
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInchesOscar(36); //3 feet
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInchesOscar(36); //3 feet
     }
 
     public void setting8() {
@@ -145,20 +170,33 @@ public class Autonomous {
      */
     public void setting9() {
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(30);
+        donnie.dt.forwardInchesOscar(30);
         kick();
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInchesOscar(36); //3 feet
         kick();
 
         donnie.roller.start();
-        donnie.dt.forwardInchesStraight(36); //3 feet
+        donnie.dt.forwardInchesOscar(36); //3 feet
+        kick();
+    }
+
+    public void setting10() {
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(30);
+        kick();
+    }
+
+    public void setting11() {
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(30);
         kick();
     }
 
     /**
      * This aligns to target, kicks the ball and stops the acquirer
+     * ONLY USE IN AUTONOMOUS, NOT TELEOP
      */
     private void kick() {
         donnie.tracker.alignAuto();

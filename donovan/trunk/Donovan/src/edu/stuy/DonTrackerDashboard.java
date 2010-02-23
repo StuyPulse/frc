@@ -22,10 +22,9 @@ import java.util.TimerTask;
  * @author dtjones
  */
 public class DonTrackerDashboard {
-    //Donovan donnie;
-    public DonTrackerDashboard(/*Donovan d*/) {
-        //donnie = d;
-        //To get cock and gear booleans from kicker and dt.
+    Donovan donnie;
+    public DonTrackerDashboard(Donovan d) {
+        donnie = d;
         Timer dashTimer = new Timer();
         dashTimer.schedule(new TimerTask() {
 
@@ -106,9 +105,8 @@ public class DonTrackerDashboard {
             lowDashData.finalizeCluster();
 
             lowDashData.addByte(Solenoid.getAll());
-            /*lowDashData.addBoolean(!donnie.kicker.getCockStatus());
-            lowDashData.addBoolean(donnie.dt.getGear());*/
-            //Sends cock and gear data to remote dashboard.
+            lowDashData.addBoolean(!donnie.kicker.getCockStatus());
+            lowDashData.addBoolean(donnie.dt.getGear());
         }
         lowDashData.finalizeCluster();
         lowDashData.commit();
