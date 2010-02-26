@@ -54,7 +54,7 @@ public class Autonomous {
      */
     public void setting1() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(36); //used to be 30, 36 allows for use in any section
+        donnie.dt.forwardInchesOscar(30);
         //donnie.roller.stop(); //leave acquirer on for teleop?
     }
 
@@ -63,7 +63,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(36); //used to be 30, 36 allows for use in any section
+        donnie.dt.forwardInchesOscar(30);
         kick();
     }
 
