@@ -19,9 +19,6 @@ public class Autonomous {
 
     public void runSettingNum(int settingNum) {
         switch (settingNum) {
-            case 0:
-                setting0();
-                break;
             case 1:
                 setting1();
                 break;
@@ -50,14 +47,6 @@ public class Autonomous {
                 setting9();
                 break;
         }
-    }
-
-    public void setting0() {
-        /*donnie.roller.start();
-        donnie.dt.forwardInchesCharlie(30);
-        kick();
-         *
-         */
     }
 
     /**
