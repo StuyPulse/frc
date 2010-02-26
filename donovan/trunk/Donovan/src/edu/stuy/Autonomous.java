@@ -49,12 +49,6 @@ public class Autonomous {
             case 9:
                 setting9();
                 break;
-            case 10:
-                setting10();
-                break;
-            case 11:
-                setting11();
-                break;
         }
     }
 
@@ -71,8 +65,8 @@ public class Autonomous {
      */
     public void setting1() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
-        donnie.roller.stop();
+        donnie.dt.forwardInchesOscar(36); //used to be 30, 36 allows for use in any section
+        //donnie.roller.stop(); //leave acquirer on for teleop?
     }
 
     /**
@@ -80,7 +74,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInches(30);
+        donnie.dt.forwardInchesOscar(36); //used to be 30, 36 allows for use in any section
         kick();
     }
 
@@ -100,30 +94,31 @@ public class Autonomous {
 
     /**
      * This will move robot back 16 feet
-     * CHECK IF THIS INSTRUCTION IS CORRECT
+     * Robot should be backwards, to push the ball into goal
      */
     public void setting4() {
         donnie.dt.backInches(192); //16 feet
+	// use drive straight code (Oscar)?
     }
 
     /**
      * This will perform setting2 and then go 3 feet forward while running acquirer
      */
     public void setting5() {
-        donnie.tracker.alignAuto();
+        /*
+	donnie.tracker.alignAuto();
         System.out.println("done aligning");
         donnie.kicker.shoot();
+	*/
 
-        /*
+        
         donnie.roller.start();
-        donnie.dt.forwardInches(30);
+        donnie.dt.forwardInchesOscar(30);
         kick();
 
 
         donnie.roller.start();
-        donnie.dt.forwardInches(36); //3 feet
-         * */
-
+        donnie.dt.forwardInchesOscar(36); //3 feet
     }
 
     /**
@@ -179,18 +174,6 @@ public class Autonomous {
 
         donnie.roller.start();
         donnie.dt.forwardInchesOscar(36); //3 feet
-        kick();
-    }
-
-    public void setting10() {
-        donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
-        kick();
-    }
-
-    public void setting11() {
-        donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
         kick();
     }
 
