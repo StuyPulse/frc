@@ -50,7 +50,9 @@ public class DonCircleTracker implements Ports {
 
 
     }
-
+/**
+ *
+ */
     public void doCamera() {
         try {
             if (cam.freshImage()) {// && turnController.onTarget()) {

@@ -29,7 +29,6 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     Gyro gyro;
     DonTrackerDashboard trackerDashboard;
     DonCircleTracker tracker;
-    PIDController straightController;
     DonovanOI oi;
     Autonomous auton;
     DriverStationLCD lcd;
@@ -45,14 +44,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
         kicker = new Kicker(KICKMOTOR_CHANNEL, this); //digital channel
         hanger = new Hanger(WINCH_CHANNEL, A_FRAME_CHANNEL);
         
-        straightController = new PIDController(PVAL, IVAL, DVAL, gyro, new PIDOutput() {
-            public void pidWrite(double output) {
-                dt.arcadeDrive(-0.5, output);
-            }
-        }, 0.005);
-        straightController.setInputRange(-360.0, 360.0);
-        straightController.setTolerance(1 / 90. * 100);
-        straightController.disable();
+
 
 
 

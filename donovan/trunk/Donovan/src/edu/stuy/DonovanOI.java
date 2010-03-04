@@ -49,7 +49,7 @@ public class DonovanOI implements Ports {
     /**
      * if returns 1 -> target is wayyyyy off to the left
      * if returns 2 -> target is kind of off to the left
-     * if returns 3 -> target is in the fucking center!!
+     * if returns 3 -> target is in the central center!!
      * if returns 4 -> target is kinda  off to the right
      * if returns 5 -> target is wayyyy off to the right
      * @param target

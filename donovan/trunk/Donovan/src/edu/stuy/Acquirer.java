@@ -20,26 +20,17 @@ public class Acquirer extends Victor {
      * This will run the acquirer so it can keep the ball
      */
     public void start() {
-        if (donnie.isAutonomous()) {
-            //System.out.println("in acq class running fwd and stuff");
-        }
         set(-1.0); //double pwm value between -1 and 1
     }
 
     public void startReverse() {
-        if (donnie.isAutonomous()) {
-            //System.out.println("in acq class running rev and stuff");
-        }
         set(1.0);
     }
 
     /**
-     * This stops the acquirer so it may shoot or something else
+     * This stops the acquirer
      */
     public void stop() {
-        if (donnie.isAutonomous()) {
-            //System.out.println("in acq class stopping and stuff");
-        }
         set(0);
     }
 }
