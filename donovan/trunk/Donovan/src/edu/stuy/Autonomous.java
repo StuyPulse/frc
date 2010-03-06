@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.*;
 /**
  * These are the different methods for autonomus mode.
  * Best routines (currently):
- *   Near:   4
- *   Center: 9
+ *   Near:   2
+ *   Center: 2,9, practice 6
  *   Far:    11
  * @author Prog
  */
@@ -62,20 +62,27 @@ public class Autonomous {
                 break;
         }
     }
-
+    
     /**
-     * Applies to: anywhere
-     * Moves robot forward 30 inches while running acquirer, stops acquirer.
+     * Applies to: far
+     * aligns with the target, kicks the first ball and then acquires the second ball.
      */
     public void setting1() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
-        donnie.roller.stop();
-    }
+        donnie.dt.forwardInchesOscar(5);
 
+        donnie.tracker.alignAuto();
+        kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(36); //3 feet
+    }
+    
     /**
-     * Applies to: anywhere
+     * Applies to: middle; try in near
      * Moves robot forward 30 inches while running acquirer, aligns and kicks.
+     *
+     * IMPORTANT
      */
     public void setting2() {
         donnie.roller.start();
@@ -86,7 +93,7 @@ public class Autonomous {
     }
 
     /**
-     * Applies to: center and far
+     * Applies to: center
      * Moves robot forward 30 inches while running acquirer,
      * aligns and kicks, moves forward 72 inches while running acquirer.
      */
@@ -102,16 +109,18 @@ public class Autonomous {
     }
 
     /**
-     * Applies to: near
-     * This will move robot back 16 feet
-     * Robot should be backwards, to push the ball into goal
-     * Probably won't work because backInches doesn't have straight code
+     * Applies to: far
+     * Forward 5 inches, aligns and kicks, forward 72 inches
      */
     public void setting4() {
-        donnie.dt.backInches(192); //16 feet
-        // probably won't work
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(5);
 
-        // use drive straight code (Oscar)?
+        donnie.tracker.alignAuto();
+        kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(72); //6 feet
     }
 
     /**
@@ -119,14 +128,11 @@ public class Autonomous {
      * aligns with the target, kicks the first ball and then acquires the second ball.
      */
     public void setting5() {
-
-
         donnie.roller.start();
         donnie.dt.forwardInchesOscar(30);
 
         donnie.tracker.alignAuto();
         kick();
-
 
         donnie.roller.start();
         donnie.dt.forwardInchesOscar(36); //3 feet
@@ -136,6 +142,8 @@ public class Autonomous {
      * Applies to: center and far
      * The robot acquires the first ball, aligns with the target, and kicks it.
      * The robot acquires the second ball, aligns with the target, and kicks it.
+     *
+     * WORKED BEFORE SHIPPING, only second ball went in though
      */
     public void setting6() {
         donnie.roller.start();
@@ -160,7 +168,7 @@ public class Autonomous {
      */
     public void setting7() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(5);
 
         donnie.tracker.alignAuto();
         kick();
@@ -178,13 +186,20 @@ public class Autonomous {
     }
 
     /**
-     * Applies to: near
-     * Goes back 36 inches.
-     * May not work properly due to lack of straight code in backInches
-     * (See good straight code in forwardInchesOscar.)
+     * 
      */
     public void setting8() {
-        donnie.dt.backInches(36);
+        //similar to setting 6 without aligning in the first kick
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(5);
+
+        kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(36); //3 feet
+
+        donnie.tracker.alignAuto();
+        kick();
     }
 
     /**
@@ -234,6 +249,8 @@ public class Autonomous {
     /**
      * Applies to: far
      * Similar to setting 10 without aligning in the first two kicks
+     *
+     * IMPORTANT
      */
     public void setting11() {
         //Similar to setting 10 without aligning in the first two kicks
