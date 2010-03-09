@@ -27,7 +27,10 @@ public class Autonomous {
         // argument comes from DonovanOI
 
         switch (settingNum) {
-            case 1:
+            case 0:
+				setting1();
+				break;
+			case 1:
                 setting1();
                 break;
             case 2:
