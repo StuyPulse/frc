@@ -27,10 +27,7 @@ public class Autonomous {
         // argument comes from DonovanOI
 
         switch (settingNum) {
-            case 0:
-				setting1();
-				break;
-			case 1:
+            case 1:
                 setting1();
                 break;
             case 2:
@@ -83,13 +80,13 @@ public class Autonomous {
     
     /**
      * Applies to: middle; try in near
-     * Moves robot forward 30 inches while running acquirer, aligns and kicks.
+     * Moves robot forward 20 inches while running acquirer, aligns and kicks.
      *
      * IMPORTANT
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -97,12 +94,12 @@ public class Autonomous {
 
     /**
      * Applies to: center
-     * Moves robot forward 30 inches while running acquirer,
+     * Moves robot forward 20 inches while running acquirer,
      * aligns and kicks, moves forward 72 inches while running acquirer.
      */
     public void setting3() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -132,7 +129,7 @@ public class Autonomous {
      */
     public void setting5() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -150,7 +147,7 @@ public class Autonomous {
      */
     public void setting6() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -214,7 +211,7 @@ public class Autonomous {
     public void setting9() {
         //similar to setting 6 without aligning in the first kick
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(30);
+        donnie.dt.forwardInchesOscar(20);
 
         kick();
 
