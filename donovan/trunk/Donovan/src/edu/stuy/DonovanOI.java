@@ -173,7 +173,8 @@ public class DonovanOI implements Ports {
                 switchNum += binaryValue[i];
             }
             if (switchNum > 11) {
-                switchNum = 1; // that BinarySwitch() doesn't return a nonexistent switchNum
+                switchNum = 0; // that BinarySwitch() doesn't return a nonexistent switchNum
+                               // if it does, we better play it safe and do nothing
             }
             return switchNum;
         } catch (EnhancedIOException ex) {
