@@ -64,10 +64,8 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
          * Default to low, so that we're in a consistent state
          */
 
-        if (dt.shifterLeft.get() == 1) {
-            dt.shifterLeft.set(0);
-            dt.shifterRight.set(0);
-        }
+        dt.setLow(); // Start us out in low gear
+        
 
 
     }
@@ -176,8 +174,16 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 kicker.stop();
             }
 
-
-            if (shootStick.getRawButton(2)) {
+            if (shootStick.getTop()) {
+                roller.start();
+            }
+            else if (shootStick.getRawButton(2)) {
+                roller.startReverse();
+            }
+            else {
+                roller.stop();
+            }
+            if (shootStick.getRawButton(6)) {
                 hanger.deployAFrame();
             }
 

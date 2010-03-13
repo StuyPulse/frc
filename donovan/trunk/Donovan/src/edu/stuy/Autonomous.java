@@ -86,7 +86,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -99,7 +99,7 @@ public class Autonomous {
      */
     public void setting3() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -129,7 +129,7 @@ public class Autonomous {
      */
     public void setting5() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -147,7 +147,7 @@ public class Autonomous {
      */
     public void setting6() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -211,7 +211,7 @@ public class Autonomous {
     public void setting9() {
         //similar to setting 6 without aligning in the first kick
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         kick();
 
