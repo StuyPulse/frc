@@ -141,7 +141,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 oi.testGyro();
             }
             else {
-                oi.resetLEDs();
+                oi.resetLEDs(); //@TODO: THIS WILL CONFLICT WITH OI ALIGNING BOX/GOGGLE LIGHTS
             }
 
             /*
