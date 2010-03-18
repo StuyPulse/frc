@@ -48,7 +48,7 @@ public interface Ports {
     int ENCODER_CHANNEL_2B = 4;
 
     /*** ANALOG ***/
-    int GYRO_CHANNEL = 1;
+    int GYRO_CHANNEL = 1; //is 1 bad?
     int ACCEL_CHANNEL = 2; //does not exist
 
     /*** FIRSTtouch ***/

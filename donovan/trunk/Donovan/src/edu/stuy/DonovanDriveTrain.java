@@ -52,6 +52,11 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
         straightController.setTolerance(1 / 90. * 100);
         straightController.disable();
 
+
+
+        if (shifterLeft.get() == 1 && shifterRight.get() == 1) {
+            highGear = true;
+        }
     }
 
 

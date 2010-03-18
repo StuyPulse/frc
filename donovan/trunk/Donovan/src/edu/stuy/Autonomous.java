@@ -86,7 +86,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(17);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -99,7 +99,7 @@ public class Autonomous {
      */
     public void setting3() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(17);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -129,7 +129,7 @@ public class Autonomous {
      */
     public void setting5() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(17);
+        donnie.dt.forwardInchesOscar(20);
 
         donnie.tracker.alignAuto();
         kick();
@@ -143,11 +143,11 @@ public class Autonomous {
      * The robot acquires the first ball, aligns with the target, and kicks it.
      * The robot acquires the second ball, aligns with the target, and kicks it.
      *
-     * WORKED BEFORE SHIPPING, only second ball went in though
+     * WORKED BEFORE SHIPPING
      */
     public void setting6() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(17);
+        donnie.dt.forwardInchesOscar(15);
 
         donnie.tracker.alignAuto();
         kick();
@@ -211,7 +211,7 @@ public class Autonomous {
     public void setting9() {
         //similar to setting 6 without aligning in the first kick
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(17);
+        donnie.dt.forwardInchesOscar(20);
 
         kick();
 
