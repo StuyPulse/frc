@@ -151,6 +151,29 @@ public class DonovanOI implements Ports {
 
     }
 
+      public void testGyro() {
+          double value = donnie.gyro.getAngle();
+          try {
+          if (value > 45.0) {
+              enhancedIO.setDigitalOutput(LED1, true);  
+          }
+          else if (value > 15.0) {
+              enhancedIO.setDigitalOutput(LED2, true);
+          }
+          else if (value > -15.0)  {
+              enhancedIO.setDigitalOutput(LED3, true); 
+          }
+          else if (value > -45.0) {
+              enhancedIO.setDigitalOutput(LED4, true);
+          }
+          else {
+              enhancedIO.setDigitalOutput(LED5, true);
+          }
+          } catch (EnhancedIOException ex) {
+              // do nothning for now
+              //ex.printStackTrace();
+          }
+      }
 
     public int getAutonSwitch() {
         try {

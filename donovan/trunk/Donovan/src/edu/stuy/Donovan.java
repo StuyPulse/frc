@@ -137,6 +137,12 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 lastTop = true;
             }
 
+            if (lstick.getRawButton(6) && rstick.getRawButton(6)) {
+                oi.testGyro();
+            }
+            else {
+                oi.resetLEDs();
+            }
 
             /*
             if (rstick.getRawButton(9)) {
