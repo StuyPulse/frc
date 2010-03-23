@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO.*;
 public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
     boolean lastTop;
+	boolean lastTarget;
     Joystick lstick;
     Joystick rstick;
     Joystick shootStick;
@@ -96,8 +97,9 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
-
+		
         lastTop = false;
+		lastTarget = false;
         kicker.cock();
         int c = 0;
         while (isOperatorControl() && isEnabled()) {
