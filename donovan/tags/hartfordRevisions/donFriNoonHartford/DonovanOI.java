@@ -165,7 +165,7 @@ public class DonovanOI implements Ports {
                 }
             }
 
-
+            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, binaryValue[0] + " " + binaryValue[1] + " " + binaryValue[2] + " " + binaryValue[3]);
 
             binaryValue[0] *= 8; //convert all binaryValues to decimal values
             binaryValue[1] *= 4;

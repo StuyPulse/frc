@@ -45,7 +45,7 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
 
         straightController = new PIDController(PVAL, IVAL, DVAL, donnie.gyro, new PIDOutput() {
             public void pidWrite(double output) {
-                arcadeDrive(-0.4, output);
+                arcadeDrive(-0.5, output);
             }
         }, 0.005);
         straightController.setInputRange(-360.0, 360.0);
@@ -77,17 +77,6 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
     public double getRightEnc() {
         return encoderRight.getDistance();
     }
-
-
-    	public void forwardInchesRough(int inches) {
-		resetEncoders();
-		long startTime = Timer.getUsClock();
-		while ((getAvgDistance() < inches) && donnie.isAutonomous() && donnie.isEnabled() && (Timer.getUsClock() - startTime) < 15000000) {
-			arcadeDrive(-0.4, 0.0);
-		}
-		arcadeDrive(0.0,0.0);
-
-	}
 
     /*
      * A FAILED attempt at driving straight. When tested, it looked like it was having a seizure.
@@ -221,7 +210,7 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
         encoderRight.reset();
 
         while ((getAvgDistance() > -inches) && donnie.isAutonomous() && donnie.isEnabled()) {
-            arcadeDrive(0.4, 0); //speed may need adjustment
+            arcadeDrive(0.5, 0); //speed may need adjustment
         }
         arcadeDrive(0, 0);
 

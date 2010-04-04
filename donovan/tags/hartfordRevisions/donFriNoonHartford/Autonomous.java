@@ -125,13 +125,13 @@ public class Autonomous {
 
     /**
      * Applies to: center and far
-     * aligns with the target, kicks the first ball and then acquires the second ball.  NO straight-drive.  
+     * aligns with the target, kicks the first ball and then acquires the second ball.
      */
     public void setting5() {
         donnie.roller.start();
         donnie.dt.forwardInchesRough(15);
 
-        //donnie.tracker.alignAuto();
+        donnie.tracker.alignAuto();
         kick();
 
 

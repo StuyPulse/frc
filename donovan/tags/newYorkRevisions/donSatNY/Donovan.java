@@ -31,7 +31,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     DonCircleTracker tracker;
     DonovanOI oi;
     Autonomous auton;
-
+    DriverStationLCD lcd;
 
     public Donovan() {
         lstick = new Joystick(LSTICK_PORT); //usb port
@@ -50,7 +50,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
         auton = new Autonomous(this);
 
-
+        lcd = DriverStationLCD.getInstance();
         oi = new DonovanOI(this);
         trackerDashboard = new DonTrackerDashboard(this);
         tracker = new DonCircleTracker(this);
@@ -64,10 +64,8 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
          * Default to low, so that we're in a consistent state
          */
 
-        if (dt.shifterLeft.get() == 1) {
-            dt.shifterLeft.set(0);
-            dt.shifterRight.set(0);
-        }
+        dt.setLow(); // Start us out in low gear
+        
 
 
     }
@@ -96,16 +94,14 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
+
         lastTop = false;
         kicker.cock();
         int c = 0;
         while (isOperatorControl() && isEnabled()) {
             //System.out.println("left encoder: " + dt.getLeftEnc() + " right encoder: " + dt.getRightEnc());
-            Timer.delay(.01);
 
-
-
-            //tracker.doCamera();
+            tracker.doCamera();
 
 
             /************ Driver Controls **************/
@@ -129,18 +125,15 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             if (!lstick.getRawButton(3) && !rstick.getRawButton(3)) {
                 if (lastTop) {
                     tracker.stopAligning();
-                    oi.resetLEDs();
                 }
                 lastTop = false;
                 dt.tankDrive(lstick, rstick);
             } else {
-                tracker.doCamera();
                 if (!lastTop) {
                     tracker.startAligning();
                 }
                 lastTop = true;
             }
-
 
             /*
             if (rstick.getRawButton(9)) {
@@ -164,14 +157,10 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
             /************ Shooter Controls **************/
-            //Acquirer listed under Panel Controls
-            if (shootStick.getRawButton(4)) {
-
+            //Acquirer and Winch listed under Panel Controls
+            if (shootStick.getRawButton(11)) {
                 hanger.startWinch();
-            } else if (shootStick.getRawButton(5)) {
-
-                hanger.reverseWinch();
-            } else {
+            }  else {
 
                 hanger.stopWinch();
             }
@@ -182,19 +171,27 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 kicker.stop();
             }
 
-
-            if (shootStick.getRawButton(2)) {
+            if (shootStick.getTop()) {
+                roller.start();
+            }
+            else if (shootStick.getRawButton(2)) {
+                roller.startReverse();
+            }
+            else {
+                roller.stop();
+            }
+            if (shootStick.getRawButton(6)) {
                 hanger.deployAFrame();
             }
 
 
-            if (shootStick.getRawButton(10)) { //|| shootStick.getRawButton(11)){
+            if (shootStick.getRawButton(8)) { //|| shootStick.getRawButton(11)){
                 //System.out.println("switching to manual control");
                 kicker.limSwitchBroken = true; //switch to manual control
                 kicker.stop();
             }
 
-            if (shootStick.getRawButton(11)) { //|| shootStick.getRawButton(11)){
+            if (shootStick.getRawButton(9)) { //|| shootStick.getRawButton(11)){
                 //System.out.println("switching back to auto control");
                 kicker.limSwitchBroken = false; //switch to manual control
             }
@@ -210,7 +207,12 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             if (oi.getWench()) {
                 //System.out.println("Get a wench!");
                 hanger.startWinch();
-            } else {
+            }
+            else if (shootStick.getRawButton(10))
+            {
+                hanger.startWinch();
+            }
+            else {
 
                 hanger.stopWinch();
             }
@@ -236,7 +238,11 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             } else if (shootStick.getRawButton(3)) {
                 //System.out.println("jstk aquire fwd");
                 roller.start();
-            } else {
+            }
+            else if (shootStick.getRawButton(2)) {
+                roller.startReverse();
+            }
+            else {
                 roller.stop();
             }
         }

@@ -86,7 +86,7 @@ public class Autonomous {
      */
     public void setting2() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -99,7 +99,7 @@ public class Autonomous {
      */
     public void setting3() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -125,21 +125,17 @@ public class Autonomous {
 
     /**
      * Applies to: center and far
-     * aligns with the target, kicks the first ball and then acquires the second ball.  NO straight-drive.  
+     * aligns with the target, kicks the first ball and then acquires the second ball.
      */
     public void setting5() {
         donnie.roller.start();
-        donnie.dt.forwardInchesRough(15);
-
-        //donnie.tracker.alignAuto();
-        kick();
-
-
-        donnie.roller.start();
-        donnie.dt.forwardInchesRough(36); //3 feet
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
+
+        donnie.roller.start();
+        donnie.dt.forwardInchesOscar(36); //3 feet
     }
 
     /**
@@ -147,11 +143,11 @@ public class Autonomous {
      * The robot acquires the first ball, aligns with the target, and kicks it.
      * The robot acquires the second ball, aligns with the target, and kicks it.
      *
-     * WORKED BEFORE SHIPPING
+     * WORKED BEFORE SHIPPING, only second ball went in though
      */
     public void setting6() {
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(15);
+        donnie.dt.forwardInchesOscar(17);
 
         donnie.tracker.alignAuto();
         kick();
@@ -215,7 +211,7 @@ public class Autonomous {
     public void setting9() {
         //similar to setting 6 without aligning in the first kick
         donnie.roller.start();
-        donnie.dt.forwardInchesOscar(20);
+        donnie.dt.forwardInchesOscar(17);
 
         kick();
 
@@ -288,13 +284,3 @@ public class Autonomous {
         donnie.roller.stop();
     }
 }
-
-
-
-
-
-
-
-
-
-

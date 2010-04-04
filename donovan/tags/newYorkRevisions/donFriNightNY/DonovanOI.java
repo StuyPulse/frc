@@ -42,7 +42,7 @@ public class DonovanOI implements Ports {
             // no analog in setup
         } //normally low; tie switch to +
         catch (DriverStationEnhancedIO.EnhancedIOException ex) {
-            System.out.println("Enhanced IO Exception");
+            //System.out.println("Enhanced IO Exception");
         }
     }
 
@@ -78,8 +78,7 @@ public class DonovanOI implements Ports {
             enhancedIO.setDigitalOutput(LED4, false);
             enhancedIO.setDigitalOutput(LED5, false);
         } catch (EnhancedIOException ex) {
-           // do nothing
-            // ex.printStackTrace();
+           // ex.printStackTrace();
         }
     }
 
@@ -132,7 +131,7 @@ public class DonovanOI implements Ports {
                     break;
             }
         } catch (DriverStationEnhancedIO.EnhancedIOException ex) {
-            System.out.println("Enhanced IO Exception");
+           // System.out.println("Enhanced IO Exception");
             return 1;
         }
         return 0;
@@ -151,7 +150,6 @@ public class DonovanOI implements Ports {
 
     }
 
-
     public int getAutonSwitch() {
         try {
             int switchNum = 0;
@@ -165,7 +163,7 @@ public class DonovanOI implements Ports {
                 }
             }
 
-
+            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, binaryValue[0] + " " + binaryValue[1] + " " + binaryValue[2] + " " + binaryValue[3]);
 
             binaryValue[0] *= 8; //convert all binaryValues to decimal values
             binaryValue[1] *= 4;
@@ -179,8 +177,8 @@ public class DonovanOI implements Ports {
             }
             return switchNum;
         } catch (EnhancedIOException ex) {
-          //  ex.printStackTrace();
-          //  System.err.println("binary switch error!");
+            //ex.printStackTrace();
+            //System.err.println("binary switch error!");
             return 1;
         }
     }
@@ -191,7 +189,7 @@ public class DonovanOI implements Ports {
         try {
             return enhancedIO.getDigital(A_FRAME_SWITCH);
         } catch (EnhancedIOException ex) {
-           // ex.printStackTrace();
+          //  ex.printStackTrace();
         }
         return false;
     }
@@ -200,7 +198,7 @@ public class DonovanOI implements Ports {
         try {
             return enhancedIO.getDigital(WINCH_SWITCH);
         } catch (EnhancedIOException ex) {
-            //ex.printStackTrace();
+           // ex.printStackTrace();
         }
         return false;
     }
@@ -209,7 +207,7 @@ public class DonovanOI implements Ports {
         try {
             return enhancedIO.getDigital(KICK_SWITCH);
         } catch (EnhancedIOException ex) {
-          //  ex.printStackTrace();
+           // ex.printStackTrace();
         }
         return false;
     }
@@ -227,7 +225,7 @@ public class DonovanOI implements Ports {
         try {
             return enhancedIO.getDigital(ACQUIRER_SWITCH_A);
         } catch (EnhancedIOException ex) {
-          //  ex.printStackTrace();
+           // ex.printStackTrace();
         }
         return false;
     }
@@ -236,7 +234,7 @@ public class DonovanOI implements Ports {
         try {
             return enhancedIO.getDigital(ACQUIRER_SWITCH_B);
         } catch (EnhancedIOException ex) {
-           // ex.printStackTrace();
+          //  ex.printStackTrace();
         }
         return false;
     }

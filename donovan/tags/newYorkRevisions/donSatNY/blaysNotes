@@ -1,0 +1,44 @@
+I already mentioned this to Ariel but there are a few things to make
+sure of auton wise that need to be ready by the time ny starts.
+
+1. Any auton where we plan on scoring/kicking more than one ball we
+cannot have camera aligning till the last ball we reach if at all. The
+reason for this is because the target is in the middle of the goal and
+the grid where the balls can be placed at the start of the match
+prohibit the balls from being in line with the middle of the goal. If
+we go forward, pick up a ball, align, and kick it we will not be in
+line with the second ball.
+
+2. The auton that you guys had working needs to not only be saved but
+also it needs to be accessible on the switch so that once we get to
+competition we have at least one that we know will work with this
+robot. If you want to change it make a new one that copies it and mess
+with it there but we need an exact copy of what worked before to be
+good to go on the switches when we get to competition.
+
+3. I realized that I have made an error about the auton in the far
+zone. You do not have to start against the wall, you are allowed to
+start against the ramp which means that the ball is very close. So
+what i want you to program is a new auton that has us go forward 5
+inches, then kick, then forward 3 feet, then kick, then forward 3
+feet, then kick acquiring the whole time of course. There was some
+here-say about us not being able to score from the far zone but lets
+program this and see how it works out when we get there.
+
+4. The last auton I would like to be ready by ny is to just have us go
+forward 30 inches acquiring, then camera align, then kick. There are
+several purposes for this auton. The first is to possibly score from
+the close zone without getting in the way of our teammates scoring but
+we might be shooting to high and not be able to score. The second
+reason is that I would like to use it for the middle zone when we have
+an ally that can score from the far zone. This way we have the ball in
+the middle of the grid, we drive up to it, pick it up, align, and
+score. This way we can score one and be set to pick up the other
+without interfering with our partners. This type of thing will be
+extra useful in the eliminations because the best teams will be able
+to score from the far zones and instead of being another team that can
+score from the far zone we can combine with our allies to score more
+overall.
+
+I spoke about all of these things in depth with Ariel so if you have
+any questions you can ask him or call me at 646-942-1310.

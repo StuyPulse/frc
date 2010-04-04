@@ -80,7 +80,7 @@ public class DonCircleTracker implements Ports {
 
                 } else {
                   //  System.out.println(targets[0]);
-                   // System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
+                   //System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
                     turnController.setSetpoint(gyroAngle + targets[0].getHorizontalAngle());
 
                    // System.out.println("calling lightLEDs");
@@ -95,7 +95,7 @@ public class DonCircleTracker implements Ports {
             ex.printStackTrace();
         }
         //System.out.println("Time : " + (Timer.getUsClock() - startTime) / 1000000.0);
-       // System.out.println("Gyro Angle: " + donnie.gyro.getAngle());
+        //System.out.println("Gyro Angle: " + donnie.gyro.getAngle());
         //counter ++;
     }
 

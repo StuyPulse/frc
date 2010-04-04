@@ -221,7 +221,7 @@ public class DonovanDriveTrain extends RobotDrive implements Ports {
         encoderRight.reset();
 
         while ((getAvgDistance() > -inches) && donnie.isAutonomous() && donnie.isEnabled()) {
-            arcadeDrive(0.4, 0); //speed may need adjustment
+            arcadeDrive(0.5, 0); //speed may need adjustment
         }
         arcadeDrive(0, 0);
 

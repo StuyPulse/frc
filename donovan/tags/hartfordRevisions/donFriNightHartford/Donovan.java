@@ -129,7 +129,6 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             if (!lstick.getRawButton(3) && !rstick.getRawButton(3)) {
                 if (lastTop) {
                     tracker.stopAligning();
-                    oi.resetLEDs();
                 }
                 lastTop = false;
                 dt.tankDrive(lstick, rstick);
