@@ -9,6 +9,8 @@ package edu.stuy;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.*;
 
+// testing a commit from nbgit
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the SimpleRobot
