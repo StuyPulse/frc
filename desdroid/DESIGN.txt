@@ -1,12 +1,13 @@
-Ports
-Physical Mechanisms
+DESdroid code design
+1. Ports
+2. Physical Mechanisms
     Arm
     Minibot deployer
     Grabber
-Drivetrain
-LineTracker
-OI
-CameraTracking
+3. Drivetrain
+4. LineTracker
+5. OI
+6. CameraTracking
 
 Autonomous Plan
 1.  a) Go straight/left/right
@@ -17,3 +18,17 @@ Autonomous Plan
     f) Profit
 2. Drop ubertube
 3. Do nothing
+
+Line Tracking
+1. Drive on the edge of the line - LineTrackerDemo
+2. Make triangular configuration
+3. Sensors are scrunched up against each other
+4. Gyro
+
+Reusable Library
+1. Drive straight
+2. Targeting
+3. Drivetrain
+4. Servo
+5. Acquirer
+6. OI
