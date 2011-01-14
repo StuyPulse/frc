@@ -7,3 +7,13 @@ Drivetrain
 LineTracker
 OI
 CameraTracking
+
+Autonomous Plan
+1.  a) Go straight/left/right
+    b) to upper/middle/lower row
+    c) Score
+    d) Back up
+    e) ???
+    f) Profit
+2. Drop ubertube
+3. Do nothing
