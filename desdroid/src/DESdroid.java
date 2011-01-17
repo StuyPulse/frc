@@ -5,8 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -17,11 +15,33 @@ import edu.wpi.first.wpilibj.*;
  * directory.
  */
 public class DESdroid extends SimpleRobot implements Constants {
+
+    // Robot hardware
+    CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
+    RobotDrive drive;
+
+    // Driver controls
+    Joystick leftStick, rightStick;
+
+    public DESdroid() {
+        driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
+        driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
+        driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+        driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+
+        drive = new RobotDrive(driveFrontLeft,
+                               driveRearLeft,
+                               driveFrontRight,
+                               driveRearRight);
+
+        leftStick  = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+    }
+
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        
     }
 
     /**
@@ -31,7 +51,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            
         }
     }
 }
