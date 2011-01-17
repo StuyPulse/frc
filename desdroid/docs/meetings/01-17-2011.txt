@@ -1,0 +1,816 @@
+Session Start: Mon Jan 17 03:23:02 2011
+Session Ident: #prog694
+02[03:23] * Disconnected
+02[09:50] * Attempting to rejoin channel #prog694
+03[09:50] * Rejoined channel #prog694
+01[09:51] <Niggard|Sleep> i appear to have been dced
+03[09:51] * Niggard|Sleep is now known as Niggard
+[09:51] <pockets> indeed
+[09:52] <alex_c> can we change nicks to our real names?
+[09:52] <alex_c> for clarity's sake
+01[09:52] <Niggard> right
+03[09:52] * Niggard is now known as kevinwang
+02[09:53] * pockets (Mibbit@mib-89C91A50.c3-0.wsd-ubr1.qens-wsd.ny.cable.rcn.com) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+01[09:53] <kevinwang> lawl, mibbit
+03[09:53] * Paul (Mibbit@mib-961728DA.cable.mindspring.com) has joined #prog694
+01[09:53] <kevinwang> hi paul
+03[09:53] * sam_l (Mibbit@mib-89C91A50.c3-0.wsd-ubr1.qens-wsd.ny.cable.rcn.com) has joined #prog694
+[09:53] <Paul> howdy all
+[09:53] <Paul> hi kevin
+[09:53] <alex_c> hi paul
+[09:54] <sam_l> 'ello
+[09:54] <Paul> hi alex & sam
+03[09:54] * Paul is now known as Guest7489
+[09:54] <Guest7489> this is highly cool - why did it change my nicknam?
+[09:54] <alex_c> it was already taken by a mibbit user, 
+[09:54] <alex_c> probably
+01[09:54] <kevinwang> because Paul was probably a registered nick
+01[09:55] <kevinwang> so it changes you after a minute without identifying yourself
+[09:55] <alex_c> change it with '/nick paul_o'
+[09:55] <alex_c> without quotes
+03[09:55] * Guest7489 is now known as paul_o
+[09:55] <alex_c> hopefully that isn't registered either
+[09:55] <paul_o> thanks
+01[09:55] <kevinwang> lol
+01[09:55] <kevinwang> apparently this channel is communist
+[09:55] <alex_c> heh
+[09:56] <paul_o> thanks
+[09:56] <sam_l> oh kevin
+01[09:56] <kevinwang> wuddup
+[09:56] <sam_l> regarding the dap5222 config
+01[09:56] <kevinwang> 1522
+[09:56] <paul_o> "now it's not sending
+[09:56] <sam_l> >_<
+01[09:56] <kevinwang> :D
+[09:56] <sam_l> there are enough ports on it for both a camera & crio connection, right?
+[09:57] <alex_c> for what?
+01[09:57] <kevinwang> we're still plugging the camera into port 2 on the crio
+[09:57] <alex_c> yes
+[09:57] <sam_l> hm.
+[09:57] <alex_c> the jaguar chain connects to a serial port
+[09:57] <alex_c> right?
+01[09:57] <kevinwang> i believe image processing is not possible if you put it on the main network
+01[09:57] <kevinwang> yes
+01[09:57] <kevinwang> the rs232 on the crio
+[09:57] <sam_l> the can wiring diagram links the camera to the dap
+01[09:57] <kevinwang> that's a stupid idea
+[09:57] <alex_c> let's wait for more people so we can bring this up again
+[09:57] <alex_c> latet
+01[09:57] <kevinwang> check the camera docs actially
+[09:57] <alex_c> later*
+01[09:58] <kevinwang> last page i believe
+03[09:58] * Jeanne (Mibbit@mib-2750F05D.nycmny.east.verizon.net) has joined #prog694
+[09:58] <Jeanne> morning
+[09:58] <paul_o> hi jeanne
+[09:58] <alex_c> hello!
+01[09:59] <kevinwang> sup
+[09:59] <sam_l> morning.
+03[10:00] * blazer (Mibbit@mib-30E8B8E0.nyc.res.rr.com) has joined #prog694
+02[10:00] * blazer (Mibbit@mib-30E8B8E0.nyc.res.rr.com) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+[10:00] <alex_c> let's wait two more minutes
+[10:00] <alex_c> for Blake or anyone else
+[10:01] <Jeanne> dan said he was coming too
+03[10:01] * mentor_greg (Mibbit@mib-30E8B8E0.nyc.res.rr.com) has joined #prog694
+[10:01] <alex_c> wonderful
+01[10:01] <kevinwang> hi greg
+[10:01] <Jeanne> (the two of us were on chat yesterday at 1 b/c we didn't know if it was cancelled)
+[10:01] <mentor_greg> hi
+[10:01] <paul_o> yes, it seems dan should be here
+03[10:01] * blakeelias (Mibbit@mib-264D98EB.c3-0.nyw-ubr1.nyr-nyw.ny.cable.rcn.com) has joined #prog694
+[10:01] <sam_l> hm
+[10:01] <sam_l> that's interesting.
+[10:02] <sam_l> the pwm diagram links the camera to the crio but the can links it to the dap.
+[10:02] <paul_o> hi greg
+01[10:02] <kevinwang> they're alternate wirings
+[10:02] <alex_c> let's give Dan another minute or so
+01[10:02] <kevinwang> our setup is to port 2 on the cRIO
+[10:03] <mentor_greg> hello all, good conversation on the controller issue and Dan's links are very informative
+03[10:03] * DanLavin (Mibbit@mib-C1D13332.ny5030.east.verizon.net) has joined #prog694
+01[10:03] <kevinwang> hi dan
+[10:03] <sam_l> ohey there he is.
+01[10:03] <kevinwang> so i guess we're ready
+[10:03] <alex_c> morning everybody!
+[10:03] <paul_o> hi dan
+[10:03] <DanLavin> Hi all
+[10:03] <alex_c> okay
+01[10:04] <kevinwang> mIRC is logging the channel so we don't lose anything
+[10:04] <alex_c> after having had conversations with everybody, 
+[10:04] <alex_c> I've been getting the vibe
+[10:04] <alex_c> that we feel pretty able to do this
+[10:04] <alex_c> and not fail
+01[10:04] <kevinwang> yep
+[10:04] <alex_c> what are the biggest challenges?
+[10:04] <blakeelias> +1
+[10:04] <sam_l> ordering jaguars.
+[10:04] <alex_c> what could go wrong in our development of our system?
+[10:05] <alex_c> okay
+[10:05] <alex_c> that's not such a big deal
+[10:05] <DanLavin> CanJag software is new
+[10:05] <alex_c> is it new from last year as well,
+[10:05] <alex_c> or just to us?
+[10:05] <sam_l> not sure.
+01[10:06] <kevinwang> the class is new
+[10:06] <DanLavin> CANJag is not in the 2010 API
+01[10:06] <kevinwang> it was experimental last year
+[10:06] <alex_c> is the hardware new too?
+[10:06] <alex_c> or is it the same exact jaguars?
+01[10:06] <kevinwang> i don't think so
+01[10:06] <kevinwang> black jaguars were around last year
+[10:07] <sam_l> they weren't distributed last year, were they?
+[10:07] <sam_l> i can't remember
+[10:07] <alex_c> how much easier
+[10:07] <alex_c> will it be to use jaguars for mecanum drive
+[10:07] <alex_c> over victors?
+[10:07] <DanLavin> Black Jags came out last year and gray the year before; grey were distributed last year
+01[10:08] <kevinwang> jaguars just require some initial config
+[10:08] <alex_c> I say this because I know teams have used victors for mecanum many years before jaguars
+01[10:08] <kevinwang> some people have used nt 3.1 many years before w7 :P
+[10:08] <alex_c> heh
+01[10:08] <kevinwang> and that's an accurate comparison of vics vs jags
+[10:08] <DanLavin> With Jags we can get all wheels moving at the same speed
+[10:09] <sam_l> motor bias could also be an issue
+01[10:09] <kevinwang> which can be corrected with CAN
+01[10:09] <kevinwang> + encoders
+[10:10] <blakeelias> would that be better for drive-straight in general, besides their use for mecanum?
+01[10:10] <kevinwang> i'd say so yeah
+01[10:10] <kevinwang> precise speed control controlled by the jaguar
+[10:11] <Jeanne> so challenge: re-figure out drive straight (or use the line)
+[10:11] <alex_c> that's a good point
+01[10:11] <kevinwang> here's something to keep in mind
+01[10:11] <kevinwang> the RobotDrive constructor we use assumes PWM jags
+[10:11] <blakeelias> you can pass in CANJaguars
+01[10:12] <kevinwang> yeah like this:
+01[10:12] <kevinwang> CANJaguar jag2 = new CANJaguar(2);
+01[10:12] <kevinwang> CANJaguar jag3 = new CANJaguar(3);
+01[10:12] <kevinwang> CANJaguar jag4 = new CANJaguar(4);
+01[10:12] <kevinwang> CANJaguar jag5 = new CANJaguar(5);
+01[10:12] <kevinwang> RobotDrive drivetrain = new RobotDrive(jag2, jag3, jag4, jag5);
+01[10:12] <kevinwang> but that's uglyyy
+[10:12] <blakeelias> i have a link to some code, one second
+01[10:12] <kevinwang> so we can probably make that look better when we make our own drivetrain class
+[10:12] <blakeelias> https://github.com/prog694/frc/blob/mecanum-drive/desdroid/src/DESdroid.java
+[10:12] <blakeelias> kevinwang: yes, we could beautify it with our own class
+[10:13] <alex_c> it's not so terrible
+01[10:13] <kevinwang> that mecanumDrive line is strange
+[10:13] <alex_c> we'll get to that
+[10:14] <alex_c> by the way, guys
+[10:14] <alex_c> this code is purely experimental
+[10:14] <alex_c> let's not write any more till we've had a full discussion on what we want
+[10:15] <alex_c> let's talk about it now, actually
+[10:15] <alex_c> since I think we're ready for it
+[10:15] <alex_c> on the email group,
+[10:15] <alex_c> we've been talking about a lot of different control methods
+[10:15] <alex_c> whichever one we choose
+[10:15] <alex_c> will have to use either the mecanumDrive_Polar or meacumDrive_Cartesian methods
+[10:15] <alex_c> has everyone seen them?
+[10:16] <alex_c> do we all get how they work?
+[10:16] <sam_l> i haven't yet actually.
+01[10:16] <kevinwang> lol
+[10:16] <sam_l> :whistle:
+[10:16] <sam_l> where are they?
+[10:16] <blakeelias> http://www.wbrobotics.com/javadoc/edu/wpi/first/wpilibj/RobotDrive.html#mecanumDrive_Cartesian(double,%20double,%20double,%20double)
+[10:16] <alex_c> in RobotDrive
+[10:16] <alex_c> and there
+03[10:16] * Retrieving #prog694 modes...
+01[10:17] <kevinwang> blake: drive.mecanumDrive_Polar(leftStick.getMagnitude(), leftStick.getDirectionDegrees(), rightStick.getX());
+[10:17] <alex_c> hm?
+[10:17] <alex_c> I'm unfamiliar with these methods
+01[10:17] <kevinwang> the Joystick class has a lot of these neat methods
+[10:18] <alex_c> are they also new?
+01[10:18] <kevinwang> no
+[10:18] <alex_c> huh
+[10:18] <alex_c> on the subject of control
+[10:18] <alex_c> I've been thinking about gamepad vs joysticks
+[10:19] <alex_c> http://www-mp3.us/wp-content/uploads/2009/04/logitech_gamepad.jpg
+01[10:19] <kevinwang> gamepads seem like a familiar control system
+[10:19] <alex_c> there's a gamepad
+[10:19] <alex_c> for those who are unfamiliar
+[10:19] <Jeanne> thanks.  i went and googled it :)
+[10:19] <alex_c> because a gamepad is closer to the user
+03[10:19] * gamakichi (Mibbit@mib-508AC4C2.nycmny83.dynamic.covad.net) has joined #prog694
+[10:19] <alex_c> it may feel more intuitive, or more natura
+[10:19] <alex_c> natural*
+02[10:19] * gamakichi (Mibbit@mib-508AC4C2.nycmny83.dynamic.covad.net) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+[10:20] <alex_c> thoughts?
+[10:20] <Jeanne> how would it work? the mouse/arrows/joystick part does direction and speed?
+[10:20] <alex_c> the joystick part
+[10:20] <alex_c> here's what I thought of
+[10:20] <alex_c> the left one
+[10:20] <alex_c> controls forward/back/left/right
+[10:20] <alex_c> and the right one
+[10:20] <alex_c> controls rotation
+01[10:20] <kevinwang> analog sticks he means
+[10:20] <alex_c> yes,
+[10:20] <alex_c> analog stick
+[10:20] <alex_c> thanks
+[10:21] <sam_l> actually if we used a gamepad
+[10:21] <sam_l> wouldn't it feel more intuitive to use the l1 and r1 buttons for rotation?
+[10:21] <sam_l> and the right analog for arm height
+[10:21] <DanLavin> We will probably try several things before we get the solution which is best for drivers -- we need to reserve time for testing
+01[10:21] <kevinwang> it's not pressure sensing
+01[10:21] <kevinwang> no fine control of rotation speed
+01[10:22] <kevinwang> and you're supposed to pass an axis as the rotation argument
+01[10:22] <kevinwang> of the joystick, that is
+[10:22] <alex_c> well, you pass a number
+01[10:22] <kevinwang> of the axis
+01[10:22] <kevinwang> 1-6
+03[10:22] * Brian2 (Mibbit@AFDF05F9.C264E71D.9EB28F10.IP) has joined #prog694
+[10:22] <alex_c> does getX() not return a value from -1 to 1?
+[10:22] <blakeelias> you can pass in anything you want, it is a double
+01[10:22] <kevinwang> it does
+02[10:22] * Brian2 (Mibbit@AFDF05F9.C264E71D.9EB28F10.IP) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+01[10:22] <kevinwang> sam's talking about using shoulder buttons
+[10:22] <alex_c> anyway
+01[10:22] <kevinwang> which are just buttons
+[10:23] <Jeanne> i think we all agree the gamepad is a contender as an idea.  we need the drivers to agree though.  so shouldn't we focus on making the actual drive work?
+[10:23] <blakeelias> yes
+03[10:23] * BrianLam (Mibbit@AFDF05F9.C264E71D.9EB28F10.IP) has joined #prog694
+[10:23] <alex_c> well
+[10:23] <blakeelias> i think the first thing we have to run
+[10:23] <blakeelias> is the simplest possible control
+[10:23] <blakeelias> simplest for us to code
+[10:23] <alex_c> this control is probably the simplest
+[10:23] <alex_c> but the thing is
+[10:23] <alex_c> because of all the CANJaguar and RobotDrive magic
+[10:23] <alex_c> making it work in software and control are kinda intertwined
+[10:24] <alex_c> look at the mecanumDrive_Cartesian method
+[10:24] <alex_c> it takes care of any coding challenges
+[10:24] <blakeelias> to the extent that we need to ensure the drive train itself works, and is properly constructed mechanically
+[10:24] <alex_c> right, though thankfully we don't have to figure that out
+[10:24] <alex_c> that's up to the engineers
+01[10:24] <kevinwang> we need to prop the robot up on blocks and check for inverted motors before we start driving
+01[10:24] <kevinwang> since each is on a separate motor
+[10:25] <alex_c> how reliable are jaguars truly?
+[10:25] <alex_c> has anyone found a good CD thread
+[10:25] <alex_c> (while it hasn't been down)
+01[10:25] <kevinwang> there's one called can reliability
+01[10:25] <kevinwang> http://www.chiefdelphi.com/forums/showthread.php?t=86259
+[10:26] <alex_c> the biggest problem I can foressee
+[10:26] <alex_c> forsee*
+[10:26] <alex_c> with can
+[10:26] <alex_c> is that one of the jaguars in the middle of the chain
+[10:26] <alex_c> will short
+[10:26] <DanLavin> I found an engineer/mentor on a TI forum wanting to use them for his commercial FRC projects
+[10:26] <alex_c> breaking the entire chain
+01[10:26] <kevinwang> probably not the entire chain
+01[10:27] <kevinwang> most likely only the devices after it
+01[10:27] <kevinwang> and i believe the network is designed so that one failure won't kill everyone
+01[10:27] <kevinwang> cause it uses a logical bus topology
+[10:27] <sam_l> i think it actually could kill the entire chain.
+[10:27] <sam_l> because of the lack of a terminator plug.
+[10:27] <DanLavin> depends on how it goes out; but in most cases, the bus will be intact
+[10:28] <alex_c> what would the complication of losing the terminator plug be,
+[10:28] <alex_c> in the case of failure?
+01[10:28] <kevinwang> signal reflection
+01[10:28] <kevinwang> /echo
+[10:29] <DanLavin> the bus itself is passive, not a token ring where each unit must pass on data
+[10:29] <blakeelias> but the signal still has to travel through each jaguar along the line
+01[10:29] <kevinwang> not through
+[10:29] <blakeelias> depending on how it dies, that might not be possible, right?
+01[10:29] <kevinwang> the jag probably taps into the trunk line
+[10:30] <paul_o> if the entire chain weren't broken, would you still be able to operate?
+[10:30] <blakeelias> kevinwang: that's not what the diagram looks like
+01[10:30] <kevinwang> the trunk most likely extends inside and through the jaguar
+01[10:30] <kevinwang> that part is probably not affected by the jaguar circuitry
+[10:30] <alex_c> @paul not very well at all
+01[10:30] <kevinwang> we can have an unpowered jaguar on the line
+[10:30] <alex_c> the first link in the set Dan emailed us all
+[10:31] <alex_c> has a very informative diagram
+[10:31] <sam_l> wait, you mean if the entire chain were broken, would we be able to op?
+[10:31] <DanLavin> terminator loss would be bad, but unlikely; it would have to come unplugged anf these connectors don't come unplugged easily
+[10:31] <alex_c> on how wheels have to spin for what motions you want
+01[10:31] <kevinwang> a broken jag does not break the chain is what i'm implying
+[10:31] <alex_c> if we lost one wheel, we'd lose a lot of controll
+01[10:31] <kevinwang> i suspect that the signal still traverses the network well
+01[10:31] <kevinwang> well that's obvious
+[10:31] <alex_c> @kevin are you sure
+[10:32] <alex_c> about losing one jag doesn't break the whole chain
+01[10:32] <kevinwang> unless some explosion literally destroys the metal inside the jag
+01[10:32] <kevinwang> probably not
+01[10:32] <kevinwang> it's like a phone with in and out plugs
+01[10:32] <kevinwang> they still work when the phone is not on
+[10:32] <sam_l> well, do we still have the jag we blew last year?
+[10:32] <alex_c> two years ago
+[10:32] <alex_c> and maybe
+[10:32] <alex_c> but as opposed to the phone
+[10:32] <alex_c> and I could be wrong
+[10:32] <alex_c> but these ports are connected to the rest of the jaguar's internals
+[10:33] <alex_c> which could short
+[10:33] <sam_l> a phone doesn't break if you take a screw out
+[10:33] <alex_c> and I don't know how protected they are
+01[10:33] <kevinwang> sam_l: wat
+[10:33] <alex_c> can we assume they engineered it well,
+[10:33] <alex_c> and it is protected?
+[10:33] <DanLavin> we can check this with a meter
+[10:33] <sam_l> no.
+01[10:33] <kevinwang> yeah it's texas instruments
+[10:33] <blakeelias> would this be testable by chaining up some jags, and powering all but one of them?
+01[10:33] <kevinwang> they're kind of a big deal :P
+01[10:33] <kevinwang> totally
+[10:33] <sam_l> i wouldn't, actually
+[10:33] <mentor_greg> can someone point me to the CAN specifications?
+01[10:33] <kevinwang> http://www.luminarymicro.com/index.php?option=com_remository&func=download&id=1358&chk=c65690a2c1f46d0a36e2ac6370ae68e6&Itemid=591
+[10:34] <sam_l> considering that the official ti docs say cover everything that you aren't using with electrical tape
+[10:35] <DanLavin> a short would be a problem
+[10:35] <DanLavin> http://zone.ni.com/devzone/cda/tut/p/id/2732
+01[10:35] <kevinwang> how likely would that be
+[10:36] <mentor_greg> yes shorts would be a problem but the likelihood of this occurring is small - you can not design systems to account for the smallest possible failures
+[10:36] <DanLavin> it's a physical problem, but we have a similar problem with any control system
+[10:36] <alex_c> it shorted on us two years ago
+[10:36] <alex_c> true true
+[10:37] <alex_c> the prog team has a slight irrational fear of them
+[10:37] <alex_c> from 2009
+[10:37] <DanLavin> what shorter, controller or bus?
+[10:37] <DanLavin> shorted
+[10:37] <alex_c> the controller, I think
+01[10:37] <kevinwang> the controller
+01[10:37] <kevinwang> they weren't doing can
+[10:37] <blakeelias> with a mecanum drive train, saving 3 of 4 drive motors doesn't help much
+[10:37] <mentor_greg> this is too expensive (design wise) and diverts attention progress
+[10:37] <alex_c> the jaguars are too expensive?
+[10:38] <blakeelias> once one of them is out, may as well assume that driving is completely dead
+[10:38] <mentor_greg> not $ wise, time and effort wise...
+01[10:38] <kevinwang> yeah i think this is too unlikely and small to be spending so much time about
+[10:38] <Jeanne> time.  we don't have the happy path discussion ironed out yet.
+[10:38] <mentor_greg> yes Kevin 
+[10:38] <alex_c> very well then
+[10:38] <alex_c> let's move on
+[10:38] <mentor_greg> mayes
+[10:38] <mentor_greg> *yes
+[10:38] <alex_c> can we talk about control?
+[10:38] <Jeanne> note for future: if we can log/indicate a failure so it can be diagnosed as hardware after the match that would be good
+[10:39] <alex_c> we shouldn't say let's just "leave it up to the drivers"
+[10:39] <Jeanne> so the proggies don't get blamed
+[10:39] <alex_c> because driver's don't always know what's best for them
+[10:39] <alex_c> if we can think about the problem
+[10:39] <alex_c> and find the best solution
+[10:39] <alex_c> they'll use it
+[10:39] <alex_c> of course we can give them options
+[10:39] <Jeanne> can we propose two things to the drivers?
+[10:39] <alex_c> but I think you know I mean
+[10:39] <alex_c> of course
+[10:39] <Jeanne> alex beat me to it...
+[10:39] <alex_c> and we can code more than one control system
+[10:39] <mentor_greg> logs are key
+[10:39] <DanLavin> CanJags return a huge amount of data we could log
+01[10:39] <kevinwang> that link i sent earlier
+[10:39] <Jeanne> and they won't just use it.  remember the heads up display...
+01[10:39] <kevinwang> OP wrote loggign code
+[10:39] <alex_c> the heads up display didn't really work
+[10:40] <alex_c> I mean,
+[10:40] <alex_c> it worked
+[10:40] <alex_c> it was just ineffective
+[10:40] <alex_c> and unreliable
+01[10:40] <kevinwang> aaand the logging code is in labview
+[10:40] <alex_c> blake, can you explain the "arc" control method?
+[10:40] <alex_c> (if you're there)
+[10:41] <blakeelias> you mean adam's idea?
+[10:41] <alex_c> yeah
+[10:41] <blakeelias> ok: this would have position (translation) control on one joystick, forward/back/left/right
+[10:41] <blakeelias> and then the other joystick would control *absolute heading*
+[10:41] <blakeelias> so point the stick right, the robot faces to your right
+01[10:42] <kevinwang> when you let go of the joystick the robot might spin accidentally
+[10:42] <blakeelias> all of this is field and driver oriented
+01[10:42] <kevinwang> and it seems like a lot of work to hold it in one direction
+[10:42] <blakeelias> wait there is more to this idea
+[10:42] <blakeelias> so the heading joystick has a feedback loop to get you to one heading
+[10:42] <blakeelias> but if the driver cares how it gets there
+[10:42] <blakeelias> he can drag the joystick around the way he wants it to rotate
+[10:42] <blakeelias> so if he wants it to rotate clockwise 30 degrees, he doesn't have to just put the joystick there
+[10:43] <blakeelias> he could actually move the joystick around in an arc
+[10:43] <blakeelias> to put the robot's heading where he wants
+01[10:43] <kevinwang> sounds strenuous to control
+[10:43] <alex_c> not sure
+[10:44] <blakeelias> well that is one option, adam seemed to like it....there are a couple difficulties, driver-wise and programming as well
+[10:44] <paul_o> won't all this be prototyped and practiced?
+[10:44] <alex_c> yes
+[10:44] <alex_c> I think we should code more than one solution
+[10:45] <alex_c> though this one will take a bit more time
+[10:45] <blakeelias> i would not start with this arc one
+[10:45] <blakeelias> it is more complicated
+[10:45] <blakeelias> and it has some difficulties with driving
+01[10:45] <kevinwang> mecanumDrive_Polar is probably the simplest to code
+01[10:45] <kevinwang> since i already posted that line of code earlier
+[10:46] <alex_c> depends on the control system I think
+[10:46] <blakeelias> kevinwang: that is not a driver-control scheme
+[10:46] <blakeelias> any control we make will use one of the mecanumDrive methods
+[10:46] <alex_c> for what I've suggested I think it Cartesian would be easier to use
+[10:46] <blakeelias> the issue is how to get the parameters for it
+01[10:46] <kevinwang> they work the same
+[10:46] <alex_c> not exactly
+01[10:46] <kevinwang> cartesian with simple control has an extra argument
+[10:46] <alex_c> you can make the end results the same
+[10:46] <alex_c> but they don't work the same, mathematicall
+[10:46] <alex_c> mathematically(
+[10:46] <alex_c> *
+[10:47] <DanLavin> allow extra time for final control resolution - we need driver signoff and and driver practice
+[10:47] <blakeelias> converting coordinates between cartesian and polar is a coding issue, not a driver control issue
+[10:47] <blakeelias> really not a big deal
+[10:48] <Jeanne> another issue for our list: we are relying on doing A LOT more at the end of the season than usual (control resolution, more driver practice, autonomous)
+[10:48] <alex_c> we'll be getting a mecanum bot within a week
+[10:48] <alex_c> supposedly
+[10:48] <Jeanne> i bring this up to see if there is anything we can do earlier.  practice on dummy drive train maybe?
+01[10:48] <kevinwang> not coordinates
+01[10:48] <kevinwang> just magnitude and direction
+[10:48] <Jeanne> b/c if we can borrow a driver to see if he likes the drive, we get feedback earlier
+01[10:48] <kevinwang> which are both provided by the Joystick class
+[10:48] <alex_c> we also don't know who the driver is, by the way
+[10:49] <blakeelias> Jeanne: we have to test the driving on an actual mecanum drive train
+[10:49] <alex_c> jblay says there will be "tryouts"
+[10:49] <blakeelias> as alex_c said, we will have that in a week to start coding/testing
+[10:49] <alex_c> the best we can do is decide if the control works for us, I think
+[10:49] <Jeanne> blake: i agree, alex: ok.  then that can be practice :)
+[10:49] <mentor_greg> i agree alex
+[10:50] <blakeelias> i think kevinwang's twist stick idea is also worth trying
+[10:50] <alex_c> I have a twist joystick
+[10:50] <alex_c> it's a pain
+[10:50] <blakeelias> oh you have one
+[10:50] <alex_c> you try to drive straight, you start twisting a little
+01[10:50] <kevinwang> one point alex: holonomicDrive() from last year is identical to mecanum polar
+[10:50] <alex_c> you twist too much, your wrist starts hurting
+[10:51] <alex_c> @kevin that's cool
+[10:51] <sam_l> i think the one kink i had in my mind about a twist
+[10:51] <sam_l> was that to maintain a change in heading, you'd have to keep the joystick twisted
+[10:51] <sam_l> which, as alex pointed out, would be ow.
+[10:51] <blakeelias> sam_l: nope.  it's rotation *rate*, not absolute heading
+[10:51] <DanLavin> no, we can code it otherwise
+01[10:51] <kevinwang> i already mentioned that in an email sam
+[10:52] <alex_c> rotation rate is much easier to code
+[10:52] <alex_c> and gives the impression of heading control
+01[10:52] <kevinwang> it's already there
+[10:52] <sam_l> ok, got it
+[10:52] <alex_c> because the user automatically stops moving the stick
+[10:52] <alex_c> as soon as it reaches the right heading
+[10:53] <alex_c> but to not rule it out
+[10:53] <alex_c> the twisting 
+[10:53] <alex_c> since we're brainstorming here
+[10:53] <alex_c> we can code it in preparation for the practice bot
+[10:53] <blakeelias> want to bring in your twist stick so we can try it?
+[10:53] <alex_c> yes
+01[10:53] <kevinwang> whoo
+03[10:53] * q (Mibbit@mib-FFBC732C.nycmny.east.verizon.net) has joined #prog694
+01[10:53] <kevinwang> lol q
+[10:54] <blakeelias> alex_c: for the sake of completeness, do you want to discuss blay's idea?
+[10:54] <alex_c> yes, good point
+[10:54] <alex_c> blay suggested a pseudo-tank drive control method
+03[10:54] * q is now known as Guest34208
+[10:54] <alex_c> where you drive it the way one would drive a tank bot
+[10:54] <alex_c> lol q is registered
+[10:54] <alex_c> anyway
+01[10:54] <kevinwang> win
+[10:55] <alex_c> when you want to strafe
+[10:55] <alex_c> (move sideways)
+[10:55] <alex_c> you would move one or both sticks (doesn't matter) sideways
+[10:55] <alex_c> that's the basic idea
+01[10:55] <kevinwang> sounds complicated
+[10:55] <alex_c> you would have one joystick overriding the other
+[10:55] <DanLavin> a familiar system has a lot to recommend it
+01[10:55] <kevinwang> i think a simpler control method is better for the drivers' sake
+01[10:55] <kevinwang> hint hint
+[10:55] <alex_c> if the left joystick starts moving left, it overrides the right stick and starts strafing left
+[10:55] <alex_c> one issue with it, however,
+[10:56] <alex_c> is that the drivers may accidentally strafe a lot
+[10:56] <alex_c> if they're too used to tank drive
+[10:56] <alex_c> it's best thought of as a system
+[10:56] <blakeelias> the strange thing about it is, as soon as you move your strafing stick anything other than forward or backward.....
+[10:56] <alex_c> where you can switch between tank and omni control
+[10:57] <blakeelias> it basically changes your whole control system
+[10:57] <alex_c> yes
+01[10:57] <kevinwang> i personally don't like it
+[10:57] <blakeelias> that would confuse the hell out of me
+[10:57] <blakeelias> other possibly important issue:
+[10:57] <blakeelias> you would not be able to spin and translate at the same time
+[10:57] <blakeelias> well, spin and strafe
+[10:57] <alex_c> good point
+[10:58] <blakeelias> the only time you could move and rotate at the same time is if you are going straight
+[10:58] <blakeelias> blay thinks you would never want to do that
+[10:58] <blakeelias> but i think we should leave the driver as many options as possible
+[10:58] <Jeanne> as long as they can't do it too easily by accident!
+[10:58] <blakeelias> if mecanum allows for 3 degrees of freedom, give the driver 3 dof
+[10:59] <blakeelias> Jeanne: if spinning is on its own stick, it's easy not to move that stick by accident
+[10:59] <Jeanne> correct.  i thought we were still on the move both sticks left thing
+[11:00] <paul_o> Is it known who'll drive? Is there a backup? Should they be in on some of this?
+[11:00] <alex_c> we don't know who the drivers are
+[11:00] <alex_c> there will be "tryouts" apparenlty
+[11:00] <alex_c> apparently*
+[11:01] <Guest34208> weren't there tryouts during preseason?
+[11:01] <blakeelias> i've heard rumors that it might be adam, or even our very own alex_c!
+[11:01] <alex_c> heh
+01[11:01] <kevinwang> q: change your nick and no
+01[11:01] <kevinwang> it's tryouts for mecanum
+[11:01] <alex_c> '/nick nickname'
+01[11:01] <kevinwang> /nick qqqqqqqq
+[11:02] <alex_c> lol
+[11:02] <DanLavin> How do most video/computer games handle the issue?
+[11:02] <alex_c> my solution
+[11:02] <alex_c> there's a game
+[11:02] <alex_c> Halo 3 (excuse my nerdiness)
+[11:03] <alex_c> and there's an omni-directional vehicle in this game
+[11:03] <Jeanne> that's good.  the driver can practice driving in Halo <grin>
+[11:03] <alex_c> where the left analog stick controls forward/back/left/right
+[11:03] <alex_c> heh
+[11:03] <alex_c> and the right stick controls rotation
+01[11:03] <kevinwang> that's pretty much the best idea for a gamepad
+[11:03] <alex_c> you move the stick a little to the right,
+[11:03] <alex_c> it rotates slowly
+[11:03] <alex_c> you move it all the way to the right
+[11:03] <alex_c> it rotates quickly
+[11:03] <alex_c> and intuitively
+[11:04] <alex_c> the driver will probably push the right stick up and to the right
+[11:04] <alex_c> to go
+[11:04] <alex_c> up and to the right
+[11:04] <alex_c> which is good
+[11:04] <alex_c> because it means a small displacement to the right
+[11:04] <blakeelias> i agree.  which brings me back to: https://github.com/prog694/frc/blob/mecanum-drive/desdroid/src/DESdroid.java#L54-58
+[11:04] <blakeelias> :P
+01[11:04] <kevinwang> just use polar o.o
+01[11:04] <kevinwang> i still don't get why it has to be made unnecessarily complicated
+[11:04] <alex_c> isn't that joystick though?
+[11:04] <alex_c> and kevin, I think its easier done in cartesian
+[11:05] <blakeelias> alex_c: yes that uses joysticks.  gamepad is a good idea
+01[11:05] <kevinwang> drive.mecanumDrive_Polar(gamepad.getMagnitude(), gamepad.getDirectionDegrees(), gamepad.getRawAxis(4));
+01[11:05] <kevinwang> or something like taht
+[11:05] <alex_c> what is getMagnitude
+[11:05] <blakeelias> kevinwang: yes, it is equivalent
+[11:05] <alex_c> brb javadocs
+01[11:05] <kevinwang> and simpler in my opinion
+[11:06] <blakeelias> he's basically saying convert (x, y) into (r, theta)
+01[11:06] <kevinwang> magnitude is the hypotenuse of the x y values
+01[11:06] <kevinwang> which is what it originally was
+01[11:06] <kevinwang> last year on holonomicDrive()
+[11:06] <alex_c> it's honestly the same
+[11:06] <alex_c> but okay
+[11:06] <alex_c> when coding more than one solution
+01[11:06] <kevinwang> and still i think it makes more sense
+[11:06] <alex_c> you can use that 
+[11:07] <alex_c> has anyone else thought of an idea?
+[11:07] <alex_c> for control
+03[11:07] * Guest34208 is now known as q
+[11:07] <alex_c> @q that's going to change
+03[11:07] * q is now known as qq
+[11:07] <mentor_greg> do you need to be concerned about  the time it takes for those calls /conversion?
+[11:07] <alex_c> qq: better
+[11:08] <blakeelias> mentor_greg: what, you mean the math?  should be pretty quick
+01[11:08] <kevinwang> yeah the math shouldn't be a concern
+[11:08] <alex_c> to recap:  here are the solutions we have:
+[11:08] <alex_c> 1. halo-style
+[11:08] <alex_c> 2. twist controls rotation
+[11:08] <alex_c> 3. arc control
+[11:08] <alex_c> 4. pseudo-tank drive
+[11:09] <alex_c> have I missed something?
+[11:10] <blakeelias> i think there's something else i saw on chiefdelphi
+[11:10] <blakeelias> one sec, let me make sure
+[11:10] <alex_c> k
+[11:11] <blakeelias> Arcade plus strafe.  2  2-axis joysticks.  Y1 controls fwd/rev,  X1 controls rotation,  X2 controls strafe.
+[11:11] <BrianLam> Hey guys, sorry bout idling, I was making food and eating while reading the conversation. Just couldn't type with a fork and knife in my hands.
+[11:11] <alex_c> np
+[11:12] <alex_c> blakeelias: is Y1 the left stick?
+01[11:12] <kevinwang> 1 = left
+[11:12] <blakeelias> yes
+01[11:12] <kevinwang> 2 = right
+[11:12] <alex_c> right right
+[11:12] <blakeelias> left left
+01[11:12] <kevinwang> lol
+[11:12] <alex_c> I think that could be cool
+[11:13] <alex_c> a little cumbersome, maybe 
+[11:13] <alex_c> but then again
+[11:13] <alex_c> I think all these solutions would require much practice
+[11:13] <alex_c> I'm putting that down as #5
+[11:13] <blakeelias> yes.  that last one is better for drivers who are used to arcade drive, it may or may not be useful for us
+[11:13] <blakeelias> but it's worth listing all of these, then narrowing it down
+[11:14] <DanLavin> Isn't this halo with a swap of axes
+[11:14] <alex_c> okay, if no one has anything else to add, I think we can wrap up
+[11:14] <alex_c> we've agreed to go CAN this year
+[11:14] <alex_c> I will inform Dripto of what we need
+[11:14] <Jeanne> goals for tomorrow so we can start faster?
+06[11:14] * kevinwang lights fireworks
+[11:15] <blakeelias> DanLavin: correct
+[11:15] <alex_c> Jeanne: yes
+[11:15] <alex_c> but first
+[11:15] <alex_c> what do we need to get started on CAN?
+01[11:15] <kevinwang> jags
+01[11:15] <kevinwang> cables
+01[11:15] <kevinwang> terminator
+01[11:15] <kevinwang> 6p6c to serial cable
+[11:15] <alex_c> it sounds like you're familiar with the hardware
+[11:15] <alex_c> can you talk to Dripto?
+[11:15] <alex_c> ASAP
+01[11:15] <kevinwang> dan has a lot of the stuff
+[11:16] <sam_l> ^
+01[11:16] <kevinwang> ^
+[11:16] <alex_c> like what
+[11:16] <DanLavin> I have the cabling bits and pieces
+[11:16] <blakeelias> so all our motors would be on jaguars, right?  none of that some jag/some victor?
+01[11:16] <kevinwang> all jags
+[11:16] <alex_c> can we talk about that for a moment?
+[11:16] <alex_c> why all jags, out of curiousity
+[11:16] <alex_c> curiosity* 
+[11:16] <alex_c> off topic, sorry
+[11:17] <DanLavin> we could still use victors for some things like roller motors
+[11:17] <alex_c> because if we're going to make an order of jaguars
+[11:17] <alex_c> we should order what we need
+[11:17] <DanLavin> but jags for wheels and arm
+01[11:17] <kevinwang> because then there's no point in keeping some motors off the network
+[11:17] <DanLavin> size
+01[11:17] <kevinwang> i guess
+[11:17] <qq> and also because it would make it really complicated
+[11:17] <alex_c> what motors don't need jags?
+[11:18] <blakeelias> the 2 rollers
+01[11:18] <kevinwang> on the grabber?
+[11:18] <alex_c> correct
+01[11:18] <kevinwang> wouldn't it be good to use jags to make sure they run at the same speed?
+[11:18] <alex_c> shouldn't be that big a deal, IMO
+[11:18] <DanLavin> ok jags all around
+[11:18] <blakeelias> they did want to be able to rotate the game piece in the grabber
+[11:19] <alex_c> realy
+[11:19] <alex_c> really*
+[11:19] <sam_l> it isn't.
+[11:19] <blakeelias> by running them at different speeds
+[11:19] <sam_l> but that's just reversing the direction of the rollers
+[11:19] <alex_c> if we can make use of some of the good victors we have, I'd like to
+[11:19] <DanLavin> the question now is how many to order
+[11:20] <alex_c> I'm going to say, especially for space concerns, that the rollers should be victor
+[11:20] <alex_c> I count four jags for the dt,
+01[11:20] <kevinwang> joe wants twice as many as we need
+[11:20] <alex_c> one for the arm,
+01[11:20] <kevinwang> one spare for each jag
+[11:20] <sam_l> $850.
+[11:20] <DanLavin> we have at least 2
+[11:20] <alex_c> ten jags total?
+[11:20] <alex_c> the latest jaguars?
+[11:20] <alex_c> black?
+01[11:20] <kevinwang> we don't need all black
+01[11:20] <kevinwang> two blacks
+[11:20] <DanLavin> 2 in KOP
+[11:20] <alex_c> excellent
+01[11:20] <kevinwang> eight greys
+[11:20] <alex_c> 8 grays
+[11:21] <alex_c> what does that total to
+[11:21] <sam_l> ok, $680 for 8.
+[11:21] <sam_l> i can't find a single order catalog for greys.
+[11:21] <alex_c> it's pricy.  
+[11:21] <sam_l> unless another team's selling greys it's $680 for 8.
+01[11:21] <kevinwang> have the greys been discontinued?
+01[11:21] <kevinwang> from where sam_l
+[11:22] <sam_l> digikey doesn't carry greys anymore
+[11:22] <DanLavin> KOP list has a link for discounted blacks
+01[11:22] <kevinwang> oh digikey
+[11:22] <sam_l> ti lists greys in the catalog but fails to provide any link for orders
+01[11:22] <kevinwang> grays are discontinued probably
+[11:22] <sam_l> most likely
+[11:22] <sam_l> i believe...
+[11:22] <sam_l> actually
+[11:22] <sam_l> we may be able to cut that down to $510
+01[11:22] <kevinwang> we have at least two grays
+[11:22] <sam_l> i think we've got two grays in the closet
+01[11:22] <kevinwang> ninja'd
+[11:22] <alex_c> two more?
+[11:22] <DanLavin> the H bridge on blacks is improved over greys
+[11:22] <alex_c> from last year's KOP?
+[11:23] <sam_l> yes.
+01[11:23] <kevinwang> from benchtop testing
+[11:23] <alex_c> can we confirm this
+01[11:23] <kevinwang> i doubt that we threw them out :P
+[11:23] <sam_l> not until tomorrow.
+[11:23] <alex_c> how sure are you that we have four jaguars in the lab as we speak
+01[11:23] <kevinwang> sam we have two blacks?
+01[11:23] <kevinwang> i remember seeing just one
+[11:23] <sam_l> i can say for sure we have two blacks in this year's kop.
+[11:23] <paul_o> specs seem to say grays don't have a serial port
+01[11:23] <kevinwang> okay
+[11:23] <sam_l> paul, grays don't
+01[11:24] <kevinwang> we only need one with a serial port
+[11:24] <sam_l> when they were released the serial-can interface had to be bought separately
+[11:24] <sam_l> but with blacks, we can daisy chain grays to blacks
+01[11:24] <kevinwang> no
+01[11:24] <kevinwang> used to be 2CANs
+[11:24] <DanLavin> only blacks have serial, but we need only one serial
+[11:24] <blakeelias> + 1 as backup
+[11:24] <sam_l> 2cans?
+[11:24] <DanLavin> one black links to the greys
+01[11:24] <kevinwang> does anyone know the major differences between 2CANs and blackjags?
+[11:24] <sam_l> idk, i saw something about buying serial-can interfaces.
+[11:25] <DanLavin> 2Cans are only a bridge -- now incororated in black
+01[11:25] <kevinwang> i heard that the 2CAN is more capable
+01[11:25] <kevinwang> with more bandwidth
+01[11:25] <kevinwang> + web based control
+[11:25] <DanLavin> got a link?
+[11:25] <alex_c> this is a whole other meeting now
+[11:26] <alex_c> we should meet about this again tomorrow
+01[11:26] <kevinwang> http://crosstheroadelectronics.com/2CAN.htm
+[11:26] <alex_c> after inventorying the lab
+01[11:26] <kevinwang> it's 200 from the bank though
+[11:26] <alex_c> Sam & Kevin, can you do the inventory tomorrow?
+01[11:26] <kevinwang> k
+[11:26] <sam_l> i can try to go in 4th
+[11:26] <alex_c> then we'll give dripto a list
+[11:27] <alex_c> back to the original discussion,
+[11:27] <alex_c> halo style and twist style should be coded by wednesday
+[11:28] <alex_c> who can volunteer to do this
+[11:28] <blakeelias> i already did halo style
+01[11:28] <kevinwang> i can do twisty
+[11:28] <blakeelias> i'll be happy to do twist as well
+[11:28] <blakeelias> ok sure
+01[11:28] <kevinwang> put it on the repo
+[11:28] <alex_c> make sure to include a gamepad version
+01[11:28] <kevinwang> so we can all work on the same code
+[11:28] <alex_c> for halo,
+[11:28] <alex_c> not twist
+[11:28] <Jeanne> wednesday?  aren't the meetings tuesday/thursday this week?
+[11:28] <blakeelias> alex_c: okay i'll do that today
+01[11:28] <kevinwang> blake i'll make a blank frc project and commit it
+[11:28] <alex_c> yes they are
+01[11:28] <kevinwang> so we can add stuff to it
+[11:29] <alex_c> good point
+[11:29] <blakeelias> kevinwang: look at the desdroid directory
+[11:29] <alex_c> by tomorrow's meeting, then
+[11:29] <blakeelias> i already did that
+01[11:29] <kevinwang> oh you already did it
+01[11:29] <kevinwang> lol
+[11:29] <blakeelias> the master branch has a basic template, the mecanum-drive branch has halo-style with 2 joysticks
+[11:29] <blakeelias> i will rename that branch mecanum-halo-joystick
+01[11:29] <kevinwang> blakeelias i'll begin writing the drivetrain class?
+[11:29] <blakeelias> and then make a new branch mecanum-halo-gamepad
+[11:30] <alex_c> hold on kevin
+01[11:30] <kevinwang> k
+[11:30] <alex_c> did we agree there should be a dt class?
+[11:30] <blakeelias> do we need a drivetrain class?
+[11:30] <blakeelias> for now it seems easy enough without one
+[11:30] <alex_c> I don't think we need a drivetrain class.
+01[11:30] <kevinwang> drive straight + make the code more elegant lol
+[11:31] <alex_c> on second thought
+[11:31] <alex_c> since we had a dt class last year
+[11:31] <alex_c> we can have one this year
+[11:31] <alex_c> but don't code it now
+[11:32] <alex_c> let's talk about it in tomorrow's meeting
+01[11:32] <kevinwang> k
+01[11:32] <kevinwang> i still think polar makes more sense
+[11:32] <alex_c> you can do that with your twist solution
+[11:33] <blakeelias> one more thing
+[11:33] <alex_c> will you be done with that by tomorrow's meeting?
+[11:33] <alex_c> and yes
+[11:33] <blakeelias> do we prefer robot-oriented to driver-oriented?
+[11:33] <blakeelias> for almost all of the proposed options, it can be done either way
+[11:33] <alex_c> can we code both ways?
+[11:33] <blakeelias> yes
+01[11:33] <kevinwang> blake
+01[11:34] <kevinwang> can you rename Constants into Ports?
+[11:34] <alex_c> can you?
+01[11:34] <kevinwang> so it's the same as last year
+[11:34] <alex_c> +1 to that
+[11:34] <blakeelias> uh sure...i thought last year we got tired of the name Ports because it came to have things other than port numbers
+[11:34] <blakeelias> but i can rename it
+[11:35] <Jeanne> i like Constants.java
+[11:35] <Jeanne> since it's not just Ports anymoer
+[11:35] <alex_c> fair enough
+[11:35] <blakeelias> i think that's a less important issue than robot vs. driver oriented control
+[11:35] <blakeelias> ok so that's staying how it is
+[11:35] <blakeelias> but any thoughts?
+[11:36] <Jeanne> blake: i don't think it matters so long as we stay consistent.
+[11:36] <Jeanne> which of course means we need to pick one :)
+[11:36] <alex_c> again, I say do both then eliminate later, but driver oriented is probably better
+01[11:36] <kevinwang> prone to failure
+[11:36] <Jeanne> or we could do that
+01[11:36] <kevinwang> but sure
+[11:37] <blakeelias> hmm ok.  i'm just worried there are so many ideas to try, we shouldn't waste time trying tons of options
+[11:37] <alex_c> we're only trying two basic for now
+[11:37] <alex_c> twist and halo
+[11:38] <blakeelias> ok
+[11:38] <alex_c> when we're done with those,
+[11:38] <alex_c> we can code arc and attempt tankdrive
+01[11:38] <kevinwang> oh one more thing
+01[11:38] <kevinwang> usb-serial adadpter
+01[11:38] <kevinwang> anyone?
+[11:38] <alex_c> we'll figure that out tomorrow
+[11:38] <DanLavin> will build today at home
+[11:38] <alex_c> okay,
+01[11:38] <kevinwang> thanks dan
+[11:38] <alex_c> thanks Dan
+[11:38] <blakeelias> awesome
+[11:39] <sam_l> thanks :D
+[11:39] <alex_c> okay guys
+[11:39] <alex_c> thanks for meeting today
+01[11:39] <kevinwang> i have all the necessary configuration stuff on my laptop so we good
+[11:39] <alex_c> I'll send a summary & agenda for tomorrow to the whole group
+[11:39] <DanLavin> correction have one, will build adapter for jag
+01[11:39] <kevinwang> thanks
+01[11:40] <kevinwang> all this is getting pastebin'd
+[11:40] <alex_c> okay, sure
+[11:40] <alex_c> thanks
+[11:41] <alex_c> although for the sake of document organization
+[11:41] <alex_c> I kind of like the idea of uploading the log to a meeting folder in docs/
+[11:41] <alex_c> in the git repo
+01[11:41] <kevinwang> k
+[11:42] <alex_c> folder is made
+[11:43] <alex_c> thanks again everyone
+[11:43] <alex_c> see you tomorrow
+02[11:43] * alex_c (Ginkgo@DE6358EC.4C5317F7.C9204C89.IP) Quit (Quit: alex_c)
+[11:43] <DanLavin> bye
+02[11:43] * DanLavin (Mibbit@mib-C1D13332.ny5030.east.verizon.net) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+[11:43] <BrianLam> See you guys at the meeting tomorrow then :)
+02[11:43] * mentor_greg (Mibbit@mib-30E8B8E0.nyc.res.rr.com) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+[11:43] <blakeelias> see you tomorrow guys
+02[11:43] * blakeelias (Mibbit@mib-264D98EB.c3-0.nyw-ubr1.nyr-nyw.ny.cable.rcn.com) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+02[11:43] * BrianLam (Mibbit@AFDF05F9.C264E71D.9EB28F10.IP) Quit (Quit: http://www.mibbit.com ajax IRC Client)
+01[11:43] <kevinwang> bye guys
+Session Close: Mon Jan 17 11:43:49 2011
