@@ -5,7 +5,6 @@ public interface Constants {
     final int DRIVE_CAN_DEVICE_REAR_LEFT     = 4;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
-    final int PORT_LEFT_STICK                = 1;
-    final int PORT_RIGHT_STICK               = 2;
+    final int PORT_GAMEPAD                   = 1;
 
 }
