@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class DESdroid extends SimpleRobot {
+public class DESdroid extends SimpleRobot implements Constants {
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
