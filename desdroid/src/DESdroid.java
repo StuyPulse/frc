@@ -51,6 +51,11 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
+            drive.mecanumDrive_Cartesian(
+                    leftStick.getX(),  // X translation (horizontal strafe)
+                    leftStick.getY(),  // Y translation (straight forward)
+                    rightStick.getX(), // rotation (clockwise?)
+                    0.0);              // use gyro for field-oriented drive
         }
     }
 }
