@@ -1,3 +1,4 @@
+package stuy;
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -23,6 +24,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Driver controls
     Joystick gamepad;
 
+    // Autonomous class
+    Autonomous auton;
+
     public DESdroid() {
         driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
         driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
@@ -41,6 +45,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+	
     }
 
     /**
