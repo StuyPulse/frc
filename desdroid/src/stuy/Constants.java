@@ -1,3 +1,5 @@
+package stuy;
+
 public interface Constants {
 
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 2;
