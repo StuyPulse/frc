@@ -19,6 +19,15 @@ import edu.wpi.first.wpilibj.*;
  */
 public class DESdroid extends SimpleRobot implements Constants {
     Autonomous auton;
+    RobotDrive dt;
+
+    public DESdroid() {
+        dt = new RobotDrive(1, 2);
+        dt.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        dt.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        dt.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        dt.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+    }
 
 
     /**
