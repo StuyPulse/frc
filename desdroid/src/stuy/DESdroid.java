@@ -7,6 +7,7 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,7 +28,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Autonomous class
     Autonomous auton;
 
-    public DESdroid() {
+    public DESdroid() throws CANTimeoutException {
+
         driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
         driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
         driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
