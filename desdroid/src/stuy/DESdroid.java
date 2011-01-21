@@ -24,6 +24,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Driver controls
     Joystick leftStick, rightStick;
+    DriverStation ds; // driver station object for getting selections
 
     // Autonomous class
     Autonomous auton;
@@ -40,6 +41,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                                driveFrontRight,
                                driveRearRight);
 
+        // get the driver station instance to read the digital I/O pins
+        ds = DriverStation.getInstance();
+
         leftStick  = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
     }
@@ -48,7 +52,8 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-	
+        auton = new Autonomous(this);
+        auton.lineTrackStraight();
     }
 
     /**
@@ -58,11 +63,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
-                    leftStick.getX(),  // X translation (horizontal strafe)
-                    leftStick.getY(),  // Y translation (straight forward)
-                    rightStick.getX(), // rotation (clockwise?)
-                    0.0);              // use gyro for field-oriented drive
+            drive.tankDrive(leftStick, rightStick);
         }
     }
 }
