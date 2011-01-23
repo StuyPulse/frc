@@ -29,17 +29,26 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Autonomous class
     Autonomous auton;
 
-    public DESdroid() throws CANTimeoutException {
-
-        driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-        driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-        driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-        driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+    public DESdroid() {
+        try {
+            driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
+            driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+            driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+        }
+        catch (CANTimeoutException e) {
+            e.printStackTrace();
+        }
 
         drive = new RobotDrive(driveFrontLeft,
                                driveRearLeft,
                                driveFrontRight,
                                driveRearRight);
+
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
@@ -61,7 +70,6 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
         while (isEnabled() && isOperatorControl()) {
             drive.tankDrive(leftStick, rightStick);
         }

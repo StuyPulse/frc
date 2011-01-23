@@ -53,10 +53,10 @@ public class Autonomous {
         double powerProfile[];   // the selected power profile
 
         // set the straightLine and left-right variables depending on chosen path
-        boolean straightLine = des.ds.getDigitalIn(1);
+        boolean straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
         powerProfile = (straightLine) ? straightProfile : forkProfile;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
-        boolean goLeft = !des.ds.getDigitalIn(2) && !straightLine;
+        boolean goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
         System.out.println("StraightLine: " + straightLine);
         System.out.println("GoingLeft: " + goLeft);
 
@@ -121,7 +121,11 @@ public class Autonomous {
             }
 
             // set the robot speed and direction
+            // for summer drive train, "normal" wheels
             des.drive.arcadeDrive(speed, turn);
+
+            // Try this for mecanum drive train:
+            //des.drive.mecanumDrive_Polar(speed, turn, turn);
 
             if (binaryValue != 0) {
                 previousValue = binaryValue;
