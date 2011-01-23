@@ -23,7 +23,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     RobotDrive drive;
 
     // Driver controls
-    Joystick leftStick, rightStick;
+    Joystick gamepad;
     DriverStation ds; // driver station object for getting selections
 
     // Autonomous class
@@ -53,8 +53,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
 
-        leftStick  = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
+        gamepad  = new Joystick(PORT_GAMEPAD);
     }
 
     /**
@@ -71,7 +70,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
         while (isEnabled() && isOperatorControl()) {
-            drive.tankDrive(leftStick, rightStick);
+            drive.tankDrive(gamepad.getRawAxis(AXIS_GAMEPAD_LEFT),
+                            gamepad.getRawAxis(AXIS_GAMEPAD_RIGHT));
         }
     }
 }
