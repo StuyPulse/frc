@@ -12,15 +12,25 @@ import edu.wpi.first.wpilibj.*;
  * @author blake
  */
 public class Arm implements Constants {
-    Victor armMotor;
+    CANJaguar armMotor;
     DigitalInput potentiometer;
 
     public Arm() {
-        armMotor = new Victor(ARM_MOTOR_CHANNEL_NUMBER);
+        try {
+            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
+        }
+        catch (Exception e) {
+            
+        }
     }
 
-    public void drive(double speed) {
-        armMotor.set(speed);
+    public void rotate(double speed) {
+        try {
+            armMotor.setX(speed);
+        }
+        catch (Exception e) {
+            
+        }
     }
 
     public void setHeight(double height) {
