@@ -16,4 +16,9 @@ public interface Constants {
 
     final double defaultSteeringGain = 0.65; // the default value for the steering gain
 
+    int BIT_4_CHANNEL = 16; // From Donovan OI box
+    int BIT_3_CHANNEL = 14;
+    int BIT_2_CHANNEL = 12;
+    int BIT_1_CHANNEL = 10;
+
 }

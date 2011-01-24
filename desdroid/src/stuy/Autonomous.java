@@ -21,6 +21,8 @@ public class Autonomous {
 
     Gyro gyro;
 
+    OperatorInterface oi;
+
     public Autonomous(DESdroid d) {
         des = d;
 
@@ -33,6 +35,8 @@ public class Autonomous {
 
 
         gyro = new Gyro(0);
+
+        oi = new OperatorInterface();
     }
 
     public void lineTrackStraight() {
@@ -53,10 +57,26 @@ public class Autonomous {
         double powerProfile[];   // the selected power profile
 
         // set the straightLine and left-right variables depending on chosen path
-        boolean straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
+        boolean straightLine;
+        boolean goLeft;
+        switch (oi.getAutonSwitch()) {
+            case 1: // Go straight
+                straightLine = true;
+                goLeft = false;
+            case 2: // Go left
+                straightLine = false;
+                goLeft = true;
+            case 3: // Go right
+                straightLine = false;
+                goLeft = false;
+            default:
+                straightLine = true;
+                goLeft = false;
+        }
+//        straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
         powerProfile = (straightLine) ? straightProfile : forkProfile;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
-        boolean goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
+//        goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
         System.out.println("StraightLine: " + straightLine);
         System.out.println("GoingLeft: " + goLeft);
 
