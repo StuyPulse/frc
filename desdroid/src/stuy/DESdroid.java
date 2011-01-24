@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
     Autonomous auton;
     RobotDrive dt;
+    Arm arm;
 
     public DESdroid() {
         dt = new RobotDrive(1, 2);
