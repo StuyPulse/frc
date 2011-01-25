@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.image.MonoImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ShapeDetectionOptions;
 import edu.wpi.first.wpilibj.util.SortedVector;
+import edu.wpi.first.wpilibj.*;
 
 /**
  *
@@ -63,6 +64,9 @@ public class DonovanTarget {
         MonoImage lumPlane = image.getLuminancePlane();
 
         EllipseMatch[] results = lumPlane.detectEllipses(ellipseDescriptor, curveOptions, shapeOptions, null);
+        if (results.length > 0 && results[0] != null) {
+            System.out.println("Target found");
+        }
 
         lumPlane.free();
 
