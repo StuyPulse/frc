@@ -6,11 +6,11 @@
 /*----------------------------------------------------------------------------*/
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+/*import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SimpleRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.SimpleRobot;*/
+import edu.wpi.first.wpilibj.*;
 
 /**
  * Sample line tracking class for FIRST 2011 Competition
@@ -56,19 +56,28 @@ public class LineTracker extends SimpleRobot {
     DigitalInput right;
     DriverStation ds; // driver station object for getting selections
     double defaultSteeringGain = 0.65; // the default value for the steering gain
+    CANJaguar frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
+    Joystick gamepad;
 
     public LineTracker() {
         // create the robot drive and correct for the wheel direction. Our robot
         // was geared such that the motor speeds needed to be inverted for
         // positive speeds to go forward. You may not need these.
-        drive = new RobotDrive(1, 2);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
-        // set the MotorSafety expiration timer
-        drive.setExpiration(15);
+        try {
+            frontLeftMotor = new CANJaguar(3);
+            rearLeftMotor = new CANJaguar(2);
+            frontRightMotor = new CANJaguar(4);
+            rearRightMotor = new CANJaguar(5);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        drive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+
 
         // create the digital input objects to read from the sensors
         left = new DigitalInput(1);
@@ -77,6 +86,8 @@ public class LineTracker extends SimpleRobot {
 
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
+
+        gamepad = new Joystick(1);
     }
 
     /**
@@ -85,7 +96,7 @@ public class LineTracker extends SimpleRobot {
     public void autonomous() {
 
         int binaryValue; // a single binary value of the three line tracking
-                        // sensors
+        // sensors
         int previousValue = 0; // the binary value from the previous loop
         double steeringGain; // the amount of steering correction to apply
 
@@ -100,10 +111,10 @@ public class LineTracker extends SimpleRobot {
         double powerProfile[];   // the selected power profile
 
         // set the straightLine and left-right variables depending on chosen path
-        boolean straightLine = ds.getDigitalIn(1);
+        boolean straightLine = true; //ds.getDigitalIn(1);
         powerProfile = (straightLine) ? straightProfile : forkProfile;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
-        boolean goLeft = !ds.getDigitalIn(2) && !straightLine;
+        boolean goLeft = false; //!ds.getDigitalIn(2) && !straightLine;
         System.out.println("StraightLine: " + straightLine);
         System.out.println("GoingLeft: " + goLeft);
 
@@ -186,5 +197,10 @@ public class LineTracker extends SimpleRobot {
      */
     public void operatorControl() {
         // supply your own teleop code here
+
+        getWatchdog().setEnabled(false);
+        while (isEnabled() && isOperatorControl()) {
+            drive.tankDrive(gamepad, 2, gamepad, 4);
+        }
     }
 }
