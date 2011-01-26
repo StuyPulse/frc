@@ -55,7 +55,7 @@ public class LineTracker extends SimpleRobot {
     DigitalInput middle;
     DigitalInput right;
     DriverStation ds; // driver station object for getting selections
-    double defaultSteeringGain = 0.65; // the default value for the steering gain
+    double defaultSteeringGain = 0.3; // the default value for the steering gain
     CANJaguar frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     Joystick gamepad;
         int leftInt = 0;
@@ -112,8 +112,7 @@ public class LineTracker extends SimpleRobot {
 
         double forkProfile[] = {0.70, 0.70, 0.55, 0.60, 0.60, 0.50, 0.40, 0.00};
 //        double straightProfile[] = {0.7, 0.7, 0.6, 0.6, 0.35, 0.35, 0.35, 0.0};
-        double straightProfile[] = {1, 1, 1, 1, 1, 1, 1, 1};
-
+        double straightProfile[] = {.8, .9, 1, 1, .7, .7, .6, 0};
         double powerProfile[];   // the selected power profile
 
         // set the straightLine and left-right variables depending on chosen path
