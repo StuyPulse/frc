@@ -72,6 +72,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         while (isEnabled() && isOperatorControl()) {
             drive.tankDrive(gamepad.getRawAxis(AXIS_GAMEPAD_LEFT),
                             gamepad.getRawAxis(AXIS_GAMEPAD_RIGHT));
+            System.out.println("Left: " + auton.left + " Middle: " + auton.middle + "Right: " + auton.right);
         }
     }
 }

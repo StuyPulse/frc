@@ -58,6 +58,9 @@ public class LineTracker extends SimpleRobot {
     double defaultSteeringGain = 0.65; // the default value for the steering gain
     CANJaguar frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     Joystick gamepad;
+        int leftInt = 0;
+        int midInt = 0;
+        int rightInt = 0;
 
     public LineTracker() {
         // create the robot drive and correct for the wheel direction. Our robot
@@ -88,6 +91,8 @@ public class LineTracker extends SimpleRobot {
         ds = DriverStation.getInstance();
 
         gamepad = new Joystick(1);
+
+        SmartDashboard.init();
     }
 
     /**
@@ -106,7 +111,8 @@ public class LineTracker extends SimpleRobot {
 
 
         double forkProfile[] = {0.70, 0.70, 0.55, 0.60, 0.60, 0.50, 0.40, 0.00};
-        double straightProfile[] = {0.7, 0.7, 0.6, 0.6, 0.35, 0.35, 0.35, 0.0};
+//        double straightProfile[] = {0.7, 0.7, 0.6, 0.6, 0.35, 0.35, 0.35, 0.0};
+        double straightProfile[] = {1, 1, 1, 1, 1, 1, 1, 1};
 
         double powerProfile[];   // the selected power profile
 
@@ -175,11 +181,11 @@ public class LineTracker extends SimpleRobot {
             }
             // print current status for debugging
             if (binaryValue != previousValue) {
-                System.out.println("Time: " + time + " Sensor: " + binaryValue + " speed: " + speed + " turn: " + turn + " atCross: " + atCross);
+                System.out.println("L" + leftValue + "M" + middleValue + "R" + rightValue);
             }
 
             // set the robot speed and direction
-            drive.arcadeDrive(speed, turn);
+            drive.arcadeDrive(-speed, -turn);
 
             if (binaryValue != 0) {
                 previousValue = binaryValue;
@@ -199,8 +205,19 @@ public class LineTracker extends SimpleRobot {
         // supply your own teleop code here
 
         getWatchdog().setEnabled(false);
+        drive.drive(0,0);
+        int counter = 0;
         while (isEnabled() && isOperatorControl()) {
             drive.tankDrive(gamepad, 2, gamepad, 4);
+            leftInt = left.get() ? 1 : 0;
+            midInt = middle.get() ? 1 : 0;
+            rightInt = right.get() ? 1 : 0;
+            if (counter % 100 == 0) {
+                System.out.println("L" + leftInt + "M" + midInt + "R" + rightInt);
+//                System.out.println("Left:\t" + !left.get() + " Middle:\t" + !middle.get() + " Right:\t" + !right.get());
+                counter = 0;
+            }
+            counter++;
         }
     }
 }
