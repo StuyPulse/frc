@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;*/
 import edu.wpi.first.wpilibj.*;
-import java.io.*;
-import com.sun.squawk.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import javax.microedition.io.Connector;
+import com.sun.squawk.io.BufferedReader;
+import com.sun.squawk.microedition.io.FileConnection;
 
 /**
  * Sample line tracking class for FIRST 2011 Competition
@@ -91,7 +94,7 @@ public class LineTracker extends SimpleRobot {
 
         gamepad = new Joystick(1);
 
-        System.out.println(readFile());
+        System.out.println(getFileContents("straightProfile.txt"));
     }
 
     /**
@@ -221,20 +224,22 @@ public class LineTracker extends SimpleRobot {
             counter++;
         }
     }
-    private String readFile() {
-        InputStream is = getClass().getResourceAsStream("tuningvalues/straightProfile.txt");
-        try {
-            StringBuffer sb = new StringBuffer();
-            int chr, i = 0;
-            // Read until the end of the stream
-            while ((chr = is.read()) != -1)
-                sb.append((char) chr);
 
-            return sb.toString();
+    private String getFileContents(String filename) {
+        String url = "file:///" + filename;
+        String contents = "";
+        try {
+            FileConnection c = (FileConnection) Connector.open(url);
+            BufferedReader buf = new BufferedReader(new InputStreamReader(c.openInputStream()));
+            String line = "";
+            while ((line = buf.readLine()) != null) {
+                contents += line + "\n";
+            }
+            c.close();
         }
-        catch (Exception e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return contents;
     }
 }
