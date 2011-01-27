@@ -8,7 +8,8 @@ public interface Constants {
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
 
-    final int[] GRABBER_CAN_DEVICE_NUMBER    = new int[] {7, 8};
+    final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
+    final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
 
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
