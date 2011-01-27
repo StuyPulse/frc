@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;*/
 import edu.wpi.first.wpilibj.*;
+import java.io.*;
+import com.sun.squawk.io.*;
 
 /**
  * Sample line tracking class for FIRST 2011 Competition
@@ -58,9 +60,6 @@ public class LineTracker extends SimpleRobot {
     double defaultSteeringGain = 0.3; // the default value for the steering gain
     CANJaguar frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     Joystick gamepad;
-        int leftInt = 0;
-        int midInt = 0;
-        int rightInt = 0;
 
     public LineTracker() {
         // create the robot drive and correct for the wheel direction. Our robot
@@ -92,7 +91,7 @@ public class LineTracker extends SimpleRobot {
 
         gamepad = new Joystick(1);
 
-        SmartDashboard.init();
+        System.out.println(readFile());
     }
 
     /**
@@ -206,6 +205,9 @@ public class LineTracker extends SimpleRobot {
         getWatchdog().setEnabled(false);
         drive.drive(0,0);
         int counter = 0;
+        int leftInt = 0;
+        int midInt = 0;
+        int rightInt = 0;
         while (isEnabled() && isOperatorControl()) {
             drive.tankDrive(gamepad, 2, gamepad, 4);
             leftInt = left.get() ? 1 : 0;
@@ -219,4 +221,23 @@ public class LineTracker extends SimpleRobot {
             counter++;
         }
     }
+    private String readFile()
+  {
+    InputStream is = getClass().getResourceAsStream("tuningvalues/straightProfile.txt");
+    try
+    {
+      StringBuffer sb = new StringBuffer();
+      int chr, i = 0;
+      // Read until the end of the stream
+      while ((chr = is.read()) != -1)
+          sb.append((char) chr);
+
+      return sb.toString();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
 }
