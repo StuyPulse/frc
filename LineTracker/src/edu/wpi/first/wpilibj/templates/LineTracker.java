@@ -221,23 +221,20 @@ public class LineTracker extends SimpleRobot {
             counter++;
         }
     }
-    private String readFile()
-  {
-    InputStream is = getClass().getResourceAsStream("tuningvalues/straightProfile.txt");
-    try
-    {
-      StringBuffer sb = new StringBuffer();
-      int chr, i = 0;
-      // Read until the end of the stream
-      while ((chr = is.read()) != -1)
-          sb.append((char) chr);
+    private String readFile() {
+        InputStream is = getClass().getResourceAsStream("tuningvalues/straightProfile.txt");
+        try {
+            StringBuffer sb = new StringBuffer();
+            int chr, i = 0;
+            // Read until the end of the stream
+            while ((chr = is.read()) != -1)
+                sb.append((char) chr);
 
-      return sb.toString();
+            return sb.toString();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-    return null;
-  }
 }
