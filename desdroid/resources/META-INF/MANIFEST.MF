@@ -1,6 +1,6 @@
 MIDlet-Name: desdroid
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: DESdroid, , DESdroid
+MIDlet-1: DESdroid, , stuy.DESdroid
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1

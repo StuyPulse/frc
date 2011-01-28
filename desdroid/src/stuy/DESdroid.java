@@ -74,7 +74,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         goLeft = false;
 
         auton.lineTrack(straightLine, goLeft);
-        
+
         //    switch (oi.getAutonSwitch()) {
         //        case 1: // Go straight
         //            straightLine = true;
