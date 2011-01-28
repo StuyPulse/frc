@@ -93,8 +93,6 @@ public class LineTracker extends SimpleRobot {
         ds = DriverStation.getInstance();
 
         gamepad = new Joystick(1);
-
-        System.out.println(getFileContents("straightProfile.txt"));
     }
 
     /**
@@ -222,6 +220,10 @@ public class LineTracker extends SimpleRobot {
                 counter = 0;
             }
             counter++;
+            if (gamepad.getRawButton(2)) {
+                System.out.println("Reading file.");
+                System.out.println(getFileContents("values.txt"));
+            }
         }
     }
 
