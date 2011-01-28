@@ -46,6 +46,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         while (isEnabled() && isOperatorControl()) {
             
+            
         }
     }
 }
