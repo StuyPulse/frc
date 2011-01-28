@@ -26,7 +26,7 @@ public class Arm implements Constants {
 
     public void rotate(double speed) {
         try {
-            armMotor.setX(speed);
+           // armMotor.setX(speed);
         }
         catch (Exception e) {
             

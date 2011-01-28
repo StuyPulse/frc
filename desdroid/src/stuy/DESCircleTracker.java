@@ -19,7 +19,7 @@ public class DESCircleTracker implements Constants{
     AxisCamera cam;
     DESTrackerDashboard trackerDashboard;
     
-    public DESCircleTracker() {
+    public DESCircleTracker(DESdroid d) {
 
         cam = AxisCamera.getInstance();
         cam.writeResolution(AxisCamera.ResolutionT.k320x240);

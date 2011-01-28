@@ -23,6 +23,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     Arm arm;
     Grabber grabber;
 
+    DESTrackerDashboard trackerDashboard;
+    DESCircleTracker pegTracker;
+
     // Driver controls
     Joystick gamepad;
     Joystick armStick;
@@ -32,6 +35,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
     public DESdroid() {
+        /*
         try {
             driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
@@ -40,7 +44,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         }
         catch (Exception e) {
 
-        }
+        } */
 
         drive = new RobotDrive(driveFrontLeft,
                                driveRearLeft,
@@ -52,13 +56,15 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         gamepad  = new Joystick(PORT_GAMEPAD);
         armStick = new Joystick(PORT_ARM_STICK);
+        trackerDashboard = new DESTrackerDashboard(this);
+        pegTracker = new DESCircleTracker(this);
     }
 
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-	
+	System.out.println("Autonomous");
     }
 
     /**
@@ -68,17 +74,17 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            
-            
-            drive.mecanumDrive_Cartesian(
-                    gamepad.getRawAxis(1),  // X translation (horizontal strafe)
-                    gamepad.getRawAxis(2),  // Y translation (straight forward)
-                    gamepad.getRawAxis(3),  // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive
+         
+            drive.tankDrive(gamepad, 2, gamepad, 4);
 
-            arm.rotate(armStick.getY());
+            if (gamepad.getRawButton(4)) {
+                pegTracker.doCamera();
+            }
 
-            // Control grabber: how?
         }
+
+
     }
+
+
 }
