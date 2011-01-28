@@ -21,10 +21,12 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Robot hardware
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
     RobotDrive drive;
+    DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
     Joystick gamepad;
     DriverStation ds; // driver station object for getting selections
+    OperatorInterface oi;
 
     // Autonomous class
     Autonomous auton;
@@ -50,18 +52,47 @@ public class DESdroid extends SimpleRobot implements Constants {
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
+        leftSensor   = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        rightSensor  = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
 
         gamepad  = new Joystick(PORT_GAMEPAD);
+
+        auton = new Autonomous(this);
     }
 
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        auton = new Autonomous(this);
-        auton.lineTrackStraight();
+        boolean straightLine, goLeft;
+
+        straightLine = true;
+        goLeft = false;
+
+        auton.lineTrack(straightLine, goLeft);
+        
+        //    switch (oi.getAutonSwitch()) {
+        //        case 1: // Go straight
+        //            straightLine = true;
+        //            goLeft = false;
+        //        case 2: // Go left
+        //            straightLine = false;
+        //            goLeft = true;
+        //        case 3: // Go right
+        //            straightLine = false;
+        //            goLeft = false;
+        //        default:
+        //            straightLine = true;
+        //            goLeft = false;
+        //    }
+
+        // Use digital inputs for straight/left input?
+        // straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
+        // goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
     }
 
     /**
@@ -69,10 +100,17 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
+
+        int binaryValue, previousValue = 0;
         while (isEnabled() && isOperatorControl()) {
             drive.tankDrive(gamepad.getRawAxis(AXIS_GAMEPAD_LEFT),
                             gamepad.getRawAxis(AXIS_GAMEPAD_RIGHT));
-            System.out.println("Left: " + auton.left + " Middle: " + auton.middle + "Right: " + auton.right);
+
+            binaryValue = auton.binaryValue(true);
+            if (binaryValue != previousValue)
+                auton.printLineStatus();
+            if (binaryValue != 0)
+                previousValue = binaryValue;
         }
     }
 }
