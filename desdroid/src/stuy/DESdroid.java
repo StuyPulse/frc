@@ -111,6 +111,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                 auton.printLineStatus();
             if (binaryValue != 0)
                 previousValue = binaryValue;
+            if (gamepad.getRawButton(2)) {
+                System.out.println(FileIO.getArray("straightLine.txt"));
+            }
         }
     }
 }

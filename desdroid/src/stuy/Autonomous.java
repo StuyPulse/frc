@@ -49,7 +49,8 @@ public class Autonomous implements Constants {
         // different to let the robot drive more slowly as the robot approaches
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
-        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+//        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+        powerProfile = (straightLine) ? FileIO.getArray("straightLine.txt") : FORK_PROFILE;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
