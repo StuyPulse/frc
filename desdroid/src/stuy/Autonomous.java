@@ -12,32 +12,23 @@
 package stuy;
 import edu.wpi.first.wpilibj.*;
 
-public class Autonomous {
+public class Autonomous implements Constants {
     DESdroid des;
 
     DigitalInput left; // digital inputs for line tracking sensors
     DigitalInput middle;
     DigitalInput right;
 
-    Encoder encoderLeft;
-    Encoder encoderRight;
-
     Gyro gyro;
 
     public Autonomous(DESdroid d) {
         des = d;
 
-        left = new DigitalInput(1);
-        middle = new DigitalInput(2);
-        right = new DigitalInput(3);
+        left = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middle = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        right = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        encoderLeft = new Encoder(3, 4, true);
-        encoderRight = new Encoder(5, 6, true);
-
-        encoderLeft.start();
-        encoderRight.start();
-
-        gyro = new Gyro(0);
+        gyro = new Gyro(GYRO_CHANNEL);
     }
 
     public void lineTrackStraight() {

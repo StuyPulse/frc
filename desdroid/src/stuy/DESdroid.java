@@ -6,8 +6,6 @@ package stuy;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -18,24 +16,49 @@ import edu.wpi.first.wpilibj.*;
  * directory.
  */
 public class DESdroid extends SimpleRobot implements Constants {
+
+    // Robot hardware
+    CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
+    RobotDrive drive;
+    Arm arm;
+    Grabber grabber;
+
+    // Driver controls
+    Joystick gamepad;
+    Joystick armStick;
+
+    // Autonomous class
     Autonomous auton;
-    RobotDrive dt;
+
 
     public DESdroid() {
-        dt = new RobotDrive(1, 2);
-        dt.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-        dt.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-        dt.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        dt.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-    }
+        try {
+            driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
+            driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+            driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+        }
+        catch (Exception e) {
 
+        }
+
+        drive = new RobotDrive(driveFrontLeft,
+                               driveRearLeft,
+                               driveFrontRight,
+                               driveRearRight);
+
+        grabber = new Grabber();
+
+
+        gamepad  = new Joystick(PORT_GAMEPAD);
+        armStick = new Joystick(PORT_ARM_STICK);
+    }
 
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-    
-        
+	
     }
 
     /**
@@ -47,6 +70,15 @@ public class DESdroid extends SimpleRobot implements Constants {
         while (isEnabled() && isOperatorControl()) {
             
             
+            drive.mecanumDrive_Cartesian(
+                    gamepad.getRawAxis(1),  // X translation (horizontal strafe)
+                    gamepad.getRawAxis(2),  // Y translation (straight forward)
+                    gamepad.getRawAxis(3),  // rotation (clockwise?)
+                    0.0);                   // use gyro for field-oriented drive
+
+            arm.rotate(armStick.getY());
+
+            // Control grabber: how?
         }
     }
 }
