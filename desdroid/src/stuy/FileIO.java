@@ -42,7 +42,7 @@ public class FileIO {
         double[] array = new double[st.countTokens()];
         int i = 0;
         while (st.hasMoreTokens()) {
-                array[i++] = Double.parseDouble(st.nextToken());
+            array[i++] = Double.parseDouble(st.nextToken());
         }
         return array;
     }
