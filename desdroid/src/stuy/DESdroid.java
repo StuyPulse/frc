@@ -35,7 +35,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
     public DESdroid() {
-        /*
+        
         try {
             driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
@@ -43,8 +43,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
         }
         catch (Exception e) {
+            System.out.println(e);
 
-        } */
+        } 
 
         drive = new RobotDrive(driveFrontLeft,
                                driveRearLeft,
