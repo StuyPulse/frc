@@ -18,5 +18,6 @@ public interface Constants {
     final int GYRO_CHANNEL                   = 4;
 
     final int PORT_GAMEPAD                   = 1;
+    final int PORT_JOYSTICK                  = 1;
     final int PORT_ARM_STICK                 = 2;
 }

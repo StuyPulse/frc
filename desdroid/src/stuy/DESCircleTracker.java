@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.image.*;
  * @author Ginkgo
  */
 public class DESCircleTracker implements Constants{
-    double kScoreThreshold = .01;
+    double kScoreThreshold = .001;
     AxisCamera cam;
     DESTrackerDashboard trackerDashboard;
     
@@ -38,6 +38,8 @@ public class DESCircleTracker implements Constants{
                 Thread.yield();
                 image.free();
                 if (targets.length == 0 || targets[0].m_score < kScoreThreshold) {
+                    if (targets.length > 0)
+                        System.out.println(targets[0].m_score);
                    // System.out.println("No target found");
 
                     DESTarget[] newTargets = new DESTarget[targets.length + 1];
@@ -49,15 +51,15 @@ public class DESCircleTracker implements Constants{
                         newTargets[i + 1] = targets[i];
                     }
 
-                    trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
+                   // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
 
                 } else {
                   //  System.out.println(targets[0]);
-                   // System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
+                      System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
 
                    // System.out.println("calling lightLEDs");
 
-                     trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, targets[0].m_xPos / targets[0].m_xMax, targets);
+                   //  trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, targets[0].m_xPos / targets[0].m_xMax, targets);
                 }
             }
         } catch (NIVisionException ex) {

@@ -29,9 +29,12 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Driver controls
     Joystick gamepad;
     Joystick armStick;
+    Joystick arcadeStick;
 
     // Autonomous class
     Autonomous auton;
+
+    boolean isOn = false;
 
 
     public DESdroid() {
@@ -59,6 +62,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         armStick = new Joystick(PORT_ARM_STICK);
         trackerDashboard = new DESTrackerDashboard(this);
         pegTracker = new DESCircleTracker(this);
+        arcadeStick = new Joystick(PORT_JOYSTICK);
     }
 
     /**
@@ -75,17 +79,21 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-         
-            drive.tankDrive(gamepad, 2, gamepad, 4);
+   
+            // drive.tankDrive(gamepad, 2, gamepad, 4);
+            drive.arcadeDrive(arcadeStick);
 
-            if (gamepad.getRawButton(4)) {
+            if (arcadeStick.getRawButton(7) && !isOn) {
                 pegTracker.doCamera();
+                isOn = true;
             }
+            if (arcadeStick.getRawButton(9)) {
+                isOn = false;
+            }
+
 
         }
 
 
     }
-
-
 }
