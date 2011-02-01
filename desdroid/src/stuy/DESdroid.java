@@ -20,25 +20,34 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Robot hardware
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
     RobotDrive drive;
-
     // Driver controls
     Joystick leftStick, rightStick;
-
     // Autonomous class
     Autonomous auton;
 
     public DESdroid() {
-        driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-        driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-        driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-        driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+        try {
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT, CANJaguar.ControlMode.kSpeed);
 
-        drive = new RobotDrive(driveFrontLeft,
-                               driveRearLeft,
-                               driveFrontRight,
-                               driveRearRight);
+            driveFrontLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveFrontRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
 
-        leftStick  = new Joystick(PORT_LEFT_STICK);
+            updatePID();
+
+            drive = new RobotDrive(driveFrontLeft,
+                    driveRearLeft,
+                    driveFrontRight,
+                    driveRearRight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
     }
 
@@ -46,7 +55,6 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-	
     }
 
     /**
@@ -57,10 +65,27 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
-                    leftStick.getX(),  // X translation (horizontal strafe)
-                    leftStick.getY(),  // Y translation (straight forward)
+                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
                     0.0);              // use gyro for field-oriented drive
+
+            if (rightStick.getRawButton(7)) {
+                updatePID();
+            }
+        }
+    }
+
+    public void updatePID() {
+        double drivePID[] = FileIO.getArray("drive_PID_values.txt");
+        try {
+            driveFrontLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
