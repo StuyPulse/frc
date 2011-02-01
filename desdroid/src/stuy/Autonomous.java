@@ -57,7 +57,11 @@ public class Autonomous implements Constants {
      * Back up along line
      */
     public void auton1() {
-
+        lineTrack(true, false);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+        // Back up
     }
 
     /**
@@ -66,7 +70,11 @@ public class Autonomous implements Constants {
      * Back up along line
      */
     public void auton2() {
-
+        lineTrack(false, true);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+        // Back up
     }
 
     /**
@@ -75,14 +83,20 @@ public class Autonomous implements Constants {
      * Back up along line
      */
     public void auton3() {
-
+        lineTrack(false, false);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+        // Back up
     }
 
     /**
      * Drop uebertube
      */
     public void auton4() {
-        
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
     }
 
         public void lineTrack(boolean straightLine, boolean goLeft) {
