@@ -1,6 +1,7 @@
 package stuy;
 
 import com.sun.squawk.util.MathUtils;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.image.*;
 
 import edu.wpi.first.wpilibj.util.SortedVector;
@@ -8,7 +9,7 @@ import edu.wpi.first.wpilibj.util.SortedVector;
 /* ALGO
  * 1. 
  */
-public class DESTarget {
+public class DESTarget implements PIDSource {
 
     public double m_majorRadius;
     public double m_minorRadius;
@@ -26,6 +27,10 @@ public class DESTarget {
         x = MathUtils.atan2(x, 20.0);
         x = x * 180.0 / Math.PI;
         return x;
+    }
+
+    public double pidGet() {
+        return m_xPos;
     }
 
     public String toString() {

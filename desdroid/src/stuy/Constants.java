@@ -20,4 +20,10 @@ public interface Constants {
     final int PORT_GAMEPAD                   = 1;
     final int PORT_JOYSTICK                  = 1;
     final int PORT_ARM_STICK                 = 2;
+
+    // Gains and setpoint for the target feedback loop.  Not yet tuned.
+    final int PVAL                           = 1;
+    final int IVAL                           = 1;
+    final int DVAL                           = 1;
+    final double PID_SETPOINT                = 50.0;
 }

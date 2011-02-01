@@ -2,33 +2,40 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
 
-
 /**
  *
  * @author Ginkgo
  */
-public class DESCircleTracker implements Constants{
+public class DESCircleTracker implements Constants, PIDOutput {
+
     double kScoreThreshold = .001;
     AxisCamera cam;
     DESTrackerDashboard trackerDashboard;
-    
+    DESTarget mainTarget;
+    PIDController strafeController;
+    DESdroid des;
+
     public DESCircleTracker(DESdroid d) {
+        des = d;
 
         cam = AxisCamera.getInstance();
         cam.writeResolution(AxisCamera.ResolutionT.k320x240);
         cam.writeBrightness(0);
 
+        mainTarget = new DESTarget();
+        mainTarget.m_xPos = 0;
 
+        strafeController = new PIDController(PVAL, IVAL, DVAL, mainTarget, this);
+        strafeController.disable();
     }
 
-        public void doCamera() {
+    public void doCamera() {
         try {
             if (cam.freshImage()) {// && turnController.onTarget()) {
 
@@ -38,9 +45,10 @@ public class DESCircleTracker implements Constants{
                 Thread.yield();
                 image.free();
                 if (targets.length == 0 || targets[0].m_score < kScoreThreshold) {
-                    if (targets.length > 0)
+                    if (targets.length > 0) {
                         System.out.println(targets[0].m_score);
-                   // System.out.println("No target found");
+                    }
+                    // System.out.println("No target found");
 
                     DESTarget[] newTargets = new DESTarget[targets.length + 1];
                     newTargets[0] = new DESTarget();
@@ -50,16 +58,15 @@ public class DESCircleTracker implements Constants{
                     for (int i = 0; i < targets.length; i++) {
                         newTargets[i + 1] = targets[i];
                     }
+                    mainTarget = newTargets[0];
 
-                   // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
+                    // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
 
                 } else {
-                  //  System.out.println(targets[0]);
-                      System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
-
-                   // System.out.println("calling lightLEDs");
-
-                   //  trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, targets[0].m_xPos / targets[0].m_xMax, targets);
+                    //  System.out.println(targets[0]);
+                    System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
+                    System.out.println("Target m_xPos: " + targets[0].m_xPos);
+                    mainTarget = targets[0];
                 }
             }
         } catch (NIVisionException ex) {
@@ -67,8 +74,17 @@ public class DESCircleTracker implements Constants{
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         }
-        //System.out.println("Time : " + (Timer.getUsClock() - startTime) / 1000000.0);
-       // System.out.println("Gyro Angle: " + donnie.gyro.getAngle());
-        //counter ++;
+    }
+
+    public void pidWrite(double output) {
+        des.drive.mecanumDrive_Cartesian(output, 0, 0, 0);
+    }
+
+    public void startAligning() {
+        strafeController.enable();
+        strafeController.setSetpoint(PID_SETPOINT); // the ideal value of m_xPos
+    }
+    public void stopAligning() {
+        strafeController.disable();
     }
 }

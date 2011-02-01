@@ -83,17 +83,34 @@ public class DESdroid extends SimpleRobot implements Constants {
             // drive.tankDrive(gamepad, 2, gamepad, 4);
             drive.arcadeDrive(arcadeStick);
 
+
+            // Place the robot centered in front of a target and record the xPos
+            // value (press button 7 to find the target).  Since the camera is
+            // off-center, this value must be determined experimentally.  Put it
+            // into Constants.java as PID_SETPOINT.
+
+            // Move the robot or the target, then press and hold button 10 to
+            // align using PID feedback control (tune the PID gains as well).
+            
             if (arcadeStick.getRawButton(7) && !isOn) {
                 pegTracker.doCamera();
                 isOn = true;
             }
-            if (arcadeStick.getRawButton(9)) {
+            if(arcadeStick.getRawButton(9)) {
                 isOn = false;
             }
-
-
+            
+            if (arcadeStick.getRawButton(10)) { //button choice?
+                if (!isOn) {
+                    pegTracker.startAligning();
+                    isOn = true;
+                }
+                pegTracker.doCamera();
+            }
+            else {
+                pegTracker.stopAligning();
+                isOn = false;
+            }
         }
-
-
     }
 }
