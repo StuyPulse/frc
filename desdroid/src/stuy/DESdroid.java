@@ -28,8 +28,12 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Driver controls
     Joystick gamepad;
-    Joystick armStick;
-    Joystick arcadeStick;
+    Joystick leftStick;
+    Joystick rightStick;
+
+    // Digital I/O
+    DigitalOutput halogen_a;
+    DigitalOutput halogen_b;
 
     // Autonomous class
     Autonomous auton;
@@ -48,21 +52,27 @@ public class DESdroid extends SimpleRobot implements Constants {
         catch (Exception e) {
             System.out.println(e);
 
-        } 
+        }
 
         drive = new RobotDrive(driveFrontLeft,
                                driveRearLeft,
                                driveFrontRight,
                                driveRearRight);
 
-        grabber = new Grabber();
+       
 
 
-        gamepad  = new Joystick(PORT_GAMEPAD);
-        armStick = new Joystick(PORT_ARM_STICK);
+
+        leftStick = new Joystick(PORT_ARM_STICK);
+        rightStick = new Joystick(PORT_JOYSTICK);
+        
         trackerDashboard = new DESTrackerDashboard(this);
         pegTracker = new DESCircleTracker(this);
-        arcadeStick = new Joystick(PORT_JOYSTICK);
+
+
+        halogen_a = new DigitalOutput(HALOGEN_CHANNEL_A);
+        halogen_b = new DigitalOutput(HALOGEN_CHANNEL_B);
+
     }
 
     /**
@@ -81,7 +91,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         while (isEnabled() && isOperatorControl()) {
    
             // drive.tankDrive(gamepad, 2, gamepad, 4);
-            drive.arcadeDrive(arcadeStick);
+            drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0.0);
 
 
             // Place the robot centered in front of a target and record the xPos
@@ -92,15 +102,17 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Move the robot or the target, then press and hold button 10 to
             // align using PID feedback control (tune the PID gains as well).
             
-            if (arcadeStick.getRawButton(7) && !isOn) {
+            if (leftStick.getRawButton(7) && !isOn) {
+                System.out.println("track called");
                 pegTracker.doCamera();
                 isOn = true;
             }
-            if(arcadeStick.getRawButton(9)) {
+            
+            if(leftStick.getRawButton(9)) {
                 isOn = false;
             }
             
-            if (arcadeStick.getRawButton(10)) { //button choice?
+            if (leftStick.getRawButton(10)) { //button choice?
                 if (!isOn) {
                     pegTracker.startAligning();
                     isOn = true;
@@ -110,6 +122,15 @@ public class DESdroid extends SimpleRobot implements Constants {
             else {
                 pegTracker.stopAligning();
                 isOn = false;
+            }
+
+            if (leftStick.getTrigger()) {
+                halogen_a.set(true);
+                halogen_b.set(true);
+            }
+            else {
+                halogen_a.set(false);
+                halogen_b.set(false);
             }
         }
     }

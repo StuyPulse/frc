@@ -1,9 +1,9 @@
 package stuy;
 
 public interface Constants {
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 3;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 2;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
@@ -11,9 +11,12 @@ public interface Constants {
     final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
     final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
 
+    /*** DIGITAL I/O ***/
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int HALOGEN_CHANNEL_A              = 4;
+    final int HALOGEN_CHANNEL_B              = 5;
 
     final int GYRO_CHANNEL                   = 4;
 

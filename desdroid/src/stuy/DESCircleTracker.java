@@ -36,7 +36,10 @@ public class DESCircleTracker implements Constants, PIDOutput {
     }
 
     public void doCamera() {
+        des.halogen_a.set(true);
         try {
+
+            
             if (cam.freshImage()) {// && turnController.onTarget()) {
 
                 ColorImage image = cam.getImage();
@@ -59,7 +62,7 @@ public class DESCircleTracker implements Constants, PIDOutput {
                         newTargets[i + 1] = targets[i];
                     }
                     mainTarget = newTargets[0];
-
+                    System.out.println("Target not found");
                     // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
 
                 } else {
@@ -74,6 +77,8 @@ public class DESCircleTracker implements Constants, PIDOutput {
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         }
+
+        des.halogen_a.set(false);
     }
 
     public void pidWrite(double output) {
