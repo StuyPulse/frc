@@ -60,7 +60,10 @@ public class OperatorInterface implements Constants {
     }
 
     public int getAutonSetting() {
-        if (getDropUbertubeSwitch()) {
+        if (getDoNothingSwitch()) {
+            return 5;
+        }
+        else if (getDropUbertubeSwitch()) {
             return 4;
         }
         else {
@@ -103,6 +106,16 @@ public class OperatorInterface implements Constants {
     public boolean getDropUbertubeSwitch() {
         try {
             return enhancedIO.getDigital(DROP_UBERTUBE_SWITCH);
+        }
+        catch (EnhancedIOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean getDoNothingSwitch() {
+        try {
+            return enhancedIO.getDigital(DO_NOTHING_SWITCH);
         }
         catch (EnhancedIOException e) {
             e.printStackTrace();
