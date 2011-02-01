@@ -7,6 +7,7 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,43 +23,82 @@ public class DESdroid extends SimpleRobot implements Constants {
     RobotDrive drive;
     Arm arm;
     Grabber grabber;
+    DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
     Joystick gamepad;
     Joystick armStick;
+    DriverStation ds; // driver station object for getting selections
+    OperatorInterface oi;
 
     // Autonomous class
     Autonomous auton;
 
-
     public DESdroid() {
         try {
-            driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-            driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-            driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
-        }
-        catch (Exception e) {
-
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         drive = new RobotDrive(driveFrontLeft,
-                               driveRearLeft,
-                               driveFrontRight,
-                               driveRearRight);
+                driveRearLeft,
+                driveFrontRight,
+                driveRearRight);
+
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
         grabber = new Grabber();
 
 
-        gamepad  = new Joystick(PORT_GAMEPAD);
-        armStick = new Joystick(PORT_ARM_STICK);
+        gamepad = new Joystick(PORT_GAMEPAD);
+
+        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+
+        // get the driver station instance to read the digital I/O pins
+        ds = DriverStation.getInstance();
+
+        gamepad = new Joystick(PORT_GAMEPAD);
+
+        auton = new Autonomous(this);
     }
 
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
+     /**
+      * This function is called once each time the robot enters autonomous mode.
+      */
     public void autonomous() {
-	
+        boolean straightLine, goLeft;
+
+        straightLine = true;
+        goLeft = false;
+
+        auton.lineTrack(straightLine, goLeft);
+
+        //    switch (oi.getAutonSwitch()) {
+        //        case 1: // Go straight
+        //            straightLine = true;
+        //            goLeft = false;
+        //        case 2: // Go left
+        //            straightLine = false;
+        //            goLeft = true;
+        //        case 3: // Go right
+        //            straightLine = false;
+        //            goLeft = false;
+        //        default:
+        //            straightLine = true;
+        //            goLeft = false;
+        //    }
+        // Use digital inputs for straight/left input?
+        // straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
+        // goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
     }
 
     /**
@@ -67,16 +107,18 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
+        int binaryValue, previousValue = 0;
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
-                    gamepad.getRawAxis(1),  // X translation (horizontal strafe)
-                    gamepad.getRawAxis(2),  // Y translation (straight forward)
-                    gamepad.getRawAxis(3),  // rotation (clockwise?)
+                    gamepad.getRawAxis(1), // X translation (horizontal strafe)
+                    gamepad.getRawAxis(2), // Y translation (straight forward)
+                    gamepad.getRawAxis(3), // rotation (clockwise?)
                     0.0);                   // use gyro for field-oriented drive
 
             arm.rotate(armStick.getY());
 
             // Control grabber: how?
+
         }
     }
 }
