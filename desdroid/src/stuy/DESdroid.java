@@ -58,7 +58,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
         gamepad = new Joystick(PORT_GAMEPAD);
-        armStick = new Joystick(PORT_ARM_STICK);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
