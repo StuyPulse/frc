@@ -20,6 +20,9 @@ public class DESCircleTracker implements Constants, PIDOutput {
     DESTarget mainTarget;
     PIDController strafeController;
     DESdroid des;
+    
+    DigitalOutput halogen_a;
+    DigitalOutput halogen_b;
 
     public DESCircleTracker(DESdroid d) {
         des = d;
@@ -33,10 +36,13 @@ public class DESCircleTracker implements Constants, PIDOutput {
 
         strafeController = new PIDController(PVAL, IVAL, DVAL, mainTarget, this);
         strafeController.disable();
+
+        halogen_a = new DigitalOutput(HALOGEN_CHANNEL_A);
+        halogen_b = new DigitalOutput(HALOGEN_CHANNEL_B);
     }
 
     public void doCamera() {
-        des.halogen_a.set(true);
+        halogen_a.set(true);
         try {
 
             
@@ -78,7 +84,7 @@ public class DESCircleTracker implements Constants, PIDOutput {
             ex.printStackTrace();
         }
 
-        des.halogen_a.set(false);
+        halogen_a.set(false);
     }
 
     public void pidWrite(double output) {

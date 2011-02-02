@@ -32,8 +32,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick rightStick;
 
     // Digital I/O
-    DigitalOutput halogen_a;
-    DigitalOutput halogen_b;
+
 
     // Autonomous class
     Autonomous auton;
@@ -70,8 +69,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         pegTracker = new DESCircleTracker(this);
 
 
-        halogen_a = new DigitalOutput(HALOGEN_CHANNEL_A);
-        halogen_b = new DigitalOutput(HALOGEN_CHANNEL_B);
+
 
     }
 
@@ -125,12 +123,12 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             if (leftStick.getTrigger()) {
-                halogen_a.set(true);
-                halogen_b.set(true);
+                pegTracker.halogen_a.set(true);
+                pegTracker.halogen_b.set(true);
             }
             else {
-                halogen_a.set(false);
-                halogen_b.set(false);
+                pegTracker.halogen_a.set(false);
+                pegTracker.halogen_b.set(false);
             }
         }
     }
