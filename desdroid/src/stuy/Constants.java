@@ -4,8 +4,8 @@ public interface Constants {
 
     // Robot Hardware Configuration
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 3;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
     final int DRIVE_CAN_DEVICE_REAR_LEFT     = 2;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
@@ -23,12 +23,9 @@ public interface Constants {
     final int DIGITAL_IN_GO_LEFT             = 2;
 
     // User Controls
-    final int PORT_GAMEPAD                   = 1;
-    final int PORT_ARM_STICK                 = 2;
-
-    // Gamepad axes
-    final int AXIS_GAMEPAD_LEFT              = 2;
-    final int AXIS_GAMEPAD_RIGHT             = 4;
+    final int PORT_LEFT_STICK                = 1;
+    final int PORT_RIGHT_STICK               = 2;
+    final int PORT_ARM_STICK                 = 3;
 
     // EnhancedIO pins
     final int BIT_4_CHANNEL = 16; // From Donovan OI box

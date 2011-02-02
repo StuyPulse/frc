@@ -16,39 +16,70 @@ public class Grabber implements Constants {
     CANJaguar upperRoller;
     CANJaguar lowerRoller;
 
+    byte syncGroup = (byte)0x80;
+
     public Grabber() {
         try {
             upperRoller = new CANJaguar(GRABBER_UPPER_ROLLER_DEVICE);
             lowerRoller = new CANJaguar(GRABBER_LOWER_ROLLER_DEVICE);
         }
         catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
     public void in() {
+        try {
+            upperRoller.setX(1, syncGroup);
+            lowerRoller.setX(-1, syncGroup);
+            CANJaguar.updateSyncGroup(syncGroup);
+        }
+        catch (Exception e) {
 
+        }
     }
 
     public void out() {
+        try {
+            upperRoller.setX(-1, syncGroup);
+            lowerRoller.setX(1, syncGroup);
+            CANJaguar.updateSyncGroup(syncGroup);
+        }
+        catch (Exception e) {
 
+        }
     }
 
     public void rotateUp() {
-        
+        try {
+            upperRoller.setX(1, syncGroup);
+            lowerRoller.setX(1, syncGroup);
+            CANJaguar.updateSyncGroup(syncGroup);
+        }
+        catch (Exception e) {
+
+        }
     }
 
     public void rotateDown() {
+        try {
+            upperRoller.setX(-1, syncGroup);
+            lowerRoller.setX(-1, syncGroup);
+            CANJaguar.updateSyncGroup(syncGroup);
+        }
+        catch (Exception e) {
 
+        }
     }
 
     public void stop() {
         try {
-            upperRoller.setX(0);
-            lowerRoller.setX(0);
+            upperRoller.setX(0, syncGroup);
+            lowerRoller.setX(0, syncGroup);
+            CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

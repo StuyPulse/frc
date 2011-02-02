@@ -7,7 +7,6 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +25,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
-    Joystick gamepad;
+    Joystick leftStick;
+    Joystick rightStick;
     Joystick armStick;
     DriverStation ds; // driver station object for getting selections
     OperatorInterface oi;
@@ -37,11 +37,12 @@ public class DESdroid extends SimpleRobot implements Constants {
     public DESdroid() {
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
             driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
             driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        catch (Exception e) {
+
         }
 
         drive = new RobotDrive(driveFrontLeft,
@@ -51,13 +52,15 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+        armStick = new Joystick(PORT_ARM_STICK);
+
+        arm = new Arm();
         grabber = new Grabber();
-
-
-        gamepad = new Joystick(PORT_GAMEPAD);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -65,6 +68,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
+
+        oi = new OperatorInterface();
 
         auton = new Autonomous(this);
     }
@@ -74,6 +79,7 @@ public class DESdroid extends SimpleRobot implements Constants {
       */
     public void autonomous() {
         getWatchdog().setEnabled(false);
+
         auton.run(oi.getAutonSetting());
     }
 
@@ -83,17 +89,16 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
-        int binaryValue, previousValue = 0;
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
-                    gamepad.getRawAxis(1), // X translation (horizontal strafe)
-                    gamepad.getRawAxis(2), // Y translation (straight forward)
-                    gamepad.getRawAxis(3), // rotation (clockwise?)
+                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getY(), // Y translation (straight forward)
+                    rightStick.getX(), // rotation (clockwise?)
                     0.0);                   // use gyro for field-oriented drive
 
             arm.rotate(armStick.getY());
 
-            // Control grabber: how?
+            // Control grabber: wat do?
 
         }
     }
