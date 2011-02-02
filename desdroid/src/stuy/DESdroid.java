@@ -67,8 +67,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
 
-        gamepad = new Joystick(PORT_GAMEPAD);
-
         auton = new Autonomous(this);
     }
 
