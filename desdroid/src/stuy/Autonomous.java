@@ -3,8 +3,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package stuy;
+
 import edu.wpi.first.wpilibj.*;
 
 public class Autonomous implements Constants {
@@ -16,7 +16,7 @@ public class Autonomous implements Constants {
         des = d;
     }
 
-    public void getSensorValues() {
+    private void getSensorValues() {
         leftValue = des.leftSensor.get() ? 1 : 0;
         middleValue = des.middleSensor.get() ? 1 : 0;
         rightValue = des.rightSensor.get() ? 1 : 0;
@@ -41,15 +41,16 @@ public class Autonomous implements Constants {
         }
     }
 
-    public void printLineStatus() {
+    private void printLineStatus() {
         System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
                 + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
                 + "R: [" + (rightValue == 1 ? "1" : " ") + "]");
     }
 
-    public int binaryValue(boolean goLeft) {
-        if (goLeft)
+    private int binaryValue(boolean goLeft) {
+        if (goLeft) {
             return leftValue * 4 + middleValue * 2 + rightValue;
+        }
         return rightValue * 4 + middleValue * 2 + leftValue;
     }
 
@@ -58,7 +59,7 @@ public class Autonomous implements Constants {
      * Score
      * Back up along line
      */
-    public void auton1() {
+    private void auton1() {
         des.arm.setHeight(0);
         lineTrack(true, false);
         des.grabber.out();
@@ -72,7 +73,7 @@ public class Autonomous implements Constants {
      * Score
      * Back up along line
      */
-    public void auton2() {
+    private void auton2() {
         des.arm.setHeight(0);
         lineTrack(false, true);
         des.grabber.out();
@@ -86,7 +87,7 @@ public class Autonomous implements Constants {
      * Score
      * Back up along line
      */
-    public void auton3() {
+    private void auton3() {
         des.arm.setHeight(0);
         lineTrack(false, false);
         des.grabber.out();
@@ -96,15 +97,15 @@ public class Autonomous implements Constants {
     }
 
     /**
-     * Drop übertube
+     * Drop ubertube
      */
-    public void auton4() {
+    private void auton4() {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
     }
 
-        public void lineTrack(boolean straightLine, boolean goLeft) {
+    private void lineTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -162,21 +163,24 @@ public class Autonomous implements Constants {
                     turn = -steeringGain;
             }
             // print current status for debugging
-            if (binaryValue != previousValue)
+            if (binaryValue != previousValue) {
                 printLineStatus();
+            }
 
             // set the robot speed and direction
             des.drive.arcadeDrive(-speed, -turn);
 
-            if (binaryValue != 0)
+            if (binaryValue != 0) {
                 previousValue = binaryValue;
+            }
 
             Timer.delay(0.01);
         }
         // Done with loop - stop the robot. Robot ought to be at the end of the line
         des.drive.arcadeDrive(0, 0);
     }
-        public void backTrack(boolean straightLine, boolean goLeft) {
+
+    private void backTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -234,14 +238,16 @@ public class Autonomous implements Constants {
                     turn = -steeringGain;
             }
             // print current status for debugging
-            if (binaryValue != previousValue)
+            if (binaryValue != previousValue) {
                 printLineStatus();
+            }
 
             // set the robot speed and direction
             des.drive.arcadeDrive(-speed, -turn);
 
-            if (binaryValue != 0)
+            if (binaryValue != 0) {
                 previousValue = binaryValue;
+            }
 
             Timer.delay(0.01);
         }

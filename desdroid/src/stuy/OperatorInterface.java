@@ -71,7 +71,7 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public int getDirectionSwitch() {
+    private int getDirectionSwitch() {
         if (getDirectionSwitchLeft()) {
             return 2;
         }
@@ -83,7 +83,7 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public boolean getDirectionSwitchLeft() {
+    private boolean getDirectionSwitchLeft() {
         try {
             return enhancedIO.getDigital(DIRECTION_SWITCH_LEFT);
         }
@@ -93,7 +93,7 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public boolean getDirectionSwitchRight() {
+    private boolean getDirectionSwitchRight() {
         try {
             return enhancedIO.getDigital(DIRECTION_SWITCH_RIGHT);
         }
@@ -103,7 +103,7 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public boolean getDropUbertubeSwitch() {
+    private boolean getDropUbertubeSwitch() {
         try {
             return enhancedIO.getDigital(DROP_UBERTUBE_SWITCH);
         }
@@ -113,7 +113,7 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public boolean getDoNothingSwitch() {
+    private boolean getDoNothingSwitch() {
         try {
             return enhancedIO.getDigital(DO_NOTHING_SWITCH);
         }
