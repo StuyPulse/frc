@@ -22,7 +22,7 @@ public class Grabber implements Constants {
             lowerRoller = new CANJaguar(GRABBER_LOWER_ROLLER_DEVICE);
         }
         catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -40,5 +40,15 @@ public class Grabber implements Constants {
 
     public void rotateDown() {
 
+    }
+
+    public void stop() {
+        try {
+            upperRoller.setX(0);
+            lowerRoller.setX(0);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

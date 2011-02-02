@@ -58,4 +58,68 @@ public class OperatorInterface implements Constants {
             return 1;
         }
     }
+
+    public int getAutonSetting() {
+        if (getDoNothingSwitch()) {
+            return 5;
+        }
+        else if (getDropUbertubeSwitch()) {
+            return 4;
+        }
+        else {
+            return getDirectionSwitch();
+        }
+    }
+
+    private int getDirectionSwitch() {
+        if (getDirectionSwitchLeft()) {
+            return 2;
+        }
+        else if (getDirectionSwitchRight()) {
+            return 3;
+        }
+        else {
+            return 1;
+        }
+    }
+
+    private boolean getDirectionSwitchLeft() {
+        try {
+            return enhancedIO.getDigital(DIRECTION_SWITCH_LEFT);
+        }
+        catch (EnhancedIOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean getDirectionSwitchRight() {
+        try {
+            return enhancedIO.getDigital(DIRECTION_SWITCH_RIGHT);
+        }
+        catch (EnhancedIOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean getDropUbertubeSwitch() {
+        try {
+            return enhancedIO.getDigital(DROP_UBERTUBE_SWITCH);
+        }
+        catch (EnhancedIOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean getDoNothingSwitch() {
+        try {
+            return enhancedIO.getDigital(DO_NOTHING_SWITCH);
+        }
+        catch (EnhancedIOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

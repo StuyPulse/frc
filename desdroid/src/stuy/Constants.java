@@ -1,6 +1,7 @@
 package stuy;
 
 public interface Constants {
+
     // Robot Hardware Configuration
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 3;
     final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
@@ -17,19 +18,29 @@ public interface Constants {
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
 
     final int GYRO_CHANNEL                   = 4;
+
     final int DIGITAL_IN_STRAIGHT_LINE       = 1;
     final int DIGITAL_IN_GO_LEFT             = 2;
 
     // User Controls
     final int PORT_GAMEPAD                   = 1;
     final int PORT_ARM_STICK                 = 2;
+
+    // Gamepad axes
     final int AXIS_GAMEPAD_LEFT              = 2;
     final int AXIS_GAMEPAD_RIGHT             = 4;
 
+    // EnhancedIO pins
     final int BIT_4_CHANNEL = 16; // From Donovan OI box
     final int BIT_3_CHANNEL = 14;
     final int BIT_2_CHANNEL = 12;
     final int BIT_1_CHANNEL = 10;
+
+    final int DO_NOTHING_SWITCH = 2;
+    final int DROP_UBERTUBE_SWITCH = 4;
+    final int DIRECTION_SWITCH_LEFT = 6;
+    final int DIRECTION_SWITCH_RIGHT = 8;
+
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.3;

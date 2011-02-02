@@ -58,7 +58,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
         gamepad = new Joystick(PORT_GAMEPAD);
-        armStick = new Joystick(PORT_ARM_STICK);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -74,30 +73,8 @@ public class DESdroid extends SimpleRobot implements Constants {
       * This function is called once each time the robot enters autonomous mode.
       */
     public void autonomous() {
-        boolean straightLine, goLeft;
-
-        straightLine = true;
-        goLeft = false;
-
-        auton.lineTrack(straightLine, goLeft);
-
-        //    switch (oi.getAutonSwitch()) {
-        //        case 1: // Go straight
-        //            straightLine = true;
-        //            goLeft = false;
-        //        case 2: // Go left
-        //            straightLine = false;
-        //            goLeft = true;
-        //        case 3: // Go right
-        //            straightLine = false;
-        //            goLeft = false;
-        //        default:
-        //            straightLine = true;
-        //            goLeft = false;
-        //    }
-        // Use digital inputs for straight/left input?
-        // straightLine = des.ds.getDigitalIn(des.DIGITAL_IN_STRAIGHT_LINE);
-        // goLeft = !des.ds.getDigitalIn(des.DIGITAL_IN_GO_LEFT) && !straightLine;
+        getWatchdog().setEnabled(false);
+        auton.run(oi.getAutonSetting());
     }
 
     /**
