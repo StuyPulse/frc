@@ -17,7 +17,8 @@ public class Arm implements Constants {
 
     public Arm() {
         try {
-            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
+            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPosition);
+            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
         }
         catch (Exception e) {
             

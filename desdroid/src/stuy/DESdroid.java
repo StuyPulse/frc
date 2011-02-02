@@ -99,6 +99,21 @@ public class DESdroid extends SimpleRobot implements Constants {
             arm.rotate(armStick.getY());
 
             // Control grabber: wat do?
+            if (armStick.getTrigger()) {
+                grabber.out();
+            }
+            else if (armStick.getRawButton(2)) {
+                grabber.in();
+            }
+            else if (armStick.getRawButton(6)) {
+                grabber.rotateUp();
+            }
+            else if (armStick.getRawButton(7)) {
+                grabber.rotateDown();
+            }
+            else  {
+                grabber.stop();
+            }
 
         }
     }
