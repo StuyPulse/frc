@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
+    CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     RobotDrive drive;
     Arm arm;
     Grabber grabber;
@@ -28,7 +28,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
-    DriverStation ds; // driver station object for getting selections
     OperatorInterface oi;
 
     // Autonomous class
@@ -55,10 +54,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
-        armStick = new Joystick(PORT_ARM_STICK);
-
         arm = new Arm();
         grabber = new Grabber();
 
@@ -66,8 +61,9 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        // get the driver station instance to read the digital I/O pins
-        ds = DriverStation.getInstance();
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+        armStick = new Joystick(PORT_ARM_STICK);
 
         oi = new OperatorInterface();
 
@@ -96,9 +92,10 @@ public class DESdroid extends SimpleRobot implements Constants {
                     rightStick.getX(), // rotation (clockwise?)
                     0.0);                   // use gyro for field-oriented drive
 
+            // Arm control
             arm.rotate(armStick.getY());
 
-            // Control grabber: wat do?
+            // Grabber control
             if (armStick.getTrigger()) {
                 grabber.in();
             }
@@ -111,10 +108,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             else if (armStick.getRawButton(7)) {
                 grabber.rotateDown();
             }
-            else  {
+            else {
                 grabber.stop();
             }
-
         }
     }
 }

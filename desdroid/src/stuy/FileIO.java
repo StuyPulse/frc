@@ -19,7 +19,7 @@ import javax.microedition.io.Connector;
 public class FileIO {
 
     private static String getFileContents(String filename) {
-        String url = "file:///" + filename;
+        String url = "file:///" + filename; // TODO: Make a directory for the text files
         String contents = "";
         try {
             FileConnection c = (FileConnection) Connector.open(url);

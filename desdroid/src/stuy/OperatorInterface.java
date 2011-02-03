@@ -28,34 +28,43 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    /**
+     * Use a binary switch to set the autonomous mode setting.
+     * @return Autonomous setting to run.
+     */
     public int getAutonSetting() {
         try {
             int switchNum = 0;
             int[] binaryValue = new int[4];
+
             boolean[] dIO = new boolean[]{enhancedIO.getDigital(BIT_1_CHANNEL), enhancedIO.getDigital(BIT_2_CHANNEL), enhancedIO.getDigital(BIT_3_CHANNEL), enhancedIO.getDigital(BIT_4_CHANNEL)};
+
             for (int i = 0; i < 4; i++) {
                 if (dIO[i]) {
                     binaryValue[i] = 1;
-                } else {
+                }
+                else {
                     binaryValue[i] = 0;
                 }
             }
 
-            binaryValue[0] *= 8; //convert all binaryValues to decimal values
+            binaryValue[0] *= 8; // convert all binaryValues to decimal values
             binaryValue[1] *= 4;
             binaryValue[2] *= 2;
-            for (int i = 0; i < 4; i++) //finish binary -> decimal conversion
-            {
+
+            for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
                 switchNum += binaryValue[i];
             }
-            if (switchNum > 11) {
-                switchNum = 1; // that BinarySwitch() doesn't return a nonexistent switchNum
+
+            if (switchNum > 5) {
+                switchNum = 1; // that getAutonSetting() doesn't return a nonexistent switchNum
             }
+
             return switchNum;
-        } catch (EnhancedIOException ex) {
-          //  ex.printStackTrace();
-          //  System.err.println("binary switch error!");
-            return 1;
+        }
+        catch (EnhancedIOException e) {
+            System.out.println("Binary switch error!");
+            return 5; // Do nothing in case of failure
         }
     }
 }

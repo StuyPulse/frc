@@ -33,11 +33,10 @@ public interface Constants {
     final int BIT_2_CHANNEL = 12;
     final int BIT_1_CHANNEL = 10;
 
-    final int DO_NOTHING_SWITCH = 2;
-    final int DROP_UBERTUBE_SWITCH = 4;
-    final int DIRECTION_SWITCH_LEFT = 6;
-    final int DIRECTION_SWITCH_RIGHT = 8;
-
+    // Arm position control
+    final double ARM_P = 0;
+    final double ARM_I = 0;
+    final double ARM_D = 0;
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.3;
