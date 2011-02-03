@@ -31,7 +31,7 @@ public class FileIO {
             c.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot get contents of " + url + ". Does this file exist?");
         }
         return contents;
     }
