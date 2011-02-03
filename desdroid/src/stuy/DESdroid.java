@@ -19,7 +19,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
-    RobotDrive drive;
+    DriveTrain drive;
     // Driver controls
     Joystick leftStick, rightStick;
     // Autonomous class
@@ -44,7 +44,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             updatePID();
 
-            drive = new RobotDrive(driveFrontLeft,
+            drive = new DriveTrain(driveFrontLeft,
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
@@ -69,11 +69,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
+            /*drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
                     0.0);              // use gyro for field-oriented drive
+             *
+             */
+            drive.mecanumDrive_Cartesian(0, 1, 0, 0);
 
             if (rightStick.getRawButton(7)) {
                 updatePID();
