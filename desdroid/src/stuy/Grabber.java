@@ -16,7 +16,7 @@ public class Grabber implements Constants {
     CANJaguar upperRoller;
     CANJaguar lowerRoller;
 
-    byte syncGroup = (byte)0x80;
+    byte syncGroup = (byte)0x81;
 
     public Grabber() {
         try {
