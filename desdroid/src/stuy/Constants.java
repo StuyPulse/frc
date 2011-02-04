@@ -17,6 +17,9 @@ public interface Constants {
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
 
+    final int LOWER_ARM_POT_LIM              = 100;
+    final int UPPER_ARM_POT_LIM              = 100;
+
     final int GYRO_CHANNEL                   = 4;
 
     final int DIGITAL_IN_STRAIGHT_LINE       = 1;
@@ -37,6 +40,12 @@ public interface Constants {
     final double ARM_P = 0;
     final double ARM_I = 0;
     final double ARM_D = 0;
+
+    //Speed position control
+    final double SPEED_P = 0;
+    final double SPEED_I = 0;
+    final double SPEED_D = 0;
+
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.3;
