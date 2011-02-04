@@ -13,6 +13,8 @@ public interface Constants {
     final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
     final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
 
+    final int TRAY_MOTORS_CHANNEL            = 4;
+
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
