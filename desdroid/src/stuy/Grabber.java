@@ -40,7 +40,7 @@ public class Grabber implements Constants {
     public void in() {
         try {
             upperRoller.setX(1, syncGroup);
-            lowerRoller.setX(-1, syncGroDup);
+            lowerRoller.setX(-1, syncGroup);
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
