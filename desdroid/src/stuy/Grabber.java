@@ -16,18 +16,21 @@ public class Grabber implements Constants {
     CANJaguar upperRoller;
     CANJaguar lowerRoller;
 
+    DESdroid des;
+
     byte syncGroup = (byte)0x81;
 
     /**
      * Grabber constructor.
      */
-    public Grabber() {
+    public Grabber(DESdroid d) {
+      des = d;
         try {
             upperRoller = new CANJaguar(GRABBER_UPPER_ROLLER_DEVICE);
             lowerRoller = new CANJaguar(GRABBER_LOWER_ROLLER_DEVICE);
         }
         catch (Exception e) {
-
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -37,11 +40,11 @@ public class Grabber implements Constants {
     public void in() {
         try {
             upperRoller.setX(1, syncGroup);
-            lowerRoller.setX(-1, syncGroup);
+            lowerRoller.setX(-1, syncGroDup);
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -55,7 +58,7 @@ public class Grabber implements Constants {
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -69,7 +72,7 @@ public class Grabber implements Constants {
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -83,7 +86,7 @@ public class Grabber implements Constants {
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -97,7 +100,7 @@ public class Grabber implements Constants {
             CANJaguar.updateSyncGroup(syncGroup);
         }
         catch (Exception e) {
-            
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 }

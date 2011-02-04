@@ -14,28 +14,54 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
+    DESdroid des;
 
     /**
      * Operator interface constructor, setting digital inputs pulled down.
      */
-    public OperatorInterface() {
+    public OperatorInterface(DESdroid d) {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
+        des = d;
         try {
+            enhancedIO.setDigitalConfig(BROKEN_LIGHT, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+
+            enhancedIO.setDigitalConfig(OI_LEFT_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_LEFT_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_LEFT_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_RIGHT_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_RIGHT_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_RIGHT_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Enhanced IO exception");
+             des.oi.setStuffsBrokenLED(true);
         }
     }
 
     /**
+     * Sets the broken light.
+     */
+    public void setStuffsBrokenLED(boolean val) {
+        try {
+            enhancedIO.setDigitalOutput(BROKEN_LIGHT, val);
+        }
+        catch (EnhancedIOException e) {
+            System.out.println("Error LED is broken.");
+        }
+    }
+    /**
      * Use a binary switch to set the autonomous mode setting.
      * @return Autonomous setting to run.
      */
-    public int getAutonSetting() {
+    public int getAutonSetting(DESdroid d) {
+        des = d;
         try {
             int switchNum = 0;
             int[] binaryValue = new int[4];
@@ -66,7 +92,7 @@ public class OperatorInterface implements Constants {
             return switchNum;
         }
         catch (EnhancedIOException e) {
-            System.out.println("Binary switch error!");
+            des.oi.setStuffsBrokenLED(true);
             return 5; // Do nothing in case of failure
         }
     }

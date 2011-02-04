@@ -37,6 +37,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
+        oi = new OperatorInterface(this);
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
             driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
@@ -44,7 +45,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
         }
         catch (Exception e) {
-
+            oi.setStuffsBrokenLED(true);
         }
 
         drive = new RobotDrive(driveFrontLeft,
@@ -57,8 +58,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
-        arm = new Arm();
-        grabber = new Grabber();
+        arm = new Arm(this);
+        grabber = new Grabber(this);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -68,7 +69,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        oi = new OperatorInterface();
+       
 
         auton = new Autonomous(this);
     }
@@ -79,7 +80,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-        auton.run(oi.getAutonSetting());
+        auton.run(oi.getAutonSetting(this));
     }
 
     /**

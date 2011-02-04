@@ -39,6 +39,22 @@ public interface Constants {
     final double ARM_I = 0;
     final double ARM_D = 0;
 
+    //Exception led
+    final int BROKEN_LIGHT = 0;
+
+    //TODO: Numbers need to be set.
+    final int OI_LEFT_BOTTOM_BUTTON = 0;
+    final int OI_LEFT_MIDDLE_BUTTON = 0;
+    final int OI_LEFT_TOP_BUTTON = 0;
+    final int OI_MIDDLE_BOTTOM_BUTTON = 0;
+    final int OI_MIDDLE_MIDDLE_BUTTON = 0;
+    final int OI_MIDDLE_TOP_BUTTON = 0;
+    final int OI_RIGHT_BOTTOM_BUTTON = 0;
+    final int OI_RIGHT_MIDDLE_BUTTON = 0;
+    final int OI_RIGHT_TOP_BUTTON = 0;
+
+
+
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.3;
     final double FORK_PROFILE[]         = {.7, .7, .55, .6, .6, .5, .4, 0};
