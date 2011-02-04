@@ -8,13 +8,16 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- *
+ * Controls the DESdroid arm elbow.
  * @author blake
  */
 public class Arm implements Constants {
     CANJaguar armMotor;
     DigitalInput potentiometer;
 
+    /**
+     * Arm constructor.
+     */
     public Arm() {
         try {
             armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPosition);
@@ -26,6 +29,10 @@ public class Arm implements Constants {
         }
     }
 
+    /**
+     * Rotate the arm manually.
+     * @param speed Speed to rotate the arm at. (-1.0 to 1.0)
+     */
     public void rotate(double speed) {
         try {
             armMotor.setX(speed);
@@ -35,6 +42,10 @@ public class Arm implements Constants {
         }
     }
 
+    /**
+     * Move the arm to a specific position.
+     * @param height The height to set the arm to.
+     */
     public void setHeight(double height) {
         
     }

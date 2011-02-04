@@ -33,6 +33,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Autonomous class
     Autonomous auton;
 
+    /**
+     * DESdroid constructor.
+     */
     public DESdroid() {
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);

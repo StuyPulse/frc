@@ -7,6 +7,10 @@ package stuy;
 
 import edu.wpi.first.wpilibj.*;
 
+/**
+ * Autonomous constructor.
+ * @author Kevin Wang
+ */
 public class Autonomous implements Constants {
 
     DESdroid des;
@@ -105,6 +109,11 @@ public class Autonomous implements Constants {
         des.grabber.stop();
     }
 
+    /**
+     * Follow the line forwards.
+     * @param straightLine Set to true to go straight.
+     * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
+     */
     private void lineTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
@@ -180,6 +189,11 @@ public class Autonomous implements Constants {
         des.drive.arcadeDrive(0, 0);
     }
 
+    /**
+     * Follow the line backwards.
+     * @param straightLine Set to true to go straight.
+     * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
+     */
     private void backTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking

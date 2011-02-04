@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import javax.microedition.io.Connector;
 
 /**
- * Read and parse text files on the cRIO. This is useful for quickly adjusting tuning values using FTP, such as for PID.
+ * Reads and parses text files on the cRIO. This is useful for quickly adjusting tuning values using FTP, such as for PID.
  * Place the '#' character before comments.
  * @author Kevin Wang
  */

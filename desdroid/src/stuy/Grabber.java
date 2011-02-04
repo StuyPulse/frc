@@ -8,7 +8,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- *
+ * Controls the end effector of the DESdroid arm.
  * @author blake
  */
 public class Grabber implements Constants {
@@ -18,6 +18,9 @@ public class Grabber implements Constants {
 
     byte syncGroup = (byte)0x81;
 
+    /**
+     * Grabber constructor.
+     */
     public Grabber() {
         try {
             upperRoller = new CANJaguar(GRABBER_UPPER_ROLLER_DEVICE);
@@ -28,6 +31,9 @@ public class Grabber implements Constants {
         }
     }
 
+    /**
+     * Intake the tube.
+     */
     public void in() {
         try {
             upperRoller.setX(1, syncGroup);
@@ -39,6 +45,9 @@ public class Grabber implements Constants {
         }
     }
 
+    /**
+     * Eject the tube.
+     */
     public void out() {
         try {
             upperRoller.setX(-1, syncGroup);
@@ -50,6 +59,9 @@ public class Grabber implements Constants {
         }
     }
 
+    /**
+     * Rotate the tube up.
+     */
     public void rotateUp() {
         try {
             upperRoller.setX(1, syncGroup);
@@ -61,6 +73,9 @@ public class Grabber implements Constants {
         }
     }
 
+    /**
+     * Rotate the tube down.
+     */
     public void rotateDown() {
         try {
             upperRoller.setX(-1, syncGroup);
@@ -72,6 +87,9 @@ public class Grabber implements Constants {
         }
     }
 
+    /**
+     * Stop the grabber rollers.
+     */
     public void stop() {
         try {
             upperRoller.setX(0, syncGroup);

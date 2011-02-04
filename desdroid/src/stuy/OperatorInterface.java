@@ -9,12 +9,15 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 
 /**
- *
+ * Handles input from the operator interface using the Cypress FirstTouch I/O module.
  * @author Kevin Wang
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
 
+    /**
+     * Operator interface constructor, setting digital inputs pulled down.
+     */
     public OperatorInterface() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
         try {
