@@ -19,8 +19,7 @@ public interface Constants {
 
     final int GYRO_CHANNEL                   = 4;
 
-    final int DIGITAL_IN_STRAIGHT_LINE       = 1;
-    final int DIGITAL_IN_GO_LEFT             = 2;
+    final int CAGE_LATCH_SERVO_CHANNEL       = 1;
 
     // User Controls
     final int PORT_LEFT_STICK                = 1;
