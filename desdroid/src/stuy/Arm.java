@@ -14,18 +14,20 @@ import edu.wpi.first.wpilibj.*;
 public class Arm implements Constants {
     CANJaguar armMotor;
     DigitalInput potentiometer;
+    DESdroid des;
 
     /**
      * Arm constructor.
      */
-    public Arm() {
+    public Arm(DESdroid d) {
+        des = d;
         try {
             armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPosition);
             armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
             armMotor.setPID(ARM_P, ARM_I, ARM_D);
         }
         catch (Exception e) {
-            
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 
@@ -35,10 +37,10 @@ public class Arm implements Constants {
      */
     public void rotate(double speed) {
         try {
-            armMotor.setX(speed);
+            armMotor.set(speed);
         }
         catch (Exception e) {
-            
+            des.oi.setStuffsBrokenLED(true);
         }
     }
 

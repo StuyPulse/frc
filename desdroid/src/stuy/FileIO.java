@@ -22,7 +22,7 @@ public class FileIO {
     /**
      * Returns the contents of a file on the root directory of the cRIO, getting rid of comments and trimming whitespace.
      * @param filename The name of the file to read.
-     * @return The contents of the file.
+     * @return The contentzzs of the file.
      */
     private static String getFileContents(String filename) {
         String url = "file:///values/" + filename; // TODO: Make the values directory and move text files into it
