@@ -8,7 +8,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Autonomous constructor.
+ * This is the location of DESdroid's autonomous routines.
  * @author Kevin Wang
  */
 public class Autonomous implements Constants {
@@ -16,16 +16,27 @@ public class Autonomous implements Constants {
     DESdroid des;
     int leftValue, middleValue, rightValue;
 
+    /**
+     * Autonomous constructor.
+     * @param d DESdroid instance to control robot components.
+     */
     public Autonomous(DESdroid d) {
         des = d;
     }
 
-    private void getSensorValues() {
+    /**
+     * Update the values of the line tracking sensors.
+     */
+    private void updateSensorValues() {
         leftValue = des.leftSensor.get() ? 1 : 0;
         middleValue = des.middleSensor.get() ? 1 : 0;
         rightValue = des.rightSensor.get() ? 1 : 0;
     }
 
+    /**
+     * Execute autonomous routine.
+     * @param setting The autonomous routine to run.
+     */
     public void run(int setting) {
         switch (setting) {
             case 1:
@@ -45,6 +56,9 @@ public class Autonomous implements Constants {
         }
     }
 
+    /**
+     * Prints the values of the line tracking sensors.
+     */
     private void printLineStatus() {
         System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
                 + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
@@ -142,7 +156,7 @@ public class Autonomous implements Constants {
         // loop until robot reaches "T" at end or 8 seconds has past
         while ((time = timer.get()) < 8.0 && !atCross) {
             int timeInSeconds = (int) time;
-            getSensorValues();
+            updateSensorValues();
             binaryValue = binaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
 
@@ -222,7 +236,7 @@ public class Autonomous implements Constants {
         // loop until robot reaches "T" at end or 8 seconds has past
         while ((time = timer.get()) < 8.0 && !atCross) {
             int timeInSeconds = (int) time;
-            getSensorValues();
+            updateSensorValues();
             binaryValue = binaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
 
