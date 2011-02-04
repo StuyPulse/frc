@@ -69,14 +69,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            /*drive.mecanumDrive_Cartesian(
+            drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
                     0.0);              // use gyro for field-oriented drive
-             *
-             */
-            drive.mecanumDrive_Cartesian(0, 1, 0, 0);
+            //drive.mecanumDrive_Cartesian(0, 1, 0, 0);
 
             if (rightStick.getRawButton(7)) {
                 updatePID();
@@ -90,6 +88,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                System.out.println("Joysticks: " + leftStick.getX() + "  " + leftStick.getY() + "  " + rightStick.getX());
             }
         }
     }

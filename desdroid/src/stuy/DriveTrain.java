@@ -8,6 +8,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.RobotDrive.*;
 import edu.wpi.first.wpilibj.can.*;
+import java.lang.Math;
 
 /**
  *
@@ -27,8 +28,9 @@ public class DriveTrain extends RobotDrive {
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle)
     {
-        double xIn = x;
-        double yIn = y;
+        double xIn = x * Math.abs(x);
+        double yIn = y * Math.abs(y);
+        
         // Negate y for the joystick.
         yIn = -yIn;
         // Compenstate for gyro angle.
