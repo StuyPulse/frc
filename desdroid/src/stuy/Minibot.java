@@ -12,45 +12,20 @@ import edu.wpi.first.wpilibj.*;
  * @author Kevin Wang
  */
 public class Minibot implements Constants {
-    Servo cageLatch;
-    Victor trayMotors;
+    Servo minibotRelease;
 
     /**
-     * Minibot constructor. It initializes the tray motors and and the cage latch servo.
+     * Minibot constructor. Deployment of the minibot is controlled by a servo.
      */
     public Minibot() {
-        cageLatch = new Servo(CAGE_LATCH_SERVO_CHANNEL);
-        cageLatch.set(0);
-        trayMotors = new Victor(TRAY_MOTORS_CHANNEL);
+        minibotRelease = new Servo(MINIBOT_RELEASE_SERVO);
+        minibotRelease.set(0);
     }
 
     /**
-     * Extents the minibot tray out.
-     */
-    public void trayOut() {
-        trayMotors.set(1);
-    }
-
-    /**
-     * Retracts the minibot tray.
-     */
-    public void trayIn() {
-        trayMotors.set(0);
-    }
-
-    /**
-     * Release the latch that keeps the minibot in place.
-     */
-    public void openCage() {
-        cageLatch.set(1);
-    }
-
-    /**
-     * Extends the tray out
-     * Opens the cage to release the minibot
+     * Deploys the minibot.
      */
     public void deploy() {
-        trayOut();
-        openCage();
+        minibotRelease.set(1);
     }
 }

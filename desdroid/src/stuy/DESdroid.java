@@ -69,8 +69,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-       
-
         auton = new Autonomous(this);
     }
 
