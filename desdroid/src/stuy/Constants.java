@@ -46,18 +46,18 @@ public interface Constants {
 
 
     //Exception led
-    final int BROKEN_LIGHT                   = 0;
+    final int BROKEN_LIGHT                   = 10;
 
     //TODO: Numbers need to be set.
-    final int OI_LEFT_BOTTOM_BUTTON          = 0;
-    final int OI_LEFT_MIDDLE_BUTTON          = 0;
-    final int OI_LEFT_TOP_BUTTON             = 0;
-    final int OI_MIDDLE_BOTTOM_BUTTON        = 0;
-    final int OI_MIDDLE_MIDDLE_BUTTON        = 0;
-    final int OI_MIDDLE_TOP_BUTTON           = 0;
-    final int OI_RIGHT_BOTTOM_BUTTON         = 0;
-    final int OI_RIGHT_MIDDLE_BUTTON         = 0;
-    final int OI_RIGHT_TOP_BUTTON            = 0;
+    final int OI_LEFT_BOTTOM_BUTTON          = 1;
+    final int OI_LEFT_MIDDLE_BUTTON          = 2;
+    final int OI_LEFT_TOP_BUTTON             = 3;
+    final int OI_MIDDLE_BOTTOM_BUTTON        = 4;
+    final int OI_MIDDLE_MIDDLE_BUTTON        = 5;
+    final int OI_MIDDLE_TOP_BUTTON           = 6;
+    final int OI_RIGHT_BOTTOM_BUTTON         = 7;
+    final int OI_RIGHT_MIDDLE_BUTTON         = 8;
+    final int OI_RIGHT_TOP_BUTTON            = 9;
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN       = 0.3;

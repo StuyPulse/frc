@@ -128,7 +128,7 @@ public class Autonomous implements Constants {
      * @param straightLine Set to true to go straight.
      * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
      */
-    private void lineTrack(boolean straightLine, boolean goLeft) {
+    public void lineTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -139,8 +139,8 @@ public class Autonomous implements Constants {
         // different to let the robot drive more slowly as the robot approaches
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
-//        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
-        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
+        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+//        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
@@ -191,7 +191,8 @@ public class Autonomous implements Constants {
             }
 
             // set the robot speed and direction
-            des.drive.arcadeDrive(-speed, -turn);
+//            des.drive.arcadeDrive(-speed, -turn);
+            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0, 0);
 
             if (binaryValue != 0) {
                 previousValue = binaryValue;

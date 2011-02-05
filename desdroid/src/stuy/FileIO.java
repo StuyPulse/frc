@@ -26,7 +26,7 @@ public class FileIO {
      * @return The contents of the file.
      */
     private static String getFileContents(String filename) {
-        String url = "file:///" + filename;
+        String url = "file:///values/" + filename;
         String contents = "";
         try {
             FileConnection c = (FileConnection) Connector.open(url);
@@ -53,7 +53,6 @@ public class FileIO {
         }
         catch (IOException e) {
             System.out.println("Cannot get contents of " + url + ". Does this file exist?");
-            e.printStackTrace();
         }
         return contents;
     }

@@ -18,18 +18,15 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-
     CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
-
     // Driver controls
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
     OperatorInterface oi;
-
     DriveTrain drive;
     // Autonomous class
     Autonomous auton;
@@ -38,10 +35,14 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface(this);
+       // oi = new OperatorInterface(this);
 
         arm = new Arm(this);
         grabber = new Grabber(this);
+
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -69,7 +70,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
-        } catch (Exception e) {
+        } catch (Exception e) { 
             e.printStackTrace();
         }
 
@@ -77,13 +78,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         auton = new Autonomous(this);
     }
 
-     /**
-      * This function is called once each time the robot enters autonomous mode.
-      */
+    /**
+     * This function is called once each time the robot enters autonomous mode.
+     */
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-        auton.run(oi.getAutonSetting(this));
+//        auton.run(oi.getAutonSetting(this));
+        auton.lineTrack(true, false);
     }
 
     /**
@@ -93,48 +95,42 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
+          drive.arcadeDrive(leftStick);
+            
+            /*drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive
-
+                    0.0);                   // use gyro for field-oriented drive*/
+              
             // Arm control
-            arm.rotate(armStick.getY());
+//            arm.rotate(armStick.getY());
 
             // Grabber control
-            if (armStick.getTrigger()) {
-                grabber.in();
-            }
-            else if (armStick.getRawButton(2)) {
-                grabber.out();
-            }
-            else if (armStick.getRawButton(6)) {
-                grabber.rotateUp();
-            }
-            else if (armStick.getRawButton(7)) {
-                grabber.rotateDown();
-            }
-            else {
-                grabber.stop();
-            }
+//            if (armStick.getTrigger()) {
+//                grabber.in();
+//            } else if (armStick.getRawButton(2)) {
+//                grabber.out();
+//            } else if (armStick.getRawButton(6)) {
+//                grabber.rotateUp();
+//            } else if (armStick.getRawButton(7)) {
+//                grabber.rotateDown();
+//            } else {
+//                grabber.stop();
+//            }
         }
     }
 
     // update PID values.  uses a text file drive_PID_values.txt that must be
     // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
-     public void updatePID() {
+    public void updatePID() {
         double drivePID[];
-         try {
-                drivePID = FileIO.getArray("drive_PID_values.txt");
-         }
-        catch (Exception e) {
-            e.printStackTrace();
-            drivePID = new double[3];
-                drivePID[0] = 0.48;
-                drivePID[1] = 0.005;
-                drivePID[2] = 0.05;
-        }
+//        drivePID = FileIO.getArray("drive_PID_values.txt");
+        drivePID = new double[3];
+        drivePID[0] = 0.48;
+        drivePID[1] = 0.005;
+        drivePID[2] = 0.05;
+
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
         try {
             driveFrontLeft.disableControl();
