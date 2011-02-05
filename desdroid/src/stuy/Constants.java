@@ -13,6 +13,8 @@ public interface Constants {
     final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
     final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
 
+    final int TRAY_MOTORS_CHANNEL            = 4;
+
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
@@ -22,8 +24,7 @@ public interface Constants {
 
     final int GYRO_CHANNEL                   = 4;
 
-    final int DIGITAL_IN_STRAIGHT_LINE       = 1;
-    final int DIGITAL_IN_GO_LEFT             = 2;
+    final int CAGE_LATCH_SERVO_CHANNEL       = 1;
 
     // User Controls
     final int PORT_LEFT_STICK                = 1;
@@ -45,6 +46,22 @@ public interface Constants {
     final double SPEED_P                     = 0;
     final double SPEED_I                     = 0;
     final double SPEED_D                     = 0;
+
+
+    //Exception led
+    final int BROKEN_LIGHT = 0;
+
+    //TODO: Numbers need to be set.
+    final int OI_LEFT_BOTTOM_BUTTON = 0;
+    final int OI_LEFT_MIDDLE_BUTTON = 0;
+    final int OI_LEFT_TOP_BUTTON = 0;
+    final int OI_MIDDLE_BOTTOM_BUTTON = 0;
+    final int OI_MIDDLE_MIDDLE_BUTTON = 0;
+    final int OI_MIDDLE_TOP_BUTTON = 0;
+    final int OI_RIGHT_BOTTOM_BUTTON = 0;
+    final int OI_RIGHT_MIDDLE_BUTTON = 0;
+    final int OI_RIGHT_TOP_BUTTON = 0;
+
 
 
     // Line Tracking
