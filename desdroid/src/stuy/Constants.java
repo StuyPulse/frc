@@ -2,10 +2,9 @@ package stuy;
 
 public interface Constants {
 
-    // Robot Hardware Configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 3;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 2;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
@@ -64,4 +63,10 @@ public interface Constants {
     final double DEFAULT_STEERING_GAIN       = 0.3;
     final double FORK_PROFILE[]              = {.7, .7, .55, .6, .6, .5, .4, 0};
     final double STRAIGHT_PROFILE[]          = {.8, .9, 1, 1, .7, .7, .6, 0};
+
+    final int ENCODER_CODES_PER_REV          = 250;
+
+    final double PDRIVE                      = 0.5;
+    final double IDRIVE                      = 0;
+    final double DDRIVE                      = 0;
 }

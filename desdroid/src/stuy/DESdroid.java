@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
+
     CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    RobotDrive drive;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
@@ -30,6 +30,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick armStick;
     OperatorInterface oi;
 
+    DriveTrain drive;
     // Autonomous class
     Autonomous auton;
 
@@ -38,25 +39,6 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public DESdroid() {
         oi = new OperatorInterface(this);
-        try {
-            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
-        }
-        catch (Exception e) {
-            oi.setStuffsBrokenLED(true);
-        }
-
-        drive = new RobotDrive(driveFrontLeft,
-                driveRearLeft,
-                driveFrontRight,
-                driveRearRight);
-
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
         arm = new Arm(this);
         grabber = new Grabber(this);
@@ -65,9 +47,32 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
-        armStick = new Joystick(PORT_ARM_STICK);
+        try {
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT, CANJaguar.ControlMode.kSpeed);
+
+            driveFrontLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveFrontRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+
+            driveFrontLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveFrontRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+
+            updatePID();
+
+            drive = new DriveTrain(driveFrontLeft,
+                    driveRearLeft,
+                    driveFrontRight,
+                    driveRearRight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         auton = new Autonomous(this);
     }
@@ -113,6 +118,42 @@ public class DESdroid extends SimpleRobot implements Constants {
             else {
                 grabber.stop();
             }
+        }
+    }
+
+    // update PID values.  uses a text file drive_PID_values.txt that must be
+    // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+     public void updatePID() {
+        double drivePID[];
+         try {
+                drivePID = FileIO.getArray("drive_PID_values.txt");
+         }
+        catch (Exception e) {
+            e.printStackTrace();
+            drivePID = new double[3];
+                drivePID[0] = 0.48;
+                drivePID[1] = 0.005;
+                drivePID[2] = 0.05;
+        }
+        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
+        try {
+            driveFrontLeft.disableControl();
+            driveFrontRight.disableControl();
+            driveRearLeft.disableControl();
+            driveRearRight.disableControl();
+
+            driveFrontLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+
+            driveFrontLeft.enableControl();
+            driveFrontRight.enableControl();
+            driveRearLeft.enableControl();
+            driveRearRight.enableControl();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

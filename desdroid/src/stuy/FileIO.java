@@ -15,6 +15,7 @@ import javax.microedition.io.Connector;
 /**
  * Reads and parses text files on the cRIO. This is useful for quickly adjusting tuning values using FTP, such as for PID.
  * Place the '#' character before comments.
+ *
  * @author Kevin Wang
  */
 public class FileIO {
@@ -25,12 +26,13 @@ public class FileIO {
      * @return The contents of the file.
      */
     private static String getFileContents(String filename) {
-        String url = "file:///values/" + filename; // TODO: Make the values directory and move text files into it
+        String url = "file:///" + filename;
         String contents = "";
         try {
             FileConnection c = (FileConnection) Connector.open(url);
             BufferedReader buf = new BufferedReader(new InputStreamReader(c.openInputStream()));
             String line = "";
+
             boolean lineRead = false;
             while ((line = buf.readLine()) != null) {
                 lineRead = false;
@@ -51,6 +53,7 @@ public class FileIO {
         }
         catch (IOException e) {
             System.out.println("Cannot get contents of " + url + ". Does this file exist?");
+            e.printStackTrace();
         }
         return contents;
     }
