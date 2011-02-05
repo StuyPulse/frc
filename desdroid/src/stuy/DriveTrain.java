@@ -29,6 +29,8 @@ public class DriveTrain extends RobotDrive {
     public DriveTrain(SpeedController frontLeftMotor, SpeedController rearLeftMotor,
             SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        setInvertedMotor(MotorType.kFrontRight, m_isCANInitialized);
+        setInvertedMotor(MotorType.kRearRight, m_isCANInitialized);
     }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
@@ -43,10 +45,10 @@ public class DriveTrain extends RobotDrive {
         yIn = rotated[1];
 
         double wheelSpeeds[] = new double[kMaxNumberOfMotors];
-        wheelSpeeds[kFrontLeft_val] = xIn + yIn + rotation;
-        wheelSpeeds[kFrontRight_val] = -xIn + yIn - rotation;
-        wheelSpeeds[kRearLeft_val] = -xIn + yIn + rotation;
-        wheelSpeeds[kRearRight_val] = xIn + yIn - rotation;
+        wheelSpeeds[kFrontLeft_val] = (xIn + yIn + rotation) * 1.1;
+        wheelSpeeds[kFrontRight_val] = (-xIn + yIn - rotation) * 1.1;
+        wheelSpeeds[kRearLeft_val] = (-xIn + yIn + rotation) * 1;
+        wheelSpeeds[kRearRight_val] = (xIn + yIn - rotation) * 1;
 
         normalize(wheelSpeeds);
 
