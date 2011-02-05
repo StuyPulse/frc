@@ -19,7 +19,7 @@ public class DriveTrain extends RobotDrive {
     int kFrontRight_val = 1;
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
-    int kMaxRPM = 600;
+    static int kMaxRPM = 600;
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
      * Scale the rest of the inputs to still allow for the full output range (-1 to 1)
@@ -36,6 +36,7 @@ public class DriveTrain extends RobotDrive {
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
         double xIn = scaleInput(x);
         double yIn = scaleInput(y);
+        rotation = scaleInput(rotation);
 
         // Negate y for the joystick.
         yIn = -yIn;
