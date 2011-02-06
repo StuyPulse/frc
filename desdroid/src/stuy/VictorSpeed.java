@@ -30,7 +30,7 @@ public class VictorSpeed implements SpeedController, PIDSource, Constants {
     }
 
     public double pidGet() {
-        return e.getDistance();
+        return e.getRate();
     }
 
     public void pidWrite(double output) {
