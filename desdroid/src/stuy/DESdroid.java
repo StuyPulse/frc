@@ -24,7 +24,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
-    Joystick gamepad;
+    Joystick leftStick, rightStick;
     DriverStation ds; // driver station object for getting selections
     OperatorInterface oi;
 
@@ -33,24 +33,34 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     public DESdroid() {
         try {
-            driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-            driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-            driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
-        }
-        catch (CANTimeoutException e) {
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT, CANJaguar.ControlMode.kSpeed);
+
+            driveFrontLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveFrontRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+
+            driveFrontLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveFrontRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+
+            updatePID();
+
+            drive = new DriveTrain(driveFrontLeft,
+                    driveRearLeft,
+                    driveFrontRight,
+                    driveRearRight);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        drive = new RobotDrive(driveFrontLeft,
-                               driveRearLeft,
-                               driveFrontRight,
-                               driveRearRight);
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
 
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, false);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
 
         leftSensor   = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -58,8 +68,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         // get the driver station instance to read the digital I/O pins
         ds = DriverStation.getInstance();
-
-        gamepad  = new Joystick(PORT_GAMEPAD);
 
         auton = new Autonomous(this);
     }
@@ -102,20 +110,56 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         int binaryValue, previousValue = 0;
+        
         while (isEnabled() && isOperatorControl()) {
-            drive.tankDrive(gamepad.getRawAxis(AXIS_GAMEPAD_LEFT),
-                            gamepad.getRawAxis(AXIS_GAMEPAD_RIGHT));
+            drive.mecanumDrive_Cartesian(
+                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getY(), // Y translation (straight forward)
+                    rightStick.getX(), // rotation (clockwise?)
+                    0.0);                   // use gyro for field-oriented drive
 
             binaryValue = auton.binaryValue(true);
             if (binaryValue != previousValue)
                 auton.printLineStatus();
             if (binaryValue != 0)
                 previousValue = binaryValue;
-            if (gamepad.getRawButton(2)) {
+            if (leftStick.getRawButton(2)) {
                 for (int i = 0; i < FileIO.getArray("straightLine.txt").length; i++) {
                     System.out.println(FileIO.getArray("straightLine.txt")[i]);
                 }
             }
+        }
+    }
+
+        // update PID values.  uses a text file drive_PID_values.txt that must be
+    // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+    public void updatePID() {
+        double drivePID[];
+//        drivePID = FileIO.getArray("drive_PID_values.txt");
+        drivePID = new double[3];
+        drivePID[0] = 0.48;
+        drivePID[1] = 0.005;
+        drivePID[2] = 0.05;
+
+        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
+        try {
+            driveFrontLeft.disableControl();
+            driveFrontRight.disableControl();
+            driveRearLeft.disableControl();
+            driveRearRight.disableControl();
+
+            driveFrontLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+
+            driveFrontLeft.enableControl();
+            driveFrontRight.enableControl();
+            driveRearLeft.enableControl();
+            driveRearRight.enableControl();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -3,10 +3,12 @@ package stuy;
 public interface Constants {
 
     // Robot Hardware Configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 3;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 4;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 2;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
+
+    final int ENCODER_CODES_PER_REV          = 250;
 
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
@@ -16,9 +18,9 @@ public interface Constants {
     final int DIGITAL_IN_GO_LEFT             = 2;
 
     // User Controls
-    final int PORT_GAMEPAD                   = 1;
-    final int AXIS_GAMEPAD_LEFT              = 2;
-    final int AXIS_GAMEPAD_RIGHT             = 4;
+    final int PORT_LEFT_STICK                = 1;
+    final int PORT_RIGHT_STICK               = 2;
+
 
     final int BIT_4_CHANNEL = 16; // From Donovan OI box
     final int BIT_3_CHANNEL = 14;
