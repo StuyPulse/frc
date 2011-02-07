@@ -39,6 +39,7 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(OI_RIGHT_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(OI_RIGHT_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(OI_RIGHT_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(FEEDER_TUBE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
         }
         catch (EnhancedIOException e) {
             System.out.println("Error initializing the operator interface.");
@@ -109,6 +110,7 @@ public class OperatorInterface implements Constants {
             armButtons[6] = enhancedIO.getDigital(OI_RIGHT_BOTTOM_BUTTON);
             armButtons[7] = enhancedIO.getDigital(OI_RIGHT_MIDDLE_BUTTON);
             armButtons[8] = enhancedIO.getDigital(OI_RIGHT_TOP_BUTTON);
+
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
