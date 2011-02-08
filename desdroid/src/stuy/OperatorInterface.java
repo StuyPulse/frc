@@ -30,16 +30,13 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
 
-            enhancedIO.setDigitalConfig(OI_LEFT_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(OI_LEFT_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(OI_LEFT_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_SIDE_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_SIDE_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_SIDE_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(OI_MIDDLE_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(OI_MIDDLE_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(OI_MIDDLE_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(OI_RIGHT_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(OI_RIGHT_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(OI_RIGHT_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(FEEDER_TUBE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_FEEDER_TUBE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
         }
         catch (EnhancedIOException e) {
             System.out.println("Error initializing the operator interface.");
@@ -101,15 +98,13 @@ public class OperatorInterface implements Constants {
     public boolean[] getArmButtons() {
         boolean[] armButtons = new boolean[9];
         try {
-            armButtons[0] = enhancedIO.getDigital(OI_LEFT_BOTTOM_BUTTON);
-            armButtons[1] = enhancedIO.getDigital(OI_LEFT_MIDDLE_BUTTON);
-            armButtons[2] = enhancedIO.getDigital(OI_LEFT_TOP_BUTTON);
+            armButtons[0] = enhancedIO.getDigital(OI_SIDE_BOTTOM_BUTTON);
+            armButtons[1] = enhancedIO.getDigital(OI_SIDE_MIDDLE_BUTTON);
+            armButtons[2] = enhancedIO.getDigital(OI_SIDE_TOP_BUTTON);
             armButtons[3] = enhancedIO.getDigital(OI_MIDDLE_BOTTOM_BUTTON);
             armButtons[4] = enhancedIO.getDigital(OI_MIDDLE_MIDDLE_BUTTON);
             armButtons[5] = enhancedIO.getDigital(OI_MIDDLE_TOP_BUTTON);
-            armButtons[6] = enhancedIO.getDigital(OI_RIGHT_BOTTOM_BUTTON);
-            armButtons[7] = enhancedIO.getDigital(OI_RIGHT_MIDDLE_BUTTON);
-            armButtons[8] = enhancedIO.getDigital(OI_RIGHT_TOP_BUTTON);
+            armButtons[6] = enhancedIO.getDigital(OI_FEEDER_TUBE_BUTTON);
 
         }
         catch (EnhancedIOException e) {
