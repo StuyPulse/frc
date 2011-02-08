@@ -99,7 +99,7 @@ public class Autonomous implements Constants {
             
 
             // set the robot speed and direction
-            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0.0, 0.0, false);
+            des.drive.mecanumDrive_Cartesian(-turn, -speed, -des.gyro.getAngle(), 0.0, false);
 
             // print current status for debugging
             if (binaryValue != previousValue) {

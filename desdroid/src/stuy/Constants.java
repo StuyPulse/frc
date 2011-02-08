@@ -27,6 +27,8 @@ public interface Constants {
     final int BIT_2_CHANNEL = 12;
     final int BIT_1_CHANNEL = 10;
 
+    final int GYRO_CHANNEL = 1;
+
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.15;
     final double FORK_PROFILE[]         = {.7, .7, .55, .6, .6, .5, .4, 0};

@@ -22,6 +22,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
     DriveTrain drive;
     DigitalInput leftSensor, middleSensor, rightSensor;
+    Gyro gyro;
 
     // Driver controls
     Joystick leftStick, rightStick;
@@ -61,6 +62,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
 
+        gyro = new Gyro(GYRO_CHANNEL);
+
 
         leftSensor   = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -80,6 +83,10 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         straightLine = true;
         goLeft = false;
+
+        gyro.setSensitivity(0.007);
+        gyro.reset();
+
 
         auton.lineTrack(straightLine, goLeft);
 
