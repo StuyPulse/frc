@@ -33,8 +33,9 @@ public class Autonomous implements Constants {
     }
 
     public int binaryValue(boolean goLeft) {
-        if (goLeft)
+        if (goLeft) {
             return leftValue * 4 + middleValue * 2 + rightValue;
+        }
         return rightValue * 4 + middleValue * 2 + leftValue;
     }
 
@@ -50,7 +51,7 @@ public class Autonomous implements Constants {
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
 //        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
-        powerProfile = (straightLine) ? FileIO.getArray("straightLine.txt") : FORK_PROFILE;
+        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
@@ -95,12 +96,16 @@ public class Autonomous implements Constants {
                 default:  // all other cases
                     turn = -steeringGain;
             }
-            // print current status for debugging
-            if (binaryValue != previousValue)
-                printLineStatus();
+            
 
             // set the robot speed and direction
-            des.drive.arcadeDrive(-speed, -turn);
+            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0.0, 0.0, false);
+
+            // print current status for debugging
+            if (binaryValue != previousValue) {
+                //printLineStatus();
+                //System.out.println("forward " + -speed + " strafe " + -turn);
+            }
 
             if (binaryValue != 0)
                 previousValue = binaryValue;

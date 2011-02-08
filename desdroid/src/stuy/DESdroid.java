@@ -20,7 +20,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
-    RobotDrive drive;
+    DriveTrain drive;
     DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
@@ -113,21 +113,17 @@ public class DESdroid extends SimpleRobot implements Constants {
         
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
-                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getX(),   // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive
+                    0,             // use gyro for field-oriented drive
+                    true);
 
             binaryValue = auton.binaryValue(true);
             if (binaryValue != previousValue)
                 auton.printLineStatus();
             if (binaryValue != 0)
                 previousValue = binaryValue;
-            if (leftStick.getRawButton(2)) {
-                for (int i = 0; i < FileIO.getArray("straightLine.txt").length; i++) {
-                    System.out.println(FileIO.getArray("straightLine.txt")[i]);
-                }
-            }
         }
     }
 

@@ -28,8 +28,8 @@ public interface Constants {
     final int BIT_1_CHANNEL = 10;
 
     // Line Tracking
-    final double DEFAULT_STEERING_GAIN  = 0.3;
+    final double DEFAULT_STEERING_GAIN  = 0.15;
     final double FORK_PROFILE[]         = {.7, .7, .55, .6, .6, .5, .4, 0};
-    final double STRAIGHT_PROFILE[]     = {.8, .9, 1, 1, .7, .7, .6, 0};
+    final double STRAIGHT_PROFILE[]     = {.4, .4, .5, .6, .5, .4, .3, 0};
 
 }
