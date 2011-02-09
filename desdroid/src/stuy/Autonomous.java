@@ -39,6 +39,97 @@ public class Autonomous implements Constants {
         return rightValue * 4 + middleValue * 2 + leftValue;
     }
 
+    /**
+     * Goes down line, forks right, moves back, raises arm (fake), goes forward.
+     */
+    public void setting1() {
+        lineTrack(false, false);
+        goForward(false);
+
+        // call arm raise here
+        Timer.delay(2);
+
+        goForward(true);
+    }
+
+    /**
+     * Goes down straight line, no fork, moves back, raises arm (fake), goes forward.
+     */
+    public void setting2() {
+        lineTrack(true, false);
+        goForward(false);
+
+        // call arm raise here
+        Timer.delay(2);
+
+        goForward(true);
+    }
+
+
+    /**
+     * Goes down line, forks left, moves back raises arm (fake), goes forward.
+     */
+    public void setting3() {
+        lineTrack(false, true);
+        goForward(false);
+
+        // call arm raise here
+        Timer.delay(2);
+
+        goForward(true);
+    }
+
+    
+        /**
+     * Raises arm (fake) then goes down line, forks right.
+     */
+    public void setting4() {
+        // call arm raise here
+        Timer.delay(2);
+
+        lineTrack(false, false);
+    }
+
+    /**
+     * Raises arm (fake), goes down straight line, no fork.
+     */
+    public void setting5() {
+        // call arm raise here
+        Timer.delay(2);
+
+        lineTrack(true, false);
+    }
+
+
+    /**
+     * Raises arm (fake) goes down line, forks left.
+     */
+    public void setting6() {
+        // call arm raise here
+        Timer.delay(2);
+
+        lineTrack(false, true);
+    }
+    
+    
+    
+    /**
+     * Goes forward or backwards to have space in between the peg and the robot's
+     * bumper so we can raise the arm to score.
+     * @param direction Forward/backward-ness.  Forward = true
+     * the `magnitude' variable controls the speed
+     */
+    private void goForward(boolean direction) {
+        double magnitude = 0.1;
+
+        // mecanumDrive expects a negative joystick value for forward motion
+        double speed = (direction ? -1 : 1) * magnitude;
+        
+        des.drive.mecanumDrive_Cartesian(0, speed, 0, 0, false);
+        Timer.delay(2);
+        des.drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
+    }
+
     public void lineTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
