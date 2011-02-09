@@ -21,8 +21,7 @@ public class DESCircleTracker implements Constants, PIDOutput {
     PIDController strafeController;
     DESdroid des;
     
-    DigitalOutput halogen_a;
-    DigitalOutput halogen_b;
+    Relay halogen_a;
 
     public DESCircleTracker(DESdroid d) {
         des = d;
@@ -37,12 +36,11 @@ public class DESCircleTracker implements Constants, PIDOutput {
         strafeController = new PIDController(PVAL, IVAL, DVAL, mainTarget, this);
         strafeController.disable();
 
-        halogen_a = new DigitalOutput(HALOGEN_CHANNEL_A);
-        halogen_b = new DigitalOutput(HALOGEN_CHANNEL_B);
+        halogen_a = new Relay(HALOGEN_CHANNEL_A, Relay.Direction.kForward);
     }
 
     public void doCamera() {
-        halogen_a.set(true);
+        halogen_a.set(Relay.Value.kOn);
         try {
 
             
@@ -84,7 +82,7 @@ public class DESCircleTracker implements Constants, PIDOutput {
             ex.printStackTrace();
         }
 
-        halogen_a.set(false);
+        halogen_a.set(Relay.Value.kOff);
     }
 
     public void pidWrite(double output) {

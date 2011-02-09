@@ -39,26 +39,25 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     boolean isOn = false;
 
-
     public DESdroid() {
-        
+
         try {
-            driveFrontLeft  = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-            driveRearLeft   = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-            driveRearRight  = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
-        }
-        catch (Exception e) {
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+
+
+
+            drive = new RobotDrive(driveFrontLeft,
+                    driveRearLeft,
+                    driveFrontRight,
+                    driveRearRight);
+        } catch (Exception e) {
             System.out.println(e);
 
         }
 
-        drive = new RobotDrive(driveFrontLeft,
-                               driveRearLeft,
-                               driveFrontRight,
-                               driveRearRight);
-
-       
 
 
 
@@ -89,7 +88,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         while (isEnabled() && isOperatorControl()) {
    
             // drive.tankDrive(gamepad, 2, gamepad, 4);
-            drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0.0);
+            //drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0.0);
 
 
             // Place the robot centered in front of a target and record the xPos
@@ -123,12 +122,10 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             if (leftStick.getTrigger()) {
-                pegTracker.halogen_a.set(true);
-                pegTracker.halogen_b.set(true);
+                pegTracker.halogen_a.set(Relay.Value.kOn);
             }
             else {
-                pegTracker.halogen_a.set(false);
-                pegTracker.halogen_b.set(false);
+                pegTracker.halogen_a.set(Relay.Value.kOff);
             }
         }
     }
