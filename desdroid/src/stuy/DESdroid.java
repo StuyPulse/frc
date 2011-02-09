@@ -98,12 +98,15 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             // Move the robot or the target, then press and hold button 10 to
             // align using PID feedback control (tune the PID gains as well).
+
+            drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0);
             
             if (leftStick.getRawButton(7) && !isOn) {
                 System.out.println("track called");
                 pegTracker.doCamera();
                 isOn = true;
             }
+
             
             if(leftStick.getRawButton(9)) {
                 isOn = false;
