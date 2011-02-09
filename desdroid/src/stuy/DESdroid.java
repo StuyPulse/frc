@@ -19,67 +19,65 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
     CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
-    RobotDrive drive;
-    Arm arm;
-    Grabber grabber;
-
-    DESTrackerDashboard trackerDashboard;
-    DESCircleTracker pegTracker;
-
+    DriveTrain drive;
     // Driver controls
-    Joystick gamepad;
-    Joystick leftStick;
-    Joystick rightStick;
-
-    // Digital I/O
-
-
+    Joystick leftStick, rightStick;
     // Autonomous class
     Autonomous auton;
+
+    DESCircleTracker pegTracker;
+    DESTrackerDashboard trackerDashboard;
 
     boolean isOn = false;
 
     public DESdroid() {
-
         try {
-            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT);
-            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT);
-            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT);
-            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT);
+            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
+            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT, CANJaguar.ControlMode.kSpeed);
+            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT, CANJaguar.ControlMode.kSpeed);
 
+            driveFrontLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveFrontRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
+            driveRearRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
 
+            driveFrontLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveFrontRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
 
-            drive = new RobotDrive(driveFrontLeft,
+            updatePID();
+
+            drive = new DriveTrain(driveFrontLeft,
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
+
+
+            leftStick = new Joystick(PORT_ARM_STICK);
+            rightStick = new Joystick(PORT_JOYSTICK);
+
+            trackerDashboard = new DESTrackerDashboard(this);
+            pegTracker = new DESCircleTracker(this);
         } catch (Exception e) {
             System.out.println(e);
 
         }
 
-
-
-
-        leftStick = new Joystick(PORT_ARM_STICK);
-        rightStick = new Joystick(PORT_JOYSTICK);
-        
-        trackerDashboard = new DESTrackerDashboard(this);
-        pegTracker = new DESCircleTracker(this);
-
-
-
-
     }
 
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
-    public void autonomous() {
-	System.out.println("Autonomous");
-    }
 
-    /**
+
+
+
+/**
+ * This function is called once each time the robot enters autonomous mode.
+ */
+public void autonomous() {
+}
+
+/**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
@@ -130,6 +128,42 @@ public class DESdroid extends SimpleRobot implements Constants {
             else {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
             }
+        }
+    }
+
+    // update PID values.  uses a text file drive_PID_values.txt that must be
+    // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+     public void updatePID() {
+        double drivePID[];
+         try {
+                drivePID = FileIO.getArray("drive_PID_values.txt");
+         }
+        catch (Exception e) {
+            e.printStackTrace();
+            drivePID = new double[3];
+                drivePID[0] = 0.48;
+                drivePID[1] = 0.005;
+                drivePID[2] = 0.05;
+        }
+        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
+        try {
+            driveFrontLeft.disableControl();
+            driveFrontRight.disableControl();
+            driveRearLeft.disableControl();
+            driveRearRight.disableControl();
+
+            driveFrontLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+
+            driveFrontLeft.enableControl();
+            driveFrontRight.enableControl();
+            driveRearLeft.enableControl();
+            driveRearRight.enableControl();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,6 +1,8 @@
 package stuy;
 
 public interface Constants {
+
+
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
     final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
     final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
@@ -29,4 +31,10 @@ public interface Constants {
     final double IVAL                        = 1;
     final double DVAL                        = 1;
     final double PID_SETPOINT                = 50.0;
+
+    final int ENCODER_CODES_PER_REV          = 250;
+
+    final double PDRIVE                      = 0.5;
+    final double IDRIVE                      = 0;
+    final double DDRIVE                      = 0;
 }
