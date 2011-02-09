@@ -81,7 +81,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         boolean straightLine, goLeft;
 
-        straightLine = true;
+        straightLine = false;
         goLeft = false;
 
         gyro.setSensitivity(0.007);
