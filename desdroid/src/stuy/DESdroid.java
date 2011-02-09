@@ -75,6 +75,7 @@ public class DESdroid extends SimpleRobot implements Constants {
  * This function is called once each time the robot enters autonomous mode.
  */
 public void autonomous() {
+    
 }
 
 /**
@@ -135,17 +136,19 @@ public void autonomous() {
     // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
      public void updatePID() {
         double drivePID[];
+        /*
          try {
-                drivePID = FileIO.getArray("drive_PID_values.txt");
+              //  drivePID = FileIO.getArray("drive_PID_values.txt");
          }
-        catch (Exception e) {
-            e.printStackTrace();
-            drivePID = new double[3];
-                drivePID[0] = 0.48;
-                drivePID[1] = 0.005;
-                drivePID[2] = 0.05;
-        }
-        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
+        catch (Exception e) { 
+         e.printStackTrace();
+          * */
+
+         drivePID = new double[3];
+         drivePID[0] = 0.48;
+         drivePID[1] = 0.005;
+         drivePID[2] = 0.05;
+
         try {
             driveFrontLeft.disableControl();
             driveFrontRight.disableControl();
