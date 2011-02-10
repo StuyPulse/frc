@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Arm implements Constants {
     CANJaguar armMotor;
-    DigitalInput potentiometer;
+    // DigitalInput potentiometer; // wired directly to the jaguar
     DESdroid des;
 
     /**
@@ -23,7 +23,8 @@ public class Arm implements Constants {
         des = d;
 
         try {
-            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPercentVbus);
+            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
+            toPositionControl();
         }
         catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
@@ -36,6 +37,7 @@ public class Arm implements Constants {
      */
     public void rotate(double speed) {
         try {
+            toPercentVbusControl();
             if (speed >= 0.5) {
                 armMotor.setX(1);
             }

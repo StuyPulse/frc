@@ -38,15 +38,15 @@ public class DESdroid extends SimpleRobot implements Constants {
        // oi = new OperatorInterface(this);
 
         arm = new Arm(this);
-        grabber = new Grabber(this);
+        //grabber = new Grabber(this);
 
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
+        //leftStick = new Joystick(PORT_LEFT_STICK);
+        //rightStick = new Joystick(PORT_RIGHT_STICK);
+        armStick = new Joystick(PORT_ARM_STICK);
 
-
-        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+        //leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        //middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        //rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
@@ -104,20 +104,20 @@ public class DESdroid extends SimpleRobot implements Constants {
                     0.0);                   // use gyro for field-oriented drive*/
               
             // Arm control
-//            arm.rotate(armStick.getY());
+            arm.rotate(armStick.getY());
 
             // Grabber control
-//            if (armStick.getTrigger()) {
-//                grabber.in();
-//            } else if (armStick.getRawButton(2)) {
-//                grabber.out();
-//            } else if (armStick.getRawButton(6)) {
-//                grabber.rotateUp();
-//            } else if (armStick.getRawButton(7)) {
-//                grabber.rotateDown();
-//            } else {
-//                grabber.stop();
-//            }
+            /*if (armStick.getTrigger()) {
+                grabber.in();
+            } else if (armStick.getRawButton(2)) {
+                grabber.out();
+            } else if (armStick.getRawButton(6)) {
+                grabber.rotateUp();
+            } else if (armStick.getRawButton(7)) {
+                grabber.rotateDown();
+            } else {
+                grabber.stop();
+            }*/
         }
     }
 

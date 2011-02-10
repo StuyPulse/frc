@@ -2,9 +2,9 @@ package stuy;
 
 public interface Constants {
 
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
@@ -26,7 +26,7 @@ public interface Constants {
     // User Controls
     final int PORT_LEFT_STICK                = 1;
     final int PORT_RIGHT_STICK               = 2;
-    final int PORT_ARM_STICK                 = 3;
+    final int PORT_ARM_STICK                 = 1;
 
     // EnhancedIO pins
     final int BIT_4_CHANNEL                  = 16; // From Donovan OI box
