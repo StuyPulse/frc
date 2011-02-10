@@ -24,7 +24,6 @@ public class Arm implements Constants {
 
         try {
             armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
-            toPositionControl();
         }
         catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
