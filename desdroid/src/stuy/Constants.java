@@ -27,10 +27,10 @@ public interface Constants {
     final int PORT_ARM_STICK                 = 2;
 
     // Gains and setpoint for the target feedback loop.  Not yet tuned.
-    final double PVAL                        = 1;
-    final double IVAL                        = 1;
-    final double DVAL                        = 1;
-    final double PID_SETPOINT                = 50.0;
+    final double PVAL                        = .5;
+    final double IVAL                        = 0;
+    final double DVAL                        = 0;
+    final double PID_SETPOINT                = 0.83;
 
     final int ENCODER_CODES_PER_REV          = 250;
 

@@ -23,6 +23,8 @@ public class DESCircleTracker implements Constants, PIDOutput {
     
     Relay halogen_a;
 
+    public String outputVals = "";
+
     public DESCircleTracker(DESdroid d) {
         des = d;
 
@@ -33,14 +35,16 @@ public class DESCircleTracker implements Constants, PIDOutput {
         mainTarget = new DESTarget();
         mainTarget.m_xPos = 0;
 
+
         strafeController = new PIDController(PVAL, IVAL, DVAL, mainTarget, this);
+        updatePID();
         strafeController.disable();
 
         halogen_a = new Relay(HALOGEN_CHANNEL_A, Relay.Direction.kForward);
     }
 
     public void doCamera() {
-        halogen_a.set(Relay.Value.kOn);
+        
         try {
 
             
@@ -53,7 +57,7 @@ public class DESCircleTracker implements Constants, PIDOutput {
                 image.free();
                 if (targets.length == 0 || targets[0].m_score < kScoreThreshold) {
                     if (targets.length > 0) {
-                        System.out.println(targets[0].m_score);
+                       // System.out.println(targets[0].m_score);
                     }
                     // System.out.println("No target found");
 
@@ -66,14 +70,15 @@ public class DESCircleTracker implements Constants, PIDOutput {
                         newTargets[i + 1] = targets[i];
                     }
                     mainTarget = newTargets[0];
-                    System.out.println("Target not found");
+                    //System.out.println("Target not found");
                     // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
 
                 } else {
-                    //  System.out.println(targets[0]);
+                    /*System.out.println(targets[0]);
                     System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
-                    System.out.println("Target m_xPos: " + targets[0].m_xPos);
+                    System.out.println("Target m_xPos: " + targets[0].m_xPos); */
                     mainTarget = targets[0];
+                    //System.out.println(mainTarget);
                 }
             }
         } catch (NIVisionException ex) {
@@ -82,11 +87,12 @@ public class DESCircleTracker implements Constants, PIDOutput {
             ex.printStackTrace();
         }
 
-        halogen_a.set(Relay.Value.kOff);
     }
 
     public void pidWrite(double output) {
-        des.drive.mecanumDrive_Cartesian(output, 0, 0, 0);
+       // des.drive.mecanumDrive_Cartesian(output, 0, 0, 0);
+        des.drive.mecanumDrive_Cartesian(-output, 0, 0, 0);
+        outputVals += output + "\n";
     }
 
     public void startAligning() {
@@ -95,5 +101,12 @@ public class DESCircleTracker implements Constants, PIDOutput {
     }
     public void stopAligning() {
         strafeController.disable();
+    }
+
+    public void updatePID() {
+        double[] pid_vals = FileIO.getArray("peg-pid.txt");
+        strafeController.disable();
+        strafeController.setPID(pid_vals[0], pid_vals[1], pid_vals[2]);
+        
     }
 }

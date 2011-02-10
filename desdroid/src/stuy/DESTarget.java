@@ -53,7 +53,7 @@ public class DESTarget implements PIDSource {
         MonoImage lumPlane = image.getLuminancePlane();
 
         EllipseMatch[] results = lumPlane.detectEllipses(ellipseDescriptor, curveOptions, shapeOptions, null);
-        System.out.println("Results array: " + results.length);
+        //System.out.println("Results array: " + results.length);
        // threshPlane.free();
         lumPlane.free();
 
@@ -85,9 +85,9 @@ public class DESTarget implements PIDSource {
             target.m_rotation = results[i].m_rotation;
             target.m_bothFound = false;
             target.m_xMax = (double) width / height;
-
+/*
             System.out.println("\n Mscore= " + results[i].m_score + " \n major rad= " + results[i].m_majorRadius + "\n Minor Radius= " + results[i].m_minorRadius + "\nScore="
-                     + target.m_score);
+                     + target.m_score); */
             sortedTargetList.addElement(target);
         }
 

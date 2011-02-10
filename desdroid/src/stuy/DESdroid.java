@@ -28,7 +28,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     DESCircleTracker pegTracker;
     DESTrackerDashboard trackerDashboard;
 
+    boolean isTargeting = false;
     boolean isOn = false;
+    String targetVals = "";
 
     public DESdroid() {
         try {
@@ -82,7 +84,10 @@ public void autonomous() {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+
+
         getWatchdog().setEnabled(false);
+        double startT = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
    
@@ -100,36 +105,58 @@ public void autonomous() {
 
             drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0);
             
-            if (leftStick.getRawButton(7) && !isOn) {
-                System.out.println("track called");
-                pegTracker.doCamera();
-                isOn = true;
-            }
-
-            
-            if(leftStick.getRawButton(9)) {
-                isOn = false;
-            }
-            
-            if (leftStick.getRawButton(10)) { //button choice?
-                if (!isOn) {
-                    pegTracker.startAligning();
-                    isOn = true;
-                }
-                pegTracker.doCamera();
-            }
-            else {
+            if (!leftStick.getRawButton(7)) {
+                if (isTargeting) {
+                pegTracker.halogen_a.set(Relay.Value.kOff);
                 pegTracker.stopAligning();
-                isOn = false;
+                System.out.println("Stopped");
+                }
+                isTargeting = false;
+            } else {
+                pegTracker.halogen_a.set(Relay.Value.kOn);
+                pegTracker.doCamera();
+                targetVals += pegTracker.mainTarget + "\n";
+                Timer.delay(.25);
+
+                if (!isTargeting) {
+                    pegTracker.startAligning();
+                    System.out.println("Started");
+                    isTargeting = true;
+                }
+
             }
 
+            if (leftStick.getRawButton(11))
+                pegTracker.updatePID();
+             
+
+            /*if (rightStick.getTrigger() && !isOn) {
+                pegTracker.halogen_a.set(Relay.Value.kOn);
+                isOn = true;
+                pegTracker.doCamera();
+            } else {
+                pegTracker.halogen_a.set(Relay.Value.kOff);
+            }
+
+            if (rightStick.getTop()) {
+                isOn = false;
+            }*/
+
+
+
+
+         
+            
+            /*
             if (leftStick.getTrigger()) {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
             }
             else {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
-            }
+            } */
         }
+        System.out.println(targetVals);
+        System.out.println(pegTracker.outputVals);
     }
 
     // update PID values.  uses a text file drive_PID_values.txt that must be
