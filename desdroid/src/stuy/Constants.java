@@ -55,7 +55,8 @@ public interface Constants {
     final int OI_MIDDLE_BOTTOM_BUTTON        = 4;
     final int OI_MIDDLE_MIDDLE_BUTTON        = 5;
     final int OI_MIDDLE_TOP_BUTTON           = 6;
-    final int FEEDER_TUBE_BUTTON             = 7;
+    final int OI_FEEDER_TUBE_BUTTON          = 7;
+    final int OI_FLOOR_BUTTON                = 8;
     
     // Line Tracking
     final double DEFAULT_STEERING_GAIN       = 0.3;
