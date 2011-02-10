@@ -104,7 +104,7 @@ public void autonomous() {
             // align using PID feedback control (tune the PID gains as well).
 
             drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0);
-            
+            /*
             if (!leftStick.getRawButton(7)) {
                 if (isTargeting) {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
@@ -128,19 +128,21 @@ public void autonomous() {
 
             if (leftStick.getRawButton(11))
                 pegTracker.updatePID();
-             
+             */
 
-            /*if (rightStick.getTrigger() && !isOn) {
+            if (rightStick.getTrigger() && !isOn) {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
+                Timer.delay(.1);
                 isOn = true;
                 pegTracker.doCamera();
+                Timer.delay(1);
             } else {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
             }
 
             if (rightStick.getTop()) {
                 isOn = false;
-            }*/
+            }
 
 
 
