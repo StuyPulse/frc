@@ -2,15 +2,15 @@ package stuy;
 
 public interface Constants {
 
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
 
-    final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
-    final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
+    final int GRABBER_UPPER_ROLLER_PORT      = 7;
+    final int GRABBER_LOWER_ROLLER_PORT      = 8;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
 
