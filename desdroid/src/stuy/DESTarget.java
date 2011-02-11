@@ -49,14 +49,17 @@ public class DESTarget implements PIDSource {
 
         //ColorImage lumPlane = image.luminanceEqualize();
         //BinaryImage threshPlane = lumPlane.thresholdHSL(211,256,211,256,211,256);
-        image.write("IMAGE-" + System.currentTimeMillis() + ".png");
+        //image.write("IMAGE-" + System.currentTimeMillis() + ".png");
         Image mask =image.thresholdHSL(0, 255, 0, 21, 160, 255);
+        image.free();
         HSLImage h= (HSLImage)mask;
         MonoImage lumPlane = h.getLuminancePlane();
         EllipseMatch[] results = lumPlane.detectEllipses(ellipseDescriptor, curveOptions, shapeOptions, null);
+        mask.free();
+        h.free();
         //System.out.println("Results array: " + results.length);
        // threshPlane.free();
-        lumPlane.write("LUMPLANED-"+ System.currentTimeMillis() + ".png");
+        //lumPlane.write("LUMPLANED-"+ System.currentTimeMillis() + ".png");
         lumPlane.free();
 
         SortedVector.Comparator targetComparator = new SortedVector.Comparator() {
