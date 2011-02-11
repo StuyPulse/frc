@@ -31,6 +31,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Autonomous class
     Autonomous auton;
 
+    double setPos = 0.45;
+
     /**
      * DESdroid constructor.
      */
@@ -93,9 +95,17 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
+        double lastTimeSeconds = Timer.getFPGATimestamp();
+        
+        try {
+            setPos = arm.armMotor.getPosition();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         while (isEnabled() && isOperatorControl()) {
-          drive.arcadeDrive(leftStick);
+          //drive.arcadeDrive(leftStick);
             
             /*drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
@@ -104,7 +114,24 @@ public class DESdroid extends SimpleRobot implements Constants {
                     0.0);                   // use gyro for field-oriented drive*/
               
             // Arm control
-            arm.rotate(armStick.getY());
+            
+            
+            if (armStick.getRawButton(11))
+                setPos = 0.7;
+            if (armStick.getRawButton(10))
+                setPos = 0.5;
+
+            arm.setHeight(setPos);
+
+            if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
+                try {
+                    System.out.println("Requested position: " + setPos + " current position: " + arm.armMotor.getPosition());
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                lastTimeSeconds = Timer.getFPGATimestamp();
+            }
 
             // Grabber control
             /*if (armStick.getTrigger()) {
