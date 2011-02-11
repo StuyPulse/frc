@@ -76,6 +76,10 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
+
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
 
     /**
@@ -89,6 +93,10 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
+
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
     
     /**
@@ -102,6 +110,10 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
+
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
 
     /**
@@ -121,12 +133,20 @@ public class Autonomous implements Constants {
      */
     public void auton5() {
         lineTrack(false, false);
-        goForward(false);
+        goSpeed(-.1);
+        Timer.delay(2);
+        goSpeed(0);
 
         // call arm raise here (get this from `arm' branch)
         Timer.delay(2);
 
-        goForward(true);
+        goSpeed(.1);
+        Timer.delay(2);
+        goSpeed(0);
+        
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
 
     /**
@@ -137,12 +157,20 @@ public class Autonomous implements Constants {
      */
     public void auton6() {
         lineTrack(true, false);
-        goForward(false);
+        goSpeed(-.1);
+        Timer.delay(2);
+        goSpeed(0);
 
-        // call arm raise here
+        // call arm raise here (get this from `arm' branch)
         Timer.delay(2);
 
-        goForward(true);
+        goSpeed(.1);
+        Timer.delay(2);
+        goSpeed(0);
+
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
 
 
@@ -154,12 +182,20 @@ public class Autonomous implements Constants {
      */
     public void auton7() {
         lineTrack(false, true);
-        goForward(false);
+        goSpeed(-.1);
+        Timer.delay(2);
+        goSpeed(0);
 
-        // call arm raise here
+        // call arm raise here (get this from `arm' branch)
         Timer.delay(2);
 
-        goForward(true);
+        goSpeed(.1);
+        Timer.delay(2);
+        goSpeed(0);
+
+        goSpeed(-1);
+        Timer.delay(5);
+        goSpeed(0);
     }
 
 
@@ -267,14 +303,10 @@ public class Autonomous implements Constants {
      * @param direction Forward/backward-ness.  Forward = true
      * the `magnitude' variable controls the speed
      */
-    private void goForward(boolean direction) {
-        double magnitude = 0.1;
+    private void goSpeed(double speed) {
 
         // mecanumDrive expects a negative joystick value for forward motion
-        double speed = (direction ? -1 : 1) * magnitude;
 
-        des.drive.mecanumDrive_Cartesian(0, speed, 0, 0, false);
-        Timer.delay(2);
-        des.drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
+        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
     }
 }
