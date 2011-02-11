@@ -46,7 +46,7 @@ public class Autonomous implements Constants {
         lineTrack(false, false);
         goForward(false);
 
-        // call arm raise here
+        // call arm raise here (get this from `arm' branch)
         Timer.delay(2);
 
         goForward(true);
