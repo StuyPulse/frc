@@ -3,46 +3,123 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- *
- * @author Alex Carrillo
- */
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
 
+/**
+ * This is the location of DESdroid's autonomous routines.
+ * @author Kevin Wang
+ */
 public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
 
+    /**
+     * Autonomous constructor.
+     * @param d DESdroid instance to control robot components.
+     */
     public Autonomous(DESdroid d) {
         des = d;
     }
 
-    public void getSensorValues() {
+    /**
+     * Update the values of the line tracking sensors.
+     */
+    private void updateSensorValues() {
         leftValue = des.leftSensor.get() ? 1 : 0;
         middleValue = des.middleSensor.get() ? 1 : 0;
         rightValue = des.rightSensor.get() ? 1 : 0;
     }
 
-    public void printLineStatus() {
-        System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
-                + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
-                + "R: [" + (rightValue == 1 ? "1" : " ") + "]");
-    }
-
-    public int binaryValue(boolean goLeft) {
-        if (goLeft) {
-            return leftValue * 4 + middleValue * 2 + rightValue;
+    /**
+     * Execute autonomous routine.
+     * @param setting The autonomous routine to run.
+     */
+    public void run(int setting) {
+        switch (setting) {
+            case 1:
+                auton1();
+                break;
+            case 2:
+                auton2();
+                break;
+            case 3:
+                auton3();
+                break;
+            case 4:
+                auton4();
+                break;
+            case 5:
+                auton5();
+                break;
+            case 6:
+                auton6();
+                break;
+            case 7:
+                auton7();
+                break;
+            case 8:
+                break; // Do nothing.
         }
-        return rightValue * 4 + middleValue * 2 + leftValue;
     }
 
     /**
-     * Goes down line, forks right, moves back, raises arm (fake), goes forward.
+     * Raise arm
+     * Follow line straight
+     * Score
      */
-    public void setting1() {
+    private void auton1() {
+        des.arm.setHeight(0);
+        lineTrack(true, false);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+    }
+
+    /**
+     * Raise arm
+     * Follow line left
+     * Score
+     */
+    private void auton2() {
+        des.arm.setHeight(0);
+        lineTrack(false, true);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+    }
+    
+    /**
+     * Raise arm
+     * Follow line right
+     * Score
+     */
+    private void auton3() {
+        des.arm.setHeight(0);
+        lineTrack(false, false);
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+    }
+
+    /**
+     * Drop ubertube
+     */
+    private void auton4() {
+        des.grabber.out();
+        Timer.delay(2);
+        des.grabber.stop();
+    }
+
+    /**
+     * Follow line right
+     * moves back a little
+     * raises arm (fake)
+     * goes forward to peg
+     */
+    public void auton5() {
         lineTrack(false, false);
         goForward(false);
 
@@ -53,9 +130,12 @@ public class Autonomous implements Constants {
     }
 
     /**
-     * Goes down straight line, no fork, moves back, raises arm (fake), goes forward.
+     * Follow line straight
+     * moves back
+     * raises arm (fake)
+     * goes forward into peg
      */
-    public void setting2() {
+    public void auton6() {
         lineTrack(true, false);
         goForward(false);
 
@@ -67,9 +147,12 @@ public class Autonomous implements Constants {
 
 
     /**
-     * Goes down line, forks left, moves back raises arm (fake), goes forward.
+     * Follow line left
+     * moves back
+     * raises arm (fake)
+     * goes forward into peg
      */
-    public void setting3() {
+    public void auton7() {
         lineTrack(false, true);
         goForward(false);
 
@@ -79,57 +162,28 @@ public class Autonomous implements Constants {
         goForward(true);
     }
 
-    
-        /**
-     * Raises arm (fake) then goes down line, forks right.
-     */
-    public void setting4() {
-        // call arm raise here
-        Timer.delay(2);
 
-        lineTrack(false, false);
+    /**
+     * Prints the values of the line tracking sensors.
+     */
+    private void printLineStatus() {
+        System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
+                + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
+                + "R: [" + (rightValue == 1 ? "1" : " ") + "]");
+    }
+
+    private int binaryValue(boolean goLeft) {
+        if (goLeft) {
+            return leftValue * 4 + middleValue * 2 + rightValue;
+        }
+        return rightValue * 4 + middleValue * 2 + leftValue;
     }
 
     /**
-     * Raises arm (fake), goes down straight line, no fork.
+     * Follow the line forward.
+     * @param straightLine Set to true to go straight.
+     * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
      */
-    public void setting5() {
-        // call arm raise here
-        Timer.delay(2);
-
-        lineTrack(true, false);
-    }
-
-
-    /**
-     * Raises arm (fake) goes down line, forks left.
-     */
-    public void setting6() {
-        // call arm raise here
-        Timer.delay(2);
-
-        lineTrack(false, true);
-    }
-    
-    
-    
-    /**
-     * Goes forward or backwards to have space in between the peg and the robot's
-     * bumper so we can raise the arm to score.
-     * @param direction Forward/backward-ness.  Forward = true
-     * the `magnitude' variable controls the speed
-     */
-    private void goForward(boolean direction) {
-        double magnitude = 0.1;
-
-        // mecanumDrive expects a negative joystick value for forward motion
-        double speed = (direction ? -1 : 1) * magnitude;
-        
-        des.drive.mecanumDrive_Cartesian(0, speed, 0, 0, false);
-        Timer.delay(2);
-        des.drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
-    }
-
     public void lineTrack(boolean straightLine, boolean goLeft) {
 
         int binaryValue; // a single binary value of the three line tracking
@@ -141,8 +195,8 @@ public class Autonomous implements Constants {
         // different to let the robot drive more slowly as the robot approaches
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
-//        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
-        powerProfile = (straightLine) ? FileIO.getArray("straightLine.txt") : FileIO.getArray("forkProfile.txt");
+        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+//        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
@@ -158,7 +212,7 @@ public class Autonomous implements Constants {
         // loop until robot reaches "T" at end or 8 seconds has past
         while ((time = timer.get()) < 8.0 && !atCross) {
             int timeInSeconds = (int) time;
-            getSensorValues();
+            updateSensorValues();
             binaryValue = binaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
 
@@ -174,7 +228,7 @@ public class Autonomous implements Constants {
                 case 7:  // all sensors on (maybe at cross)
                     if (time > stopTime) {
                         atCross = true;
-                        speed = -.1;
+                        speed = 0;
                     }
                     break;
                 case 0:  // all sensors off
@@ -187,24 +241,40 @@ public class Autonomous implements Constants {
                 default:  // all other cases
                     turn = -steeringGain;
             }
-            
-
-            // set the robot speed and direction
-            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0.0, 0.0, false);
-
             // print current status for debugging
             if (binaryValue != previousValue) {
                 printLineStatus();
-                System.out.println("forward " + -speed + " strafe " + -turn);
             }
 
+            // set the robot speed and direction
+//            des.drive.arcadeDrive(-speed, -turn);
+            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0, 0);
 
-            if (binaryValue != 0)
+            if (binaryValue != 0) {
                 previousValue = binaryValue;
+            }
 
             Timer.delay(0.01);
         }
         // Done with loop - stop the robot. Robot ought to be at the end of the line
         des.drive.arcadeDrive(0, 0);
+    }
+
+
+    /**
+     * Goes forward or backwards to have space in between the peg and the robot's
+     * bumper so we can raise the arm to score.
+     * @param direction Forward/backward-ness.  Forward = true
+     * the `magnitude' variable controls the speed
+     */
+    private void goForward(boolean direction) {
+        double magnitude = 0.1;
+
+        // mecanumDrive expects a negative joystick value for forward motion
+        double speed = (direction ? -1 : 1) * magnitude;
+
+        des.drive.mecanumDrive_Cartesian(0, speed, 0, 0, false);
+        Timer.delay(2);
+        des.drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
     }
 }

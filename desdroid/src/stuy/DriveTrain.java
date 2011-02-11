@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
@@ -9,10 +5,6 @@ import edu.wpi.first.wpilibj.RobotDrive.*;
 import edu.wpi.first.wpilibj.can.*;
 import java.lang.Math;
 
-/**
- *
- * @author Blake
- */
 public class DriveTrain extends RobotDrive {
 
     int kFrontLeft_val = 0;
@@ -82,17 +74,6 @@ public class DriveTrain extends RobotDrive {
         }
     }
 
-    /**
-     * Drive the left and right sides like tank drive, plus horizontal strafing
-     * from a third input.
-     */
-    public void tankDrive3(double left, double right, double strafe) {
-        if (scaleInput(strafe) == 0) {
-            tankDrive(scaleInput(left), scaleInput(right));
-        } else {
-            mecanumDrive_Cartesian(scaleInput(strafe), 0, 0, 0);
-        }
-    }
 
     /**
      * Modify a joystick input to round any super-small values to 0.  Should prevent

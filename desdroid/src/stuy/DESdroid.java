@@ -7,7 +7,6 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,20 +18,38 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    CANJaguar driveFrontLeft, driveFrontRight, driveRearLeft, driveRearRight;
-    DriveTrain drive;
+
+    CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    Arm arm;
+    Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
-    Gyro gyro;
-
     // Driver controls
-    Joystick leftStick, rightStick;
-    DriverStation ds; // driver station object for getting selections
-    OperatorInterface oi;
+    Joystick leftStick;
+    Joystick rightStick;
+    Joystick armStick;
 
+    OperatorInterface oi;
+    DriveTrain drive;
     // Autonomous class
     Autonomous auton;
 
+    /**
+     * DESdroid constructor.
+     */
     public DESdroid() {
+       // oi = new OperatorInterface(this);
+
+        arm = new Arm(this);
+        grabber = new Grabber(this);
+
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+
+
+        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
@@ -55,22 +72,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
-        } catch (Exception e) {
+        } catch (Exception e) { 
             e.printStackTrace();
         }
-
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
-
-        gyro = new Gyro(GYRO_CHANNEL);
-
-
-        leftSensor   = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-        rightSensor  = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-
-        // get the driver station instance to read the digital I/O pins
-        ds = DriverStation.getInstance();
 
         auton = new Autonomous(this);
     }
@@ -79,7 +83,10 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        auton.setting1();
+        getWatchdog().setEnabled(false);
+
+//        auton.run(oi.getAutonSetting(this));
+        auton.run(1);
     }
 
     /**
@@ -87,8 +94,6 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
-        int binaryValue, previousValue = 0;
         
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
@@ -97,24 +102,20 @@ public class DESdroid extends SimpleRobot implements Constants {
                     rightStick.getX(), // rotation (clockwise?)
                     0,             // use gyro for field-oriented drive
                     true);
-
-            binaryValue = auton.binaryValue(true);
-            if (binaryValue != previousValue)
-                auton.printLineStatus();
-            if (binaryValue != 0)
-                previousValue = binaryValue;
         }
     }
 
-        // update PID values.  uses a text file drive_PID_values.txt that must be
-    // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+    /**
+     * update PID values.  uses a text file drive_PID_values.txt that must be
+     * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+     */
     public void updatePID() {
         double drivePID[];
 //        drivePID = FileIO.getArray("drive_PID_values.txt");
         drivePID = new double[3];
-        drivePID[0] = 0.48;
-        drivePID[1] = 0.005;
-        drivePID[2] = 0.05;
+        drivePID[0] = SPEED_P;
+        drivePID[1] = SPEED_I;
+        drivePID[2] = SPEED_D;
 
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
         try {

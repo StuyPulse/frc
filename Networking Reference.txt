@@ -1,0 +1,31 @@
+694 Programmer Reference Sheet
+
+Network Configuration
+    255.0.0.0 (/8)  Subnet mask
+    IP Addresses:
+        10.6.94.1       Radio (both brands)
+        10.6.94.2       cRIO
+        10.6.94.4       Router (if present)
+        10.6.94.5       Driver Station
+
+D-Link Radio Setup
+    Switch on back  AP when not at competition
+    Username        None - just click Log In
+    SSID            694
+    Encryption      WPA-PSK AES
+    WPA Key         joshhasnofriends
+
+Linksys Radio Setup
+    SSID            694 or 694b
+    Encryption      None
+
+Router Setup (Only needed for Linksys radio)
+    Username        admin
+    Password        joshhasnofriends
+    SSID            694 or 694b
+    Encryption      None
+
+Axis Camera Setup
+    IP Address      192.168.0.90
+    Username        ?
+    Password        ?

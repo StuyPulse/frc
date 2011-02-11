@@ -9,53 +9,107 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
 
 /**
- *
+ * Handles input from the operator interface using the Cypress FirstTouch I/O module.
  * @author Kevin Wang
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
+    DESdroid des;
 
-    public OperatorInterface() {
+    /**
+     * Operator interface constructor, setting digital inputs pulled down.
+     */
+    public OperatorInterface(DESdroid d) {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
+        des = d;
         try {
+            enhancedIO.setDigitalConfig(BROKEN_LIGHT, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+
+            enhancedIO.setDigitalConfig(OI_SIDE_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_SIDE_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_SIDE_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_BOTTOM_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_MIDDLE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MIDDLE_TOP_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_FEEDER_TUBE_BUTTON, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Enhanced IO exception");
+            System.out.println("Error initializing the operator interface.");
         }
     }
 
-    public int getAutonSwitch() {
+    /**
+     * Sets the broken light.
+     */
+    public void setStuffsBrokenLED(boolean val) {
+        try {
+            enhancedIO.setDigitalOutput(BROKEN_LIGHT, val);
+        }
+        catch (EnhancedIOException e) {
+            System.out.println("Error LED is broken.");
+        }
+    }
+    /**
+     * Use a binary switch to set the autonomous mode setting.
+     * @return Autonomous setting to run.
+     */
+    public int getAutonSetting(DESdroid d) {
+        des = d;
         try {
             int switchNum = 0;
             int[] binaryValue = new int[4];
+
             boolean[] dIO = new boolean[]{enhancedIO.getDigital(BIT_1_CHANNEL), enhancedIO.getDigital(BIT_2_CHANNEL), enhancedIO.getDigital(BIT_3_CHANNEL), enhancedIO.getDigital(BIT_4_CHANNEL)};
+
             for (int i = 0; i < 4; i++) {
                 if (dIO[i]) {
                     binaryValue[i] = 1;
-                } else {
+                }
+                else {
                     binaryValue[i] = 0;
                 }
             }
 
-            binaryValue[0] *= 8; //convert all binaryValues to decimal values
+            binaryValue[0] *= 8; // convert all binaryValues to decimal values
             binaryValue[1] *= 4;
             binaryValue[2] *= 2;
-            for (int i = 0; i < 4; i++) //finish binary -> decimal conversion
-            {
+
+            for (int i = 0; i < 4; i++) { // finish binary -> decimal conversion
                 switchNum += binaryValue[i];
             }
-            if (switchNum > 11) {
-                switchNum = 1; // that BinarySwitch() doesn't return a nonexistent switchNum
+
+            if (switchNum > 8) {
+                switchNum = 8; // that getAutonSetting() doesn't return a nonexistent switchNum
             }
+
             return switchNum;
-        } catch (EnhancedIOException ex) {
-          //  ex.printStackTrace();
-          //  System.err.println("binary switch error!");
-            return 1;
         }
+        catch (EnhancedIOException e) {
+            setStuffsBrokenLED(true);
+            return 5; // Do nothing in case of failure
+        }
+    }
+
+    public boolean[] getArmButtons() {
+        boolean[] armButtons = new boolean[9];
+        try {
+            armButtons[0] = enhancedIO.getDigital(OI_SIDE_BOTTOM_BUTTON);
+            armButtons[1] = enhancedIO.getDigital(OI_SIDE_MIDDLE_BUTTON);
+            armButtons[2] = enhancedIO.getDigital(OI_SIDE_TOP_BUTTON);
+            armButtons[3] = enhancedIO.getDigital(OI_MIDDLE_BOTTOM_BUTTON);
+            armButtons[4] = enhancedIO.getDigital(OI_MIDDLE_MIDDLE_BUTTON);
+            armButtons[5] = enhancedIO.getDigital(OI_MIDDLE_TOP_BUTTON);
+            armButtons[6] = enhancedIO.getDigital(OI_FEEDER_TUBE_BUTTON);
+
+        }
+        catch (EnhancedIOException e) {
+            setStuffsBrokenLED(true);
+        }
+        return armButtons;
     }
 }
