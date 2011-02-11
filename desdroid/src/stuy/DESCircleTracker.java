@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.image.*;
  */
 public class DESCircleTracker implements Constants, PIDOutput {
 
-    double kScoreThreshold = .001;
+    double kScoreThreshold = 0;
     AxisCamera cam;
     DESTrackerDashboard trackerDashboard;
     DESTarget mainTarget;
@@ -70,13 +70,13 @@ public class DESCircleTracker implements Constants, PIDOutput {
                         newTargets[i + 1] = targets[i];
                     }
                     mainTarget = newTargets[0];
-                    //System.out.println("Target not found");
+                    System.out.println("Target not found");
                     // trackerDashboard.updateVisionDashboard(0.0, 0.0, 0.0, 0.0, newTargets);
 
                 } else {
-                    /*System.out.println(targets[0]);
-                    System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
-                    System.out.println("Target m_xPos: " + targets[0].m_xPos); */
+                 //   System.out.println(targets[0]);
+                //    System.out.println("Target Angle: " + targets[0].getHorizontalAngle());
+                    System.out.println("Target m_xPos: " + targets[0].m_xPos);
                     mainTarget = targets[0];
                     //System.out.println(mainTarget);
                 }

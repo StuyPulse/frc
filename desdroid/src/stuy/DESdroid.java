@@ -88,6 +88,7 @@ public void autonomous() {
 
         getWatchdog().setEnabled(false);
         double startT = Timer.getFPGATimestamp();
+        pegTracker.halogen_a.set(Relay.Value.kOn);
 
         while (isEnabled() && isOperatorControl()) {
    
@@ -132,12 +133,12 @@ public void autonomous() {
 
             if (rightStick.getTrigger() && !isOn) {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
-                Timer.delay(.1);
+                Timer.delay(.5);
                 isOn = true;
                 pegTracker.doCamera();
                 Timer.delay(1);
             } else {
-                pegTracker.halogen_a.set(Relay.Value.kOff);
+                //pegTracker.halogen_a.set(Relay.Value.kOff);
             }
 
             if (rightStick.getTop()) {
@@ -157,6 +158,7 @@ public void autonomous() {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
             } */
         }
+        pegTracker.halogen_a.set(Relay.Value.kOff);
         System.out.println(targetVals);
         System.out.println(pegTracker.outputVals);
     }
