@@ -38,6 +38,8 @@ public class DESCircleTracker implements Constants, PIDOutput {
 
         strafeController = new PIDController(PVAL, IVAL, DVAL, mainTarget, this);
         updatePID();
+        strafeController.setInputRange(-1.2, 1.2);
+        strafeController.setTolerance(1 / 90. * 100);
         strafeController.disable();
 
         halogen_a = new Relay(HALOGEN_CHANNEL_A, Relay.Direction.kForward);
@@ -105,8 +107,10 @@ public class DESCircleTracker implements Constants, PIDOutput {
 
     public void updatePID() {
         double[] pid_vals = FileIO.getArray("peg-pid.txt");
+        
         strafeController.disable();
         strafeController.setPID(pid_vals[0], pid_vals[1], pid_vals[2]);
+       // strafeController.setPID(PVAL, IVAL, DVAL);
         
     }
 }

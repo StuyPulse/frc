@@ -47,16 +47,17 @@ public class DESTarget implements PIDSource {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        //ColorImage lumPlane = image.luminanceEqualize();
-        //BinaryImage threshPlane = lumPlane.thresholdHSL(211,256,211,256,211,256);
-        image.write("IMAGE-" + System.currentTimeMillis() + ".png");
-        MonoImage lumPlane = image.thresholdHSL(0, 255, 0, 21, 160, 255);
+        BinaryImage binImage = image.thresholdHSL(0, 255, 0, 21, 160, 255);
+        binImage.write("BINIMAGE.png");
+        binImage.free();
+        HSLImage hslImage = new HSLImage("BINIMAGE.png");
+
+        MonoImage lumPlane = hslImage.getLuminancePlane();
+        hslImage.free();
 
         EllipseMatch[] results = lumPlane.detectEllipses(ellipseDescriptor, curveOptions, shapeOptions, null);
-        //System.out.println("Results array: " + results.length);
-       // threshPlane.free();
-        lumPlane.write("LUMPLANED-"+ System.currentTimeMillis() + ".png");
         lumPlane.free();
+
 
         SortedVector.Comparator targetComparator = new SortedVector.Comparator() {
 
@@ -87,8 +88,8 @@ public class DESTarget implements PIDSource {
             target.m_bothFound = false;
             target.m_xMax = (double) width / height;
 
-            System.out.println("\n Mscore= " + results[i].m_score + " \n major rad= " + results[i].m_majorRadius + "\n Minor Radius= " + results[i].m_minorRadius + "\nScore="
-                     + target.m_score); 
+          /*  System.out.println("\n Mscore= " + results[i].m_score + " \n major rad= " + results[i].m_majorRadius + "\n Minor Radius= " + results[i].m_minorRadius + "\nScore="
+                     + target.m_score); */
             sortedTargetList.addElement(target);
         }
 

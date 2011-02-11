@@ -88,10 +88,9 @@ public void autonomous() {
 
         getWatchdog().setEnabled(false);
         double startT = Timer.getFPGATimestamp();
-        pegTracker.halogen_a.set(Relay.Value.kOn);
+       //pegTracker.halogen_a.set(Relay.Value.kOn);
 
         while (isEnabled() && isOperatorControl()) {
-   
             // drive.tankDrive(gamepad, 2, gamepad, 4);
             //drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0.0);
 
@@ -105,7 +104,7 @@ public void autonomous() {
             // align using PID feedback control (tune the PID gains as well).
 
             drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0);
-            /*
+            
             if (!leftStick.getRawButton(7)) {
                 if (isTargeting) {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
@@ -117,7 +116,7 @@ public void autonomous() {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
                 pegTracker.doCamera();
                 targetVals += pegTracker.mainTarget + "\n";
-                Timer.delay(.25);
+                Timer.delay(.05);
 
                 if (!isTargeting) {
                     pegTracker.startAligning();
@@ -129,21 +128,21 @@ public void autonomous() {
 
             if (leftStick.getRawButton(11))
                 pegTracker.updatePID();
-             */
-
+             
+/*
             if (rightStick.getTrigger() && !isOn) {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
-                Timer.delay(.5);
+                Timer.delay(.5); 
                 isOn = true;
                 pegTracker.doCamera();
-                Timer.delay(1);
+             //   Timer.delay(1);    
             } else {
                 //pegTracker.halogen_a.set(Relay.Value.kOff);
             }
 
             if (rightStick.getTop()) {
                 isOn = false;
-            }
+            } */
 
 
 
@@ -158,9 +157,12 @@ public void autonomous() {
                 pegTracker.halogen_a.set(Relay.Value.kOff);
             } */
         }
+        /*
         pegTracker.halogen_a.set(Relay.Value.kOff);
         System.out.println(targetVals);
         System.out.println(pegTracker.outputVals);
+         * 
+         */
     }
 
     // update PID values.  uses a text file drive_PID_values.txt that must be
