@@ -30,8 +30,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     DriveTrain drive;
     // Autonomous class
     Autonomous auton;
-
-    double setPos = 0.45;
+    double[] positions;
 
     /**
      * DESdroid constructor.
@@ -78,6 +77,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
         auton = new Autonomous(this);
+
+        positions = FileIO.getArray("positions.txt");
     }
 
     /**
@@ -96,13 +97,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
         double lastTimeSeconds = Timer.getFPGATimestamp();
-        
-        try {
-            setPos = arm.armMotor.getPosition();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         
         while (isEnabled() && isOperatorControl()) {
           //drive.arcadeDrive(leftStick);
@@ -115,17 +110,23 @@ public class DESdroid extends SimpleRobot implements Constants {
               
             // Arm control
             
-            
-            if (armStick.getRawButton(11))
-                setPos = 0.7;
-            if (armStick.getRawButton(10))
-                setPos = 0.5;
 
-            arm.setHeight(setPos);
+
+            if (armStick.getRawButton(11))
+                arm.setHeight(positions[0]);
+            else if(armStick.getRawButton(10))
+                arm.setHeight(positions[1]);
+            else if (armStick.getRawButton(9))
+                arm.setHeight(positions[2]);
+            else
+                arm.rotate(armStick.getY());
+
+            if (armStick.getRawButton(8))
+                positions = FileIO.getArray("positions.txt");
 
             if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
                 try {
-                    System.out.println("Requested position: " + setPos + " current position: " + arm.armMotor.getPosition());
+                    //System.out.println("Requested position: " + setPos + " current position: " + arm.armMotor.getPosition());
                 }
                 catch (Exception e) {
                     e.printStackTrace();

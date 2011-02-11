@@ -60,9 +60,9 @@ public class Arm implements Constants {
     public void setHeight(double potVal) {
         try {
             double currentVal = armMotor.getPosition();
-            if (currentVal - potVal > 0.04)
+            if (currentVal - potVal > 0.08)
                 armMotor.setX(-1);
-            else if (currentVal - potVal < -0.04)
+            else if (currentVal - potVal < -0.08)
                 armMotor.setX(1);
             else
                 armMotor.setX(0);
