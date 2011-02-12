@@ -140,17 +140,17 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Grabber control
-            /*if (armStick.getTrigger()) {
-            grabber.in();
+            if (armStick.getTrigger()) {
+                grabber.in();
             } else if (armStick.getRawButton(2)) {
-            grabber.out();
+                grabber.out();
             } else if (armStick.getRawButton(6)) {
-            grabber.rotateUp();
+                grabber.rotateUp();
             } else if (armStick.getRawButton(7)) {
-            grabber.rotateDown();
+                grabber.rotateDown();
             } else {
-            grabber.stop();
-            }*/
+                grabber.stop();
+            }
 
             if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
                 try {
@@ -252,7 +252,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         drivePID[2] = SPEED_D;
 
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
-        
+
         try {
             driveFrontLeft.disableControl();
             driveFrontRight.disableControl();
