@@ -17,9 +17,12 @@ public interface Constants {
 
     final int MINIBOT_RELEASE_SERVO          = 4;
 
+    /*** DIGITAL I/O ***/
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int HALOGEN_CHANNEL_A              = 4;
+    final int HALOGEN_CHANNEL_B              = 5;
 
     final int LOWER_ARM_POT_LIM              = 100;
     final int UPPER_ARM_POT_LIM              = 200;
@@ -63,4 +66,10 @@ public interface Constants {
     final int LIGHT_ENABLE_CHANNEL           = 1;
 
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+
+    // Gains and setpoint for the target feedback loop.  Not yet tuned.
+    final double PVAL                        = .5;
+    final double IVAL                        = 0;
+    final double DVAL                        = 0;
+    final double PID_SETPOINT                = 0;
 }

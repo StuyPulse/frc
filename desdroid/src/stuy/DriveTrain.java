@@ -25,6 +25,7 @@ public class DriveTrain extends RobotDrive {
         setInvertedMotor(MotorType.kRearRight, m_isCANInitialized);
     }
 
+
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle, boolean deadband) {
         double xIn;
         double yIn;
@@ -37,7 +38,6 @@ public class DriveTrain extends RobotDrive {
             xIn = x;
             yIn = y;
         }
-
         // Negate y for the joystick.
         yIn = -yIn;
         // Compenstate for gyro angle.
@@ -66,7 +66,12 @@ public class DriveTrain extends RobotDrive {
             } catch (CANNotInitializedException e) {
                 m_isCANInitialized = false;
             } catch (CANTimeoutException e) {
+
+            } catch (Exception e) {
+            System.out.println(e);
             }
+
+
         }
 
         if (m_safetyHelper != null) {
