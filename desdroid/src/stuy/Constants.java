@@ -30,7 +30,7 @@ public interface Constants {
     final double PVAL                        = .5;
     final double IVAL                        = 0;
     final double DVAL                        = 0;
-    final double PID_SETPOINT                = 0.83;
+    final double PID_SETPOINT                = 0;
 
     final int ENCODER_CODES_PER_REV          = 250;
 

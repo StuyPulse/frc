@@ -7,6 +7,7 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
+import java.util.Vector;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,7 +31,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     boolean isTargeting = false;
     boolean isOn = false;
-    String targetVals = "";
+    boolean wasEnabledOnce = false;
+    Vector targetVals;
 
     public DESdroid() {
         try {
@@ -50,10 +52,14 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
 
             updatePID();
+        } catch (Exception e) {
+            e.printStackTrace();
 
-            drive = new DriveTrain(driveFrontLeft,
-                    driveRearLeft,
-                    driveFrontRight,
+        }
+
+        drive = new DriveTrain(driveFrontLeft,
+                driveRearLeft,
+                driveFrontRight,
                     driveRearRight);
 
 
@@ -62,10 +68,10 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             trackerDashboard = new DESTrackerDashboard(this);
             pegTracker = new DESCircleTracker(this);
-        } catch (Exception e) {
-            System.out.println(e);
 
-        }
+            targetVals = new Vector();
+            System.out.println(pegTracker);
+            System.out.println(pegTracker.halogen_a);
 
     }
 
@@ -87,10 +93,10 @@ public void autonomous() {
 
 
         getWatchdog().setEnabled(false);
-        double startT = Timer.getFPGATimestamp();
        //pegTracker.halogen_a.set(Relay.Value.kOn);
 
         while (isEnabled() && isOperatorControl()) {
+            wasEnabledOnce = true;
             // drive.tankDrive(gamepad, 2, gamepad, 4);
             //drive.mecanumDrive_Cartesian(leftStick.getX(), leftStick.getY(), rightStick.getX(), 0.0);
 
@@ -114,9 +120,12 @@ public void autonomous() {
                 isTargeting = false;
             } else {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
+                if (!isTargeting) {
+                    Timer.delay(.5);
+                }
                 pegTracker.doCamera();
-                targetVals += pegTracker.mainTarget + "\n";
-                Timer.delay(.05);
+                targetVals.addElement("" + pegTracker.mainTarget.m_xPos);
+
 
                 if (!isTargeting) {
                     pegTracker.startAligning();
@@ -129,7 +138,7 @@ public void autonomous() {
             if (leftStick.getRawButton(11))
                 pegTracker.updatePID();
              
-/*
+             /*
             if (rightStick.getTrigger() && !isOn) {
                 pegTracker.halogen_a.set(Relay.Value.kOn);
                 Timer.delay(.5); 
@@ -142,9 +151,9 @@ public void autonomous() {
 
             if (rightStick.getTop()) {
                 isOn = false;
-            } */
+            } 
 
-
+            */
 
 
          
@@ -159,10 +168,14 @@ public void autonomous() {
         }
         /*
         pegTracker.halogen_a.set(Relay.Value.kOff);
-        System.out.println(targetVals);
-        System.out.println(pegTracker.outputVals);
-         * 
-         */
+        System.out.println(targetVals); */
+
+        if (wasEnabledOnce) {
+            for (int i = 0; i < targetVals.size(); i++) {
+                System.out.println(targetVals.elementAt(i) + "\t" + pegTracker.outputVals.elementAt(i));
+        
+            }
+        }
     }
 
     // update PID values.  uses a text file drive_PID_values.txt that must be
