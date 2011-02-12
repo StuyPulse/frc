@@ -1,17 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.RobotDrive.*;
 import edu.wpi.first.wpilibj.can.*;
+import java.lang.Math;
 
-/**
- *
- * @author Blake
- */
 public class DriveTrain extends RobotDrive {
 
     int kFrontLeft_val = 0;
@@ -32,10 +25,18 @@ public class DriveTrain extends RobotDrive {
         setInvertedMotor(MotorType.kRearRight, m_isCANInitialized);
     }
 
-    public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
-        double xIn = scaleInput(x);
-        double yIn = scaleInput(y);
-        rotation = scaleInput(rotation);
+    public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle, boolean deadband) {
+        double xIn;
+        double yIn;
+        if (deadband) {
+            xIn = scaleInput(x);
+            yIn = scaleInput(y);
+            rotation = scaleInput(rotation);
+        }
+        else {
+            xIn = x;
+            yIn = y;
+        }
 
         // Negate y for the joystick.
         yIn = -yIn;
@@ -73,65 +74,6 @@ public class DriveTrain extends RobotDrive {
         }
     }
 
-    /**
-     * Drive the left and right sides like tank drive, plus horizontal strafing
-     * from a third input.
-     */
-    public void tankDrive3(double left, double right, double strafe) {
-        if (scaleInput(strafe) == 0)
-            tankDrive(scaleInput(left), scaleInput(right));
-        else
-            mecanumDrive_Cartesian(scaleInput(strafe), 0, 0, 0);
-    }
-
-    public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
-        // local variables to hold the computed PWM values for the motors
-        double leftMotorSpeed;
-        double rightMotorSpeed;
-
-        moveValue = limit(moveValue);
-        rotateValue = limit(rotateValue);
-
-        if (squaredInputs) {
-            // square the inputs (while preserving the sign) to increase fine control while permitting full power
-            if (moveValue >= 0.0) {
-                moveValue = (moveValue * moveValue);
-            } else {
-                moveValue = -(moveValue * moveValue);
-            }
-            if (rotateValue >= 0.0) {
-                rotateValue = (rotateValue * rotateValue);
-            } else {
-                rotateValue = -(rotateValue * rotateValue);
-            }
-        }
-
-        if (moveValue > 0.0) {
-            if (rotateValue > 0.0) {
-                leftMotorSpeed = moveValue - rotateValue;
-                rightMotorSpeed = Math.max(moveValue, rotateValue);
-            } else {
-                leftMotorSpeed = Math.max(moveValue, -rotateValue);
-                rightMotorSpeed = moveValue + rotateValue;
-            }
-        } else {
-            if (rotateValue > 0.0) {
-                leftMotorSpeed = -Math.max(-moveValue, rotateValue);
-                rightMotorSpeed = moveValue + rotateValue;
-            } else {
-                leftMotorSpeed = moveValue - rotateValue;
-                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
-            }
-        }
-         byte syncGroup = (byte) 0x80;
-
-        m_frontLeftMotor.set(kMaxRPM * leftMotorSpeed * m_invertedMotors[kFrontLeft_val] * m_maxOutput, syncGroup);
-        m_frontRightMotor.set(kMaxRPM * rightMotorSpeed * m_invertedMotors[kFrontRight_val] * m_maxOutput, syncGroup);
-        m_rearLeftMotor.set(kMaxRPM * leftMotorSpeed * m_invertedMotors[kRearLeft_val] * m_maxOutput, syncGroup);
-        m_rearRightMotor.set(kMaxRPM * rightMotorSpeed * m_invertedMotors[kRearRight_val] * m_maxOutput, syncGroup);
-
-        //setLeftRightMotorOutputs(leftMotorSpeed * kMaxRPM, rightMotorSpeed * kMaxRPM);
-    }
 
     /**
      * Modify a joystick input to round any super-small values to 0.  Should prevent

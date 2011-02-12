@@ -83,8 +83,8 @@ public class OperatorInterface implements Constants {
                 switchNum += binaryValue[i];
             }
 
-            if (switchNum > 5) {
-                switchNum = 1; // that getAutonSetting() doesn't return a nonexistent switchNum
+            if (switchNum > 8) {
+                switchNum = 8; // that getAutonSetting() doesn't return a nonexistent switchNum
             }
 
             return switchNum;

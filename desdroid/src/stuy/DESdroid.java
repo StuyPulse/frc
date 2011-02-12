@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
+
     CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     DriveTrain drive;
     Arm arm;
@@ -28,6 +29,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
+
     OperatorInterface oi;
 
     // Autonomous class
@@ -78,7 +80,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             e.printStackTrace();
         }
 
-
         auton = new Autonomous(this);
 
         positions = FileIO.getArray("positions.txt");
@@ -91,7 +92,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
 //        auton.run(oi.getAutonSetting(this));
-        auton.lineTrack(true, false);
+        auton.run(1);
     }
 
     /**
@@ -99,16 +100,16 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
+
         double lastTimeSeconds = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
-          //drive.arcadeDrive(leftStick);
-            
-            /*drive.mecanumDrive_Cartesian(
-                    leftStick.getX(), // X translation (horizontal strafe)
+            drive.mecanumDrive_Cartesian(
+                    leftStick.getX(),   // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive*/
+                    0,             // use gyro for field-oriented drive
+                    true);
               
             // Arm control
             if (armStick.getRawButton(11))
@@ -148,15 +149,17 @@ public class DESdroid extends SimpleRobot implements Constants {
         }
     }
 
-    // update PID values.  uses a text file drive_PID_values.txt that must be
-    // uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+    /**
+     * update PID values.  uses a text file drive_PID_values.txt that must be
+     * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+     */
     public void updatePID() {
         double drivePID[];
 //        drivePID = FileIO.getArray("drive_PID_values.txt");
         drivePID = new double[3];
-        drivePID[0] = 0.48;
-        drivePID[1] = 0.005;
-        drivePID[2] = 0.05;
+        drivePID[0] = SPEED_P;
+        drivePID[1] = SPEED_I;
+        drivePID[2] = SPEED_D;
 
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
         try {

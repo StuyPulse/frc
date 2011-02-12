@@ -2,10 +2,13 @@ package stuy;
 
 public interface Constants {
 
+    // Robot Hardware Configuration
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
     final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
     final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
     final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
+
+    final int ENCODER_CODES_PER_REV          = 250;
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
 
@@ -34,16 +37,15 @@ public interface Constants {
     final int BIT_2_CHANNEL                  = 12;
     final int BIT_1_CHANNEL                  = 10;
 
-    // Arm position control
-    final double ARM_P                       = 0;
-    final double ARM_I                       = 0;
-    final double ARM_D                       = 0;
+    // Line Tracking
+    final double DEFAULT_STEERING_GAIN  = 0.15;
+    final double FORK_PROFILE[]         = {.2, .3, .2, .1, .2, .1, .05, 0};
+    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .3, .05, 0, 0, 0};
 
     //Speed position control
-    final double SPEED_P                     = 0;
-    final double SPEED_I                     = 0;
-    final double SPEED_D                     = 0;
-
+    final double SPEED_P                     = 0.48;
+    final double SPEED_I                     = 0.005;
+    final double SPEED_D                     = 0.05;
 
     //Exception led
     final int BROKEN_LIGHT                   = 10;
@@ -59,17 +61,6 @@ public interface Constants {
     final int LIGHT_BIT_3_CHANNEL            = 1;
     final int LIGHT_BIT_4_CHANNEL            = 1;
     final int LIGHT_ENABLE_CHANNEL           = 1;
-    
-    // Line Tracking
-    final double DEFAULT_STEERING_GAIN       = 0.3;
-    final double FORK_PROFILE[]              = {.7, .7, .55, .6, .6, .5, .4, 0};
-    final double STRAIGHT_PROFILE[]          = {.8, .9, 1, 1, .7, .7, .6, 0};
-
-    final int ENCODER_CODES_PER_REV          = 250;
-
-    final double PDRIVE                      = 0.5;
-    final double IDRIVE                      = 0;
-    final double DDRIVE                      = 0;
 
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
 }
