@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Arm implements Constants {
     CANJaguar armMotor;
-    DigitalInput potentiometer;
+    // DigitalInput potentiometer; // wired directly to the jaguar
     DESdroid des;
 
     /**
@@ -23,7 +23,9 @@ public class Arm implements Constants {
         des = d;
 
         try {
-            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPercentVbus);
+            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
+            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+            armMotor.configPotentiometerTurns(1);
         }
         catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
@@ -32,14 +34,14 @@ public class Arm implements Constants {
 
     /**
      * Rotate the arm manually. Arm motor must be run at full speed.
-     * @param speed Speed to rotate the arm. (-1.0 to 1.0)
+     * @param stickVal Driver's joystick value to rotate the arm. (-1.0 to 1.0)
      */
-    public void rotate(double speed) {
+    public void rotate(double stickVal) {
         try {
-            if (speed >= 0.5) {
+            if (stickVal >= 0.5) {
                 armMotor.setX(1);
             }
-            else if (speed <= -0.5) {
+            else if (stickVal <= -0.5) {
                 armMotor.setX(-1);
             }
             else {
@@ -53,42 +55,19 @@ public class Arm implements Constants {
 
     /**
      * Move the arm to a specific position.
-     * @param height The height to set the arm to.
+     * @param potVal The potentiometer value to set the arm to.
      */
-    public void setHeight(double height) {
-        double init = Timer.getFPGATimestamp();
+    public void setHeight(double potVal) {
         try {
-            toPositionControl();
-            
-            armMotor.enableControl();
-            armMotor.setX(height);
-
-            armMotor.disableControl();
-
-            toPercentVbusControl();
+            double currentVal = armMotor.getPosition();
+            if (currentVal - potVal > 0.08)
+                armMotor.setX(-1);
+            else if (currentVal - potVal < -0.08)
+                armMotor.setX(1);
+            else
+                armMotor.setX(0);
         }
         catch(Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
-
-    public void toPositionControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPosition);
-            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            armMotor.setPID(ARM_P, ARM_I, ARM_D);
-            armMotor.configSoftPositionLimits(LOWER_ARM_POT_LIM, UPPER_ARM_POT_LIM);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
-
-    public void toPercentVbusControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-        }
-        catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
     }
