@@ -21,9 +21,9 @@ public interface Constants {
     final int WING_SERVO                     = 7;
 
     /*** DIGITAL I/O ***/
-    final int LINE_SENSOR_LEFT_CHANNEL       = 8;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 9;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 10;
+    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
