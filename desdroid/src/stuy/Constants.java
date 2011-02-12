@@ -49,14 +49,16 @@ public interface Constants {
     final int BROKEN_LIGHT                   = 10;
 
     //TODO: Numbers need to be set.
-    final int OI_SIDE_BOTTOM_BUTTON          = 1;
-    final int OI_SIDE_MIDDLE_BUTTON          = 2;
-    final int OI_SIDE_TOP_BUTTON             = 3;
-    final int OI_MIDDLE_BOTTOM_BUTTON        = 4;
-    final int OI_MIDDLE_MIDDLE_BUTTON        = 5;
-    final int OI_MIDDLE_TOP_BUTTON           = 6;
-    final int OI_FEEDER_TUBE_BUTTON          = 7;
-    final int OI_FLOOR_BUTTON                = 8;
+    final int OI_MINIBOT_SWITCH_PORT         = 1;
+
+    final int OI_BUTTON_ANALOG_PORT          = 1;
+    final int OI_TRIM_POT_PORT               = 2;
+
+    final int LIGHT_BIT_1_CHANNEL            = 1;
+    final int LIGHT_BIT_2_CHANNEL            = 1;
+    final int LIGHT_BIT_3_CHANNEL            = 1;
+    final int LIGHT_BIT_4_CHANNEL            = 1;
+    final int LIGHT_ENABLE_CHANNEL           = 1;
     
     // Line Tracking
     final double DEFAULT_STEERING_GAIN       = 0.3;
@@ -68,4 +70,6 @@ public interface Constants {
     final double PDRIVE                      = 0.5;
     final double IDRIVE                      = 0;
     final double DDRIVE                      = 0;
+
+    final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
 }
