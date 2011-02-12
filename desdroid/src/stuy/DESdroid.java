@@ -82,10 +82,11 @@ public class DESdroid extends SimpleRobot implements Constants {
             e.printStackTrace();
         }
 
+
+        targetVals = new Vector();
         trackerDashboard = new DESTrackerDashboard(this);
         pegTracker = new DESCircleTracker(this);
 
-        targetVals = new Vector();
         System.out.println(pegTracker);
         System.out.println(pegTracker.halogen_a);
 
@@ -117,14 +118,29 @@ public class DESdroid extends SimpleRobot implements Constants {
         double lastTimeSeconds = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
+            /**drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
                     0, // use gyro for field-oriented drive
                     true);
+             */
+
+            if (leftStick.getRawButton(3))
+                drive.mecanumDrive_Cartesian(0, -1, 0, 0, false);
+            else if(leftStick.getRawButton(2))
+                drive.mecanumDrive_Cartesian(0, 1, 0, 0, false);
+            else if(leftStick.getRawButton(4))
+                drive.mecanumDrive_Cartesian(-1, 0, 0, 0, false);
+            else if(leftStick.getRawButton(5))
+                drive.mecanumDrive_Cartesian(1, 0, 0, 0, false);
+            else
+                drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
 
             // Arm control
+            if (armStick.getRawButton(4))
+                arm.wrist.set(0);
+
             if (armStick.getRawButton(11)) {
                 arm.setHeight(positions[0]);
             } else if (armStick.getRawButton(10)) {

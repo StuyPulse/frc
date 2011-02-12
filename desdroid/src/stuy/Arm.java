@@ -15,6 +15,7 @@ public class Arm implements Constants {
     CANJaguar armMotor;
     // DigitalInput potentiometer; // wired directly to the jaguar
     DESdroid des;
+    Servo wrist;
 
     /**
      * Arm constructor.
@@ -30,6 +31,8 @@ public class Arm implements Constants {
         catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
+
+        wrist = new Servo(WRIST_SERVO);
     }
 
     /**
