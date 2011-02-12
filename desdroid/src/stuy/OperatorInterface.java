@@ -118,16 +118,16 @@ public class OperatorInterface implements Constants {
         return value;
     }
 
-    public double getTrimMultiplier(double maxTrim) {
-        double trimVoltage;
+    public double getTrimAmount(double maxTrim) {
+        double potVoltage;
         try {
-            trimVoltage = enhancedIO.getAnalogIn(OI_TRIM_POT_PORT);
+            potVoltage = enhancedIO.getAnalogIn(OI_TRIM_POT_PORT);
         }
         catch (EnhancedIOException e) {
-            trimVoltage = 1.65;
+            potVoltage = 1.65;
         }
-        double trimMultiplier = (((trimVoltage - 1.65) * 2) / 3.3) * maxTrim;
-        return trimMultiplier;
+        double trimAmount = (((potVoltage - 1.65) * 2) / 3.3) * maxTrim;
+        return trimAmount;
     }
 
     public void setLight(int lightNum) {
