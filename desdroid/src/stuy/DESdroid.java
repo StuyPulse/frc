@@ -41,7 +41,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         oi = new OperatorInterface(this);
 
         arm = new Arm(this);
-        grabber = new Grabber(this);
+        grabber = new Grabber();
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);

@@ -7,6 +7,10 @@ public interface Constants {
     final int CHANNEL_REAR_LEFT              = 7;
     final int CHANNEL_REAR_RIGHT             = 5;
 
+    final int GRABBER_UPPER_ROLLER_PORT      = 1;
+    final int GRABBER_LOWER_ROLLER_PORT      = 2;
+    final int GRABBER_LIMIT_SWITCH_PORT      = 3;
+
     final int MINIBOT_RELEASE_SERVO          = 4;
 
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;

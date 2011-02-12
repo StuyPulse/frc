@@ -13,94 +13,54 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Grabber implements Constants {
 
-    CANJaguar upperRoller;
-    CANJaguar lowerRoller;
-
-    DESdroid des;
-
-    byte syncGroup = (byte)0x81;
+    Victor upperRoller;
+    Victor lowerRoller;
 
     /**
      * Grabber constructor.
      */
-    public Grabber(DESdroid d) {
-      des = d;
-        try {
-            upperRoller = new CANJaguar(GRABBER_UPPER_ROLLER_DEVICE);
-            lowerRoller = new CANJaguar(GRABBER_LOWER_ROLLER_DEVICE);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+    public Grabber() {
+      upperRoller = new Victor(GRABBER_UPPER_ROLLER_PORT);
+      lowerRoller = new Victor(GRABBER_LOWER_ROLLER_PORT);
     }
 
     /**
      * Intake the tube.
      */
     public void in() {
-        try {
-            upperRoller.setX(1, syncGroup);
-            lowerRoller.setX(-1, syncGroup);
-            CANJaguar.updateSyncGroup(syncGroup);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        upperRoller.set(1);
+        lowerRoller.set(-1);
     }
 
     /**
      * Eject the tube.
      */
     public void out() {
-        try {
-            upperRoller.setX(-1, syncGroup);
-            lowerRoller.setX(1, syncGroup);
-            CANJaguar.updateSyncGroup(syncGroup);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        upperRoller.set(-1);
+        lowerRoller.set(1);
     }
 
     /**
      * Rotate the tube up.
      */
     public void rotateUp() {
-        try {
-            upperRoller.setX(1, syncGroup);
-            lowerRoller.setX(1, syncGroup);
-            CANJaguar.updateSyncGroup(syncGroup);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        upperRoller.set(1);
+        lowerRoller.set(1);
     }
 
     /**
      * Rotate the tube down.
      */
     public void rotateDown() {
-        try {
-            upperRoller.setX(-1, syncGroup);
-            lowerRoller.setX(-1, syncGroup);
-            CANJaguar.updateSyncGroup(syncGroup);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        upperRoller.set(-1);
+        lowerRoller.set(-1);
     }
 
     /**
      * Stop the grabber rollers.
      */
     public void stop() {
-        try {
-            upperRoller.setX(0, syncGroup);
-            lowerRoller.setX(0, syncGroup);
-            CANJaguar.updateSyncGroup(syncGroup);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        upperRoller.set(0);
+        lowerRoller.set(0);
     }
 }
