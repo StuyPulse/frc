@@ -12,15 +12,18 @@ public interface Constants {
 
     final int ARM_CAN_DEVICE_NUMBER          = 6;
 
-    final int GRABBER_UPPER_ROLLER_PORT      = 7;
-    final int GRABBER_LOWER_ROLLER_PORT      = 8;
+    final int GRABBER_UPPER_ROLLER_PORT      = 1;
+    final int GRABBER_LOWER_ROLLER_PORT      = 2;
+    final int GRABBER_LIMIT_SWITCH_PORT      = 3;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
+    final int WRIST_SERVO                    = 6;
+    final int WING_SERVO                     = 7;
 
     /*** DIGITAL I/O ***/
-    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int LINE_SENSOR_LEFT_CHANNEL       = 8;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 9;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 10;
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
@@ -53,7 +56,6 @@ public interface Constants {
     //Exception led
     final int BROKEN_LIGHT                   = 10;
 
-    //TODO: Numbers need to be set.
     final int OI_MINIBOT_SWITCH_PORT         = 1;
 
     final int OI_BUTTON_ANALOG_PORT          = 1;
