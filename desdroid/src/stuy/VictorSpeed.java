@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.*;
  *
  * @author Blake
  */
-public class VictorSpeed implements SpeedController, PIDSource, Constants {
+public class VictorSpeed implements SpeedController, Constants {
 
     Encoder e;
     Victor v;
@@ -20,17 +20,14 @@ public class VictorSpeed implements SpeedController, PIDSource, Constants {
         v = new Victor(victorChannel);
 
         e = new Encoder(encoderAChannel, encoderBChannel);
-        e.setDistancePerPulse(Constants.ENCODER_CODES_PER_REV);
+        e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
+        e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
 
-        c = new PIDController(PDRIVE, IDRIVE, DDRIVE, this, this);
+        c = new PIDController(PDRIVE, IDRIVE, DDRIVE, e, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
         c.setOutputRange(-1, 1);
         c.enable();
-    }
-
-    public double pidGet() {
-        return e.getDistance();
     }
 
     public void pidWrite(double output) {
