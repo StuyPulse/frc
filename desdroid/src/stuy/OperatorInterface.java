@@ -23,13 +23,13 @@ public class OperatorInterface implements Constants {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
         des = d;
         try {
-            enhancedIO.setDigitalConfig(BROKEN_LIGHT, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(ERROR_LED, DriverStationEnhancedIO.tDigitalConfig.kOutput);
 
-            enhancedIO.setDigitalConfig(LIGHT_BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(LIGHT_BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(LIGHT_BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(LIGHT_BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
-            enhancedIO.setDigitalConfig(LIGHT_ENABLE_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(LIGHT_BIT_A_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(LIGHT_BIT_B_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(LIGHT_BIT_C_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(LIGHT_BIT_D_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
+            enhancedIO.setDigitalConfig(LIGHT_DISABLE_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
 
             enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
             enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
@@ -44,18 +44,18 @@ public class OperatorInterface implements Constants {
     }
 
     /**
-     * Sets the broken light.
+     * Sets the error light.
      */
     public void setStuffsBrokenLED(boolean val) {
         try {
-            enhancedIO.setDigitalOutput(BROKEN_LIGHT, val);
+            enhancedIO.setDigitalOutput(ERROR_LED, val);
         }
         catch (EnhancedIOException e) {
             System.out.println("Error LED is broken.");
         }
     }
     /**
-     * Use a binary switch to set the autonomous mode setting.
+     * Use a thumbwheel switch to set the autonomous mode setting.
      * @return Autonomous setting to run.
      */
     public int getAutonSetting(DESdroid d) {
@@ -91,11 +91,11 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
-            return 5; // Do nothing in case of failure
+            return 8; // Do nothing in case of failure
         }
     }
 
-    public int getAnalogButton() {
+    public int getHeightButton() {
         double analogVoltage;
         try {
             analogVoltage = enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
@@ -111,6 +111,28 @@ public class OperatorInterface implements Constants {
         boolean value;
         try {
             value = enhancedIO.getDigital(OI_MINIBOT_SWITCH_PORT);
+        }
+        catch (EnhancedIOException e) {
+            value = false;
+        }
+        return value;
+    }
+
+    public boolean getWingSwitch() {
+        boolean value;
+        try {
+            value = enhancedIO.getDigital(OI_WING_SWITCH_PORT);
+        }
+        catch (EnhancedIOException e) {
+            value = false;
+        }
+        return value;
+    }
+
+    public boolean getExtraButton() {
+        boolean value;
+        try {
+            value = enhancedIO.getDigital(OI_EXTRA_BUTTON_PORT);
         }
         catch (EnhancedIOException e) {
             value = false;
@@ -137,11 +159,11 @@ public class OperatorInterface implements Constants {
             binaryOutputs[i] = binaryString.toCharArray()[i] == '1';
         }
         try {
-            enhancedIO.setDigitalOutput(LIGHT_ENABLE_CHANNEL, true);
-            enhancedIO.setDigitalOutput(LIGHT_BIT_1_CHANNEL, binaryOutputs[0]);
-            enhancedIO.setDigitalOutput(LIGHT_BIT_2_CHANNEL, binaryOutputs[1]);
-            enhancedIO.setDigitalOutput(LIGHT_BIT_3_CHANNEL, binaryOutputs[2]);
-            enhancedIO.setDigitalOutput(LIGHT_BIT_4_CHANNEL, binaryOutputs[3]);
+            enhancedIO.setDigitalOutput(LIGHT_DISABLE_CHANNEL, false);
+            enhancedIO.setDigitalOutput(LIGHT_BIT_D_CHANNEL, binaryOutputs[0]);
+            enhancedIO.setDigitalOutput(LIGHT_BIT_C_CHANNEL, binaryOutputs[1]);
+            enhancedIO.setDigitalOutput(LIGHT_BIT_B_CHANNEL, binaryOutputs[2]);
+            enhancedIO.setDigitalOutput(LIGHT_BIT_A_CHANNEL, binaryOutputs[3]);
         }
         catch (EnhancedIOException e) {
 
@@ -150,7 +172,7 @@ public class OperatorInterface implements Constants {
 
     public void lightsOff() {
         try {
-            enhancedIO.setDigitalOutput(LIGHT_ENABLE_CHANNEL, false);
+            enhancedIO.setDigitalOutput(LIGHT_DISABLE_CHANNEL, true);
         }
         catch (EnhancedIOException e) {
 

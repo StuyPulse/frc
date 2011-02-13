@@ -2,7 +2,7 @@ package stuy;
 
 public interface Constants {
 
-    // Robot Hardware Configuration
+    // Robot output configuration
     final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
     final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
     final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
@@ -20,7 +20,7 @@ public interface Constants {
     final int WRIST_SERVO                    = 6;
     final int WING_SERVO                     = 7;
 
-    /*** DIGITAL I/O ***/
+    // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 1;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
@@ -32,42 +32,58 @@ public interface Constants {
 
     final int GYRO_CHANNEL                   = 4;
 
-    // User Controls
+    // User controls
     final int PORT_LEFT_STICK                = 1;
     final int PORT_RIGHT_STICK               = 2;
     final int PORT_ARM_STICK                 = 3;
 
-    // EnhancedIO pins
-    final int BIT_4_CHANNEL                  = 16; // From Donovan OI box
-    final int BIT_3_CHANNEL                  = 14;
-    final int BIT_2_CHANNEL                  = 12;
-    final int BIT_1_CHANNEL                  = 10;
+    // Thumbwheel switch
+    final int BIT_1_CHANNEL                  = 1;
+    final int BIT_2_CHANNEL                  = 2;
+    final int BIT_3_CHANNEL                  = 3;
+    final int BIT_4_CHANNEL                  = 4; // Least significant bit
 
-    // Line Tracking
-    final double DEFAULT_STEERING_GAIN  = 0.15;
-    final double FORK_PROFILE[]         = {.2, .3, .2, .1, .2, .1, .05, 0};
-    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .3, .05, 0, 0, 0};
+    // Excpetion LED
+    final int ERROR_LED                      = 10;
 
-    //Speed position control
+    // OI analog inputs
+    final int OI_BUTTON_ANALOG_PORT          = 1;
+    final int OI_TRIM_POT_PORT               = 3;
+
+    // OI digital inputs
+    final int OI_MINIBOT_SWITCH_PORT         = 2;
+    final int OI_WING_SWITCH_PORT            = 4;
+    final int OI_EXTRA_BUTTON_PORT           = 6;
+
+    // Height buton light binary pins
+    final int LIGHT_BIT_D_CHANNEL            = 11;
+    final int LIGHT_BIT_C_CHANNEL            = 10;
+    final int LIGHT_BIT_B_CHANNEL            = 9;
+    final int LIGHT_BIT_A_CHANNEL            = 8; // Least significant bit
+    final int LIGHT_DISABLE_CHANNEL          = 12;
+
+    // Array of binary values from 0 to 15
+    final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+
+    // Height button light decimal outputs
+    final int SIDE_UPPER_LIGHT                 = 0;
+    final int SIDE_MIDDLE_LIGHT                = 1;
+    final int SIDE_LOWER_LIGHT                 = 2;
+    final int CENTER_UPPER_LIGHT               = 3;
+    final int CENTER_MIDDLE_LIGHT              = 4;
+    final int CENTER_LOWER_LIGHT               = 5;
+    final int FEEDER_LEVEL_LIGHT               = 6;
+    final int GROUND_LEVEL_LIGHT               = 7;
+
+    // Speed position control
     final double SPEED_P                     = 0.48;
     final double SPEED_I                     = 0.005;
     final double SPEED_D                     = 0.05;
 
-    //Exception led
-    final int BROKEN_LIGHT                   = 10;
-
-    final int OI_MINIBOT_SWITCH_PORT         = 1;
-
-    final int OI_BUTTON_ANALOG_PORT          = 1;
-    final int OI_TRIM_POT_PORT               = 2;
-
-    final int LIGHT_BIT_1_CHANNEL            = 1;
-    final int LIGHT_BIT_2_CHANNEL            = 1;
-    final int LIGHT_BIT_3_CHANNEL            = 1;
-    final int LIGHT_BIT_4_CHANNEL            = 1;
-    final int LIGHT_ENABLE_CHANNEL           = 1;
-
-    final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+    // Line tracking
+    final double DEFAULT_STEERING_GAIN  = 0.15;
+    final double FORK_PROFILE[]         = {.2, .3, .2, .1, .2, .1, .05, 0};
+    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .3, .05, 0, 0, 0};
 
     // Gains and setpoint for the target feedback loop.  Not yet tuned.
     final double PVAL                        = .5;
