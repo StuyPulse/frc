@@ -8,7 +8,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the DESdroid arm elbow.
+ * Controls the DESdroid arm elbow. Note that the Fisher Price motor that powers the arm must be run at full speed or it will stall.
  * @author blake
  */
 public class Arm implements Constants {
