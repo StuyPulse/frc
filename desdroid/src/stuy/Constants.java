@@ -23,6 +23,8 @@ public interface Constants {
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
 
+    // Analog input for arm potentiometer
+    final int ARM_POT_CHANNEL                = 1;
     final int LOWER_ARM_POT_LIM              = 100;
     final int UPPER_ARM_POT_LIM              = 200;
 
