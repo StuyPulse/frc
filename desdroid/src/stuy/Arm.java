@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
@@ -12,9 +11,10 @@ import edu.wpi.first.wpilibj.*;
  * @author blake
  */
 public class Arm implements Constants {
-    CANJaguar armMotor;
-    // DigitalInput potentiometer; // wired directly to the jaguar
+
     DESdroid des;
+    Victor armMotor;
+    AnalogChannel potentiometer;
     Servo wrist;
 
     /**
@@ -22,16 +22,8 @@ public class Arm implements Constants {
      */
     public Arm(DESdroid d) {
         des = d;
-
-        try {
-            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER);
-            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            armMotor.configPotentiometerTurns(1);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-
+        armMotor = new Victor(ARM_MOTOR_CHANNEL);
+        potentiometer = new AnalogChannel(ARM_POT_CHANNEL);
         wrist = new Servo(WRIST_SERVO);
     }
 
@@ -42,16 +34,13 @@ public class Arm implements Constants {
     public void rotate(double stickVal) {
         try {
             if (stickVal >= 0.5) {
-                armMotor.setX(1);
+                armMotor.set(1);
+            } else if (stickVal <= -0.5) {
+                armMotor.set(-1);
+            } else {
+                armMotor.set(0);
             }
-            else if (stickVal <= -0.5) {
-                armMotor.setX(-1);
-            }
-            else {
-                armMotor.setX(0);
-            }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
     }
@@ -62,15 +51,15 @@ public class Arm implements Constants {
      */
     public void setHeight(double potVal) {
         try {
-            double currentVal = armMotor.getPosition();
-            if (currentVal - potVal > 0.08 && currentVal > 0.395)
-                armMotor.setX(-1);
-            else if (currentVal - potVal < -0.08 && currentVal < 0.85)
-                armMotor.setX(1);
-            else
-                armMotor.setX(0);
-        }
-        catch(Exception e) {
+            double currentVal = potentiometer.getVoltage(); // TODO: Find range of getVoltage().
+            if (currentVal - potVal > 0.08 && currentVal > 0.395) {
+                armMotor.set(-1);
+            } else if (currentVal - potVal < -0.08 && currentVal < 0.85) {
+                armMotor.set(1);
+            } else {
+                armMotor.set(0);
+            }
+        } catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
     }

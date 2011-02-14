@@ -10,7 +10,7 @@ public interface Constants {
 
     final int ENCODER_CODES_PER_REV          = 250;
 
-    final int ARM_CAN_DEVICE_NUMBER          = 6;
+    final int ARM_MOTOR_CHANNEL              = 6;
 
     final int GRABBER_UPPER_ROLLER_PORT      = 1;
     final int GRABBER_LOWER_ROLLER_PORT      = 2;
@@ -31,6 +31,9 @@ public interface Constants {
     final int UPPER_ARM_POT_LIM              = 200;
 
     final int GYRO_CHANNEL                   = 4;
+
+    // Analog input for arm potentiometer
+    final int ARM_POT_CHANNEL                = 1;
 
     // User controls
     final int PORT_LEFT_STICK                = 1;
