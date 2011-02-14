@@ -48,10 +48,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
         try {
-            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
-            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
-            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
-            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
+            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
+            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B);
+            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B);
+            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B);
 
             updatePID();
 

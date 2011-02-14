@@ -2,26 +2,34 @@ package stuy;
 
 public interface Constants {
 
-    final int CHANNEL_FRONT_LEFT             = 6; // not wired yet, don't know
-    final int CHANNEL_FRONT_RIGHT            = 8;
-    final int CHANNEL_REAR_LEFT              = 7;
-    final int CHANNEL_REAR_RIGHT             = 5;
+    final int CHANNEL_FRONT_LEFT             = 7; // not wired yet, don't know
+    final int CHANNEL_FRONT_RIGHT            = 9;
+    final int CHANNEL_REAR_LEFT              = 8;
+    final int CHANNEL_REAR_RIGHT             = 10;
 
+    final int CHANNEL_FRONT_LEFT_ENC_A       = 1;
+    final int CHANNEL_FRONT_LEFT_ENC_B       = 2;
+    final int CHANNEL_REAR_LEFT_ENC_A        = 3;
+    final int CHANNEL_REAR_LEFT_ENC_B        = 4;
+    final int CHANNEL_FRONT_RIGHT_ENC_A      = 5;
+    final int CHANNEL_FRONT_RIGHT_ENC_B      = 6;
+    final int CHANNEL_REAR_RIGHT_ENC_A       = 7;
+    final int CHANNEL_REAR_RIGHT_ENC_B       = 8;
 
-
-    final int ARM_MOTOR_CHANNEL              = 6;
+    final int ARM_MOTOR_CHANNEL              = 3;
 
     final int WRIST_SERVO                    = 6;
 
-    final int GRABBER_UPPER_ROLLER_PORT      = 1;
-    final int GRABBER_LOWER_ROLLER_PORT      = 2;
-    final int GRABBER_LIMIT_SWITCH_PORT      = 3;
+    final int GRABBER_UPPER_ROLLER_PORT      = 4;
+    final int GRABBER_LOWER_ROLLER_PORT      = 1;
+    
+    final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
 
-    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int LINE_SENSOR_LEFT_CHANNEL       = 12;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
 
     // Analog input for arm potentiometer
     final int ARM_POT_CHANNEL                = 1;

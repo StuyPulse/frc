@@ -46,8 +46,8 @@ public class DriveTrain extends RobotDrive {
         yIn = rotated[1];
 
         double wheelSpeeds[] = new double[kMaxNumberOfMotors];
-        wheelSpeeds[kFrontLeft_val] = (xIn + yIn + rotation) * 1.1;
-        wheelSpeeds[kFrontRight_val] = (-xIn + yIn - rotation) * 1.1;
+        wheelSpeeds[kFrontLeft_val] = (xIn + yIn + rotation) * 1;
+        wheelSpeeds[kFrontRight_val] = (-xIn + yIn - rotation) * 1;
         wheelSpeeds[kRearLeft_val] = (-xIn + yIn + rotation) * 1;
         wheelSpeeds[kRearRight_val] = (xIn + yIn - rotation) * 1;
 
