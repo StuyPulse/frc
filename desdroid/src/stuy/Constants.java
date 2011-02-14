@@ -7,6 +7,12 @@ public interface Constants {
     final int CHANNEL_REAR_LEFT              = 7;
     final int CHANNEL_REAR_RIGHT             = 5;
 
+
+
+    final int ARM_MOTOR_CHANNEL              = 6;
+
+    final int WRIST_SERVO                    = 6;
+
     final int GRABBER_UPPER_ROLLER_PORT      = 1;
     final int GRABBER_LOWER_ROLLER_PORT      = 2;
     final int GRABBER_LIMIT_SWITCH_PORT      = 3;
