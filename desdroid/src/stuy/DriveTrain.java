@@ -20,6 +20,8 @@ public class DriveTrain extends RobotDrive {
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
     static int kMaxRPM = 600;
+    //static int kMaxRPM = 1;
+
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
      * Scale the rest of the inputs to still allow for the full output range (-1 to 1)
@@ -29,8 +31,8 @@ public class DriveTrain extends RobotDrive {
     public DriveTrain(SpeedController frontLeftMotor, SpeedController rearLeftMotor,
             SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-        setInvertedMotor(MotorType.kFrontRight, m_isCANInitialized);
-        setInvertedMotor(MotorType.kRearRight, m_isCANInitialized);
+        setInvertedMotor(MotorType.kFrontRight, true);
+        setInvertedMotor(MotorType.kRearRight, true);
     }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {

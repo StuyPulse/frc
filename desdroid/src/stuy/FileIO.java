@@ -26,7 +26,7 @@ public class FileIO {
      * @return The contents of the file.
      */
     private static String getFileContents(String filename) {
-        String url = "file:///" + filename;
+        String url = "file:///values/" + filename;
         String contents = "";
         try {
             FileConnection c = (FileConnection) Connector.open(url);
