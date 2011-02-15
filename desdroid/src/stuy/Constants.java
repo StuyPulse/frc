@@ -9,8 +9,8 @@ public interface Constants {
 
     final int CHANNEL_FRONT_LEFT_ENC_A       = 1;
     final int CHANNEL_FRONT_LEFT_ENC_B       = 2;
-    final int CHANNEL_REAR_LEFT_ENC_A        = 3;
-    final int CHANNEL_REAR_LEFT_ENC_B        = 4;
+    final int CHANNEL_REAR_LEFT_ENC_A        = 9; // 3 / 4 were bad
+    final int CHANNEL_REAR_LEFT_ENC_B        = 10;
     final int CHANNEL_FRONT_RIGHT_ENC_A      = 5;
     final int CHANNEL_FRONT_RIGHT_ENC_B      = 6;
     final int CHANNEL_REAR_RIGHT_ENC_A       = 7;

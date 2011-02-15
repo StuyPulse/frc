@@ -19,8 +19,8 @@ public class DriveTrain extends RobotDrive {
     int kFrontRight_val = 1;
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
-    static int kMaxRPM = 600;
-    //static int kMaxRPM = 1;
+    //static int kMaxRPM = 600;
+    static int kMaxRPM = 1;
 
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
