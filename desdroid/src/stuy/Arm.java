@@ -63,4 +63,8 @@ public class Arm implements Constants {
             des.oi.setStuffsBrokenLED(true);
         }
     }
+
+    public double getPotVal() {
+        return potentiometer.getVoltage();
+    }
 }
