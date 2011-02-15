@@ -46,10 +46,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
 
-        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B);
-        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B);
+        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, true);
+        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, false);
 
 
 
@@ -107,21 +107,61 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (leftStick.getRawButton(7)) {
                 updatePID();
             }
-            if (leftStick.getRawButton(8)) {
+            if (rightStick.getRawButton(6)) {
                 System.out.println("front left:" +
                         " get: " + driveFrontLeft.e.get() +
                         " getRaw: " + driveFrontLeft.e.getRaw() +
-                        " getDistance: " + driveFrontLeft.e.getDistance() +
+                        " getDis tance: " + driveFrontLeft.e.getDistance() +
                         " getDirection: " + driveFrontLeft.e.getDirection() +
                         " getStopped: " + driveFrontLeft.e.getStopped() +
                         " getPeriod: " + driveFrontLeft.e.getPeriod() +
                         " getRate: " + driveFrontLeft.e.getRate());
             }
 
+            if (rightStick.getRawButton(11)) {
+                System.out.println("front right:" +
+                        " get: " + driveFrontRight.e.get() +
+                        " getRaw: " + driveFrontRight.e.getRaw() +
+                        " getDistance: " + driveFrontRight.e.getDistance() +
+                        " getDirection: " + driveFrontRight.e.getDirection() +
+                        " getStopped: " + driveFrontRight.e.getStopped() +
+                        " getPeriod: " + driveFrontRight.e.getPeriod() +
+                        " getRate: " + driveFrontRight.e.getRate());
+            }
+
+            if (rightStick.getRawButton(7)) {
+                System.out.println("rear left:" +
+                        " get: " + driveRearLeft.e.get() +
+                        " getRaw: " + driveRearLeft.e.getRaw() +
+                        " getDistance: " + driveRearLeft.e.getDistance() +
+                        " getDirection: " + driveRearLeft.e.getDirection() +
+                        " getStopped: " + driveRearLeft.e.getStopped() +
+                        " getPeriod: " + driveRearLeft.e.getPeriod() +
+                        " getRate: " + driveRearLeft.e.getRate());
+            }
+
+            if (rightStick.getRawButton(10)) {
+                System.out.println("rear right:" +
+                        " get: " + driveRearRight.e.get() +
+                        " getRaw: " + driveRearRight.e.getRaw() +
+                        " getDistance: " + driveRearRight.e.getDistance() +
+                        " getDirection: " + driveRearRight.e.getDirection() +
+                        " getStopped: " + driveRearRight.e.getStopped() +
+                        " getPeriod: " + driveRearRight.e.getPeriod() +
+                        " getRate: " + driveRearRight.e.getRate());
+            }
+
+            if (rightStick.getTrigger()) {
+                driveFrontLeft.e.reset();
+                driveFrontRight.e.reset();
+                driveRearLeft.e.reset();
+                driveRearRight.e.reset();
+            }
+
             driveFrontLeft.v.set(0.5);
-            driveFrontRight.v.set(0.5);
+            driveFrontRight.v.set(-0.5);
             driveRearLeft.v.set(0.5);
-            driveRearRight.v.set(0.5);
+            driveRearRight.v.set(-0.5);
 
 
             // Arm control
@@ -139,8 +179,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             } else {
                 grabber.stop();
             }
-        }
 
+            Timer.delay(.05);
+        }
     }
 
 // update PID values.  uses a text file drive_PID_values.txt that must be

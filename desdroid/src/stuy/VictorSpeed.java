@@ -16,10 +16,20 @@ public class VictorSpeed implements SpeedController, Constants {
     Victor v;
     PIDController c;
 
-    public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
-        v = new Victor(victorChannel);
+    DigitalSource encoderA;
+    DigitalSource encoderB;
 
-        e = new Encoder(encoderAChannel, encoderBChannel);
+    double lastTime;
+
+    public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
+        encoderA = new DigitalInput(encoderAChannel);
+        encoderB = new DigitalInput(encoderBChannel);
+        v = new Victor(victorChannel);
+        e = new Encoder(encoderB, encoderA, reverse, CounterBase.EncodingType.k2X);
+        encoderA.free();
+        encoderB.free();
+        e = new Encoder(encoderA, encoderB, reverse, CounterBase.EncodingType.k2X);
+
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
@@ -27,12 +37,19 @@ public class VictorSpeed implements SpeedController, Constants {
         c = new PIDController(PDRIVE, IDRIVE, DDRIVE, e, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
         c.setOutputRange(-1, 1);
-        c.enable();
+//        c.enable();
     }
 
     public void pidWrite(double output) {
         v.set(output);
     }
+
+//    public double getRate() {
+//        boolean itsMyFirstTimeBeGentle;
+//        double timeDifference = Timer.getFPGATimestamp() - lastTime;
+//        lastTime = Timer.getFPGATimestamp();
+//        return timeDifference;
+//    }
 
     public void set(double speedRPM) {
         c.setSetpoint(speedRPM);
