@@ -3,32 +3,27 @@ package stuy;
 public interface Constants {
 
     // Robot output configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
-    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
-
     final int ENCODER_CODES_PER_REV          = 250;
 
-    final int ARM_MOTOR_CHANNEL              = 6;
+    final int ARM_MOTOR_CHANNEL              = 3;
 
-    final int GRABBER_UPPER_ROLLER_PORT      = 1;
-    final int GRABBER_LOWER_ROLLER_PORT      = 2;
-    final int GRABBER_LIMIT_SWITCH_PORT      = 3;
+    final int GRABBER_UPPER_ROLLER_PORT      = 4;
+    final int GRABBER_LOWER_ROLLER_PORT      = 1;
+    final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
-    final int CHANNEL_FRONT_LEFT             = 6; // not wired yet, don't know
-    final int CHANNEL_FRONT_RIGHT            = 8;
-    final int CHANNEL_REAR_LEFT              = 7;
-    final int CHANNEL_REAR_RIGHT             = 5;
+    final int CHANNEL_FRONT_LEFT             = 7; // not wired yet, don't know
+    final int CHANNEL_FRONT_RIGHT            = 9;
+    final int CHANNEL_REAR_LEFT              = 8;
+    final int CHANNEL_REAR_RIGHT             = 10;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
-    final int WRIST_SERVO                    = 6;
-    final int WING_SERVO                     = 7;
+    final int WRIST_SERVO                    = 5;
+    final int WING_SERVO                     = 6;
 
     // Robot digital I/O
-    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int LINE_SENSOR_LEFT_CHANNEL       = 12;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 

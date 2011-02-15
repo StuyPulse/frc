@@ -158,6 +158,8 @@ public class DESdroid extends SimpleRobot implements Constants {
             } else {
                 grabber.stop();
             }
+            System.out.println(grabber.getLimitSwitch());
+
 
             if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
                 try {

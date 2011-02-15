@@ -31,8 +31,8 @@ public class Grabber implements Constants {
      */
     public void in() {
         if (limitSwitch.get()) {
-            upperRoller.set(1);
-            lowerRoller.set(-1);
+            upperRoller.set(-1);
+            lowerRoller.set(1);
         }
         else {
             upperRoller.set(0);
@@ -44,8 +44,8 @@ public class Grabber implements Constants {
      * Eject the tube.
      */
     public void out() {
-        upperRoller.set(-1);
-        lowerRoller.set(1);
+        upperRoller.set(1);
+        lowerRoller.set(-1);
     }
 
     /**
