@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class VictorSpeed implements SpeedController, Constants {
 
-    Encoder e;
+    DESencoder e;
     Victor v;
     PIDController c;
 
@@ -22,13 +22,10 @@ public class VictorSpeed implements SpeedController, Constants {
     double lastTime;
 
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
-        encoderA = new DigitalInput(encoderAChannel);
-        encoderB = new DigitalInput(encoderBChannel);
         v = new Victor(victorChannel);
-        e = new Encoder(encoderB, encoderA, reverse, CounterBase.EncodingType.k2X);
-        encoderA.free();
-        encoderB.free();
-        e = new Encoder(encoderA, encoderB, reverse, CounterBase.EncodingType.k2X);
+        e = new DESencoder(encoderBChannel, encoderAChannel, reverse, CounterBase.EncodingType.k2X);
+        e.free();
+        e = new DESencoder(encoderAChannel, encoderBChannel, reverse, CounterBase.EncodingType.k2X);
 
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
