@@ -18,9 +18,8 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    //VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    Encoder efl;
+    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    //Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
@@ -47,31 +46,29 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
 
-         /*   driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
-            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B);
-            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B);
-            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B);
-           */
+        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B);
+        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B);
 
 
-            leftStick = new Joystick(PORT_LEFT_STICK);
-            rightStick = new Joystick(PORT_RIGHT_STICK);
-            armStick = new Joystick(PORT_ARM_STICK);
 
-            driveFrontLeft = new Victor(CHANNEL_FRONT_LEFT);
-            driveFrontRight = new Victor(CHANNEL_FRONT_RIGHT);
-            driveRearLeft = new Victor(CHANNEL_REAR_LEFT);
-            driveRearRight = new Victor(CHANNEL_REAR_RIGHT);
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+        armStick = new Joystick(PORT_ARM_STICK);
 
-            efl = new Encoder(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
+        /*driveFrontLeft = new Victor(CHANNEL_FRONT_LEFT);
+        driveFrontRight = new Victor(CHANNEL_FRONT_RIGHT);
+        driveRearLeft = new Victor(CHANNEL_REAR_LEFT);
+        driveRearRight = new Victor(CHANNEL_REAR_RIGHT);*/
 
 
-            //updatePID();
+        updatePID();
 
-            drive = new DriveTrain(driveFrontLeft,
-            driveRearLeft,
-            driveFrontRight,
-            driveRearRight);
+        drive = new DriveTrain(driveFrontLeft,
+                driveRearLeft,
+                driveFrontRight,
+                driveRearRight);
 
 
         auton = new Autonomous(this);
@@ -90,11 +87,11 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
-            leftStick.getX(), // X translation (horizontal strafe)
-            leftStick.getY(), // Y translation (straight forward)
-            rightStick.getX(), // rotation (clockwise?)
-            0.0);                   // use gyro for field-oriented drive
+            /*drive.mecanumDrive_Cartesian(
+                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getY(), // Y translation (straight forward)
+                    rightStick.getX(), // rotation (clockwise?)
+                    0.0);                   // use gyro for field-oriented drive*/
 
             /*if (leftStick.getRawButton(3))
             drive.mecanumDrive_Cartesian(0, -1, 0, 0);
@@ -107,20 +104,24 @@ public class DESdroid extends SimpleRobot implements Constants {
             else
             drive.mecanumDrive_Cartesian(0, 0, 0, 0);*/
 
-            /*if (leftStick.getRawButton(7))
-            updatePID();
+            if (leftStick.getRawButton(7)) {
+                updatePID();
+            }
             if (leftStick.getRawButton(8)) {
-                /*System.out.println("fl: " + driveFrontLeft.e.getRate() +
-                " fr: " + driveFrontRight.e.getRate() +
-                " bl: " + driveRearLeft.e.getRate() +
-                " br: " + driveRearRight.e.getRate());
-                System.out.println("get: " + efl.get() + " ");
+                System.out.println("front left:" +
+                        " get: " + driveFrontLeft.e.get() +
+                        " getRaw: " + driveFrontLeft.e.getRaw() +
+                        " getDistance: " + driveFrontLeft.e.getDistance() +
+                        " getDirection: " + driveFrontLeft.e.getDirection() +
+                        " getStopped: " + driveFrontLeft.e.getStopped() +
+                        " getPeriod: " + driveFrontLeft.e.getPeriod() +
+                        " getRate: " + driveFrontLeft.e.getRate());
             }
 
-            driveFrontLeft.set(300);
-            driveFrontRight.set(300);
-            driveRearLeft.set(300);
-            driveRearRight.set(300);*/
+            driveFrontLeft.v.set(0.5);
+            driveFrontRight.v.set(0.5);
+            driveRearLeft.v.set(0.5);
+            driveRearRight.v.set(0.5);
 
 
             // Arm control
