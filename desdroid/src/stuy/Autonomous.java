@@ -307,6 +307,6 @@ public class Autonomous implements Constants {
 
         // mecanumDrive expects a negative joystick value for forward motion
 
-        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
+        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0);
     }
 }

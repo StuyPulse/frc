@@ -16,6 +16,11 @@ public interface Constants {
     final int GRABBER_LOWER_ROLLER_PORT      = 2;
     final int GRABBER_LIMIT_SWITCH_PORT      = 3;
 
+    final int CHANNEL_FRONT_LEFT             = 6; // not wired yet, don't know
+    final int CHANNEL_FRONT_RIGHT            = 8;
+    final int CHANNEL_REAR_LEFT              = 7;
+    final int CHANNEL_REAR_RIGHT             = 5;
+
     final int MINIBOT_RELEASE_SERVO          = 4;
     final int WRIST_SERVO                    = 6;
     final int WING_SERVO                     = 7;
@@ -93,4 +98,31 @@ public interface Constants {
     final double IVAL                        = 0;
     final double DVAL                        = 0;
     final double PID_SETPOINT                = 0;
+
+    // Arm position control
+    final double ARM_P                       = 0;
+    final double ARM_I                       = 0;
+    final double ARM_D                       = 0;
+
+    //Speed position control
+
+
+    //Exception led
+
+    //TODO: Numbers need to be set.
+    final int OI_LEFT_BOTTOM_BUTTON          = 0;
+    final int OI_LEFT_MIDDLE_BUTTON          = 0;
+    final int OI_LEFT_TOP_BUTTON             = 0;
+    final int OI_MIDDLE_BOTTOM_BUTTON        = 0;
+    final int OI_MIDDLE_MIDDLE_BUTTON        = 0;
+    final int OI_MIDDLE_TOP_BUTTON           = 0;
+    final int OI_RIGHT_BOTTOM_BUTTON         = 0;
+    final int OI_RIGHT_MIDDLE_BUTTON         = 0;
+    final int OI_RIGHT_TOP_BUTTON            = 0;
+
+    // Line Tracking
+
+    // "disntance" per pulse, to make the Encoder class return getRate() in RPM
+    final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
+
 }

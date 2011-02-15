@@ -19,8 +19,9 @@ import java.util.Vector;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    DriveTrain drive;
+
+    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    RobotDrive drive;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
@@ -57,20 +58,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
         try {
-            driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
-            driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
-            driveRearLeft = new CANJaguar(DRIVE_CAN_DEVICE_REAR_LEFT, CANJaguar.ControlMode.kSpeed);
-            driveRearRight = new CANJaguar(DRIVE_CAN_DEVICE_REAR_RIGHT, CANJaguar.ControlMode.kSpeed);
-
-            driveFrontLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            driveFrontRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            driveRearLeft.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-            driveRearRight.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
-
-            driveFrontLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            driveFrontRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            driveRearLeft.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
-            driveRearRight.configEncoderCodesPerRev(ENCODER_CODES_PER_REV);
+            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
+            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
+            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
+            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
 
             updatePID();
 
@@ -127,15 +118,15 @@ public class DESdroid extends SimpleRobot implements Constants {
              */
 
             if (leftStick.getRawButton(3))
-                drive.mecanumDrive_Cartesian(0, -1, 0, 0, false);
+                drive.mecanumDrive_Cartesian(0, -1, 0, 0);
             else if(leftStick.getRawButton(2))
-                drive.mecanumDrive_Cartesian(0, 1, 0, 0, false);
+                drive.mecanumDrive_Cartesian(0, 1, 0, 0);
             else if(leftStick.getRawButton(4))
-                drive.mecanumDrive_Cartesian(-1, 0, 0, 0, false);
+                drive.mecanumDrive_Cartesian(-1, 0, 0, 0);
             else if(leftStick.getRawButton(5))
-                drive.mecanumDrive_Cartesian(1, 0, 0, 0, false);
+                drive.mecanumDrive_Cartesian(1, 0, 0, 0);
             else
-                drive.mecanumDrive_Cartesian(0, 0, 0, 0, false);
+                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
             // Arm control
             if (armStick.getRawButton(4))
@@ -261,29 +252,34 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void updatePID() {
         double drivePID[];
-//        drivePID = FileIO.getArray("drive_PID_values.txt");
-        drivePID = new double[3];
-        drivePID[0] = SPEED_P;
-        drivePID[1] = SPEED_I;
-        drivePID[2] = SPEED_D;
 
+         try {
+                drivePID = FileIO.getArray("drive_PID_values.txt");
+         }
+        catch (Exception e) {
+            e.printStackTrace();
+            drivePID = new double[3];
+                drivePID[0] = SPEED_P;
+                drivePID[1] = SPEED_I;
+                drivePID[2] = SPEED_D;
+        }
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
 
         try {
-            driveFrontLeft.disableControl();
-            driveFrontRight.disableControl();
-            driveRearLeft.disableControl();
-            driveRearRight.disableControl();
+            driveFrontLeft.c.disable();
+            driveFrontRight.c.disable();
+            driveRearLeft.disable();
+            driveRearRight.disable();
 
-            driveFrontLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveFrontRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearLeft.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearRight.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveFrontRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
+            driveRearRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
 
-            driveFrontLeft.enableControl();
-            driveFrontRight.enableControl();
-            driveRearLeft.enableControl();
-            driveRearRight.enableControl();
+            driveFrontLeft.c.enable();
+            driveFrontRight.c.enable();
+            driveRearLeft.c.enable();
+            driveRearRight.c.enable();
 
         } catch (Exception e) {
             e.printStackTrace();
