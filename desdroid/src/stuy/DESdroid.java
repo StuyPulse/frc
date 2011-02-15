@@ -101,15 +101,12 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-
-
         getWatchdog().setEnabled(false);
-        //pegTracker.halogen_a.set(Relay.Value.kOn);
 
         double lastTimeSeconds = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
-            /**drive.mecanumDrive_Cartesian(
+            /*drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
@@ -132,32 +129,31 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (armStick.getRawButton(4))
                 arm.wrist.set(0);
 
-            if (armStick.getRawButton(11)) {
+            if (armStick.getRawButton(11))
                 arm.setHeight(positions[0]);
-            } else if (armStick.getRawButton(10)) {
+            else if (armStick.getRawButton(10))
                 arm.setHeight(positions[1]);
-            } else if (armStick.getRawButton(9)) {
+            else if (armStick.getRawButton(9))
                 arm.setHeight(positions[2]);
-            } else {
+            else
                 arm.rotate(armStick.getY());
-            }
 
             if (armStick.getRawButton(8)) {
                 positions = FileIO.getArray("positions.txt");
             }
 
             // Grabber control
-            if (armStick.getTrigger()) {
+            if (armStick.getTrigger())
                 grabber.in();
-            } else if (armStick.getRawButton(2)) {
+            else if (armStick.getRawButton(2))
                 grabber.out();
-            } else if (armStick.getRawButton(6)) {
+            else if (armStick.getRawButton(6))
                 grabber.rotateUp();
-            } else if (armStick.getRawButton(7)) {
+            else if (armStick.getRawButton(7))
                 grabber.rotateDown();
-            } else {
+            else
                 grabber.stop();
-            }
+            
             System.out.println(grabber.getLimitSwitch());
 
 
