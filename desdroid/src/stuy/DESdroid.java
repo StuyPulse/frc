@@ -53,14 +53,17 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+        
 
-        try {
+       
+
+        
             driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
+            rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
             driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
+            middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
             driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
+            leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
             driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
 
             updatePID();
@@ -69,9 +72,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
 
 
         targetVals = new Vector();
