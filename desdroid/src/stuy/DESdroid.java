@@ -45,13 +45,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-
 //        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
 //        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, true);
 //        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
 //        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, false);
-
-
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
