@@ -29,6 +29,7 @@ public interface Constants {
 
     final double LOWER_ARM_POT_LIM           = 0.395;
     final double UPPER_ARM_POT_LIM           = 0.850;
+    final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
 

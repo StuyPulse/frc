@@ -59,6 +59,9 @@ public class Arm implements Constants {
         else {
             armMotor.set(0);
         }
+        Timer.delay(MAX_ARM_DELAY * Math.abs(getPosition() - potVal)); //TODO:  Protect from /0 !
+        armMotor.set(0);
+        Timer.delay(MAX_ARM_DELAY / Math.abs(getPosition() - potVal)); //TODO:  Protect from /0 !
     }
 
     public double getPosition() {
