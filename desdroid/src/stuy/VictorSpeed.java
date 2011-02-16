@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.*;
  *
  * @author Blake
  */
-public class VictorSpeed implements SpeedController, Constants {
+public class VictorSpeed implements SpeedController, Constants, PIDSource {
 
     Encoder e;
     Victor v;
     PIDController c;
+    double lastDistance, lastTime;
 
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
         v = new Victor(victorChannel);
@@ -23,8 +24,10 @@ public class VictorSpeed implements SpeedController, Constants {
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
+        lastDistance = e.getDistance();
+        lastTime = Timer.getFPGATimestamp();
 
-        c = new PIDController(PDRIVE, IDRIVE, DDRIVE, e, this);
+        c = new PIDController(PDRIVE, IDRIVE, DDRIVE, this, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
         c.setOutputRange(-1, 1);
         c.enable();
@@ -40,6 +43,18 @@ public class VictorSpeed implements SpeedController, Constants {
 
     public void set(double speed, byte syncGroup) {
         set(speed);
+    }
+
+    public double pidGet() {
+        double currentTime = Timer.getFPGATimestamp();
+        double currentDistance = e.getDistance();
+
+        double speed = (currentDistance - lastDistance) / (currentTime - lastTime);
+
+        lastTime = Timer.getFPGATimestamp();
+        lastDistance = e.getDistance();
+
+        return speed;
     }
 
     public double get() {
