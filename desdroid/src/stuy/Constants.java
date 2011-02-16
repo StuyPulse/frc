@@ -85,5 +85,5 @@ public interface Constants {
 
     final double PDRIVE                      = 0.48;
     final double IDRIVE                      = 0.00;
-    final double DDRIVE                      = 0.05;
+    final double DDRIVE                      = 0.00;
 }

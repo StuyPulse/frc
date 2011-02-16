@@ -22,11 +22,13 @@ public class VictorSpeed implements SpeedController, Constants {
 
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
         v = new Victor(victorChannel);
-        A= new DigitalInput(encoderAChannel);
-        B= new DigitalInput(encoderBChannel);
-        //e = new DESencoder(encoderAChannel, encoderBChannel, reverse, CounterBase.EncodingType.k2X);
-        e= new Encoder(A, B,reverse,CounterBase.EncodingType.k2X);
-        e= new Encoder(A,B,reverse,CounterBase.EncodingType.k2X);
+//        A= new DigitalInput(encoderAChannel);
+//        B= new DigitalInput(encoderBChannel);
+        /*
+         * ALL LIES WE ARE LYING TO U CRIO!
+         */
+        
+        e= new Encoder(4,encoderAChannel,4,encoderBChannel,reverse,CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
@@ -37,12 +39,12 @@ public class VictorSpeed implements SpeedController, Constants {
 //        c.enable();
     }
 
-/*    public VictorSpeed( int encoderAChannel, int encoderBChannel, boolean reverse) {
-        e = new DESencoder(encoderAChannel, encoderBChannel, reverse, CounterBase.EncodingType.k2X);
-
+public VictorSpeed( int encoderAChannel, int encoderBChannel, boolean reverse) {
+e = new Encoder(6,encoderAChannel, 6,encoderBChannel, reverse, CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
+    }
 /*
         c = new PIDController(PDRIVE, IDRIVE, DDRIVE, e, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
