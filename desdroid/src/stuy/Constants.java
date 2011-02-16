@@ -3,10 +3,10 @@ package stuy;
 public interface Constants {
 
     // Robot Hardware Configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 6;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 8;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 7;
-    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 7;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 9;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 8;
+    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 10;
 
     final int ENCODER_CODES_PER_REV          = 250;
 
@@ -17,9 +17,9 @@ public interface Constants {
 
     final int MINIBOT_RELEASE_SERVO          = 4;
 
-    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
+    final int LINE_SENSOR_LEFT_CHANNEL       = 12;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
 
     final int LOWER_ARM_POT_LIM              = 100;
     final int UPPER_ARM_POT_LIM              = 200;
@@ -38,9 +38,9 @@ public interface Constants {
     final int BIT_1_CHANNEL                  = 10;
 
     // Line Tracking
-    final double DEFAULT_STEERING_GAIN  = 0.15;
-    final double FORK_PROFILE[]         = {.2, .3, .2, .1, .2, .1, .05, 0};
-    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .3, .05, 0, 0, 0};
+    final double DEFAULT_STEERING_GAIN  = 0.3;
+    final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
+    final double STRAIGHT_PROFILE[]     = {.7, .7, .7, .7, .4, 0, 0, 0};
 
     //Speed position control
     final double SPEED_P                     = 0.48;

@@ -19,7 +19,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
 
-    CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    //CANJaguar driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
@@ -39,8 +40,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     public DESdroid() {
        // oi = new OperatorInterface(this);
 
-        arm = new Arm(this);
-        grabber = new Grabber(this);
+       // arm = new Arm(this);
+       // grabber = new Grabber(this);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
@@ -49,7 +50,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-
+/*
         try {
             driveFrontLeft = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_LEFT, CANJaguar.ControlMode.kSpeed);
             driveFrontRight = new CANJaguar(DRIVE_CAN_DEVICE_FRONT_RIGHT, CANJaguar.ControlMode.kSpeed);
@@ -74,7 +75,17 @@ public class DESdroid extends SimpleRobot implements Constants {
                     driveRearRight);
         } catch (Exception e) { 
             e.printStackTrace();
-        }
+        } */
+
+        driveFrontLeft = new Victor(DRIVE_CAN_DEVICE_FRONT_LEFT);
+        driveFrontRight = new Victor(DRIVE_CAN_DEVICE_FRONT_RIGHT);
+        driveRearLeft = new Victor(DRIVE_CAN_DEVICE_REAR_LEFT);
+        driveRearRight = new Victor(DRIVE_CAN_DEVICE_REAR_RIGHT);
+
+        drive = new DriveTrain(driveFrontLeft,
+                driveRearLeft,
+                driveFrontRight,
+                driveRearRight);
 
         auton = new Autonomous(this);
     }
@@ -86,7 +97,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
 //        auton.run(oi.getAutonSetting(this));
-        auton.run(1);
+        auton.lineTrack(false, false);
     }
 
     /**
@@ -108,7 +119,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     /**
      * update PID values.  uses a text file drive_PID_values.txt that must be
      * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
-     */
+     */ /*
     public void updatePID() {
         double drivePID[];
 //        drivePID = FileIO.getArray("drive_PID_values.txt");
@@ -137,5 +148,5 @@ public class DESdroid extends SimpleRobot implements Constants {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } */
 }

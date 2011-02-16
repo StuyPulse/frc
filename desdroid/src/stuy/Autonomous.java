@@ -203,9 +203,9 @@ public class Autonomous implements Constants {
      * Prints the values of the line tracking sensors.
      */
     private void printLineStatus() {
-        System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
+     /*   System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
                 + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
-                + "R: [" + (rightValue == 1 ? "1" : " ") + "]");
+                + "R: [" + (rightValue == 1 ? "1" : " ") + "]"); */
     }
 
     private int binaryValue(boolean goLeft) {

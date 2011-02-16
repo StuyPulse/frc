@@ -76,7 +76,7 @@ public class Arm implements Constants {
         try {
             armMotor.changeControlMode(CANJaguar.ControlMode.kPosition);
             armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            armMotor.setPID(ARM_P, ARM_I, ARM_D);
+            //armMotor.setPID(ARM_P, ARM_I, ARM_D);
             armMotor.configSoftPositionLimits(LOWER_ARM_POT_LIM, UPPER_ARM_POT_LIM);
         }
         catch (Exception e) {
