@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.*;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    //Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+//    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
@@ -28,7 +28,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick rightStick;
     Joystick armStick;
     OperatorInterface oi;
-    DriveTrain drive;
+    RobotDrive drive;
     // Autonomous class
     Autonomous auton;
 
@@ -45,30 +45,30 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-
-        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B);
-        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B);
-
-
+//        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+//        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, true);
+//        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+//        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, false);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        /*driveFrontLeft = new Victor(CHANNEL_FRONT_LEFT);
+        driveFrontLeft = new Victor(CHANNEL_FRONT_LEFT);
         driveFrontRight = new Victor(CHANNEL_FRONT_RIGHT);
         driveRearLeft = new Victor(CHANNEL_REAR_LEFT);
-        driveRearRight = new Victor(CHANNEL_REAR_RIGHT);*/
+        driveRearRight = new Victor(CHANNEL_REAR_RIGHT);
 
 
         updatePID();
 
-        drive = new DriveTrain(driveFrontLeft,
+        drive = new RobotDrive(driveFrontLeft,
                 driveRearLeft,
                 driveFrontRight,
                 driveRearRight);
+
+//        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+//        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
 
         auton = new Autonomous(this);
@@ -78,6 +78,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        auton.lineTrack(false, false);
     }
 
     /**
@@ -87,11 +88,11 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         while (isEnabled() && isOperatorControl()) {
-            /*drive.mecanumDrive_Cartesian(
+            drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive*/
+                    0.0);                   // use gyro for field-oriented drive
 
             /*if (leftStick.getRawButton(3))
             drive.mecanumDrive_Cartesian(0, -1, 0, 0);
@@ -107,21 +108,61 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (leftStick.getRawButton(7)) {
                 updatePID();
             }
-            if (leftStick.getRawButton(8)) {
-                System.out.println("front left:" +
-                        " get: " + driveFrontLeft.e.get() +
-                        " getRaw: " + driveFrontLeft.e.getRaw() +
-                        " getDistance: " + driveFrontLeft.e.getDistance() +
-                        " getDirection: " + driveFrontLeft.e.getDirection() +
-                        " getStopped: " + driveFrontLeft.e.getStopped() +
-                        " getPeriod: " + driveFrontLeft.e.getPeriod() +
-                        " getRate: " + driveFrontLeft.e.getRate());
-            }
-
-            driveFrontLeft.v.set(0.5);
-            driveFrontRight.v.set(0.5);
-            driveRearLeft.v.set(0.5);
-            driveRearRight.v.set(0.5);
+//            if (rightStick.getRawButton(6)) {
+//                System.out.println("front left:" +
+//                        " get: " + driveFrontLeft.e.get() +
+//                        " getRaw: " + driveFrontLeft.e.getRaw() +
+//                        " getDis tance: " + driveFrontLeft.e.getDistance() +
+//                        " getDirection: " + driveFrontLeft.e.getDirection() +
+//                        " getStopped: " + driveFrontLeft.e.getStopped() +
+//                        " getPeriod: " + driveFrontLeft.e.getPeriod() +
+//                        " getRate: " + driveFrontLeft.e.getRate());
+//            }
+//
+//            if (rightStick.getRawButton(11)) {
+//                System.out.println("front right:" +
+//                        " get: " + driveFrontRight.e.get() +
+//                        " getRaw: " + driveFrontRight.e.getRaw() +
+//                        " getDistance: " + driveFrontRight.e.getDistance() +
+//                        " getDirection: " + driveFrontRight.e.getDirection() +
+//                        " getStopped: " + driveFrontRight.e.getStopped() +
+//                        " getPeriod: " + driveFrontRight.e.getPeriod() +
+//                        " getRate: " + driveFrontRight.e.getRate());
+//            }
+//
+//            if (rightStick.getRawButton(7)) {
+//                System.out.println("rear left:" +
+//                        " get: " + driveRearLeft.e.get() +
+//                        " getRaw: " + driveRearLeft.e.getRaw() +
+//                        " getDistance: " + driveRearLeft.e.getDistance() +
+//                        " getDirection: " + driveRearLeft.e.getDirection() +
+//                        " getStopped: " + driveRearLeft.e.getStopped() +
+//                        " getPeriod: " + driveRearLeft.e.getPeriod() +
+//                        " getRate: " + driveRearLeft.e.getRate());
+//            }
+//
+//            if (rightStick.getRawButton(10)) {
+//                System.out.println("rear right:" +
+//                        " get: " + driveRearRight.e.get() +
+//                        " getRaw: " + driveRearRight.e.getRaw() +
+//                        " getDistance: " + driveRearRight.e.getDistance() +
+//                        " getDirection: " + driveRearRight.e.getDirection() +
+//                        " getStopped: " + driveRearRight.e.getStopped() +
+//                        " getPeriod: " + driveRearRight.e.getPeriod() +
+//                        " getRate: " + driveRearRight.e.getRate());
+//            }
+//
+//            if (rightStick.getTrigger()) {
+//                driveFrontLeft.e.reset();
+//                driveFrontRight.e.reset();
+//                driveRearLeft.e.reset();
+//                driveRearRight.e.reset();
+//            }
+//
+//            driveFrontLeft.v.set(0.5);
+//            driveFrontRight.v.set(-0.5);
+//            driveRearLeft.v.set(0.5);
+//            driveRearRight.v.set(-0.5);
 
 
             // Arm control
@@ -139,8 +180,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             } else {
                 grabber.stop();
             }
-        }
 
+            Timer.delay(.05);
+        }
     }
 
 // update PID values.  uses a text file drive_PID_values.txt that must be

@@ -76,12 +76,12 @@ public interface Constants {
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN       = 0.3;
-    final double FORK_PROFILE[]              = {.7, .7, .55, .6, .6, .5, .4, 0};
-    final double STRAIGHT_PROFILE[]          = {.8, .9, 1, 1, .7, .7, .6, 0};
+    final double FORK_PROFILE[]              = {.5, .5, .5, .5, .5, .2, .2, 0};
+    final double STRAIGHT_PROFILE[]          = {.2, .2, .2, .2, .2, .2, .2, 0};
 
     final int ENCODER_CODES_PER_REV          = 250;
     // "distance" per pulse, to make the Encoder class return getRate() in RPM
-    final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
+    final double ENCODER_RPM_PER_PULSE       = 60.0 / ENCODER_CODES_PER_REV;
 
     final double PDRIVE                      = 0.48;
     final double IDRIVE                      = 0.00;
