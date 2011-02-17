@@ -83,7 +83,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
-        positions = FileIO.getArray("positions.txt"); // TODO: where is this file?
+        //positions = FileIO.getArray("positions.txt"); // TODO: where is this file?
+        positions = new double[] {.3, 1, 1.7};
     }
 
     /**
@@ -135,12 +136,15 @@ public class DESdroid extends SimpleRobot implements Constants {
                 arm.setHeight(positions[1]);
             else if (armStick.getRawButton(9))
                 arm.setHeight(positions[2]);
-            else
+            else {
                 arm.rotate(armStick.getY());
+                System.out.println(armStick.getY());
+            }
+
 
             if (armStick.getRawButton(8)) {
                 positions = FileIO.getArray("positions.txt");
-            }
+            } 
 
             // Grabber control
             if (armStick.getTrigger())
@@ -154,12 +158,12 @@ public class DESdroid extends SimpleRobot implements Constants {
             else
                 grabber.stop();
             
-            System.out.println(grabber.getLimitSwitch());
+            //System.out.println(grabber.getLimitSwitch());
 
 
             if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
                 try {
-                    //System.out.println("Requested position: " + setPos + " current position: " + arm.armMotor.getPosition());
+                    System.out.println(" current position: " + arm.armMotor.getPosition());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -168,80 +172,15 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             wasEnabledOnce = true;
 
-            // Place the robot centered in front of a target and record the xPos
-            // value (press button 7 to find the target).  Since the camera is
-            // off-center, this value must be determined experimentally.  Put it
-            // into Constants.java as PID_SETPOINT.
-
-            // Move the robot or the target, then press and hold button 10 to
-            // align using PID feedback control (tune the PID gains as well).
-
-            if (!leftStick.getRawButton(7)) {
-                if (isTargeting) {
-                    pegTracker.halogen_a.set(Relay.Value.kOff);
-                    pegTracker.stopAligning();
-                    System.out.println("Stopped");
-                }
-                isTargeting = false;
-            } else {
-                pegTracker.halogen_a.set(Relay.Value.kOn);
-                if (!isTargeting) {
-                    Timer.delay(.5);
-                }
-                pegTracker.doCamera();
-                targetVals.addElement("" + pegTracker.mainTarget.m_xPos);
 
 
-                if (!isTargeting) {
-                    pegTracker.startAligning();
-                    System.out.println("Started");
-                    isTargeting = true;
-                }
-
-            }
-
-            if (leftStick.getRawButton(11)) {
-                pegTracker.updatePID();
-            }
-
-            /*
-            if (rightStick.getTrigger() && !isOn) {
-            pegTracker.halogen_a.set(Relay.Value.kOn);
-            Timer.delay(.5);
-            isOn = true;
-            pegTracker.doCamera();
-            //   Timer.delay(1);
-            } else {
-            //pegTracker.halogen_a.set(Relay.Value.kOff);
-            }
-
-            if (rightStick.getTop()) {
-            isOn = false;
-            } 
-
-             */
+            
 
 
 
-
-            /*
-            if (leftStick.getTrigger()) {
-            pegTracker.halogen_a.set(Relay.Value.kOn);
-            }
-            else {
-            pegTracker.halogen_a.set(Relay.Value.kOff);
-            } */
         }
-        /*
-        pegTracker.halogen_a.set(Relay.Value.kOff);
-        System.out.println(targetVals); */
+        
 
-        if (wasEnabledOnce) {
-            for (int i = 0; i < targetVals.size(); i++) {
-                System.out.println(targetVals.elementAt(i) + "\t" + pegTracker.outputVals.elementAt(i));
-
-            }
-        }
     }
 
     /**

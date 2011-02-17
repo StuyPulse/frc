@@ -27,8 +27,8 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.395;
-    final double UPPER_ARM_POT_LIM           = 0.850;
+    final double LOWER_ARM_POT_LIM           = 0.0;
+    final double UPPER_ARM_POT_LIM           = 9000;
     final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
