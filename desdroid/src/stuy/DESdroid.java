@@ -36,9 +36,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     double[] positions;
     DESCircleTracker pegTracker;
     DESTrackerDashboard trackerDashboard;
-    boolean isTargeting = false;
-    boolean isOn = false;
-    boolean wasEnabledOnce = false;
     Vector targetVals;
 
     /**
@@ -55,12 +52,13 @@ public class DESdroid extends SimpleRobot implements Constants {
         armStick = new Joystick(PORT_ARM_STICK);
 
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
-        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
         driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
-        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
+        
+        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
 
         updatePID();
 
@@ -79,7 +77,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
-        //positions = FileIO.getArray("positions.txt"); // TODO: where is this file?
+//        positions = FileIO.getArray("positions.txt");
         positions = new double[] {.3, 1, 1.7};
     }
 
@@ -105,10 +103,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0, // use gyro for field-oriented drive
-                    true);
-             */
+                    0); // use gyro for field-oriented drive*/
 
+            // Button drive
             if (leftStick.getRawButton(3))
                 drive.mecanumDrive_Cartesian(0, -1, 0, 0);
             else if(leftStick.getRawButton(2))
@@ -120,26 +117,26 @@ public class DESdroid extends SimpleRobot implements Constants {
             else
                 drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
-            // Arm control
+            // Wrist servo
             if (armStick.getRawButton(4))
                 arm.wrist.set(0);
 
+            // Arm control
             if (armStick.getRawButton(11))
-                arm.setHeight(POT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
+                arm.setHeight(HEIGHT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
             else if (armStick.getRawButton(10))
                 arm.setHeight(positions[1]);
             else if (armStick.getRawButton(9))
                 arm.setHeight(positions[2]);
             else if (armStick.getRawButton(8))
                 System.out.println("Arm position" + arm.getPosition());
-            else {
+            else
                 arm.rotate(armStick.getY());
-            }
 
-
-            if (armStick.getRawButton(8)) {
-                positions = FileIO.getArray("positions.txt");
-            } 
+            // Update arm positions
+//            if (armStick.getRawButton(8)) {
+//                positions = FileIO.getArray("positions.txt");
+//            }
 
             // Grabber control
             if (armStick.getTrigger())
@@ -154,8 +151,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             
             //System.out.println(grabber.getLimitSwitch());
-
-            wasEnabledOnce = true;
         }
     }
 
