@@ -20,8 +20,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    RobotDrive drive;
+    DriveTrain drive;
     Arm arm;
+    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
 
@@ -42,19 +43,26 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface(this);
+        //oi = new OperatorInterface(this);
 
         arm = new Arm(this);
         grabber = new Grabber();
+        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+
+        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
-
-        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
-        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
         
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -103,6 +111,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
+<<<<<<< HEAD
                     0); // use gyro for field-oriented drive*/
 
             // Button drive
@@ -151,6 +160,35 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             
             //System.out.println(grabber.getLimitSwitch());
+            
+            if (leftStick.getRawButton(7)) {
+                updatePID();
+            }
+
+            if (rightStick.getRawButton(6)) {
+                System.out.println("front left:" + " getRate: " + driveFrontLeft.e.getRate() + "Output num:" + driveFrontLeft.v.get());
+            }
+
+            if (rightStick.getRawButton(11)) {
+                System.out.println("front right:" + " getRate: " + driveFrontRight.e.getRate() + "Output num:" + driveFrontRight.v.get());
+            }
+
+            if (rightStick.getRawButton(7)) {
+                System.out.println("rear left:" + " getRate: " + driveRearLeft.e.getRate() + "Output num:" + driveRearLeft.v.get());
+            }
+
+            if (rightStick.getRawButton(10)) {
+                System.out.println("rear right:" + " getRate: " + driveRearRight.e.getRate() + "Output num:" + driveRearRight.v.get());
+            }
+
+            if (rightStick.getTrigger()) {
+                driveFrontLeft.e.reset();
+                driveFrontRight.e.reset();
+                driveRearLeft.e.reset();
+                driveRearRight.e.reset();
+            }
+
+            Timer.delay(.05);
         }
     }
 

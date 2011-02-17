@@ -11,7 +11,11 @@ public class DriveTrain extends RobotDrive {
     int kFrontRight_val = 1;
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
-    static int kMaxRPM = 600;
+    static int kMaxRPM = 700;
+    //static int kMaxRPM = 1;
+
+    double[] weightGains; // 4 weight gains
+
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
      * Scale the rest of the inputs to still allow for the full output range (-1 to 1)
@@ -21,11 +25,11 @@ public class DriveTrain extends RobotDrive {
     public DriveTrain(SpeedController frontLeftMotor, SpeedController rearLeftMotor,
             SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-        setInvertedMotor(MotorType.kFrontRight, m_isCANInitialized);
-        setInvertedMotor(MotorType.kRearRight, m_isCANInitialized);
+        setInvertedMotor(MotorType.kFrontRight, true);
+        setInvertedMotor(MotorType.kRearRight, true);
+        
+        updateWeightGains();
     }
-
-
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle, boolean deadband) {
         double xIn;
@@ -39,6 +43,7 @@ public class DriveTrain extends RobotDrive {
             xIn = x;
             yIn = y;
         }
+
         // Negate y for the joystick.
         yIn = -yIn;
         // Compenstate for gyro angle.
@@ -47,10 +52,10 @@ public class DriveTrain extends RobotDrive {
         yIn = rotated[1];
 
         double wheelSpeeds[] = new double[kMaxNumberOfMotors];
-        wheelSpeeds[kFrontLeft_val] = (xIn + yIn + rotation) * 1.1;
-        wheelSpeeds[kFrontRight_val] = (-xIn + yIn - rotation) * 1.1;
-        wheelSpeeds[kRearLeft_val] = (-xIn + yIn + rotation) * 1;
-        wheelSpeeds[kRearRight_val] = (xIn + yIn - rotation) * 1;
+        wheelSpeeds[kFrontLeft_val] = (xIn + yIn + rotation) * weightGains[0];
+        wheelSpeeds[kFrontRight_val] = (-xIn + yIn - rotation) * weightGains[1];
+        wheelSpeeds[kRearLeft_val] = (-xIn + yIn + rotation) * weightGains[2];
+        wheelSpeeds[kRearRight_val] = (xIn + yIn - rotation) * weightGains[3];
 
         normalize(wheelSpeeds);
 
@@ -81,6 +86,21 @@ public class DriveTrain extends RobotDrive {
     }
 
 
+    public void updateWeightGains() {
+        weightGains = FileIO.getArray("weight_gains.txt");
+    }
+
+    /**
+     * Drive the left and right sides like tank drive, plus horizontal strafing
+     * from a third input.
+     */
+    public void tankDrive3(double left, double right, double strafe) {
+        if (scaleInput(strafe) == 0)
+            tankDrive(scaleInput(left), scaleInput(right));
+        else
+            mecanumDrive_Cartesian(scaleInput(strafe), 0, 0, 0);
+    }
+
     /**
      * Modify a joystick input to round any super-small values to 0.  Should prevent
      * robot from jittering when the joysticks have a small default value.
@@ -104,7 +124,7 @@ public class DriveTrain extends RobotDrive {
      * @return Close to the original input, but scaled to make small values return
      * 0 while still allowing the full range of outputs, -1 to 1.
      */
-    private static double scaleInput(double x) {
+    public static double scaleInput(double x) {
         if (Math.abs(x) < minJoystickValue) {
             return 0;
         }

@@ -131,15 +131,14 @@ public class Autonomous implements Constants {
      * raises arm (fake)
      * goes forward to peg
      */
+
     public void auton5() {
         lineTrack(false, false);
         goSpeed(-.1);
         Timer.delay(2);
         goSpeed(0);
-
         // call arm raise here (get this from `arm' branch)
         Timer.delay(2);
-
         goSpeed(.1);
         Timer.delay(2);
         goSpeed(0);
@@ -148,6 +147,7 @@ public class Autonomous implements Constants {
         Timer.delay(5);
         goSpeed(0);
     }
+
 
     /**
      * Follow line straight
