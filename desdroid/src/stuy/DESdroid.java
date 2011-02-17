@@ -107,24 +107,23 @@ public class DESdroid extends SimpleRobot implements Constants {
 //        double lastTimeSeconds = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
-            /*drive.mecanumDrive_Cartesian(
+            drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-<<<<<<< HEAD
-                    0); // use gyro for field-oriented drive*/
+                    0); // use gyro for field-oriented drive
 
             // Button drive
-            if (leftStick.getRawButton(3))
-                drive.mecanumDrive_Cartesian(0, -1, 0, 0);
-            else if(leftStick.getRawButton(2))
-                drive.mecanumDrive_Cartesian(0, 1, 0, 0);
-            else if(leftStick.getRawButton(4))
-                drive.mecanumDrive_Cartesian(-1, 0, 0, 0);
-            else if(leftStick.getRawButton(5))
-                drive.mecanumDrive_Cartesian(1, 0, 0, 0);
-            else
-                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
+//            if (leftStick.getRawButton(3))
+//                drive.mecanumDrive_Cartesian(0, -1, 0, 0);
+//            else if(leftStick.getRawButton(2))
+//                drive.mecanumDrive_Cartesian(0, 1, 0, 0);
+//            else if(leftStick.getRawButton(4))
+//                drive.mecanumDrive_Cartesian(-1, 0, 0, 0);
+//            else if(leftStick.getRawButton(5))
+//                drive.mecanumDrive_Cartesian(1, 0, 0, 0);
+//            else
+//                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
             // Wrist servo
             if (armStick.getRawButton(4))
@@ -163,22 +162,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             
             if (leftStick.getRawButton(7)) {
                 updatePID();
-            }
-
-            if (rightStick.getRawButton(6)) {
-                System.out.println("front left:" + " getRate: " + driveFrontLeft.e.getRate() + "Output num:" + driveFrontLeft.v.get());
-            }
-
-            if (rightStick.getRawButton(11)) {
-                System.out.println("front right:" + " getRate: " + driveFrontRight.e.getRate() + "Output num:" + driveFrontRight.v.get());
-            }
-
-            if (rightStick.getRawButton(7)) {
-                System.out.println("rear left:" + " getRate: " + driveRearLeft.e.getRate() + "Output num:" + driveRearLeft.v.get());
-            }
-
-            if (rightStick.getRawButton(10)) {
-                System.out.println("rear right:" + " getRate: " + driveRearRight.e.getRate() + "Output num:" + driveRearRight.v.get());
             }
 
             if (rightStick.getTrigger()) {
