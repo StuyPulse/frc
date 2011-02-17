@@ -44,7 +44,7 @@ public interface Constants {
     final int BIT_4_CHANNEL                  = 4; // Least significant bit
 
     // Excpetion LED
-    final int ERROR_LED                      = 10;
+    final int ERROR_LED                      = 16;
 
     // OI analog inputs
     final int OI_BUTTON_ANALOG_PORT          = 1;
