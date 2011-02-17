@@ -50,15 +50,24 @@ public class Arm implements Constants {
      */
     public void setHeight(double potVal) {
         double currentVal = getPosition(); // TODO: Find range of getVoltage().
-        if (currentVal - potVal > 0.08 && currentVal > LOWER_ARM_POT_LIM) {
-            armMotor.set(-1);
-        }
-        else if (currentVal - potVal < -0.08 && currentVal < UPPER_ARM_POT_LIM) {
+        System.out.println("Input: " + currentVal);
+        System.out.println("Setpoint: " + potVal);
+        if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
             armMotor.set(1);
+        }
+        else if (currentVal - potVal < -0.01 && currentVal < UPPER_ARM_POT_LIM) {
+            armMotor.set(-1);
         }
         else {
             armMotor.set(0);
         }
+        double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
+        System.out.println("Rising: " + delayVal);
+        Timer.delay(delayVal); //TODO:  Protect from /0 !
+        armMotor.set(0);
+        delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
+        System.out.println("Falling: " + delayVal);
+        Timer.delay(delayVal); //TODO:  Protect from /0 !
     }
 
     public double getPosition() {
