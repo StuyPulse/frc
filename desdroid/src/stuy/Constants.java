@@ -83,7 +83,7 @@ public interface Constants {
     // "distance" per pulse, to make the Encoder class return getRate() in RPM
     final double ENCODER_RPM_PER_PULSE       = 60.0 / ENCODER_CODES_PER_REV;
 
-    final double PDRIVE                      = 0.48;
+    final double PDRIVE                      = 0.001;
     final double IDRIVE                      = 0.00;
     final double DDRIVE                      = 0.00;
 }

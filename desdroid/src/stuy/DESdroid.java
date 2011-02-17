@@ -21,7 +21,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
 //    Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     Arm arm;
-    VictorSpeed dummyFLeft,dummyRLeft,dummyFRight,dummyRRight;
+    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
     // Driver controls
@@ -29,7 +29,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick rightStick;
     Joystick armStick;
     OperatorInterface oi;
-    RobotDrive drive;
+    DriveTrain drive;
     // Autonomous class
     Autonomous auton;
 
@@ -46,14 +46,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        dummyFLeft=new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, true);
-        dummyFRight=new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, true);
+        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
         driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
         dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRRight =new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A,CHANNEL_REAR_RIGHT_ENC_B, true);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, false);
-      
+        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
@@ -66,7 +66,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         updatePID();
 
-        drive = new RobotDrive(driveFrontLeft,
+        drive = new DriveTrain(driveFrontLeft,
                 driveRearLeft,
                 driveFrontRight,
                 driveRearRight);
@@ -93,40 +93,41 @@ public class DESdroid extends SimpleRobot implements Constants {
         updatePID();
 
         while (isEnabled() && isOperatorControl()) {
-            /*drive.mecanumDrive_Cartesian(
+            drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0.0);                   // use gyro for field-oriented drive*/
+                    0.0);                   // use gyro for field-oriented drive
 
-            /*if (leftStick.getRawButton(3))
-            drive.mecanumDrive_Cartesian(0, -1, 0, 0);
-            else if(leftStick.getRawButton(2))
-            drive.mecanumDrive_Cartesian(0, 1, 0, 0);
-            else if(leftStick.getRawButton(4))
-            drive.mecanumDrive_Cartesian(-1, 0, 0, 0);
-            else if(leftStick.getRawButton(5))
-            drive.mecanumDrive_Cartesian(1, 0, 0, 0);
-            else
-            drive.mecanumDrive_Cartesian(0, 0, 0, 0);*/
+            /*if (leftStick.getRawButton(3)) {
+            drive.mecanumDrive_Cartesian(0, -0.6, 0, 0);
+            } else if (leftStick.getRawButton(2)) {
+            drive.mecanumDrive_Cartesian(0, 0.6, 0, 0);
+            } else if (leftStick.getRawButton(4)) {
+            drive.mecanumDrive_Cartesian(-0.6, 0, 0, 0);
+            } else if (leftStick.getRawButton(5)) {
+            drive.mecanumDrive_Cartesian(0.6, 0, 0, 0);
+            } else {
+            drive.mecanumDrive_Cartesian(0, 0, 0, 0);
+            }*/
 
             if (leftStick.getRawButton(7)) {
                 updatePID();
             }
             if (rightStick.getRawButton(6)) {
-                System.out.println("front left:" + " getRate: " + driveFrontLeft.e.getRate());
+                System.out.println("front left:" + " getRate: " + driveFrontLeft.e.getRate() + "Output num:" + driveFrontLeft.v.get());
             }
 
             if (rightStick.getRawButton(11)) {
-                System.out.println("front right:" +" getRate: " + driveFrontRight.e.getRate());
+                System.out.println("front right:" + " getRate: " + driveFrontRight.e.getRate() + "Output num:" + driveFrontRight.v.get());
             }
 
             if (rightStick.getRawButton(7)) {
-                System.out.println("rear left:" +" getRate: " + driveRearLeft.e.getRate());
+                System.out.println("rear left:" + " getRate: " + driveRearLeft.e.getRate() + "Output num:" + driveRearLeft.v.get());
             }
 
             if (rightStick.getRawButton(10)) {
-                System.out.println("rear right:" +" getRate: " + driveRearRight.e.getRate());
+                System.out.println("rear right:" + " getRate: " + driveRearRight.e.getRate() + "Output num:" + driveRearRight.v.get());
             }
 
             if (rightStick.getTrigger()) {
@@ -135,11 +136,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 driveRearLeft.e.reset();
                 driveRearRight.e.reset();
             }
-
-            driveFrontLeft.set(400);
-            driveFrontRight.set(-400);
-            driveRearLeft.set(400);
-            driveRearRight.set(-400);
 
 
             // Arm control
@@ -199,7 +195,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveFrontRight.c.enable();
             driveRearLeft.c.enable();
             driveRearRight.c.enable();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
 
