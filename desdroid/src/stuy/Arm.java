@@ -2,93 +2,64 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the DESdroid arm elbow.
+ * Controls the DESdroid arm elbow. Note that the Fisher Price motor that powers the arm must be run at full speed or it will stall.
  * @author blake
  */
 public class Arm implements Constants {
-    CANJaguar armMotor;
-    DigitalInput potentiometer;
+
     DESdroid des;
+    Victor armMotor;
+    AnalogChannel potentiometer;
+    Servo wrist;
 
     /**
      * Arm constructor.
      */
     public Arm(DESdroid d) {
         des = d;
-
-        try {
-            armMotor = new CANJaguar(ARM_CAN_DEVICE_NUMBER, CANJaguar.ControlMode.kPercentVbus);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
+        armMotor = new Victor(ARM_MOTOR_CHANNEL);
+        potentiometer = new AnalogChannel(ARM_POT_CHANNEL);
+        wrist = new Servo(WRIST_SERVO);
     }
 
     /**
      * Rotate the arm manually. Arm motor must be run at full speed.
-     * @param speed Speed to rotate the arm. (-1.0 to 1.0)
+     * @param stickVal Driver's joystick value to rotate the arm. (-1.0 to 1.0)
      */
-    public void rotate(double speed) {
+    public void rotate(double stickVal) {
         try {
-            if (speed >= 0.5) {
-                armMotor.setX(1);
+            if (stickVal >= 0.5) {
+                armMotor.set(1);
+            } else if (stickVal <= -0.5) {
+                armMotor.set(-1);
+            } else {
+                armMotor.set(0);
             }
-            else if (speed <= -0.5) {
-                armMotor.setX(-1);
-            }
-            else {
-                armMotor.setX(0);
-            }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
     }
 
     /**
      * Move the arm to a specific position.
-     * @param height The height to set the arm to.
+     * @param potVal The potentiometer value to set the arm to.
      */
-    public void setHeight(double height) {
-        double init = Timer.getFPGATimestamp();
+    public void setHeight(double potVal) {
         try {
-            toPositionControl();
-            
-            armMotor.enableControl();
-            armMotor.setX(height);
-
-            armMotor.disableControl();
-
-            toPercentVbusControl();
-        }
-        catch(Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
-
-    public void toPositionControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPosition);
-            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            //armMotor.setPID(ARM_P, ARM_I, ARM_D);
-            armMotor.configSoftPositionLimits(LOWER_ARM_POT_LIM, UPPER_ARM_POT_LIM);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
-
-    public void toPercentVbusControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-        }
-        catch (Exception e) {
+            double currentVal = potentiometer.getVoltage(); // TODO: Find range of getVoltage().
+            if (currentVal - potVal > 0.08 && currentVal > 0.395) {
+                armMotor.set(-1);
+            } else if (currentVal - potVal < -0.08 && currentVal < 0.85) {
+                armMotor.set(1);
+            } else {
+                armMotor.set(0);
+            }
+        } catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
         }
     }

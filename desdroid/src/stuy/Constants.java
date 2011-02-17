@@ -2,18 +2,28 @@ package stuy;
 
 public interface Constants {
 
-    // Robot Hardware Configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 7;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 9;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 8;
-    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 10;
+    final int CHANNEL_FRONT_LEFT             = 7; // not wired yet, don't know
+    final int CHANNEL_FRONT_RIGHT            = 9;
+    final int CHANNEL_REAR_LEFT              = 8;
+    final int CHANNEL_REAR_RIGHT             = 10;
 
-    final int ENCODER_CODES_PER_REV          = 250;
+    final int CHANNEL_FRONT_LEFT_ENC_A       = 1;
+    final int CHANNEL_FRONT_LEFT_ENC_B       = 2;
+    final int CHANNEL_REAR_LEFT_ENC_A        = 9; // 3 / 4 were bad
+    final int CHANNEL_REAR_LEFT_ENC_B        = 10;
+    final int CHANNEL_FRONT_RIGHT_ENC_A      = 5;
+    final int CHANNEL_FRONT_RIGHT_ENC_B      = 6;
+    final int CHANNEL_REAR_RIGHT_ENC_A       = 7;
+    final int CHANNEL_REAR_RIGHT_ENC_B       = 8;
 
-    final int ARM_CAN_DEVICE_NUMBER          = 6;
+    final int ARM_MOTOR_CHANNEL              = 3;
 
-    final int GRABBER_UPPER_ROLLER_DEVICE    = 7;
-    final int GRABBER_LOWER_ROLLER_DEVICE    = 8;
+    final int WRIST_SERVO                    = 6;
+
+    final int GRABBER_UPPER_ROLLER_PORT      = 4;
+    final int GRABBER_LOWER_ROLLER_PORT      = 1;
+    
+    final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
 
@@ -21,6 +31,8 @@ public interface Constants {
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
 
+    // Analog input for arm potentiometer
+    final int ARM_POT_CHANNEL                = 1;
     final int LOWER_ARM_POT_LIM              = 100;
     final int UPPER_ARM_POT_LIM              = 200;
 
@@ -43,9 +55,9 @@ public interface Constants {
     final double STRAIGHT_PROFILE[]     = {.7, .7, .7, .7, .4, 0, 0, 0};
 
     //Speed position control
-    final double SPEED_P                     = 0.48;
-    final double SPEED_I                     = 0.005;
-    final double SPEED_D                     = 0.05;
+    final double PDRIVE                     = 0.00375;
+    final double IDRIVE                     = 0.00;
+    final double DDRIVE                     = 0.000004;
 
     //Exception led
     final int BROKEN_LIGHT                   = 10;
@@ -58,4 +70,8 @@ public interface Constants {
     final int OI_MIDDLE_MIDDLE_BUTTON        = 5;
     final int OI_MIDDLE_TOP_BUTTON           = 6;
     final int OI_FEEDER_TUBE_BUTTON          = 7;
+
+    final int ENCODER_CODES_PER_REV          = 250;
+    // "distance" per pulse, to make the Encoder class return getRate() in RPM
+    final double ENCODER_RPM_PER_PULSE       = 60.0 / ENCODER_CODES_PER_REV;
 }
