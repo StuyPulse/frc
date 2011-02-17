@@ -131,14 +131,15 @@ public class DESdroid extends SimpleRobot implements Constants {
                 arm.wrist.set(0);
 
             if (armStick.getRawButton(11))
-                arm.setHeight(positions[0]);
+                arm.setHeight(POT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
             else if (armStick.getRawButton(10))
                 arm.setHeight(positions[1]);
             else if (armStick.getRawButton(9))
                 arm.setHeight(positions[2]);
+            else if (armStick.getRawButton(8))
+                System.out.println("Arm position" + arm.getPosition());
             else {
                 arm.rotate(armStick.getY());
-                System.out.println(armStick.getY());
             }
 
 
@@ -161,14 +162,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             //System.out.println(grabber.getLimitSwitch());
 
 
-            if (Timer.getFPGATimestamp() - lastTimeSeconds > 0.25) {
-                try {
-                    System.out.println(" current position: " + arm.armMotor.getPosition());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                lastTimeSeconds = Timer.getFPGATimestamp();
-            }
 
             wasEnabledOnce = true;
 

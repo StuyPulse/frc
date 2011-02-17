@@ -116,6 +116,12 @@ public interface Constants {
     final int OI_RIGHT_MIDDLE_BUTTON         = 0;
     final int OI_RIGHT_TOP_BUTTON            = 0;
 
+    final double POT_SIDE_BOTTOM             = 2.18;
+    final double POT_SIDE_MIDDLE             = 0;
+    final double POT_SIDE_TOP                = 0;
+    final double POT_MIDDLE_BOTTOM           = 0;
+    final double POT_MIDDLE_MIDDLE           = 0;
+    final double POT_MIDDLE_TOP              = 0;
     // Line Tracking
 
     // "disntance" per pulse, to make the Encoder class return getRate() in RPM
