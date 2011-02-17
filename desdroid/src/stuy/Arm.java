@@ -73,28 +73,4 @@ public class Arm implements Constants {
     public double getPosition() {
         return potentiometer.getVoltage();
     }
-
-    public double getPotVal() {
-        return potentiometer.getVoltage();
-    }
-    public void toPositionControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPosition);
-            armMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-            //armMotor.setPID(ARM_P, ARM_I, ARM_D);
-            armMotor.configSoftPositionLimits(LOWER_ARM_POT_LIM, UPPER_ARM_POT_LIM);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
-
-    public void toPercentVbusControl() {
-        try {
-            armMotor.changeControlMode(CANJaguar.ControlMode.kPercentVbus);
-        }
-        catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-        }
-    }
 }

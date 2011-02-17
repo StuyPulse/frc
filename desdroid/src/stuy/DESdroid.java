@@ -162,7 +162,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     /**
      * update PID values.  uses a text file drive_PID_values.txt that must be
      * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
-     */ /*
+     */
     public void updatePID() {
         double drivePID[];
 
@@ -197,5 +197,5 @@ public class DESdroid extends SimpleRobot implements Constants {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } */
+    }
 }
