@@ -52,7 +52,7 @@ public class Arm implements Constants {
         double currentVal = getPosition(); // TODO: Find range of getVoltage().
         System.out.println("Input: " + currentVal);
         System.out.println("Setpoint: " + potVal);
-        if (currentVal - potVal > 0.01 && currentVal > LOWER_ARM_POT_LIM) {
+        if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
             armMotor.set(1);
         }
         else if (currentVal - potVal < -0.01 && currentVal < UPPER_ARM_POT_LIM) {
