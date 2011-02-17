@@ -103,8 +103,17 @@ public class OperatorInterface implements Constants {
         catch (EnhancedIOException e) {
             analogVoltage = 0;
         }
-        int buttonNum = (int) ((analogVoltage / 0.4125) + .5);
+        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
         return buttonNum;
+    }
+
+    public double getRawAnalogVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
+        }
+        catch (EnhancedIOException e) {
+            return 0;
+        }
     }
 
     public boolean getMinibotSwitch() {
