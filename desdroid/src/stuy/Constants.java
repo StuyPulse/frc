@@ -3,7 +3,7 @@ package stuy;
 public interface Constants {
 
     // Robot output configuration
-    final int CHANNEL_FRONT_LEFT             = 7; // not wired yet, don't know
+    final int CHANNEL_FRONT_LEFT             = 7;
     final int CHANNEL_FRONT_RIGHT            = 9;
     final int CHANNEL_REAR_LEFT              = 8;
     final int CHANNEL_REAR_RIGHT             = 10;
@@ -123,11 +123,6 @@ public interface Constants {
     final double IVAL                        = 0;
     final double DVAL                        = 0;
     final double PID_SETPOINT                = 0;
-
-    // Arm position control
-    final double ARM_P                       = 0;
-    final double ARM_I                       = 0;
-    final double ARM_D                       = 0;
 
     final int ENCODER_CODES_PER_REV          = 250;
 
