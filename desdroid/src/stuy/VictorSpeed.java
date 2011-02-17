@@ -18,7 +18,6 @@ public class VictorSpeed implements SpeedController, Constants {
 
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel) {
         v = new Victor(victorChannel);
-
         e = new Encoder(encoderAChannel, encoderBChannel);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
