@@ -92,6 +92,15 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
         updatePID();
 
+        drive.updateWeightGains();
+
+        driveFrontLeft.e.reset();
+        driveFrontRight.e.reset();
+        driveRearLeft.e.reset();
+        driveRearRight.e.reset();
+
+        int i = 0;
+
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
@@ -99,17 +108,23 @@ public class DESdroid extends SimpleRobot implements Constants {
                     rightStick.getX(), // rotation (clockwise?)
                     0.0);                   // use gyro for field-oriented drive
 
-            /*if (leftStick.getRawButton(3)) {
-            drive.mecanumDrive_Cartesian(0, -0.6, 0, 0);
-            } else if (leftStick.getRawButton(2)) {
-            drive.mecanumDrive_Cartesian(0, 0.6, 0, 0);
-            } else if (leftStick.getRawButton(4)) {
-            drive.mecanumDrive_Cartesian(-0.6, 0, 0, 0);
-            } else if (leftStick.getRawButton(5)) {
-            drive.mecanumDrive_Cartesian(0.6, 0, 0, 0);
-            } else {
-            drive.mecanumDrive_Cartesian(0, 0, 0, 0);
+            /*if (i == 1000) {
+            System.out.println(leftStick.getX() + "  " + leftStick.getY() + "  " + rightStick.getX());
+            System.out.println(DriveTrain.scaleInput(leftStick.getX()) + "  " + DriveTrain.scaleInput(leftStick.getY()) + "  " + DriveTrain.scaleInput(rightStick.getX()));
+
+            i = 0;
             }*/
+            if (leftStick.getRawButton(3)) {
+                drive.mecanumDrive_Cartesian(0, -0.25, 0, 0);
+            } else if (leftStick.getRawButton(2)) {
+                drive.mecanumDrive_Cartesian(0, 0.25, 0, 0);
+            } else if (leftStick.getRawButton(4)) {
+                drive.mecanumDrive_Cartesian(-0.25, 0, 0, 0);
+            } else if (leftStick.getRawButton(5)) {
+                drive.mecanumDrive_Cartesian(0.25, 0, 0, 0);
+            } else {
+                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
+            }
 
             if (leftStick.getRawButton(7)) {
                 updatePID();
@@ -155,6 +170,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             Timer.delay(.05);
+            i++;
         }
     }
 
