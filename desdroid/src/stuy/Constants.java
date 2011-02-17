@@ -2,11 +2,12 @@ package stuy;
 
 public interface Constants {
 
-    // Robot output configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 4;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 2;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 3;
-    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 5;
+
+    // Robot Hardware Configuration
+    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 7;
+    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 9;
+    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 8;
+    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 10;
 
     final int ENCODER_CODES_PER_REV          = 250;
 
@@ -21,11 +22,12 @@ public interface Constants {
     final int WING_SERVO                     = 7;
 
     // Robot digital I/O
-    final int LINE_SENSOR_LEFT_CHANNEL       = 1;
-    final int LINE_SENSOR_MIDDLE_CHANNEL     = 2;
-    final int LINE_SENSOR_RIGHT_CHANNEL      = 3;
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
+
+    final int LINE_SENSOR_LEFT_CHANNEL       = 12;
+    final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
+    final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
 
     final double LOWER_ARM_POT_LIM           = 0.395;
     final double UPPER_ARM_POT_LIM           = 0.85;
@@ -61,6 +63,8 @@ public interface Constants {
     final int LIGHT_BIT_B_CHANNEL            = 9;
     final int LIGHT_BIT_A_CHANNEL            = 8; // Least significant bit
     final int LIGHT_DISABLE_CHANNEL          = 12;
+    
+    // Line Tracking
 
     // Array of binary values from 0 to 15
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
