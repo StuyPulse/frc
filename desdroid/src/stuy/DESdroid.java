@@ -38,8 +38,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     boolean isTargeting = false;
     boolean isOn = false;
     boolean wasEnabledOnce = false;
+    boolean wasArmControlled = false;
     Vector targetVals;
-
+    ArmController positionController;
     /**
      * DESdroid constructor.
      */
@@ -128,18 +129,38 @@ public class DESdroid extends SimpleRobot implements Constants {
                 drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
             // Arm control
+
             if (armStick.getRawButton(4))
                 arm.wrist.set(0);
 
-            if (armStick.getRawButton(11))
-                arm.setHeight(POT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
-            else if (armStick.getRawButton(10))
-                arm.setHeight(positions[1]);
-            else if (armStick.getRawButton(9))
-                arm.setHeight(positions[2]);
-            else if (armStick.getRawButton(8))
+            if (armStick.getRawButton(11)){
+                if(!wasArmControlled){
+                    threadend(positionController);
+                    positionController = new ArmController(POT_SIDE_BOTTOM, this);
+                    wasArmControlled = true;
+                }
+
+//                arm.setHeight(POT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
+            } else if (armStick.getRawButton(10)) {
+                if (!wasArmControlled) {
+                    threadend(positionController);
+                    positionController = new ArmController(positions[1], this);
+                    wasArmControlled = true;
+                }
+//                arm.setHeight(positions[1]);
+            } else if (armStick.getRawButton(9)) {
+                if (!wasArmControlled) {
+                    threadend(positionController);
+                    positionController = new ArmController(positions[2], this);
+                    wasArmControlled = true;
+                }
+
+//                arm.setHeight(positions[2]);
+            } else if (armStick.getRawButton(8)) {
+                threadend(positionController);
                 System.out.println("Arm position" + arm.getPosition());
-            else {
+            }else {
+                threadend(positionController);
                 arm.rotate(armStick.getY());
             }
 
@@ -175,6 +196,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         }
         
 
+    }
+
+
+    public void threadend(ArmController elliot){
+        if(elliot!=null)
+                elliot.end();
     }
 
     /**
