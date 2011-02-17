@@ -129,6 +129,19 @@ public class DESdroid extends SimpleRobot implements Constants {
             catch (Exception e) {
                 System.out.println("shit");
             }
+
+            if (oi.getMinibotSwitch()) {
+                System.out.println("Minibot switch");
+            }
+
+            if (oi.getWingSwitch()) {
+                System.out.println("Wing switch");
+            }
+
+            if (oi.getExtraButton()) {
+                System.out.println("Extra button");
+            }
+
             /**drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
