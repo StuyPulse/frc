@@ -64,4 +64,8 @@ public class Arm implements Constants {
     public double getPosition() {
         return potentiometer.getVoltage();
     }
+
+    public double getPotVal() {
+        return potentiometer.getVoltage();
+    }
 }
