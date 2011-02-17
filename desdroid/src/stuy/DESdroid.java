@@ -114,7 +114,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             i = 0;
             }*/
-            if (leftStick.getRawButton(3)) {
+            /*if (leftStick.getRawButton(3)) {
                 drive.mecanumDrive_Cartesian(0, -0.25, 0, 0);
             } else if (leftStick.getRawButton(2)) {
                 drive.mecanumDrive_Cartesian(0, 0.25, 0, 0);
@@ -124,7 +124,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 drive.mecanumDrive_Cartesian(0.25, 0, 0, 0);
             } else {
                 drive.mecanumDrive_Cartesian(0, 0, 0, 0);
-            }
+            }*/
 
             if (leftStick.getRawButton(7)) {
                 updatePID();
