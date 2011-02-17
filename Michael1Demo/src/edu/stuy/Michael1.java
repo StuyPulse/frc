@@ -75,6 +75,7 @@ public class Michael1 extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        drivetrain.tankDrive(1,1);
         
     }
 

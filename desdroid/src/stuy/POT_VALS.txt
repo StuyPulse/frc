@@ -1,0 +1,8 @@
+LOWLIM: 2.64
+Lower left: 
+Mid left:  1.46
+Upper left:  .72
+lower center: 1.99
+mid center:1.28
+upper center:  .21
+UPLIM:  .46

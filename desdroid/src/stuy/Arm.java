@@ -32,16 +32,15 @@ public class Arm implements Constants {
      * @param stickVal Driver's joystick value to rotate the arm. (-1.0 to 1.0)
      */
     public void rotate(double stickVal) {
-        try {
-            if (stickVal >= 0.5) {
-                armMotor.set(1);
-            } else if (stickVal <= -0.5) {
-                armMotor.set(-1);
-            } else {
-                armMotor.set(0);
-            }
-        } catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
+        double currentVal = getPosition();
+        if (stickVal >= 0.5 && currentVal < UPPER_ARM_POT_LIM) {
+            armMotor.set(1);
+        }
+        else if (stickVal <= -0.5 && currentVal > LOWER_ARM_POT_LIM) {
+            armMotor.set(-1);
+        }
+        else {
+            armMotor.set(0);
         }
     }
 
@@ -50,17 +49,32 @@ public class Arm implements Constants {
      * @param potVal The potentiometer value to set the arm to.
      */
     public void setHeight(double potVal) {
-        try {
-            double currentVal = potentiometer.getVoltage(); // TODO: Find range of getVoltage().
-            if (currentVal - potVal > 0.08 && currentVal > 0.395) {
-                armMotor.set(-1);
-            } else if (currentVal - potVal < -0.08 && currentVal < 0.85) {
-                armMotor.set(1);
-            } else {
-                armMotor.set(0);
-            }
-        } catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
+        double currentVal = getPosition(); // TODO: Find range of getVoltage().
+        System.out.println("Input: " + currentVal);
+        System.out.println("Setpoint: " + potVal);
+        if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
+            armMotor.set(1);
         }
+        else if (currentVal - potVal < -0.01 && currentVal < UPPER_ARM_POT_LIM) {
+            armMotor.set(-1);
+        }
+        else {
+            armMotor.set(0);
+        }
+        double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
+        System.out.println("Rising: " + delayVal);
+        Timer.delay(delayVal); //TODO:  Protect from /0 !
+        armMotor.set(0);
+        delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
+        System.out.println("Falling: " + delayVal);
+        Timer.delay(delayVal); //TODO:  Protect from /0 !
+    }
+
+    public double getPosition() {
+        return potentiometer.getVoltage();
+    }
+
+    public double getPotVal() {
+        return potentiometer.getVoltage();
     }
 }
