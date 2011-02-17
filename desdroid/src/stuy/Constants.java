@@ -66,14 +66,14 @@ public interface Constants {
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
 
     // Height button light decimal outputs
-    final int SIDE_UPPER_LIGHT                 = 0;
-    final int SIDE_MIDDLE_LIGHT                = 1;
-    final int SIDE_LOWER_LIGHT                 = 2;
-    final int CENTER_UPPER_LIGHT               = 3;
-    final int CENTER_MIDDLE_LIGHT              = 4;
-    final int CENTER_LOWER_LIGHT               = 5;
-    final int FEEDER_LEVEL_LIGHT               = 6;
-    final int GROUND_LEVEL_LIGHT               = 7;
+    final int SIDE_UPPER_LIGHT                 = 7;
+    final int SIDE_MIDDLE_LIGHT                = 5;
+    final int SIDE_LOWER_LIGHT                 = 3;
+    final int CENTER_UPPER_LIGHT               = 8;
+    final int CENTER_MIDDLE_LIGHT              = 6;
+    final int CENTER_LOWER_LIGHT               = 4;
+    final int FEEDER_LEVEL_LIGHT               = 1;
+    final int GROUND_LEVEL_LIGHT               = 2;
 
     // Speed position control
     final double SPEED_P                     = 0.48;
