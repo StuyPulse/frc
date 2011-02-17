@@ -3,36 +3,39 @@ package stuy;
 public interface Constants {
 
 
-    // Robot Hardware Configuration
-    final int DRIVE_CAN_DEVICE_FRONT_LEFT    = 7;
-    final int DRIVE_CAN_DEVICE_FRONT_RIGHT   = 9;
-    final int DRIVE_CAN_DEVICE_REAR_LEFT     = 8;
-    final int DRIVE_CAN_DEVICE_REAR_RIGHT    = 10;
-
+    // Robot output configuration
     final int ENCODER_CODES_PER_REV          = 250;
 
-    final int ARM_CAN_DEVICE_NUMBER          = 6;
+    final int ARM_MOTOR_CHANNEL              = 3;
 
-    final int GRABBER_UPPER_ROLLER_PORT      = 1;
-    final int GRABBER_LOWER_ROLLER_PORT      = 2;
-    final int GRABBER_LIMIT_SWITCH_PORT      = 3;
+    final int GRABBER_UPPER_ROLLER_PORT      = 4;
+    final int GRABBER_LOWER_ROLLER_PORT      = 1;
+    final int GRABBER_LIMIT_SWITCH_PORT      = 11;
+
+    final int CHANNEL_FRONT_LEFT             = 7; // not wired yet, don't know
+    final int CHANNEL_FRONT_RIGHT            = 9;
+    final int CHANNEL_REAR_LEFT              = 8;
+    final int CHANNEL_REAR_RIGHT             = 10;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
-    final int WRIST_SERVO                    = 6;
-    final int WING_SERVO                     = 7;
+    final int WRIST_SERVO                    = 5;
+    final int WING_SERVO                     = 6;
 
     // Robot digital I/O
-    final int HALOGEN_CHANNEL_A              = 4;
-    final int HALOGEN_CHANNEL_B              = 5;
-
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
+    final int HALOGEN_CHANNEL_A              = 4;
+    final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.395;
-    final double UPPER_ARM_POT_LIM           = 0.85;
+    final double LOWER_ARM_POT_LIM           = 0.0;
+    final double UPPER_ARM_POT_LIM           = 9000;
+    final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
+
+    // Analog input for arm potentiometer
+    final int ARM_POT_CHANNEL                = 1;
 
     // User controls
     final int PORT_LEFT_STICK                = 1;
@@ -104,4 +107,37 @@ public interface Constants {
     final double IVAL                        = 0;
     final double DVAL                        = 0;
     final double PID_SETPOINT                = 0;
+
+    // Arm position control
+    final double ARM_P                       = 0;
+    final double ARM_I                       = 0;
+    final double ARM_D                       = 0;
+
+    //Speed position control
+
+
+    //Exception led
+
+    //TODO: Numbers need to be set.
+    final int OI_LEFT_BOTTOM_BUTTON          = 0;
+    final int OI_LEFT_MIDDLE_BUTTON          = 0;
+    final int OI_LEFT_TOP_BUTTON             = 0;
+    final int OI_MIDDLE_BOTTOM_BUTTON        = 0;
+    final int OI_MIDDLE_MIDDLE_BUTTON        = 0;
+    final int OI_MIDDLE_TOP_BUTTON           = 0;
+    final int OI_RIGHT_BOTTOM_BUTTON         = 0;
+    final int OI_RIGHT_MIDDLE_BUTTON         = 0;
+    final int OI_RIGHT_TOP_BUTTON            = 0;
+
+    final double POT_SIDE_BOTTOM             = 2.18;
+    final double POT_SIDE_MIDDLE             = 0;
+    final double POT_SIDE_TOP                = 0;
+    final double POT_MIDDLE_BOTTOM           = 0;
+    final double POT_MIDDLE_MIDDLE           = 0;
+    final double POT_MIDDLE_TOP              = 0;
+    // Line Tracking
+
+    // "disntance" per pulse, to make the Encoder class return getRate() in RPM
+    final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
+
 }
