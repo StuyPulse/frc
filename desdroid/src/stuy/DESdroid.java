@@ -158,9 +158,11 @@ public class DESdroid extends SimpleRobot implements Constants {
 //                arm.setHeight(positions[2]);
             } else if (armStick.getRawButton(8)) {
                 threadend(positionController);
+                wasArmControlled=false;
                 System.out.println("Arm position" + arm.getPosition());
             }else {
                 threadend(positionController);
+                wasArmControlled=false;
                 arm.rotate(armStick.getY());
             }
 
