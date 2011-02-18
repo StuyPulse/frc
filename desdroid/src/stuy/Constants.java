@@ -27,8 +27,8 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.0;
-    final double UPPER_ARM_POT_LIM           = 9000;
+    final double LOWER_ARM_POT_LIM           = 2.18;
+    final double UPPER_ARM_POT_LIM           = 4.53;
     final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
@@ -117,10 +117,10 @@ public interface Constants {
     final int OI_RIGHT_TOP_BUTTON            = 0;
 
     final double POT_SIDE_BOTTOM             = 2.18;
-    final double POT_SIDE_MIDDLE             = 0;
+    final double POT_SIDE_MIDDLE             = 1.46;
     final double POT_SIDE_TOP                = 0;
-    final double POT_MIDDLE_BOTTOM           = 0;
-    final double POT_MIDDLE_MIDDLE           = 0;
+    final double POT_MIDDLE_BOTTOM           = 3.62;
+    final double POT_MIDDLE_MIDDLE           = 2.97;
     final double POT_MIDDLE_TOP              = 0;
     // Line Tracking
 

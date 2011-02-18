@@ -65,11 +65,13 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
 
-            drive = new RobotDrive(driveFrontLeft,
-                    driveRearLeft,
-                    driveFrontRight,
-                    driveRearRight);
-        
+        drive = new RobotDrive(driveFrontLeft,
+                driveRearLeft,
+                driveFrontRight,
+                driveRearRight);
+
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
 
         targetVals = new Vector();
@@ -105,24 +107,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         double lastTimeSeconds = Timer.getFPGATimestamp();
 
         while (isEnabled() && isOperatorControl()) {
-            /*drive.mecanumDrive_Cartesian(
+            drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0, // use gyro for field-oriented drive
-                    true);
-             */
+                    0 // use gyro for field-oriented drive
+                    );
+             
 
-            if (leftStick.getRawButton(3))
-                drive.mecanumDrive_Cartesian(0, -1, 0, 0);
-            else if(leftStick.getRawButton(2))
-                drive.mecanumDrive_Cartesian(0, 1, 0, 0);
-            else if(leftStick.getRawButton(4))
-                drive.mecanumDrive_Cartesian(-1, 0, 0, 0);
-            else if(leftStick.getRawButton(5))
-                drive.mecanumDrive_Cartesian(1, 0, 0, 0);
-            else
-                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
             // Arm control
 
@@ -132,7 +124,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (armStick.getRawButton(11)){
                 if(!wasArmControlled){
                     threadend(positionController);
-                    positionController = new ArmController(POT_SIDE_BOTTOM, this);
+                    positionController = new ArmController(POT_MIDDLE_MIDDLE, this);
                     positionController.start();
                     wasArmControlled = true;
                 }
