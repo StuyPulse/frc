@@ -70,6 +70,35 @@ public class Arm implements Constants {
         Timer.delay(delayVal); //TODO:  Protect from /0 !
     }
 
+    public void setHeight(int buttonNum) {
+        switch (buttonNum) {
+            case SIDE_UPPER_BUTTON:
+                setHeight(HEIGHT_SIDE_UPPER);
+                break;
+            case SIDE_MIDDLE_BUTTON:
+                setHeight(HEIGHT_SIDE_MIDDLE);
+                break;
+            case SIDE_LOWER_BUTTON:
+                setHeight(HEIGHT_SIDE_LOWER);
+                break;
+            case CENTER_UPPER_BUTTON:
+                setHeight(HEIGHT_CENTER_UPPER);
+                break;
+            case CENTER_MIDDLE_BUTTON:
+                setHeight(HEIGHT_CENTER_MIDDLE);
+                break;
+            case CENTER_LOWER_BUTTON:
+                setHeight(HEIGHT_CENTER_LOWER);
+                break;
+            case FEEDER_LEVEL_BUTTON:
+                setHeight(HEIGHT_FEEDER_LEVEL);
+                break;
+            case GROUND_LEVEL_BUTTON:
+                setHeight(HEIGHT_GROUND_LEVEL);
+                break;
+        }
+    }
+
     public double getPosition() {
         return potentiometer.getVoltage();
     }

@@ -93,12 +93,14 @@ public interface Constants {
     final int GROUND_LEVEL_BUTTON              = 2;
 
     // Arm heights
-    final double HEIGHT_SIDE_BOTTOM          = 2.18;
+    final double HEIGHT_SIDE_UPPER           = 0;
     final double HEIGHT_SIDE_MIDDLE          = 0;
-    final double HEIGHT_SIDE_TOP             = 0;
-    final double HEIGHT_MIDDLE_BOTTOM        = 0;
-    final double HEIGHT_MIDDLE_MIDDLE        = 0;
-    final double HEIGHT_MIDDLE_TOP           = 0;
+    final double HEIGHT_SIDE_LOWER           = 2.18;
+    final double HEIGHT_CENTER_UPPER         = 0;
+    final double HEIGHT_CENTER_MIDDLE        = 0;
+    final double HEIGHT_CENTER_LOWER         = 0;
+    final double HEIGHT_FEEDER_LEVEL         = 0;
+    final double HEIGHT_GROUND_LEVEL         = 0;
 
     // Height button light decimal outputs
     final int SIDE_UPPER_LIGHT                 = 1;

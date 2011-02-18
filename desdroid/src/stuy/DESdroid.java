@@ -129,9 +129,12 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (armStick.getRawButton(4))
                 arm.wrist.set(0);
 
+            // Arm control by OI
+//            arm.setHeight(oi.getHeightButton());
+
             // Arm control
             if (armStick.getRawButton(11))
-                arm.setHeight(HEIGHT_SIDE_BOTTOM); //arm.setHeight(positions[0]);
+                arm.setHeight(HEIGHT_SIDE_LOWER); //arm.setHeight(positions[0]);
             else if (armStick.getRawButton(10))
                 arm.setHeight(positions[1]);
             else if (armStick.getRawButton(9))
