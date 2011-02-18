@@ -137,6 +137,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 if(!wasArmControlled){
                     threadend(positionController);
                     positionController = new ArmController(POT_SIDE_BOTTOM, this);
+                    positionController.start();
                     wasArmControlled = true;
                 }
 
@@ -145,6 +146,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 if (!wasArmControlled) {
                     threadend(positionController);
                     positionController = new ArmController(positions[1], this);
+                    positionController.start();
                     wasArmControlled = true;
                 }
 //                arm.setHeight(positions[1]);
@@ -152,6 +154,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 if (!wasArmControlled) {
                     threadend(positionController);
                     positionController = new ArmController(positions[2], this);
+                    positionController.start();
                     wasArmControlled = true;
                 }
 
