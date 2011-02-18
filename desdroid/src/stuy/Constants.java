@@ -34,16 +34,6 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.46;
-    final double UPPER_ARM_POT_LIM           = 2.64;
-    final double POT_SIDE_BOTTOM             = 2.18;
-    final double POT_SIDE_MIDDLE             = 1.46;
-    final double POT_SIDE_TOP                = 0.72;
-    final double POT_MIDDLE_BOTTOM           = 1.99;
-    final double POT_MIDDLE_MIDDLE           = .8;
-    final double POT_MIDDLE_TOP              = 0.21;
-    final double MAX_ARM_DELAY               = .4;
-
     final int GYRO_CHANNEL                   = 4;
 
     // Analog input for arm potentiometer
@@ -97,16 +87,6 @@ public interface Constants {
     final int FEEDER_LEVEL_BUTTON              = 1;
     final int GROUND_LEVEL_BUTTON              = 2;
 
-    // Arm heights
-    final double HEIGHT_SIDE_UPPER           = 0;
-    final double HEIGHT_SIDE_MIDDLE          = 0;
-    final double HEIGHT_SIDE_LOWER           = 2.18;
-    final double HEIGHT_CENTER_UPPER         = 0;
-    final double HEIGHT_CENTER_MIDDLE        = 0;
-    final double HEIGHT_CENTER_LOWER         = 0;
-    final double HEIGHT_FEEDER_LEVEL         = 0;
-    final double HEIGHT_GROUND_LEVEL         = 0;
-
     // Height button light decimal outputs
     final int SIDE_UPPER_LIGHT                 = 1;
     final int SIDE_MIDDLE_LIGHT                = 3;
@@ -118,6 +98,17 @@ public interface Constants {
     final int GROUND_LEVEL_LIGHT               = 6;
     final int EXTRA_BUTTON_LIGHT               = 8;
 
+    final double LOWER_ARM_POT_LIM           = 0.46;
+    final double UPPER_ARM_POT_LIM           = 2.64;
+    final double POT_SIDE_BOTTOM             = 2.18;
+    final double POT_SIDE_MIDDLE             = 1.46;
+    final double POT_SIDE_TOP                = 0.72;
+    final double POT_MIDDLE_BOTTOM           = 1.99;
+    final double POT_MIDDLE_MIDDLE           = .8;
+    final double POT_MIDDLE_TOP              = 0.21;
+    final double POT_FEEDER_LEVEL            = 0; // TODO: Needs to be set.
+    final double POT_GROUND_LEVEL            = 0;
+    final double MAX_ARM_DELAY               = .4;
 
     // Speed control
     final double SPEED_P                       = 0.00375;

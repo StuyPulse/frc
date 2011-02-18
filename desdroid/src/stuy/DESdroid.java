@@ -40,7 +40,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface(this);
+//        oi = new OperatorInterface(this);
 
         arm = new Arm(this);
         grabber = new Grabber();
@@ -77,7 +77,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-        auton.run(oi.getAutonSetting());
+//        auton.run(oi.getAutonSetting());
+        auton.run(1);
     }
 
     /**
@@ -85,8 +86,6 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
-//        double lastTimeSeconds = Timer.getFPGATimestamp();
             
         updatePID();
 
@@ -96,8 +95,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         driveFrontRight.e.reset();
         driveRearLeft.e.reset();
         driveRearRight.e.reset();
-
-        int i = 0;
 
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
@@ -126,24 +123,24 @@ public class DESdroid extends SimpleRobot implements Constants {
                 arm.wrist.set(1);
 
             // Arm control by OI
-//            arm.setHeight(oi.getHeightButton());
+//            if (oi.isHeightButtonPressed()) {
+//                arm.setHeight(oi.getHeightButton(), oi.getTrimAmount(0.5));
+//            }
+//            else {
+//                arm.rotate(armStick.getY());
+//            }
 
             // Arm control
             if (armStick.getRawButton(11))
-                arm.setHeight(HEIGHT_SIDE_LOWER); //arm.setHeight(positions[0]);
+                arm.setHeight(POT_SIDE_TOP); //arm.setHeight(positions[0]);
             else if (armStick.getRawButton(10))
-                arm.setHeight(HEIGHT_SIDE_MIDDLE);
+                arm.setHeight(POT_SIDE_MIDDLE);
             else if (armStick.getRawButton(9))
-                arm.setHeight(HEIGHT_SIDE_UPPER);
+                arm.setHeight(POT_SIDE_BOTTOM);
             else if (armStick.getRawButton(8))
                 System.out.println("Arm position" + arm.getPosition());
             else
                 arm.rotate(armStick.getY());
-
-            // Update arm positions
-//            if (armStick.getRawButton(8)) {
-//                positions = FileIO.getArray("positions.txt");
-//            }
 
             // Grabber control
             if (armStick.getTrigger())
@@ -156,8 +153,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.rotateDown();
             else
                 grabber.stop();
-
-            //System.out.println(grabber.getLimitSwitch());
         }
     }
 

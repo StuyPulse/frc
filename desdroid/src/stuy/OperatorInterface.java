@@ -119,6 +119,10 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    public boolean isHeightButtonPressed() {
+        return getHeightButton() != 0;
+    }
+
     public boolean getMinibotSwitch() {
         boolean value;
         try {

@@ -76,34 +76,32 @@ public class Arm implements Constants {
      * Move the arm to a specific position based on an OI height button.
      * @param butonNum The OI height button number pressed.
      */
-    public void setHeight(int buttonNum) {
+    public void setHeight(int buttonNum, double trimAmount) {
         switch (buttonNum) {
             case SIDE_UPPER_BUTTON:
-                setHeight(HEIGHT_SIDE_UPPER);
+                setHeight(POT_SIDE_TOP + trimAmount);
                 break;
             case SIDE_MIDDLE_BUTTON:
-                setHeight(HEIGHT_SIDE_MIDDLE);
+                setHeight(POT_SIDE_MIDDLE + trimAmount);
                 break;
             case SIDE_LOWER_BUTTON:
-                setHeight(HEIGHT_SIDE_LOWER);
+                setHeight(POT_SIDE_BOTTOM + trimAmount);
                 break;
             case CENTER_UPPER_BUTTON:
-                setHeight(HEIGHT_CENTER_UPPER);
+                setHeight(POT_MIDDLE_TOP + trimAmount);
                 break;
             case CENTER_MIDDLE_BUTTON:
-                setHeight(HEIGHT_CENTER_MIDDLE);
+                setHeight(POT_MIDDLE_MIDDLE + trimAmount);
                 break;
             case CENTER_LOWER_BUTTON:
-                setHeight(HEIGHT_CENTER_LOWER);
+                setHeight(POT_MIDDLE_BOTTOM + trimAmount);
                 break;
             case FEEDER_LEVEL_BUTTON:
-                setHeight(HEIGHT_FEEDER_LEVEL);
+                setHeight(POT_FEEDER_LEVEL + trimAmount);
                 break;
             case GROUND_LEVEL_BUTTON:
-                setHeight(HEIGHT_GROUND_LEVEL);
+                setHeight(POT_GROUND_LEVEL + trimAmount);
                 break;
-            default:
-                // TODO: FINISH
         }
     }
 
