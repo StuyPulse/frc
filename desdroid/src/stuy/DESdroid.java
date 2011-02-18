@@ -95,7 +95,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-        auton.run(oi.getAutonSetting(this));
+        auton.run(oi.getAutonSetting());
     }
 
     /**
