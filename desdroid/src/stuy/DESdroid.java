@@ -31,7 +31,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick armStick;
 
     // Operator interface
-    OperatorInterface oi;
+//    OperatorInterface oi;
 
     // Autonomous class
     Autonomous auton;
