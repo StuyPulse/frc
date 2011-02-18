@@ -20,7 +20,6 @@ public class ArmController extends Thread implements Constants {
         active = true;
         this.setpoint = setpoint;
         this.robot = that;
-        this.start();
     }
 
     public void run() {

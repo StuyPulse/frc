@@ -20,7 +20,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
 
-    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    Victor driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     RobotDrive drive;
     Arm arm;
     Grabber grabber;
@@ -58,18 +58,14 @@ public class DESdroid extends SimpleRobot implements Constants {
 
        
 
-        
-            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, 1, 2);
-            rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, 3, 4);
-            middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, 5, 6);
-            leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, 7, 8);
+        driveFrontLeft = new Victor(CHANNEL_FRONT_LEFT);
+        driveFrontRight = new Victor(CHANNEL_FRONT_RIGHT);
+        driveRearLeft = new Victor(CHANNEL_REAR_LEFT);
+        driveRearRight = new Victor(CHANNEL_REAR_RIGHT);
 
-            updatePID();
 
-            drive = new DriveTrain(driveFrontLeft,
+
+            drive = new RobotDrive(driveFrontLeft,
                     driveRearLeft,
                     driveFrontRight,
                     driveRearRight);
@@ -209,43 +205,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 elliot.end();
     }
 
-    /**
-     * update PID values.  uses a text file drive_PID_values.txt that must be
-     * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
-     */
-    public void updatePID() {
-        double drivePID[];
 
-         try {
-                drivePID = FileIO.getArray("drive_PID_values.txt");
-         }
-        catch (Exception e) {
-            e.printStackTrace();
-            drivePID = new double[3];
-                drivePID[0] = SPEED_P;
-                drivePID[1] = SPEED_I;
-                drivePID[2] = SPEED_D;
-        }
-        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
-
-        try {
-            driveFrontLeft.c.disable();
-            driveFrontRight.c.disable();
-            driveRearLeft.disable();
-            driveRearRight.disable();
-
-            driveFrontLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveFrontRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-
-            driveFrontLeft.c.enable();
-            driveFrontRight.c.enable();
-            driveRearLeft.c.enable();
-            driveRearRight.c.enable();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 }
