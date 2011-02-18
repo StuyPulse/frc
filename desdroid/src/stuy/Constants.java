@@ -98,7 +98,7 @@ public interface Constants {
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.2;
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
-    final double STRAIGHT_PROFILE[]     = {.7, .7, .7, .7, .4, 0, 0, 0};
+    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .2, 0, 0, 0, 0};
 
     // Gains and setpoint for the target feedback loop.  Not yet tuned.
     final double PVAL                        = .5;
