@@ -80,8 +80,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-//        auton.run(oi.getAutonSetting(this));
-        auton.lineTrack(false, false);
+        auton.run(1);
+//        auton.lineTrack(true, false);
     }
 
     /**
@@ -168,6 +168,19 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.rotateDown();
             } else {
                 grabber.stop();
+            }
+            
+            if (armStick.getRawButton(11)) {
+                arm.setHeight(POT_SIDE_TOP);
+            } else if (armStick.getRawButton(10)) {
+                arm.setHeight(POT_SIDE_MIDDLE);
+            } else if (armStick.getRawButton(9)) {
+                arm.setHeight(POT_SIDE_BOTTOM);
+            } else if (armStick.getRawButton(4)) {
+                System.out.println(arm.getPosition());
+            }
+            else {
+                arm.rotate(armStick.getY());
             }
 
             Timer.delay(.05);

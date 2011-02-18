@@ -71,15 +71,16 @@ public class Autonomous implements Constants {
      * Score
      */
     private void auton1() {
-        des.arm.setHeight(0);
-        lineTrack(true, false);
+        double time = Timer.getFPGATimestamp();
+        while (!des.arm.setHeight(POT_MIDDLE_MIDDLE) && Timer.getFPGATimestamp() - time < 2
+                && des.isAutonomous() && des.isEnabled()) {
+        }
+        if (des.isAutonomous() && des.isEnabled()) {
+            lineTrack(true, false);
+        }
         des.grabber.out();
-        Timer.delay(2);
+        Timer.delay(1);
         des.grabber.stop();
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
     }
 
     /**
@@ -98,7 +99,7 @@ public class Autonomous implements Constants {
         Timer.delay(5);
         goSpeed(0);
     }
-    
+
     /**
      * Raise arm
      * Follow line right
@@ -131,7 +132,6 @@ public class Autonomous implements Constants {
      * raises arm (fake)
      * goes forward to peg
      */
-
     public void auton5() {
         lineTrack(false, false);
         goSpeed(-.1);
@@ -142,12 +142,11 @@ public class Autonomous implements Constants {
         goSpeed(.1);
         Timer.delay(2);
         goSpeed(0);
-        
+
         goSpeed(-1);
         Timer.delay(5);
         goSpeed(0);
     }
-
 
     /**
      * Follow line straight
@@ -173,7 +172,6 @@ public class Autonomous implements Constants {
         goSpeed(0);
     }
 
-
     /**
      * Follow line left
      * moves back
@@ -198,14 +196,13 @@ public class Autonomous implements Constants {
         goSpeed(0);
     }
 
-
     /**
      * Prints the values of the line tracking sensors.
      */
     private void printLineStatus() {
-     /*   System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
-                + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
-                + "R: [" + (rightValue == 1 ? "1" : " ") + "]"); */
+        /*   System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
+        + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
+        + "R: [" + (rightValue == 1 ? "1" : " ") + "]"); */
     }
 
     private int binaryValue(boolean goLeft) {
@@ -231,8 +228,8 @@ public class Autonomous implements Constants {
         // different to let the robot drive more slowly as the robot approaches
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
-        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
-//        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
+//        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
@@ -284,7 +281,7 @@ public class Autonomous implements Constants {
 
             // set the robot speed and direction
 //            des.drive.arcadeDrive(-speed, -turn);
-            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0, 0);
+            des.drive.mecanumDrive_Cartesian(-turn, -speed, 0, 0, false);
 
             if (binaryValue != 0) {
                 previousValue = binaryValue;
@@ -295,7 +292,6 @@ public class Autonomous implements Constants {
         // Done with loop - stop the robot. Robot ought to be at the end of the line
         des.drive.arcadeDrive(0, 0);
     }
-
 
     /**
      * Goes forward or backwards to have space in between the peg and the robot's

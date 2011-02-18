@@ -37,8 +37,14 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.0;
-    final double UPPER_ARM_POT_LIM           = 9000;
+    final double LOWER_ARM_POT_LIM           = 0.46;
+    final double UPPER_ARM_POT_LIM           = 2.64;
+    final double POT_SIDE_BOTTOM             = 2.18;
+    final double POT_SIDE_MIDDLE             = 1.46;
+    final double POT_SIDE_TOP                = 0.72;
+    final double POT_MIDDLE_BOTTOM           = 1.99;
+    final double POT_MIDDLE_MIDDLE           = .8;
+    final double POT_MIDDLE_TOP              = 0.21;
     final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
@@ -90,7 +96,7 @@ public interface Constants {
     final int GROUND_LEVEL_LIGHT               = 7;
 
     // Line Tracking
-    final double DEFAULT_STEERING_GAIN  = 0.3;
+    final double DEFAULT_STEERING_GAIN  = 0.2;
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
     final double STRAIGHT_PROFILE[]     = {.7, .7, .7, .7, .4, 0, 0, 0};
 
