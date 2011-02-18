@@ -7,7 +7,6 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
-import java.util.Vector;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,14 +29,11 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
+
     OperatorInterface oi;
 
     // Autonomous class
     Autonomous auton;
-    double[] positions;
-    DESCircleTracker pegTracker;
-    DESTrackerDashboard trackerDashboard;
-    Vector targetVals;
 
     /**
      * DESdroid constructor.
@@ -63,10 +59,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
-        
-        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
 
         updatePID();
 
@@ -75,18 +67,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 driveFrontRight,
                 driveRearRight);
 
-
-        targetVals = new Vector();
-        trackerDashboard = new DESTrackerDashboard(this);
-        pegTracker = new DESCircleTracker(this);
-
-        System.out.println(pegTracker);
-        System.out.println(pegTracker.halogen_a);
-
         auton = new Autonomous(this);
-
-//        positions = FileIO.getArray("positions.txt");
-        positions = new double[] {.3, 1, 1.7};
     }
 
     /**
@@ -105,6 +86,17 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
 //        double lastTimeSeconds = Timer.getFPGATimestamp();
+            
+        updatePID();
+
+        drive.updateWeightGains();
+
+        driveFrontLeft.e.reset();
+        driveFrontRight.e.reset();
+        driveRearLeft.e.reset();
+        driveRearRight.e.reset();
+
+        int i = 0;
 
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
@@ -136,9 +128,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (armStick.getRawButton(11))
                 arm.setHeight(HEIGHT_SIDE_LOWER); //arm.setHeight(positions[0]);
             else if (armStick.getRawButton(10))
-                arm.setHeight(positions[1]);
+                arm.setHeight(HEIGHT_SIDE_MIDDLE);
             else if (armStick.getRawButton(9))
-                arm.setHeight(positions[2]);
+                arm.setHeight(HEIGHT_SIDE_UPPER);
             else if (armStick.getRawButton(8))
                 System.out.println("Arm position" + arm.getPosition());
             else
@@ -160,21 +152,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.rotateDown();
             else
                 grabber.stop();
-            
+
             //System.out.println(grabber.getLimitSwitch());
-            
-            if (leftStick.getRawButton(7)) {
-                updatePID();
-            }
-
-            if (rightStick.getTrigger()) {
-                driveFrontLeft.e.reset();
-                driveFrontRight.e.reset();
-                driveRearLeft.e.reset();
-                driveRearRight.e.reset();
-            }
-
-            Timer.delay(.05);
         }
     }
 
@@ -185,16 +164,17 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void updatePID() {
         double drivePID[];
 
-         try {
-                drivePID = FileIO.getArray("drive_PID_values.txt");
-         }
+        try {
+            drivePID = FileIO.getArray("drive_PID_values.txt");
+        }
         catch (Exception e) {
             e.printStackTrace();
             drivePID = new double[3];
-                drivePID[0] = SPEED_P;
-                drivePID[1] = SPEED_I;
-                drivePID[2] = SPEED_D;
+            drivePID[0] = SPEED_P;
+            drivePID[1] = SPEED_I;
+            drivePID[2] = SPEED_D;
         }
+
         System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
 
         try {
@@ -212,8 +192,8 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveFrontRight.c.enable();
             driveRearLeft.c.enable();
             driveRearRight.c.enable();
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

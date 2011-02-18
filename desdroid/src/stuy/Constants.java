@@ -21,7 +21,6 @@ public interface Constants {
 
     final int GRABBER_UPPER_ROLLER_PORT      = 4;
     final int GRABBER_LOWER_ROLLER_PORT      = 1;
-    
     final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
     final int MINIBOT_RELEASE_SERVO          = 4;
@@ -35,8 +34,14 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
-    final double LOWER_ARM_POT_LIM           = 0.0;
-    final double UPPER_ARM_POT_LIM           = 9000;
+    final double LOWER_ARM_POT_LIM           = 0.46;
+    final double UPPER_ARM_POT_LIM           = 2.64;
+    final double POT_SIDE_BOTTOM             = 2.18;
+    final double POT_SIDE_MIDDLE             = 1.46;
+    final double POT_SIDE_TOP                = 0.72;
+    final double POT_MIDDLE_BOTTOM           = 1.99;
+    final double POT_MIDDLE_MIDDLE           = .8;
+    final double POT_MIDDLE_TOP              = 0.21;
     final double MAX_ARM_DELAY               = .4;
 
     final int GYRO_CHANNEL                   = 4;
@@ -113,18 +118,16 @@ public interface Constants {
     final int GROUND_LEVEL_LIGHT               = 6;
     final int EXTRA_BUTTON_LIGHT               = 8;
 
-    // Speed position control
-//    final double SPEED_P                     = 0.48;
-//    final double SPEED_I                     = 0.005;
-//    final double SPEED_D                     = 0.05;
+
+    // Speed control
     final double SPEED_P                       = 0.00375;
     final double SPEED_I                       = 0.00;
     final double SPEED_D                       = 0.000004;
 
-    // Line tracking
-    final double DEFAULT_STEERING_GAIN  = 0.15;
-    final double FORK_PROFILE[]         = {.2, .3, .2, .1, .2, .1, .05, 0};
-    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .3, .05, 0, 0, 0};
+    // Line Tracking
+    final double DEFAULT_STEERING_GAIN  = 0.2;
+    final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
+    final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .2, 0, 0, 0, 0};
 
     // Gains and setpoint for the target feedback loop.  Not yet tuned.
     final double PVAL                        = .5;
@@ -132,7 +135,13 @@ public interface Constants {
     final double DVAL                        = 0;
     final double PID_SETPOINT                = 0;
 
+
     final int ENCODER_CODES_PER_REV          = 250;
+
+    // Arm position control
+    final double ARM_P                       = 0;
+    final double ARM_I                       = 0;
+    final double ARM_D                       = 0;
 
     // "distance" per pulse, to make the Encoder class return getRate() in RPM
     final double ENCODER_RPM_PER_PULSE       = 60.0 / ENCODER_CODES_PER_REV;

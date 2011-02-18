@@ -43,7 +43,7 @@ public class DriveTrain extends RobotDrive {
             xIn = x;
             yIn = y;
         }
-
+        
         // Negate y for the joystick.
         yIn = -yIn;
         // Compenstate for gyro angle.

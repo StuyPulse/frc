@@ -48,8 +48,8 @@ public class Arm implements Constants {
      * Move the arm to a specific position.
      * @param potVal The potentiometer value to set the arm to.
      */
-    public void setHeight(double potVal) {
-        double currentVal = getPosition();
+    public boolean setHeight(double potVal) {
+        double currentVal = getPosition(); // TODO: Find range of getVoltage().
         System.out.println("Input: " + currentVal);
         System.out.println("Setpoint: " + potVal);
         if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
@@ -60,6 +60,7 @@ public class Arm implements Constants {
         }
         else {
             armMotor.set(0);
+            return true;
         }
         double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
         System.out.println("Rising: " + delayVal);
@@ -68,6 +69,7 @@ public class Arm implements Constants {
         delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
         System.out.println("Falling: " + delayVal);
         Timer.delay(delayVal); //TODO:  Protect from /0 !
+        return false;
     }
 
     /**

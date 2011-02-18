@@ -2,4 +2,5 @@
 j2meclasses/
 build/
 suite/
+.DS_STORE
 
