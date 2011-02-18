@@ -38,22 +38,22 @@ public interface Constants {
     final int PORT_ARM_STICK                 = 3;
 
     // Thumbwheel switch
-    final int BIT_1_CHANNEL                  = 1;
+    final int BIT_1_CHANNEL                  = 3;
     final int BIT_2_CHANNEL                  = 2;
-    final int BIT_3_CHANNEL                  = 3;
+    final int BIT_3_CHANNEL                  = 1;
     final int BIT_4_CHANNEL                  = 4; // Least significant bit
 
     // Excpetion LED
-    final int ERROR_LED                      = 16;
+    final int ERROR_LED                      = 13;
 
     // OI analog inputs
     final int OI_BUTTON_ANALOG_PORT          = 1;
     final int OI_TRIM_POT_PORT               = 3;
 
     // OI digital inputs
-    final int OI_MINIBOT_SWITCH_PORT         = 2;
-    final int OI_WING_SWITCH_PORT            = 4;
-    final int OI_EXTRA_BUTTON_PORT           = 6;
+    final int OI_MINIBOT_SWITCH_PORT         = 6;
+    final int OI_WING_SWITCH_PORT            = 5;
+    final int OI_EXTRA_BUTTON_PORT           = 7;
 
     // Height buton light binary pins
     final int LIGHT_BIT_D_CHANNEL            = 11;
@@ -62,8 +62,13 @@ public interface Constants {
     final int LIGHT_BIT_A_CHANNEL            = 8; // Least significant bit
     final int LIGHT_DISABLE_CHANNEL          = 12;
 
+    // Analog input straight from 3.3v. Max voltage is calculated using this pin.
+    final int OI_MAX_VOLTAGE_INPUT           = 8;
+
     // Array of binary values from 0 to 15
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+    final String[] MONTHS_LIST               = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    final int[] BUTTON_LIGHT_TABLE           = {7, 6, 5, 4, 3, 2, 1, 0};
 
     // Height buttons
     final int SIDE_UPPER_BUTTON                = 7;
@@ -76,14 +81,15 @@ public interface Constants {
     final int GROUND_LEVEL_BUTTON              = 2;
 
     // Height button light decimal outputs
-    final int SIDE_UPPER_LIGHT                 = 7;
-    final int SIDE_MIDDLE_LIGHT                = 5;
-    final int SIDE_LOWER_LIGHT                 = 3;
-    final int CENTER_UPPER_LIGHT               = 8;
-    final int CENTER_MIDDLE_LIGHT              = 6;
+    final int SIDE_UPPER_LIGHT                 = 1;
+    final int SIDE_MIDDLE_LIGHT                = 3;
+    final int SIDE_LOWER_LIGHT                 = 5;
+    final int CENTER_UPPER_LIGHT               = 0;
+    final int CENTER_MIDDLE_LIGHT              = 2;
     final int CENTER_LOWER_LIGHT               = 4;
-    final int FEEDER_LEVEL_LIGHT               = 1;
-    final int GROUND_LEVEL_LIGHT               = 2;
+    final int FEEDER_LEVEL_LIGHT               = 7;
+    final int GROUND_LEVEL_LIGHT               = 6;
+    final int EXTRA_BUTTON_LIGHT               = 8;
 
     // Speed position control
     final double SPEED_P                     = 0.48;

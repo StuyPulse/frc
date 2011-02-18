@@ -7,6 +7,7 @@ package stuy;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Handles input from the operator interface using the Cypress FirstTouch I/O module.
@@ -31,12 +32,14 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(LIGHT_BIT_D_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
             enhancedIO.setDigitalConfig(LIGHT_DISABLE_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kOutput);
 
-            enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
-            enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(BIT_1_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_2_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_3_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
-            enhancedIO.setDigitalConfig(OI_MINIBOT_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullDown);
+            enhancedIO.setDigitalConfig(OI_MINIBOT_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(OI_WING_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(OI_EXTRA_BUTTON_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         }
         catch (EnhancedIOException e) {
             System.out.println("Error initializing the operator interface.");
@@ -58,13 +61,12 @@ public class OperatorInterface implements Constants {
      * Use a thumbwheel switch to set the autonomous mode setting.
      * @return Autonomous setting to run.
      */
-    public int getAutonSetting(DESdroid d) {
-        des = d;
+    public int getAutonSetting() {
         try {
             int switchNum = 0;
             int[] binaryValue = new int[4];
 
-            boolean[] dIO = new boolean[]{enhancedIO.getDigital(BIT_1_CHANNEL), enhancedIO.getDigital(BIT_2_CHANNEL), enhancedIO.getDigital(BIT_3_CHANNEL), enhancedIO.getDigital(BIT_4_CHANNEL)};
+            boolean[] dIO = {!enhancedIO.getDigital(BIT_1_CHANNEL), !enhancedIO.getDigital(BIT_2_CHANNEL), !enhancedIO.getDigital(BIT_3_CHANNEL), !enhancedIO.getDigital(BIT_4_CHANNEL)};
 
             for (int i = 0; i < 4; i++) {
                 if (dIO[i]) {
@@ -103,7 +105,8 @@ public class OperatorInterface implements Constants {
         catch (EnhancedIOException e) {
             analogVoltage = 0;
         }
-        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
+//        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
+        int buttonNum = (int) ((analogVoltage / (getMaxVoltage() / 8)) + .5);
         return buttonNum;
     }
 
@@ -119,7 +122,7 @@ public class OperatorInterface implements Constants {
     public boolean getMinibotSwitch() {
         boolean value;
         try {
-            value = enhancedIO.getDigital(OI_MINIBOT_SWITCH_PORT);
+            value = !enhancedIO.getDigital(OI_MINIBOT_SWITCH_PORT);
         }
         catch (EnhancedIOException e) {
             value = false;
@@ -130,7 +133,7 @@ public class OperatorInterface implements Constants {
     public boolean getWingSwitch() {
         boolean value;
         try {
-            value = enhancedIO.getDigital(OI_WING_SWITCH_PORT);
+            value = !enhancedIO.getDigital(OI_WING_SWITCH_PORT);
         }
         catch (EnhancedIOException e) {
             value = false;
@@ -141,7 +144,7 @@ public class OperatorInterface implements Constants {
     public boolean getExtraButton() {
         boolean value;
         try {
-            value = enhancedIO.getDigital(OI_EXTRA_BUTTON_PORT);
+            value = !enhancedIO.getDigital(OI_EXTRA_BUTTON_PORT);
         }
         catch (EnhancedIOException e) {
             value = false;
@@ -157,7 +160,7 @@ public class OperatorInterface implements Constants {
         catch (EnhancedIOException e) {
             potVoltage = 1.65;
         }
-        double trimAmount = (((potVoltage - 1.65) * 2) / 3.3) * maxTrim;
+        double trimAmount = (((potVoltage - (getMaxVoltage() / 2)) * 2) / getMaxVoltage()) * maxTrim;
         return trimAmount;
     }
 
@@ -185,6 +188,25 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
 
+        }
+    }
+
+    public void testLights() {
+        int i = 0;
+        while (true) {
+            setLight(i++);
+            if (i > 8)
+                i = 0;
+            Timer.delay(.1);
+        }
+    }
+
+    public double getMaxVoltage() {
+        try {
+            return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
+        }
+        catch (EnhancedIOException e) {
+            return 2.2;
         }
     }
 }

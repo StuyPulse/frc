@@ -103,7 +103,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 //
 ////        auton.run(oi.getAutonSetting(this));
 //        auton.run(1);
-
+        oi.testLights();
     }
 
     /**
@@ -121,14 +121,37 @@ public class DESdroid extends SimpleRobot implements Constants {
         while (isEnabled() && isOperatorControl()) {
 //            System.out.println(oi.getHeightButton());
             try {
-                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_D_CHANNEL, leftStick.getRawButton(6));
-                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_C_CHANNEL, leftStick.getRawButton(7));
-                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_B_CHANNEL, leftStick.getRawButton(10));
-                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_A_CHANNEL, leftStick.getRawButton(11));
+//                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_D_CHANNEL, leftStick.getRawButton(6));
+//                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_C_CHANNEL, leftStick.getRawButton(7));
+//                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_B_CHANNEL, leftStick.getRawButton(10));
+//                oi.enhancedIO.setDigitalOutput(LIGHT_BIT_A_CHANNEL, leftStick.getRawButton(11));
+                if (oi.getRawAnalogVoltage() > 0.01) {
+                    oi.setLight(BUTTON_LIGHT_TABLE[oi.getHeightButton() - 1]);
+                }
+                else if (oi.getExtraButton()) {
+                    oi.setLight(8);
+                }
+                else {
+                    oi.lightsOff();
+                }
             }
             catch (Exception e) {
                 System.out.println("shit");
             }
+
+            if (oi.getRawAnalogVoltage() > 0.01) {
+                System.out.println(oi.getHeightButton());
+            }
+
+            if (leftStick.getRawButton(2)) {
+                oi.setStuffsBrokenLED(false);
+            }
+            else {
+                oi.setStuffsBrokenLED(true);
+            }
+
+//            System.out.println(MONTHS_LIST[oi.getAutonSetting()]);
+            System.out.println(oi.getTrimAmount(1));
 
             if (oi.getMinibotSwitch()) {
                 System.out.println("Minibot switch");
