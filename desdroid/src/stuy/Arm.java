@@ -49,7 +49,7 @@ public class Arm implements Constants {
      * @param potVal The potentiometer value to set the arm to.
      */
     public void setHeight(double potVal) {
-        double currentVal = getPosition(); // TODO: Find range of getVoltage().
+        double currentVal = getPosition();
         System.out.println("Input: " + currentVal);
         System.out.println("Setpoint: " + potVal);
         if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
@@ -70,6 +70,10 @@ public class Arm implements Constants {
         Timer.delay(delayVal); //TODO:  Protect from /0 !
     }
 
+    /**
+     * Move the arm to a specific position based on an OI height button.
+     * @param butonNum The OI height button number pressed.
+     */
     public void setHeight(int buttonNum) {
         switch (buttonNum) {
             case SIDE_UPPER_BUTTON:
