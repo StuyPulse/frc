@@ -70,7 +70,7 @@ public class Autonomous implements Constants {
      * Follow line straight
      * Score
      */
-    private void auton1() {
+    private void auton1() { // TODO: Deploy wrist
         double time = Timer.getFPGATimestamp();
         while (!des.arm.setHeight(POT_MIDDLE_MIDDLE) && Timer.getFPGATimestamp() - time < 2
                 && des.isAutonomous() && des.isEnabled()) {

@@ -19,9 +19,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
+    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     DriveTrain drive;
     Arm arm;
-    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
 
@@ -30,6 +30,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick rightStick;
     Joystick armStick;
 
+    // Operator interface
     OperatorInterface oi;
 
     // Autonomous class
@@ -39,7 +40,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        //oi = new OperatorInterface(this);
+        oi = new OperatorInterface(this);
 
         arm = new Arm(this);
         grabber = new Grabber();
@@ -53,8 +54,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
         driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
         dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
         driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
@@ -103,7 +104,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
-                    0); // use gyro for field-oriented drive
+                    0,                 // use gyro for field-oriented drive
+                    true);
 
             // Button drive
 //            if (leftStick.getRawButton(3))
@@ -118,8 +120,10 @@ public class DESdroid extends SimpleRobot implements Constants {
 //                drive.mecanumDrive_Cartesian(0, 0, 0, 0);
 
             // Wrist servo
-            if (armStick.getRawButton(4))
+            if (armStick.getRawButton(6))
                 arm.wrist.set(0);
+            else if (armStick.getRawButton(7))
+                arm.wrist.set(1);
 
             // Arm control by OI
 //            arm.setHeight(oi.getHeightButton());

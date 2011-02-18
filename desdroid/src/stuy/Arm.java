@@ -102,6 +102,8 @@ public class Arm implements Constants {
             case GROUND_LEVEL_BUTTON:
                 setHeight(HEIGHT_GROUND_LEVEL);
                 break;
+            default:
+                // TODO: FINISH
         }
     }
 
