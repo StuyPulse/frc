@@ -45,9 +45,9 @@ public interface Constants {
     final int PORT_ARM_STICK                 = 3;
 
     // Thumbwheel switch
-    final int BIT_1_CHANNEL                  = 3;
+    final int BIT_1_CHANNEL                  = 1;
     final int BIT_2_CHANNEL                  = 2;
-    final int BIT_3_CHANNEL                  = 1;
+    final int BIT_3_CHANNEL                  = 3;
     final int BIT_4_CHANNEL                  = 4; // Least significant bit
 
     // Excpetion LED
