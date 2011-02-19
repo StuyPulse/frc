@@ -11,6 +11,17 @@ import edu.wpi.first.wpilibj.*;
  * @author blake
  */
 public class Arm implements Constants {
+    static final double LOWER_ARM_POT_LIM           = 0.46;
+    static final double UPPER_ARM_POT_LIM           = 2.64;
+    static final double POT_SIDE_BOTTOM             = 2.18;
+    static final double POT_SIDE_MIDDLE             = 1.46;
+    static final double POT_SIDE_TOP                = 0.72;
+    static final double POT_MIDDLE_BOTTOM           = 1.99;
+    static final double POT_MIDDLE_MIDDLE           = .8;
+    static final double POT_MIDDLE_TOP              = 0.21;
+    static final double POT_FEEDER_LEVEL            = 0; // TODO: Needs to be set.
+    static final double POT_GROUND_LEVEL            = 0;
+    static final double MAX_ARM_DELAY               = .4;
 
     DESdroid des;
     Victor armMotor;
@@ -50,8 +61,6 @@ public class Arm implements Constants {
      */
     public boolean setHeight(double potVal) {
         double currentVal = getPosition(); // TODO: Find range of getVoltage().
-        System.out.println("Input: " + currentVal);
-        System.out.println("Setpoint: " + potVal);
         if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
             armMotor.set(1);
         }
@@ -63,11 +72,9 @@ public class Arm implements Constants {
             return true;
         }
         double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
-        System.out.println("Rising: " + delayVal);
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         armMotor.set(0);
         delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
-        System.out.println("Falling: " + delayVal);
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         return false;
     }

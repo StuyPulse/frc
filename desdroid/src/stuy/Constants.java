@@ -34,6 +34,7 @@ public interface Constants {
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
 
+
     final int GYRO_CHANNEL                   = 4;
 
     // Analog input for arm potentiometer
@@ -98,17 +99,8 @@ public interface Constants {
     final int GROUND_LEVEL_LIGHT               = 6;
     final int EXTRA_BUTTON_LIGHT               = 8;
 
-    final double LOWER_ARM_POT_LIM           = 0.46;
-    final double UPPER_ARM_POT_LIM           = 2.64;
-    final double POT_SIDE_BOTTOM             = 2.18;
-    final double POT_SIDE_MIDDLE             = 1.46;
-    final double POT_SIDE_TOP                = 0.72;
-    final double POT_MIDDLE_BOTTOM           = 1.99;
-    final double POT_MIDDLE_MIDDLE           = .8;
-    final double POT_MIDDLE_TOP              = 0.21;
-    final double POT_FEEDER_LEVEL            = 0; // TODO: Needs to be set.
-    final double POT_GROUND_LEVEL            = 0;
-    final double MAX_ARM_DELAY               = .4;
+    //Arm Constants
+
 
     // Speed control
     final double SPEED_P                       = 0.00375;
@@ -120,20 +112,12 @@ public interface Constants {
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
     final double STRAIGHT_PROFILE[]     = {.2, .3, .4, .2, 0, 0, 0, 0};
 
-    // Gains and setpoint for the target feedback loop.  Not yet tuned.
-    final double PVAL                        = .5;
-    final double IVAL                        = 0;
-    final double DVAL                        = 0;
-    final double PID_SETPOINT                = 0;
-
 
     final int ENCODER_CODES_PER_REV          = 250;
 
-    // Arm position control
-    final double ARM_P                       = 0;
-    final double ARM_I                       = 0;
-    final double ARM_D                       = 0;
 
-    // "distance" per pulse, to make the Encoder class return getRate() in RPM
-    final double ENCODER_RPM_PER_PULSE       = 60.0 / ENCODER_CODES_PER_REV;
+
+    // "disntance" per pulse, to make the Encoder class return getRate() in RPM
+    final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
+
 }
