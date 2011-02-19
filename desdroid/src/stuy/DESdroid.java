@@ -55,6 +55,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
+        // Do NOT change the order of these constructors!
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
         dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
         driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
@@ -63,8 +64,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
         dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
         driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-
-
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
@@ -76,11 +75,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 driveRearLeft,
                 driveFrontRight,
                 driveRearRight);
-        
-
-       
-
-  
 
         auton = new Autonomous(this);
     }
@@ -120,13 +114,13 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             // Wrist servo
             if (armStick.getRawButton(6)) {
-                arm.wrist.set(0);
-            } else if (armStick.getRawButton(7)) {
-                arm.wrist.set(1);
+                arm.wrist.set(0); // Close latch
+            }
+            else if (armStick.getRawButton(7)) {
+                arm.wrist.set(1); // Open latch
             }
 
             // Arm control by OI
-            
             if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
                     threadend(positionController);
@@ -134,66 +128,23 @@ public class DESdroid extends SimpleRobot implements Constants {
                     positionController.start();
                     wasArmControlled = true;
                 }
-            } else {
+            }
+            else {
                 arm.rotate(armStick.getY());
                 wasArmControlled = false;
             }
-
-            /*
-=======
-//            if (oi.isHeightButtonPressed()) {
-//                arm.setHeight(oi.getHeightButton(), oi.getTrimAmount(0.5));
-//            }
-//            else {
-//                arm.rotate(armStick.getY());
-//            }
-
->>>>>>> 6dd04dbf60ffd8fffac6429a23ea107beff5b012
-            if (armStick.getRawButton(11)){
-            if(!wasArmControlled){
-                    threadend(positionController);
-                    positionController = new ArmController(Arm.POT_MIDDLE_TOP, this);
-                    positionController.start();
-                    wasArmControlled = true;
-                }
-
-            } else if (armStick.getRawButton(10)) {
-                if (!wasArmControlled) {
-                    threadend(positionController);
-                    positionController = new ArmController(Arm.POT_MIDDLE_MIDDLE, this);
-                    positionController.start();
-                    wasArmControlled = true;
-                }
-            } else if (armStick.getRawButton(9)) {
-                if (!wasArmControlled) {
-                    threadend(positionController);
-                    positionController = new ArmController(Arm.POT_MIDDLE_BOTTOM, this);
-                    positionController.start();
-                    wasArmControlled = true;
-                }
-
-            } else if (armStick.getRawButton(8)) {
-                threadend(positionController);
-                wasArmControlled=false;
-                System.out.println("Arm position" + arm.getPosition());
-            } else {
-                threadend(positionController);
-                wasArmControlled=false;
-                arm.rotate(armStick.getY());
-            } */
             
             // Grabber control
-            if (armStick.getTrigger()) {
+            if (armStick.getTrigger())
                 grabber.in();
-            } else if (armStick.getRawButton(2)) {
+            else if (armStick.getRawButton(2))
                 grabber.out();
-            } else if (armStick.getRawButton(4)) {
+            else if (armStick.getRawButton(4))
                 grabber.rotateUp();
-            } else if (armStick.getRawButton(5)) {
+            else if (armStick.getRawButton(5))
                 grabber.rotateDown();
-            } else {
+            else
                 grabber.stop();
-            }
         }
     }
 
@@ -224,7 +175,8 @@ public class DESdroid extends SimpleRobot implements Constants {
             driveFrontRight.c.enable();
             driveRearLeft.c.enable();
             driveRearRight.c.enable();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
