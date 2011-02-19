@@ -145,6 +145,10 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.rotateDown();
             else
                 grabber.stop();
+
+            if (leftStick.getTrigger()) {
+                System.out.println(arm.getPosition());
+            }
         }
     }
 
