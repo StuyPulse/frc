@@ -195,16 +195,6 @@ public class OperatorInterface implements Constants {
         }
     }
 
-    public void testLights() {
-        int i = 0;
-        while (true) {
-            setLight(i++);
-            if (i > 8)
-                i = 0;
-            Timer.delay(.1);
-        }
-    }
-
     public double getMaxVoltage() {
         try {
             return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);

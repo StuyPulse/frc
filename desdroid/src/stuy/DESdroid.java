@@ -33,7 +33,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick armStick;
 
     // Operator interface
-//    OperatorInterface oi;
+    OperatorInterface oi;
 
     // Autonomous class
     Autonomous auton;
@@ -49,7 +49,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-//        oi = new OperatorInterface(this);
+        oi = new OperatorInterface(this);
 
         arm = new Arm(this);
         grabber = new Grabber();
@@ -126,14 +126,16 @@ public class DESdroid extends SimpleRobot implements Constants {
                 arm.wrist.set(1);
 
             // Arm control by OI
-//            if (oi.isHeightButtonPressed()) {
-//                arm.setHeight(oi.getHeightButton(), oi.getTrimAmount(0.5));
-//            }
-//            else {
-//                arm.rotate(armStick.getY());
-//            }
+            if (oi.isHeightButtonPressed()) {
+                threadend(positionController);
+                positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
+                positionController.start();
+                wasArmControlled = true;
+            } else {
+                arm.rotate(armStick.getY());
+            }
 
-
+/*
             if (armStick.getRawButton(11)){
                 if(!wasArmControlled){
                     threadend(positionController);
@@ -165,7 +167,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 threadend(positionController);
                 wasArmControlled=false;
                 arm.rotate(armStick.getY());
-            }
+            } */
+            
             // Grabber control
             if (armStick.getTrigger())
                 grabber.in();
@@ -197,8 +200,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             drivePID[1] = SPEED_I;
             drivePID[2] = SPEED_D;
         }
-
-        System.out.println("PID:  " + drivePID[0] + "  " + drivePID[1] + "  " + drivePID[2]);
 
         try {
             driveFrontLeft.c.disable();

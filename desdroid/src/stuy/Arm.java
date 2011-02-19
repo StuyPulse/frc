@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.*;
  * @author blake
  */
 public class Arm implements Constants {
-    static final double LOWER_ARM_POT_LIM           = 0.46;
-    static final double UPPER_ARM_POT_LIM           = 2.64;
-    static final double POT_SIDE_BOTTOM             = 2.18;
-    static final double POT_SIDE_MIDDLE             = 1.46;
-    static final double POT_SIDE_TOP                = 0.72;
-    static final double POT_MIDDLE_BOTTOM           = 1.99;
-    static final double POT_MIDDLE_MIDDLE           = .8;
-    static final double POT_MIDDLE_TOP              = 0.21;
-    static final double POT_FEEDER_LEVEL            = 0; // TODO: Needs to be set.
-    static final double POT_GROUND_LEVEL            = 0;
+    static final double LOWER_ARM_POT_LIM           = 2.14;
+    static final double UPPER_ARM_POT_LIM           = 4.62;
+    static final double POT_SIDE_BOTTOM             = 3.54;
+    static final double POT_SIDE_MIDDLE             = 3.01;
+    static final double POT_SIDE_TOP                = 2.38;
+    static final double POT_MIDDLE_BOTTOM           = 3.47;
+    static final double POT_MIDDLE_MIDDLE           = 2.87;
+    static final double POT_MIDDLE_TOP              = 2.14;
+    static final double POT_FEEDER_LEVEL            = 3.52;
+    static final double POT_GROUND_LEVEL            = 4.44;
     static final double MAX_ARM_DELAY               = .4;
 
     DESdroid des;
