@@ -71,7 +71,16 @@ public class Autonomous implements Constants {
      * Score
      */
     private void auton1() { // TODO: Deploy wrist
+        des.grabber.in();
+        des.arm.wrist.set(1);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
+        des.grabber.stop();
+        des.grabber.rotateDown();
+        Timer.delay(.2);
+        des.grabber.stop();
         double time = Timer.getFPGATimestamp();
+
         while (!des.arm.setHeight(Arm.POT_MIDDLE_MIDDLE) && Timer.getFPGATimestamp() - time < 2
                 && des.isAutonomous() && des.isEnabled()) {
         }
@@ -228,8 +237,7 @@ public class Autonomous implements Constants {
         // different to let the robot drive more slowly as the robot approaches
         // the fork on the forked line case.
         double powerProfile[];   // the selected power profile
-//        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
-        powerProfile = (straightLine) ? FileIO.getArray("straightProfile.txt") : FileIO.getArray("forkProfile.txt");
+        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
         double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
 
         boolean atCross = false; // if robot has arrived at end
@@ -243,7 +251,7 @@ public class Autonomous implements Constants {
         double speed, turn;
 
         // loop until robot reaches "T" at end or 8 seconds has past
-        while ((time = timer.get()) < 8.0 && !atCross) {
+        while ((time = timer.get()) < powerProfile.length && !atCross) {
             int timeInSeconds = (int) time;
             updateSensorValues();
             binaryValue = binaryValue(goLeft);

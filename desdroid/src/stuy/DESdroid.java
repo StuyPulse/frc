@@ -204,15 +204,10 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void updatePID() {
         double drivePID[];
 
-        try {
-            drivePID = FileIO.getArray("drive_PID_values.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-            drivePID = new double[3];
-            drivePID[0] = SPEED_P;
-            drivePID[1] = SPEED_I;
-            drivePID[2] = SPEED_D;
-        }
+        drivePID = new double[3];
+        drivePID[0] = SPEED_P;
+        drivePID[1] = SPEED_I;
+        drivePID[2] = SPEED_D;
 
         try {
             driveFrontLeft.c.disable();
