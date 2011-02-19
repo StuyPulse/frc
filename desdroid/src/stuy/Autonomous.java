@@ -76,7 +76,7 @@ public class Autonomous implements Constants {
         Timer.delay(1);
         des.arm.wrist.set(0);
         des.grabber.stop();
-        des.grabber.rotateDown();
+        des.grabber.rotateUp();
         Timer.delay(.2);
         des.grabber.stop();
         double time = Timer.getFPGATimestamp();
