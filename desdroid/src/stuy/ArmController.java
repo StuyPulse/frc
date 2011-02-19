@@ -21,28 +21,28 @@ public class ArmController extends Thread implements Constants {
         des = d;
                 switch (buttonNum) {
             case SIDE_UPPER_BUTTON:
-                setpoint = Arm.POT_SIDE_TOP + trimAmount;
+                setpoint = Arm.POT_SIDE_TOP - trimAmount;
                 break;
             case SIDE_MIDDLE_BUTTON:
-                setpoint = Arm.POT_SIDE_MIDDLE + trimAmount;
+                setpoint = Arm.POT_SIDE_MIDDLE - trimAmount;
                 break;
             case SIDE_LOWER_BUTTON:
-                setpoint = Arm.POT_SIDE_BOTTOM + trimAmount;
+                setpoint = Arm.POT_SIDE_BOTTOM - trimAmount;
                 break;
             case CENTER_UPPER_BUTTON:
-                setpoint = Arm.POT_MIDDLE_TOP + trimAmount;
+                setpoint = Arm.POT_MIDDLE_TOP - trimAmount;
                 break;
             case CENTER_MIDDLE_BUTTON:
-                setpoint = Arm.POT_MIDDLE_MIDDLE + trimAmount;
+                setpoint = Arm.POT_MIDDLE_MIDDLE - trimAmount;
                 break;
             case CENTER_LOWER_BUTTON:
-                setpoint = Arm.POT_MIDDLE_BOTTOM + trimAmount;
+                setpoint = Arm.POT_MIDDLE_BOTTOM - trimAmount;
                 break;
             case FEEDER_LEVEL_BUTTON:
-                setpoint = Arm.POT_FEEDER_LEVEL + trimAmount;
+                setpoint = Arm.POT_FEEDER_LEVEL - trimAmount;
                 break;
             case GROUND_LEVEL_BUTTON:
-                setpoint = Arm.POT_GROUND_LEVEL + trimAmount;
+                setpoint = Arm.POT_GROUND_LEVEL - trimAmount;
                 break;
         }
     }
@@ -58,7 +58,7 @@ public class ArmController extends Thread implements Constants {
             double currentVal = des.arm.getPosition(); // TODO: Find range of getVoltage().
             if (currentVal - setpoint > 0.005 && currentVal > Arm.LOWER_ARM_POT_LIM) {
                 des.arm.armMotor.set(1);
-            } else if (currentVal - setpoint < -0.01 && currentVal < Arm.UPPER_ARM_POT_LIM) {
+            } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {
                 des.arm.armMotor.set(-1);
             } else {
                 des.arm.armMotor.set(0);
@@ -67,10 +67,10 @@ public class ArmController extends Thread implements Constants {
             double delayVal = Arm.MAX_ARM_DELAY * Math.abs(des.arm.getPosition() - setpoint);
             Timer.delay(delayVal);
             des.arm.armMotor.set(0);
-            double denom = Math.abs(des.arm.getPosition() - setpoint);
-            
-            if (denom != 0) {
-                delayVal = Arm.MAX_ARM_DELAY / denom;
+            try {
+                delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
+            } catch (Exception e) {
+                //Do nothing 
             }
             Timer.delay(delayVal); //TODO:  Protect from /0 !
 
