@@ -35,7 +35,7 @@ public class VictorSpeed implements SpeedController, Constants {
         c = new PIDController(SPEED_P, SPEED_I, SPEED_D, e, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
         c.setOutputRange(-1, 1);
-//        c.enable();
+         c.enable();
     }
 
     public VictorSpeed(int encoderAChannel, int encoderBChannel, boolean reverse) {
