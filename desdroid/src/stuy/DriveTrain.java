@@ -87,6 +87,7 @@ public class DriveTrain extends RobotDrive {
 
 
     public void updateWeightGains() {
+        weightGains = new double[4];
         weightGains[0]=1;
         weightGains[1]=1;
         weightGains[2]=1.05;

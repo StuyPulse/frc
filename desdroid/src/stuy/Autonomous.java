@@ -247,12 +247,12 @@ public class Autonomous implements Constants {
         timer.start();
         timer.reset();
 
-        double time;
-        double speed, turn;
+        double time = Timer.getFPGATimestamp();
+        double speed, turn, currentTime;
 
         // loop until robot reaches "T" at end or 8 seconds has past
-        while (((time = timer.get()) < powerProfile.length) && (!atCross) && (des.getAvgDistance()<200.0)&&des.isAutonomous()&&des.isEnabled()) {
-            int timeInSeconds = (int) time;
+        while (((currentTime = (Timer.getFPGATimestamp() - time)) < powerProfile.length) && (!atCross) && (des.getAvgDistance()<200.0)&&des.isAutonomous()&&des.isEnabled()) {
+            int timeInSeconds = (int) currentTime;
             updateSensorValues();
             binaryValue = binaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;

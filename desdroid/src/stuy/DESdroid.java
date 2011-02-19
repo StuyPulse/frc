@@ -149,7 +149,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
 
             if (leftStick.getTrigger()) {
-                System.out.println(arm.getPosition());
+                System.out.println(getAvgDistance());
             }
         }
     }

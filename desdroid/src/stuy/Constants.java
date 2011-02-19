@@ -114,7 +114,7 @@ public interface Constants {
     //final double STRAIGHT_PROFILE[]     = {.1, .1, .1, .1, 0, 0, 0, 0};
 
 
-    final int ENCODER_CODES_PER_REV          = 250;
+    final double ENCODER_CODES_PER_REV          = 250.0;
 
 
 
