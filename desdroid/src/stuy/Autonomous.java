@@ -251,7 +251,7 @@ public class Autonomous implements Constants {
         double speed, turn;
 
         // loop until robot reaches "T" at end or 8 seconds has past
-        while ((time = timer.get()) < powerProfile.length && !atCross) {
+        while (((time = timer.get()) < powerProfile.length) && (!atCross) && (des.getAvgDistance()<200.0)&&des.isAutonomous()&&des.isEnabled()) {
             int timeInSeconds = (int) time;
             updateSensorValues();
             binaryValue = binaryValue(goLeft);

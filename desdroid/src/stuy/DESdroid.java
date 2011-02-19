@@ -83,10 +83,12 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        
         getWatchdog().setEnabled(false);
 
 //        auton.run(oi.getAutonSetting());
         auton.run(1);
+
     }
 
     /**
@@ -190,6 +192,18 @@ public class DESdroid extends SimpleRobot implements Constants {
                 elliot.end();
     }
 
+public double getAvgDistance(){
+    double avg= 0;
+    avg+=driveFrontLeft.e.getDistance();
+    avg-=driveFrontRight.e.getDistance();
+    avg+=driveRearLeft.e.getDistance();
+    avg-=driveRearRight.e.getDistance();
+    avg/=4.0;
+    avg*=Math.PI;
+    avg/=10.0;
 
+    return avg;
+
+}
     
 }
