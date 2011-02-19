@@ -16,6 +16,9 @@ public class Autonomous implements Constants {
     DESdroid des;
     int leftValue, middleValue, rightValue;
 
+    final double CENTER_UPPER_LINE_DIST = 200;  // set these
+    final double CENTER_MIDDLE_LINE_DIST = 150; // set these
+
     /**
      * Autonomous constructor.
      * @param d DESdroid instance to control robot components.
@@ -68,7 +71,7 @@ public class Autonomous implements Constants {
     /**
      * Raise arm
      * Follow line straight
-     * Score
+     * Score center/middle
      */
     private void auton1() { // TODO: Deploy wrist
         des.grabber.in();
@@ -85,7 +88,7 @@ public class Autonomous implements Constants {
                 && des.isAutonomous() && des.isEnabled()) {
         }
         if (des.isAutonomous() && des.isEnabled()) {
-            lineTrack(true, false, 200);
+            lineTrack(true, false, CENTER_MIDDLE_LINE_DIST);
         }
         des.grabber.out();
         Timer.delay(1);
@@ -94,19 +97,29 @@ public class Autonomous implements Constants {
 
     /**
      * Raise arm
-     * Follow line left
-     * Score
+     * Follow line straight
+     * Score top
      */
     private void auton2() {
-        des.arm.setHeight(0);
-        lineTrack(false, true, 200);
-        des.grabber.out();
-        Timer.delay(2);
+        des.grabber.in();
+        des.arm.wrist.set(1);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
         des.grabber.stop();
+        des.grabber.rotateUp();
+        Timer.delay(.2);
+        des.grabber.stop();
+        double time = Timer.getFPGATimestamp();
 
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
+        while (!des.arm.setHeight(Arm.POT_MIDDLE_TOP) && Timer.getFPGATimestamp() - time < 2
+                && des.isAutonomous() && des.isEnabled()) {
+        }
+        if (des.isAutonomous() && des.isEnabled()) {
+            lineTrack(true, false, CENTER_UPPER_LINE_DIST);
+        }
+        des.grabber.out();
+        Timer.delay(1);
+        des.grabber.stop();
     }
 
     /**
