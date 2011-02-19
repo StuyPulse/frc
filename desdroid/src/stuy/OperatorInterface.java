@@ -47,11 +47,11 @@ public class OperatorInterface implements Constants {
     }
 
     /**
-     * Sets the error light.
+     * Sets the error light. True turns it on.
      */
     public void setStuffsBrokenLED(boolean val) {
         try {
-            enhancedIO.setDigitalOutput(ERROR_LED, val);
+            enhancedIO.setDigitalOutput(ERROR_LED, !val);
         }
         catch (EnhancedIOException e) {
             System.out.println("Error LED is broken.");

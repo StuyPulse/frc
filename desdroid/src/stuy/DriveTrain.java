@@ -87,7 +87,12 @@ public class DriveTrain extends RobotDrive {
 
 
     public void updateWeightGains() {
-        weightGains = FileIO.getArray("weight_gains.txt");
+        weightGains = new double[4];
+        weightGains[0] = 1;
+        weightGains[1] = 1;
+        weightGains[2] = 1.05;
+        weightGains[3] = 1.05;
+//        weightGains = FileIO.getArray("weight_gains.txt");
     }
 
     /**

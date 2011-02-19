@@ -43,6 +43,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     boolean wasEnabledOnce = false;
     boolean wasArmControlled = false;
     ArmController positionController;
+
     /**
      * DESdroid constructor.
      */
@@ -77,6 +78,14 @@ public class DESdroid extends SimpleRobot implements Constants {
                 driveRearRight);
 
         auton = new Autonomous(this);
+    }
+
+    /**
+     * Turns off OI lights when the robot is disabled.
+     */
+    public void disabled() {
+        oi.lightsOff();
+        oi.setStuffsBrokenLED(false);
     }
 
     /**
