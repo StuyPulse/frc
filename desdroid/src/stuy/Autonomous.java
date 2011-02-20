@@ -261,7 +261,7 @@ public class Autonomous implements Constants {
 
         // loop until robot reaches "T" at end or passes the full distance
         while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
-                && Timer.getFPGATimestamp() - startTime > 5) {
+                && Timer.getFPGATimestamp() - startTime < 5) {
             
             int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
             updateSensorValues();
