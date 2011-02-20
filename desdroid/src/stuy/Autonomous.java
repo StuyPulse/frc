@@ -16,6 +16,9 @@ public class Autonomous implements Constants {
     DESdroid des;
     int leftValue, middleValue, rightValue;
 
+    final double CENTER_UPPER_LINE_DIST = 200;  // set these
+    final double CENTER_MIDDLE_LINE_DIST = 150; // set these
+
     /**
      * Autonomous constructor.
      * @param d DESdroid instance to control robot components.
@@ -68,7 +71,7 @@ public class Autonomous implements Constants {
     /**
      * Raise arm
      * Follow line straight
-     * Score
+     * Score center/middle
      */
     private void auton1() { // TODO: Deploy wrist
         des.grabber.in();
@@ -85,7 +88,7 @@ public class Autonomous implements Constants {
                 && des.isAutonomous() && des.isEnabled()) {
         }
         if (des.isAutonomous() && des.isEnabled()) {
-            lineTrack(true, false);
+            lineTrack(true, false, CENTER_MIDDLE_LINE_DIST);
         }
         des.grabber.out();
         Timer.delay(1);
@@ -94,19 +97,29 @@ public class Autonomous implements Constants {
 
     /**
      * Raise arm
-     * Follow line left
-     * Score
+     * Follow line straight
+     * Score top
      */
     private void auton2() {
-        des.arm.setHeight(0);
-        lineTrack(false, true);
-        des.grabber.out();
-        Timer.delay(2);
+        des.grabber.in();
+        des.arm.wrist.set(1);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
         des.grabber.stop();
+        des.grabber.rotateUp();
+        Timer.delay(.2);
+        des.grabber.stop();
+        double time = Timer.getFPGATimestamp();
 
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
+        while (!des.arm.setHeight(Arm.POT_MIDDLE_TOP) && Timer.getFPGATimestamp() - time < 2
+                && des.isAutonomous() && des.isEnabled()) {
+        }
+        if (des.isAutonomous() && des.isEnabled()) {
+            lineTrack(true, false, CENTER_UPPER_LINE_DIST);
+        }
+        des.grabber.out();
+        Timer.delay(1);
+        des.grabber.stop();
     }
 
     /**
@@ -116,7 +129,7 @@ public class Autonomous implements Constants {
      */
     private void auton3() {
         des.arm.setHeight(0);
-        lineTrack(false, false);
+        lineTrack(false, false, 200);
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
@@ -142,7 +155,7 @@ public class Autonomous implements Constants {
      * goes forward to peg
      */
     public void auton5() {
-        lineTrack(false, false);
+        lineTrack(false, false, 200);
         goSpeed(-.1);
         Timer.delay(2);
         goSpeed(0);
@@ -164,7 +177,7 @@ public class Autonomous implements Constants {
      * goes forward into peg
      */
     public void auton6() {
-        lineTrack(true, false);
+        lineTrack(true, false, 200);
         goSpeed(-.1);
         Timer.delay(2);
         goSpeed(0);
@@ -188,7 +201,7 @@ public class Autonomous implements Constants {
      * goes forward into peg
      */
     public void auton7() {
-        lineTrack(false, true);
+        lineTrack(false, true, 200);
         goSpeed(-.1);
         Timer.delay(2);
         goSpeed(0);
@@ -226,7 +239,7 @@ public class Autonomous implements Constants {
      * @param straightLine Set to true to go straight.
      * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
      */
-    public void lineTrack(boolean straightLine, boolean goLeft) {
+    public void lineTrack(boolean straightLine, boolean goLeft, double distance) {
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -242,23 +255,21 @@ public class Autonomous implements Constants {
 
         boolean atCross = false; // if robot has arrived at end
 
-        // time the path over the line
-        Timer timer = new Timer();
-        timer.start();
-        timer.reset();
 
-        double time;
-        double speed, turn;
+        double speed, turn, currentDist;
+        double startTime = Timer.getFPGATimestamp();
 
-        // loop until robot reaches "T" at end or 8 seconds has past
-        while ((time = timer.get()) < powerProfile.length && !atCross) {
-            int timeInSeconds = (int) time;
+        // loop until robot reaches "T" at end or passes the full distance
+        while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
+                && Timer.getFPGATimestamp() - startTime > 5) {
+            
+            int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
             updateSensorValues();
             binaryValue = binaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
 
             // get the default speed and turn rate at this time
-            speed = powerProfile[timeInSeconds];
+            speed = powerProfile[distanceInterval];
             turn = 0;
 
             // different cases for different line tracking sensor readings
@@ -267,7 +278,7 @@ public class Autonomous implements Constants {
                     turn = 0;
                     break;
                 case 7:  // all sensors on (maybe at cross)
-                    if (time > stopTime) {
+                    if (Timer.getFPGATimestamp() > stopTime) {
                         atCross = true;
                         speed = 0;
                     }
