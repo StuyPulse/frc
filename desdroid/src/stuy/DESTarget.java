@@ -2,7 +2,6 @@ package stuy;
 
 import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.image.*;
 
 import edu.wpi.first.wpilibj.util.SortedVector;

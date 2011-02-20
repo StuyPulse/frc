@@ -23,7 +23,6 @@ public class Arm implements Constants {
     static final double POT_GROUND_LEVEL            = 4.44;
     static final double MAX_ARM_DELAY               = .4;
 
-    DESdroid des;
     Victor armMotor;
     AnalogChannel potentiometer;
     Servo wrist;
@@ -31,8 +30,7 @@ public class Arm implements Constants {
     /**
      * Arm constructor.
      */
-    public Arm(DESdroid d) {
-        des = d;
+    public Arm() {
         armMotor = new Victor(ARM_MOTOR_CHANNEL);
         potentiometer = new AnalogChannel(ARM_POT_CHANNEL);
         wrist = new Servo(WRIST_SERVO);

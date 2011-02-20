@@ -75,8 +75,6 @@ public interface Constants {
 
     // Array of binary values from 0 to 15
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
-    final String[] MONTHS_LIST               = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    final int[] BUTTON_LIGHT_TABLE           = {7, 6, 5, 4, 3, 2, 1, 0};
 
     // Height buttons
     final int SIDE_UPPER_BUTTON                = 7;

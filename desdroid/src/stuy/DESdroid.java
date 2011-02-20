@@ -7,7 +7,6 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
-import java.util.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,10 +25,12 @@ public class DESdroid extends SimpleRobot implements Constants {
     Arm arm;
     Grabber grabber;
     DigitalInput leftSensor, middleSensor, rightSensor;
+
     // Driver controls
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
+
     // Operator interface
     OperatorInterface oi;
 
@@ -48,9 +49,9 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface(this);
+        oi = new OperatorInterface();
 
-        arm = new Arm(this);
+        arm = new Arm();
         grabber = new Grabber();
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);

@@ -7,7 +7,6 @@ package stuy;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Handles input from the operator interface using the Cypress FirstTouch I/O module.
@@ -15,14 +14,12 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
-    DESdroid des;
 
     /**
      * Operator interface constructor, setting digital inputs pulled down.
      */
-    public OperatorInterface(DESdroid d) {
+    public OperatorInterface() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
-        des = d;
         try {
             enhancedIO.setDigitalConfig(ERROR_LED, DriverStationEnhancedIO.tDigitalConfig.kOutput);
 
