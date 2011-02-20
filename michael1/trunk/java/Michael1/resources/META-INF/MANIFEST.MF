@@ -1,6 +1,6 @@
-MIDlet-Name: Michael1Test
+MIDlet-Name: Michael1Demo
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: RobotTemplate, , edu.stuy.RobotTemplate
+MIDlet-1: Michael1, , edu.stuy.Michael1
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1
