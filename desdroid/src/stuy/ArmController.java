@@ -55,7 +55,7 @@ public class ArmController extends Thread implements Constants {
 
     public void run() {
         while (active) {
-            double currentVal = des.arm.getPosition(); // TODO: Find range of getVoltage().
+            double currentVal = des.arm.getPosition();
             if (currentVal - setpoint > 0.005 && currentVal > Arm.LOWER_ARM_POT_LIM) {
                 des.arm.armMotor.set(1);
             } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {

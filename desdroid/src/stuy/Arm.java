@@ -58,7 +58,7 @@ public class Arm implements Constants {
      * @param potVal The potentiometer value to set the arm to.
      */
     public boolean setHeight(double potVal) {
-        double currentVal = getPosition(); // TODO: Find range of getVoltage().
+        double currentVal = getPosition();
         if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
             armMotor.set(1);
         }
