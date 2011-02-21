@@ -181,8 +181,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 minibot.checkSwitch();
             }
 
-            minibot.checkSwitch();
-
             updateButtonLights();
 
             if (leftStick.getTrigger()) {
