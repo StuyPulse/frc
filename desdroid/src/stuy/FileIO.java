@@ -54,7 +54,7 @@ public class FileIO {
             c.close();
         }
         catch (IOException e) {
-            reportError("FILEIO", e);
+            reportError("FILEIO", e, "Could not get file contents");
         }
         return contents;
     }

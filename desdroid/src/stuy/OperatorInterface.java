@@ -40,7 +40,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
 
-            FileIO.reportError("OI", e);
+            FileIO.reportError("OI", e, "Failed to initialize operator interface");
+
         }
     }
 
@@ -52,8 +53,8 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalOutput(ERROR_LED, !val);
         }
         catch (EnhancedIOException e) {
-            setStuffsBrokenLED(true);
-            FileIO.reportError("OI", e);
+            //setStuffsBrokenLED(true); //RECURSION
+            FileIO.reportError("OI", e, "Failed to set stuffs broken LED");
         }
     }
     /**
@@ -92,7 +93,7 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
-            FileIO.reportError("OI", e);
+            FileIO.reportError("OI", e, "Failed to read from auton switch");
             return 4; // Do nothing in case of failure
         }
     }
@@ -104,7 +105,7 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
-            FileIO.reportError("OI", e);
+            FileIO.reportError("OI", e, "Failed to get height button");
             analogVoltage = 0;
         }
 //        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
@@ -117,7 +118,8 @@ public class OperatorInterface implements Constants {
             return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
         }
         catch (EnhancedIOException e) {
-            FileIO.reportError("OI", e);
+            FileIO.reportError("OI", e, "Failed to read height button input");
+            setStuffsBrokenLED(true);
             return 0;
         }
     }
@@ -133,6 +135,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             value = false;
+            FileIO.reportError("OI", e, "Failed to read minibot switch");
+            setStuffsBrokenLED(true);
         }
         return value;
     }
@@ -143,6 +147,8 @@ public class OperatorInterface implements Constants {
             value = !enhancedIO.getDigital(OI_WING_SWITCH_PORT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e, "Failed to read wing switch");
+            setStuffsBrokenLED(true);
             value = false;
         }
         return value;
@@ -155,6 +161,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             value = false;
+            FileIO.reportError("OI", e, "Failed to read extra button");
+            setStuffsBrokenLED(true);
         }
         return value;
     }
@@ -166,6 +174,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             potVoltage = 1.65;
+            FileIO.reportError("OI", e, "Failed to read trim pot");
+            setStuffsBrokenLED(true);
         }
         double trimAmount = (((potVoltage - (getMaxVoltage() / 2)) * 2) / getMaxVoltage()) * maxTrim;
         return trimAmount;
@@ -186,6 +196,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
 
+            FileIO.reportError("OI", e, "Failed to set button lights");
+            setStuffsBrokenLED(true);
         }
     }
 
@@ -194,7 +206,8 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalOutput(LIGHT_DISABLE_CHANNEL, true);
         }
         catch (EnhancedIOException e) {
-
+            FileIO.reportError("OI", e, "Failed to turn lights off");
+            setStuffsBrokenLED(true);
         }
     }
 
@@ -203,6 +216,8 @@ public class OperatorInterface implements Constants {
             return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e, "Failed to get max voltage");
+            setStuffsBrokenLED(true);
             return 2.2;
         }
     }
