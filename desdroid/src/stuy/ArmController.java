@@ -70,7 +70,8 @@ public class ArmController extends Thread implements Constants {
             try {
                 delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
-                //Do nothing 
+                des.oi.setStuffsBrokenLED(true);
+                FileIO.reportError("ARMCONTROLLER", e);
             }
             Timer.delay(delayVal); //TODO:  Protect from /0 !
 

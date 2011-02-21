@@ -10,6 +10,7 @@ import com.sun.squawk.microedition.io.FileConnection;
 import com.sun.squawk.util.StringTokenizer;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import javax.microedition.io.Connector;
 
 /**
@@ -19,6 +20,7 @@ import javax.microedition.io.Connector;
  * @author Kevin Wang
  */
 public class FileIO {
+    private static StringBuffer log = new StringBuffer("");
 
     /**
      * Returns the contents of a file on the root directory of the cRIO, getting rid of comments and trimming whitespace.
@@ -52,7 +54,7 @@ public class FileIO {
             c.close();
         }
         catch (IOException e) {
-            System.out.println("Cannot get contents of " + url + ". Does this file exist?");
+            reportError("FILEIO", e);
         }
         return contents;
     }
@@ -71,5 +73,22 @@ public class FileIO {
             array[i++] = Double.parseDouble(st.nextToken());
         }
         return array;
+    }
+
+    public static void reportError(String context, Exception e) {
+        String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage();
+        log.append(message);
+    }
+
+    public static void writeLog() {
+        String url = "file:///competition.log";
+        try {
+            FileConnection c = (FileConnection) Connector.open(url);
+            OutputStreamWriter writer = new OutputStreamWriter(c.openOutputStream());
+            writer.write(log.toString());
+            c.close();
+        } catch (IOException e) {
+            //Do nothing
+        }
     }
 }

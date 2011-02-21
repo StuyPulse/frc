@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
-
+    
     /**
      * Operator interface constructor, setting digital inputs pulled down.
      */
@@ -39,7 +39,8 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(OI_EXTRA_BUTTON_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Error initializing the operator interface.");
+
+            FileIO.reportError("OI", e);
         }
     }
 
@@ -51,7 +52,8 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalOutput(ERROR_LED, !val);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Error LED is broken.");
+            setStuffsBrokenLED(true);
+            FileIO.reportError("OI", e);
         }
     }
     /**
@@ -90,6 +92,7 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
+            FileIO.reportError("OI", e);
             return 4; // Do nothing in case of failure
         }
     }
@@ -100,6 +103,8 @@ public class OperatorInterface implements Constants {
             analogVoltage = enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
         }
         catch (EnhancedIOException e) {
+            setStuffsBrokenLED(true);
+            FileIO.reportError("OI", e);
             analogVoltage = 0;
         }
 //        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
@@ -112,6 +117,7 @@ public class OperatorInterface implements Constants {
             return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e);
             return 0;
         }
     }

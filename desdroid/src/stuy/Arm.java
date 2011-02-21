@@ -26,11 +26,13 @@ public class Arm implements Constants {
     Victor armMotor;
     AnalogChannel potentiometer;
     Servo wrist;
+    DESdroid des;
 
     /**
      * Arm constructor.
      */
-    public Arm() {
+    public Arm(DESdroid d) {
+        des = d;
         armMotor = new Victor(ARM_MOTOR_CHANNEL);
         potentiometer = new AnalogChannel(ARM_POT_CHANNEL);
         wrist = new Servo(WRIST_SERVO);
@@ -72,7 +74,12 @@ public class Arm implements Constants {
         double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         armMotor.set(0);
+        try {
         delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
+        } catch (Exception e) {
+            des.oi.setStuffsBrokenLED(true);
+            FileIO.reportError("ARM", e);
+        }
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         return false;
     }

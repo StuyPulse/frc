@@ -169,7 +169,7 @@ public class Autonomous implements Constants {
         boolean atCross = false; // if robot has arrived at end
 
 
-        double speed, turn, currentDist;
+        double speed, turn;
         double startTime = Timer.getFPGATimestamp();
 
         // loop until robot reaches "T" at end or passes the full distance

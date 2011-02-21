@@ -39,7 +39,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     Autonomous auton;
     
     double[] positions;
-    DESTrackerDashboard trackerDashboard;
     boolean isTargeting = false;
     boolean isOn = false;
     boolean wasEnabledOnce = false;
@@ -52,7 +51,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     public DESdroid() {
         oi = new OperatorInterface();
 
-        arm = new Arm();
+        arm = new Arm(this);
         grabber = new Grabber();
         minibot = new Minibot();
 
@@ -187,6 +186,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 System.out.println(getAvgDistance());
             }
         }
+        FileIO.writeLog();  //Save the log string
     }
 
     public void threadEnd(ArmController elliot) {

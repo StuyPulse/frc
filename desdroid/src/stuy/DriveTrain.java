@@ -62,23 +62,6 @@ public class DriveTrain extends RobotDrive {
         m_rearLeftMotor.set(kMaxRPM * wheelSpeeds[kRearLeft_val] * m_invertedMotors[kRearLeft_val] * m_maxOutput, syncGroup);
         m_rearRightMotor.set(kMaxRPM * wheelSpeeds[kRearRight_val] * m_invertedMotors[kRearRight_val] * m_maxOutput, syncGroup);
 
-        if (m_isCANInitialized) {
-            try {
-                CANJaguar.updateSyncGroup(syncGroup);
-            } catch (CANNotInitializedException e) {
-                m_isCANInitialized = false;
-            } catch (CANTimeoutException e) {
-
-            } catch (Exception e) {
-            System.out.println(e);
-            }
-
-
-        }
-
-        if (m_safetyHelper != null) {
-            m_safetyHelper.feed();
-        }
     }
 
     /**
