@@ -17,7 +17,7 @@ public class Autonomous implements Constants {
     int leftValue, middleValue, rightValue;
 
     final double CENTER_UPPER_LINE_DIST = 200;  // set these
-    final double CENTER_MIDDLE_LINE_DIST = 150; // set these
+    final double CENTER_MIDDLE_LINE_DIST = 180; // set these
 
     /**
      * Autonomous constructor.
