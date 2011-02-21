@@ -24,6 +24,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     Arm arm;
     Grabber grabber;
+    Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
 
     // Driver controls
@@ -53,6 +54,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         arm = new Arm();
         grabber = new Grabber();
+        minibot = new Minibot();
+
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
@@ -121,6 +124,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
 
+        boolean isMinibotDeployed = false;
+
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
@@ -162,6 +167,21 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.rotateDown();
             else
                 grabber.stop();
+
+            if (oi.getWingSwitch()) {
+                minibot.spreadWings();
+            }
+
+            if (oi.getMinibotSwitch()) {
+                minibot.deploy();
+                isMinibotDeployed = true;
+            }
+
+            if (isMinibotDeployed) {
+                minibot.checkSwitch();
+            }
+
+            minibot.checkSwitch();
 
             updateButtonLights();
 

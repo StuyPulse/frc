@@ -23,9 +23,14 @@ public interface Constants {
     final int GRABBER_LOWER_ROLLER_PORT      = 1;
     final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
-    final int MINIBOT_RELEASE_SERVO          = 4;
     final int WRIST_SERVO                    = 5;
     final int WING_SERVO                     = 6;
+
+    // Minibot deployment
+    final int TRAY_RELEASE_SERVO             = 0;
+    final int MINIBOT_RELEASE_SERVO          = 4;
+    final int MOTOR_TOGGLE_SERVO             = 0;
+    final int MINIBOT_SWITCH_PORT            = 0;
 
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
