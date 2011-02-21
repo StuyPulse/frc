@@ -51,19 +51,7 @@ public class Autonomous implements Constants {
             case 3:
                 auton3();
                 break;
-            case 4:
-                auton4();
-                break;
-            case 5:
-                auton5();
-                break;
-            case 6:
-                auton6();
-                break;
-            case 7:
-                auton7();
-                break;
-            case 8:
+            default:
                 break; // Do nothing.
         }
     }
@@ -132,101 +120,16 @@ public class Autonomous implements Constants {
         goSpeed(0);
     }
 
-    /**
-     * Raise arm
-     * Follow line right
-     * Score
-     */
-    private void auton3() {
-        des.arm.setHeight(0);
-        lineTrack(false, false, 200);
-        des.grabber.out();
-        Timer.delay(2);
-        des.grabber.stop();
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
 
     /**
      * Drop ubertube
      */
-    private void auton4() {
+    private void auton3() {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
     }
 
-    /**
-     * Follow line right
-     * moves back a little
-     * raises arm (fake)
-     * goes forward to peg
-     */
-    public void auton5() {
-        lineTrack(false, false, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
-
-    /**
-     * Follow line straight
-     * moves back
-     * raises arm (fake)
-     * goes forward into peg
-     */
-    public void auton6() {
-        lineTrack(true, false, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
-
-    /**
-     * Follow line left
-     * moves back
-     * raises arm (fake)
-     * goes forward into peg
-     */
-    public void auton7() {
-        lineTrack(false, true, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
 
     /**
      * Prints the values of the line tracking sensors.
