@@ -73,7 +73,7 @@ public class Autonomous implements Constants {
      * Follow line straight
      * Score center/middle
      */
-    private void auton1() { // TODO: Deploy wrist
+    private void auton1() {
         des.grabber.in();
         des.arm.wrist.set(1);
         Timer.delay(1);
@@ -93,6 +93,11 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
+
+        // Back up at the end
+        goSpeed(-1);
+        Timer.delay(1);
+        goSpeed(0);
     }
 
     /**
@@ -120,6 +125,11 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
+
+        // Back up at the end
+        goSpeed(-1);
+        Timer.delay(1);
+        goSpeed(0);
     }
 
     /**
@@ -313,15 +323,12 @@ public class Autonomous implements Constants {
     }
 
     /**
-     * Goes forward or backwards to have space in between the peg and the robot's
-     * bumper so we can raise the arm to score.
-     * @param direction Forward/backward-ness.  Forward = true
-     * the `magnitude' variable controls the speed
+     * Run the robot forward/backward
+     * @param speed -1 to 1, full forward = 1
      */
     private void goSpeed(double speed) {
 
         // mecanumDrive expects a negative joystick value for forward motion
-
-        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0);
+        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
     }
 }
