@@ -75,8 +75,8 @@ public class FileIO {
         return array;
     }
 
-    public static void reportError(String context, Exception e) {
-        String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage();
+    public static void reportError(String context, Exception e, String customMessage) {
+        String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
         log.append(message);
     }
 

@@ -83,7 +83,7 @@ public class Autonomous implements Constants {
         des.grabber.stop();
 
         // Back up at the end
-        goSpeed(-1);
+        goSpeed(-.5);
         Timer.delay(1);
         goSpeed(0);
     }
@@ -115,7 +115,7 @@ public class Autonomous implements Constants {
         des.grabber.stop();
 
         // Back up at the end
-        goSpeed(-1);
+        goSpeed(-.5);
         Timer.delay(1);
         goSpeed(0);
     }
