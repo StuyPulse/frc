@@ -71,7 +71,7 @@ public class ArmController extends Thread implements Constants {
                 delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
                 des.oi.setStuffsBrokenLED(true);
-                FileIO.reportError("ARMCONTROLLER", e);
+                FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
             Timer.delay(delayVal); //TODO:  Protect from /0 !
 

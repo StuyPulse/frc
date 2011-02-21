@@ -78,7 +78,7 @@ public class Arm implements Constants {
         delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
         } catch (Exception e) {
             des.oi.setStuffsBrokenLED(true);
-            FileIO.reportError("ARM", e);
+            FileIO.reportError("ARM", e, "Divided by zero in setHeight()");
         }
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         return false;
