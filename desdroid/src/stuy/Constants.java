@@ -108,8 +108,7 @@ public interface Constants {
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.2;
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
-    final double STRAIGHT_PROFILE[]     = {.3, .2, 0.1, 0};
-    //final double STRAIGHT_PROFILE[]     = {.1, .1, .1, .1, 0, 0, 0, 0};
+    final double STRAIGHT_PROFILE[]     = {.3, .2, .1, 0};
 
 
     final double ENCODER_CODES_PER_REV          = 250.0;

@@ -71,7 +71,15 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        updatePID();
+        driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+
+        driveFrontLeft.c.enable();
+        driveFrontRight.c.enable();
+        driveRearLeft.c.enable();
+        driveRearRight.c.enable();
 
         drive = new DriveTrain(driveFrontLeft,
                 driveRearLeft,
@@ -93,12 +101,10 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        
         getWatchdog().setEnabled(false);
 
 //        auton.run(oi.getAutonSetting());
         auton.run(1);
-
     }
 
     /**
@@ -107,14 +113,13 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
-        updatePID();
-
-        drive.updateWeightGains();
-
         driveFrontLeft.e.reset();
         driveFrontRight.e.reset();
         driveRearLeft.e.reset();
         driveRearRight.e.reset();
+        
+        oi.lightsOff();
+        oi.setStuffsBrokenLED(false);
 
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(
@@ -135,7 +140,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Arm control by OI
             if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
-                    threadend(positionController);
+                    threadEnd(positionController);
                     positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
                     positionController.start();
                     wasArmControlled = true;
@@ -158,62 +163,55 @@ public class DESdroid extends SimpleRobot implements Constants {
             else
                 grabber.stop();
 
+            updateButtonLights();
+
             if (leftStick.getTrigger()) {
                 System.out.println(getAvgDistance());
             }
         }
     }
 
+    public void threadEnd(ArmController elliot) {
+        if(elliot != null)
+            elliot.end();
+    }
+
+    public double getAvgDistance() {
+        double avg = 0;
+        avg += driveFrontLeft.e.getDistance();
+        avg -= driveFrontRight.e.getDistance();
+        avg += driveRearLeft.e.getDistance();
+        avg -= driveRearRight.e.getDistance();
+        avg /= 4.0;
+        avg *= Math.PI;
+        avg /= 10.0;
+
+        return avg;
+    }
+
     /**
-     * update PID values.  uses a text file drive_PID_values.txt that must be
-     * uploaded to the cRIO via ftp://10.6.94.2/ in the root directory.
+     * Lights a height button on the OI depending on the proximity of the arm to a height position.
      */
-    public void updatePID() {
-        double drivePID[];
-
-        drivePID = new double[3];
-        drivePID[0] = SPEED_P;
-        drivePID[1] = SPEED_I;
-        drivePID[2] = SPEED_D;
-
-        try {
-            driveFrontLeft.c.disable();
-            driveFrontRight.c.disable();
-            driveRearLeft.disable();
-            driveRearRight.disable();
-
-            driveFrontLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveFrontRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearLeft.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-            driveRearRight.c.setPID(drivePID[0], drivePID[1], drivePID[2]);
-
-            driveFrontLeft.c.enable();
-            driveFrontRight.c.enable();
-            driveRearLeft.c.enable();
-            driveRearRight.c.enable();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void updateButtonLights() {
+        double currentPosition = arm.getPosition();
+        
+        if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1)
+            oi.setLight(SIDE_LOWER_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1)
+            oi.setLight(SIDE_MIDDLE_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_SIDE_TOP) < 0.1)
+            oi.setLight(SIDE_UPPER_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_BOTTOM) < 0.1)
+            oi.setLight(CENTER_LOWER_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_MIDDLE) < 0.1)
+            oi.setLight(CENTER_MIDDLE_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_TOP) < 0.1)
+            oi.setLight(CENTER_UPPER_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_FEEDER_LEVEL) < 0.1)
+            oi.setLight(FEEDER_LEVEL_LIGHT);
+        else if(Math.abs(currentPosition - Arm.POT_GROUND_LEVEL) < 0.1)
+            oi.setLight(GROUND_LEVEL_LIGHT);
+        else
+            oi.lightsOff();
     }
-
-    public void threadend(ArmController elliot){
-        if(elliot!=null)
-                elliot.end();
-    }
-
-public double getAvgDistance(){
-    double avg= 0;
-    avg+=driveFrontLeft.e.getDistance();
-    avg-=driveFrontRight.e.getDistance();
-    avg+=driveRearLeft.e.getDistance();
-    avg-=driveRearRight.e.getDistance();
-    avg/=4.0;
-    avg*=Math.PI;
-    avg/=10.0;
-
-    return avg;
-
-}
-    
 }
