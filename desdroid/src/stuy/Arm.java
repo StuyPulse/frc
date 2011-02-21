@@ -23,10 +23,10 @@ public class Arm implements Constants {
     static final double POT_GROUND_LEVEL            = 4.44;
     static final double MAX_ARM_DELAY               = .4;
 
-    DESdroid des;
     Victor armMotor;
     AnalogChannel potentiometer;
     Servo wrist;
+    DESdroid des;
 
     /**
      * Arm constructor.
@@ -60,7 +60,7 @@ public class Arm implements Constants {
      * @param potVal The potentiometer value to set the arm to.
      */
     public boolean setHeight(double potVal) {
-        double currentVal = getPosition(); // TODO: Find range of getVoltage().
+        double currentVal = getPosition();
         if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
             armMotor.set(1);
         }
@@ -74,7 +74,12 @@ public class Arm implements Constants {
         double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         armMotor.set(0);
+        try {
         delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
+        } catch (Exception e) {
+            des.oi.setStuffsBrokenLED(true);
+            FileIO.reportError("ARM", e, "Divided by zero in setHeight()");
+        }
         Timer.delay(delayVal); //TODO:  Protect from /0 !
         return false;
     }

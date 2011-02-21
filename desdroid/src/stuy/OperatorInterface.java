@@ -7,7 +7,6 @@ package stuy;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO.EnhancedIOException;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Handles input from the operator interface using the Cypress FirstTouch I/O module.
@@ -15,14 +14,12 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
-    DESdroid des;
-
+    
     /**
      * Operator interface constructor, setting digital inputs pulled down.
      */
-    public OperatorInterface(DESdroid d) {
+    public OperatorInterface() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
-        des = d;
         try {
             enhancedIO.setDigitalConfig(ERROR_LED, DriverStationEnhancedIO.tDigitalConfig.kOutput);
 
@@ -42,19 +39,22 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(OI_EXTRA_BUTTON_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Error initializing the operator interface.");
+
+            FileIO.reportError("OI", e, "Failed to initialize operator interface");
+
         }
     }
 
     /**
-     * Sets the error light.
+     * Sets the error light. True turns it on.
      */
     public void setStuffsBrokenLED(boolean val) {
         try {
-            enhancedIO.setDigitalOutput(ERROR_LED, val);
+            enhancedIO.setDigitalOutput(ERROR_LED, !val);
         }
         catch (EnhancedIOException e) {
-            System.out.println("Error LED is broken.");
+            //setStuffsBrokenLED(true); //RECURSION
+            FileIO.reportError("OI", e, "Failed to set stuffs broken LED");
         }
     }
     /**
@@ -85,15 +85,16 @@ public class OperatorInterface implements Constants {
                 switchNum += binaryValue[i];
             }
 
-            if (switchNum > 8) {
-                switchNum = 8; // that getAutonSetting() doesn't return a nonexistent switchNum
+            if (switchNum > 4) {
+                switchNum = 4; // that getAutonSetting() doesn't return a nonexistent switchNum
             }
 
             return switchNum;
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
-            return 8; // Do nothing in case of failure
+            FileIO.reportError("OI", e, "Failed to read from auton switch");
+            return 4; // Do nothing in case of failure
         }
     }
 
@@ -103,6 +104,8 @@ public class OperatorInterface implements Constants {
             analogVoltage = enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
         }
         catch (EnhancedIOException e) {
+            setStuffsBrokenLED(true);
+            FileIO.reportError("OI", e, "Failed to get height button");
             analogVoltage = 0;
         }
 //        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
@@ -115,6 +118,8 @@ public class OperatorInterface implements Constants {
             return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e, "Failed to read height button input");
+            setStuffsBrokenLED(true);
             return 0;
         }
     }
@@ -130,6 +135,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             value = false;
+            FileIO.reportError("OI", e, "Failed to read minibot switch");
+            setStuffsBrokenLED(true);
         }
         return value;
     }
@@ -140,6 +147,8 @@ public class OperatorInterface implements Constants {
             value = !enhancedIO.getDigital(OI_WING_SWITCH_PORT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e, "Failed to read wing switch");
+            setStuffsBrokenLED(true);
             value = false;
         }
         return value;
@@ -152,6 +161,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             value = false;
+            FileIO.reportError("OI", e, "Failed to read extra button");
+            setStuffsBrokenLED(true);
         }
         return value;
     }
@@ -163,6 +174,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
             potVoltage = 1.65;
+            FileIO.reportError("OI", e, "Failed to read trim pot");
+            setStuffsBrokenLED(true);
         }
         double trimAmount = (((potVoltage - (getMaxVoltage() / 2)) * 2) / getMaxVoltage()) * maxTrim;
         return trimAmount;
@@ -183,6 +196,8 @@ public class OperatorInterface implements Constants {
         }
         catch (EnhancedIOException e) {
 
+            FileIO.reportError("OI", e, "Failed to set button lights");
+            setStuffsBrokenLED(true);
         }
     }
 
@@ -191,7 +206,8 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalOutput(LIGHT_DISABLE_CHANNEL, true);
         }
         catch (EnhancedIOException e) {
-
+            FileIO.reportError("OI", e, "Failed to turn lights off");
+            setStuffsBrokenLED(true);
         }
     }
 
@@ -200,6 +216,8 @@ public class OperatorInterface implements Constants {
             return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
         }
         catch (EnhancedIOException e) {
+            FileIO.reportError("OI", e, "Failed to get max voltage");
+            setStuffsBrokenLED(true);
             return 2.2;
         }
     }

@@ -55,7 +55,7 @@ public class ArmController extends Thread implements Constants {
 
     public void run() {
         while (active) {
-            double currentVal = des.arm.getPosition(); // TODO: Find range of getVoltage().
+            double currentVal = des.arm.getPosition();
             if (currentVal - setpoint > 0.005 && currentVal > Arm.LOWER_ARM_POT_LIM) {
                 des.arm.armMotor.set(1);
             } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {
@@ -70,7 +70,8 @@ public class ArmController extends Thread implements Constants {
             try {
                 delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
-                //Do nothing 
+                des.oi.setStuffsBrokenLED(true);
+                FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
             Timer.delay(delayVal); //TODO:  Protect from /0 !
 

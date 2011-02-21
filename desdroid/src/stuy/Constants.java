@@ -23,9 +23,14 @@ public interface Constants {
     final int GRABBER_LOWER_ROLLER_PORT      = 1;
     final int GRABBER_LIMIT_SWITCH_PORT      = 11;
 
-    final int MINIBOT_RELEASE_SERVO          = 4;
     final int WRIST_SERVO                    = 5;
     final int WING_SERVO                     = 6;
+
+    // Minibot deployment
+    final int TRAY_RELEASE_SERVO             = 0;
+    final int MINIBOT_RELEASE_SERVO          = 4;
+    final int MOTOR_TOGGLE_SERVO             = 0;
+    final int MINIBOT_SWITCH_PORT            = 0;
 
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
@@ -75,8 +80,6 @@ public interface Constants {
 
     // Array of binary values from 0 to 15
     final String[] DECIMAL_BINARY_TABLE      = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
-    final String[] MONTHS_LIST               = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    final int[] BUTTON_LIGHT_TABLE           = {7, 6, 5, 4, 3, 2, 1, 0};
 
     // Height buttons
     final int SIDE_UPPER_BUTTON                = 7;
@@ -110,8 +113,7 @@ public interface Constants {
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.2;
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
-    final double STRAIGHT_PROFILE[]     = {.3, .2, 0.1, 0};
-    //final double STRAIGHT_PROFILE[]     = {.1, .1, .1, .1, 0, 0, 0, 0};
+    final double STRAIGHT_PROFILE[]     = {.3, .2, .1, 0};
 
 
     final double ENCODER_CODES_PER_REV          = 250.0;

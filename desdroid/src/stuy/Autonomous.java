@@ -51,19 +51,7 @@ public class Autonomous implements Constants {
             case 3:
                 auton3();
                 break;
-            case 4:
-                auton4();
-                break;
-            case 5:
-                auton5();
-                break;
-            case 6:
-                auton6();
-                break;
-            case 7:
-                auton7();
-                break;
-            case 8:
+            default:
                 break; // Do nothing.
         }
     }
@@ -73,7 +61,7 @@ public class Autonomous implements Constants {
      * Follow line straight
      * Score center/middle
      */
-    private void auton1() { // TODO: Deploy wrist
+    private void auton1() {
         des.grabber.in();
         des.arm.wrist.set(1);
         Timer.delay(1);
@@ -93,6 +81,11 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
+
+        // Back up at the end
+        goSpeed(-.5);
+        Timer.delay(1);
+        goSpeed(0);
     }
 
     /**
@@ -120,103 +113,23 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
-    }
 
-    /**
-     * Raise arm
-     * Follow line right
-     * Score
-     */
-    private void auton3() {
-        des.arm.setHeight(0);
-        lineTrack(false, false, 200);
-        des.grabber.out();
-        Timer.delay(2);
-        des.grabber.stop();
-
-        goSpeed(-1);
-        Timer.delay(5);
+        // Back up at the end
+        goSpeed(-.5);
+        Timer.delay(1);
         goSpeed(0);
     }
+
 
     /**
      * Drop ubertube
      */
-    private void auton4() {
+    private void auton3() {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
     }
 
-    /**
-     * Follow line right
-     * moves back a little
-     * raises arm (fake)
-     * goes forward to peg
-     */
-    public void auton5() {
-        lineTrack(false, false, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
-
-    /**
-     * Follow line straight
-     * moves back
-     * raises arm (fake)
-     * goes forward into peg
-     */
-    public void auton6() {
-        lineTrack(true, false, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
-
-    /**
-     * Follow line left
-     * moves back
-     * raises arm (fake)
-     * goes forward into peg
-     */
-    public void auton7() {
-        lineTrack(false, true, 200);
-        goSpeed(-.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        // call arm raise here (get this from `arm' branch)
-        Timer.delay(2);
-
-        goSpeed(.1);
-        Timer.delay(2);
-        goSpeed(0);
-
-        goSpeed(-1);
-        Timer.delay(5);
-        goSpeed(0);
-    }
 
     /**
      * Prints the values of the line tracking sensors.
@@ -256,12 +169,12 @@ public class Autonomous implements Constants {
         boolean atCross = false; // if robot has arrived at end
 
 
-        double speed, turn, currentDist;
+        double speed, turn;
         double startTime = Timer.getFPGATimestamp();
 
         // loop until robot reaches "T" at end or passes the full distance
         while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
-                && Timer.getFPGATimestamp() - startTime > 5) {
+                && Timer.getFPGATimestamp() - startTime < 5) {
             
             int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
             updateSensorValues();
@@ -313,15 +226,12 @@ public class Autonomous implements Constants {
     }
 
     /**
-     * Goes forward or backwards to have space in between the peg and the robot's
-     * bumper so we can raise the arm to score.
-     * @param direction Forward/backward-ness.  Forward = true
-     * the `magnitude' variable controls the speed
+     * Run the robot forward/backward
+     * @param speed -1 to 1, full forward = 1
      */
     private void goSpeed(double speed) {
 
         // mecanumDrive expects a negative joystick value for forward motion
-
-        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0);
+        des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
     }
 }

@@ -3,7 +3,6 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.RobotDrive.*;
 import edu.wpi.first.wpilibj.can.*;
-import java.lang.Math;
 
 public class DriveTrain extends RobotDrive {
 
@@ -12,9 +11,8 @@ public class DriveTrain extends RobotDrive {
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
     static int kMaxRPM = 700;
-    //static int kMaxRPM = 1;
 
-    double[] weightGains; // 4 weight gains
+    double[] weightGains = {1, 1, 1.05, 1.05}; // 4 weight gains
 
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
@@ -27,8 +25,6 @@ public class DriveTrain extends RobotDrive {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         setInvertedMotor(MotorType.kFrontRight, true);
         setInvertedMotor(MotorType.kRearRight, true);
-        
-        updateWeightGains();
     }
 
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle, boolean deadband) {
@@ -66,34 +62,6 @@ public class DriveTrain extends RobotDrive {
         m_rearLeftMotor.set(kMaxRPM * wheelSpeeds[kRearLeft_val] * m_invertedMotors[kRearLeft_val] * m_maxOutput, syncGroup);
         m_rearRightMotor.set(kMaxRPM * wheelSpeeds[kRearRight_val] * m_invertedMotors[kRearRight_val] * m_maxOutput, syncGroup);
 
-        if (m_isCANInitialized) {
-            try {
-                CANJaguar.updateSyncGroup(syncGroup);
-            } catch (CANNotInitializedException e) {
-                m_isCANInitialized = false;
-            } catch (CANTimeoutException e) {
-
-            } catch (Exception e) {
-            System.out.println(e);
-            }
-
-
-        }
-
-        if (m_safetyHelper != null) {
-            m_safetyHelper.feed();
-        }
-    }
-
-
-    public void updateWeightGains() {
-        weightGains = new double[4];
-        weightGains[0]=1;
-        weightGains[1]=1;
-        weightGains[2]=1.05;
-        weightGains[3]=1.05;
-
-        //weightGains = FileIO.getArray("weight_gains.txt");
     }
 
     /**

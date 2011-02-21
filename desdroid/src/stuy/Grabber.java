@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package stuy;
 
 import edu.wpi.first.wpilibj.*;
@@ -21,23 +20,17 @@ public class Grabber implements Constants {
      * Grabber constructor.
      */
     public Grabber() {
-      upperRoller = new Victor(GRABBER_UPPER_ROLLER_PORT);
-      lowerRoller = new Victor(GRABBER_LOWER_ROLLER_PORT);
-      limitSwitch = new DigitalInput(GRABBER_LIMIT_SWITCH_PORT);
+        upperRoller = new Victor(GRABBER_UPPER_ROLLER_PORT);
+        lowerRoller = new Victor(GRABBER_LOWER_ROLLER_PORT);
+        limitSwitch = new DigitalInput(GRABBER_LIMIT_SWITCH_PORT);
     }
 
     /**
      * Intake the tube.
      */
     public void in() {
-        if (limitSwitch.get()) {
-            upperRoller.set(-1);
-            lowerRoller.set(1);
-        }
-        else {
-            upperRoller.set(0);
-            lowerRoller.set(0);
-        }
+        upperRoller.set(-1);
+        lowerRoller.set(1);
     }
 
     /**
@@ -71,7 +64,7 @@ public class Grabber implements Constants {
         upperRoller.set(0);
         lowerRoller.set(0);
     }
-    
+
     public boolean getLimitSwitch() {
         return limitSwitch.get();
     }
