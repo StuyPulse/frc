@@ -2,7 +2,6 @@ package stuy;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.RobotDrive.*;
-import edu.wpi.first.wpilibj.can.*;
 
 public class DriveTrain extends RobotDrive {
 
@@ -11,9 +10,7 @@ public class DriveTrain extends RobotDrive {
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
     static int kMaxRPM = 600;
-
     double[] weightGains = {1, 1, 1.05, 1.05}; // 4 weight gains
-
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
      * Scale the rest of the inputs to still allow for the full output range (-1 to 1)
@@ -21,7 +18,7 @@ public class DriveTrain extends RobotDrive {
     static double minJoystickValue = 0.1;
 
     public DriveTrain(SpeedController frontLeftMotor, SpeedController rearLeftMotor,
-            SpeedController frontRightMotor, SpeedController rearRightMotor) {
+                      SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         setInvertedMotor(MotorType.kFrontRight, true);
         setInvertedMotor(MotorType.kRearRight, true);
@@ -34,12 +31,11 @@ public class DriveTrain extends RobotDrive {
             xIn = scaleInput(x);
             yIn = scaleInput(y);
             rotation = scaleInput(rotation);
-        }
-        else {
+        } else {
             xIn = x;
             yIn = y;
         }
-        
+
         // Negate y for the joystick.
         yIn = -yIn;
         // Compenstate for gyro angle.
@@ -69,10 +65,11 @@ public class DriveTrain extends RobotDrive {
      * from a third input.
      */
     public void tankDrive3(double left, double right, double strafe) {
-        if (scaleInput(strafe) == 0)
+        if (scaleInput(strafe) == 0) {
             tankDrive(scaleInput(left), scaleInput(right));
-        else
+        } else {
             mecanumDrive_Cartesian(scaleInput(strafe), 0, 0, 0);
+        }
     }
 
     /**
