@@ -22,7 +22,7 @@ Autonomous.java
 DriveTrain.java
 [x] Stop importing edu.wpi.first.wpilibj.can.*;
 [x] Fix indentation in constructor
-    In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
+[x] In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
     In tankDrive3:  Improve comment to make clear that this is a gag
 
 OperatorInterface
