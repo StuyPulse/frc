@@ -124,6 +124,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         oi.setStuffsBrokenLED(false);
 
         boolean isMinibotDeployed = false;
+        minibot.reset();
 
         while (isEnabled() && isOperatorControl()) {
             drive.mecanumDrive_Cartesian(

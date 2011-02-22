@@ -27,10 +27,10 @@ public interface Constants {
     final int WING_SERVO                     = 6;
 
     // Minibot deployment
-    final int TRAY_RELEASE_SERVO             = 0;
-    final int MINIBOT_RELEASE_SERVO          = 4;
-    final int MOTOR_TOGGLE_SERVO             = 0;
-    final int MINIBOT_SWITCH_PORT            = 0;
+    final int TRAY_RELEASE_SERVO             = 3;
+    final int MINIBOT_RELEASE_SERVO          = 2;
+    final int MOTOR_TOGGLE_SERVO             = 1;
+    final int MINIBOT_SWITCH_PORT            = 3;
 
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
@@ -38,6 +38,8 @@ public interface Constants {
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
     final int HALOGEN_CHANNEL_A              = 4;
     final int HALOGEN_CHANNEL_B              = 5;
+
+    final int TUBE_ACQUIRED_LIGHT            = 1;
 
 
     final int GYRO_CHANNEL                   = 4;
