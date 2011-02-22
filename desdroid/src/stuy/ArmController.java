@@ -19,7 +19,7 @@ public class ArmController extends Thread implements Constants {
     public ArmController(DESdroid d, int buttonNum, double trimAmount) {
         active = true;
         des = d;
-                switch (buttonNum) {
+        switch (buttonNum) {
             case SIDE_UPPER_BUTTON:
                 setpoint = Arm.POT_SIDE_TOP - trimAmount;
                 break;
@@ -70,11 +70,9 @@ public class ArmController extends Thread implements Constants {
             try {
                 delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
-                des.oi.setStuffsBrokenLED(true);
                 FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
             Timer.delay(delayVal); //TODO:  Protect from /0 !
-
         }
 
     }
