@@ -29,7 +29,6 @@ OperatorInterface
     In constructor:  In catch:  turn stuff's broken LED on
     In setStuffsBroken:  Clarify comment
     Error LED blinks when in DEBUG MODE
-    In binary code:  switchnum += 1
     In binary:  Return -1 in catch
     Fix redundancy in getting voltage
     In getTrimAmount:  comment on magic number potVoltage
@@ -60,24 +59,9 @@ Constants.java
 Grabber.java 
     Code light sensors for acquiring
 
-
 TASKS:
-    Blake:  DriveTrain.java, VictorSpeed.java, ArmController.java
+    Blake:  DriveTrain.java, VictorSpeed.java 
     Alex:   DESdroid.java, Autonomous.java
-    Ariel:  
+    Kevin:  Grabber.java, ArmController.java
     Q:      Constants.java, Minibot.java
-    Peter:  OperatorInterface.java, FileIO.java, FileIO.ja
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Peter:  OperatorInterface.java, FileIO.java
