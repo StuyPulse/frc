@@ -15,8 +15,7 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-
-    final double CENTER_UPPER_LINE_DIST = 180;  // set these
+    final double CENTER_UPPER_LINE_DIST = 170;  // set these
     final double CENTER_MIDDLE_LINE_DIST = 180; // set these
 
     /**
@@ -62,32 +61,7 @@ public class Autonomous implements Constants {
      * Score center/middle
      */
     private void auton1() {
-        des.grabber.in();
-        des.arm.wrist.set(1);
-        Timer.delay(1);
-        des.arm.wrist.set(0);
-        des.grabber.stop();
-        des.grabber.rotateUp();
-        Timer.delay(.2);
-        des.grabber.stop();
-        double time = Timer.getFPGATimestamp();
-
-        ArmController armctl = new ArmController(des, CENTER_UPPER_BUTTON, 0);
-        armctl.start();
-
-        if (des.isAutonomous() && des.isEnabled()) {
-            lineTrack(true, false, CENTER_MIDDLE_LINE_DIST);
-        }
-        des.grabber.out();
-        Timer.delay(1);
-        des.grabber.stop();
-
-        DESdroid.threadEnd(armctl);
-
-        // Back up at the end
-        goSpeed(-.5);
-        Timer.delay(1);
-        goSpeed(0);
+        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON);
     }
 
     /**
@@ -96,33 +70,8 @@ public class Autonomous implements Constants {
      * Score top
      */
     private void auton2() {
-        des.grabber.in();
-        des.arm.wrist.set(1);
-        Timer.delay(1);
-        des.arm.wrist.set(0);
-        des.grabber.stop();
-        des.grabber.rotateUp();
-        Timer.delay(.2);
-        des.grabber.stop();
-        double time = Timer.getFPGATimestamp();
-
-        while (!des.arm.setHeight(Arm.POT_MIDDLE_TOP) && Timer.getFPGATimestamp() - time < 2
-                && des.isAutonomous() && des.isEnabled()) {
-        }
-        if (des.isAutonomous() && des.isEnabled()) {
-            lineTrack(true, false, CENTER_UPPER_LINE_DIST);
-        }
-        des.grabber.out();
-        Timer.delay(1);
-        des.grabber.stop();
-        Timer.delay(1);
-
-        // Back up at the end
-        goSpeed(-.5);
-        Timer.delay(1);
-        goSpeed(0);
+        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON);
     }
-
 
     /**
      * Drop ubertube
@@ -132,7 +81,6 @@ public class Autonomous implements Constants {
         Timer.delay(2);
         des.grabber.stop();
     }
-
 
     /**
      * Prints the values of the line tracking sensors.
@@ -180,7 +128,7 @@ public class Autonomous implements Constants {
         // loop until robot reaches "T" at end or passes the full distance
         while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
                 && Timer.getFPGATimestamp() - startTime < 5) {
-            
+
             int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
             updateSensorValues();
             binaryValue = binaryValue(goLeft);
@@ -238,5 +186,36 @@ public class Autonomous implements Constants {
 
         // mecanumDrive expects a negative joystick value for forward motion
         des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
+    }
+
+    private void score(double dist, int armButtonNum) {
+        des.grabber.in();
+        des.arm.wrist.set(1);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
+        des.grabber.stop();
+        des.grabber.rotateUp();
+        Timer.delay(.2);
+        des.grabber.stop();
+        double time = Timer.getFPGATimestamp();
+
+        ArmController armctl = new ArmController(des, armButtonNum, 0);
+        armctl.start();
+
+        if (des.isAutonomous() && des.isEnabled()) {
+            lineTrack(true, false, dist);
+        }
+
+        DESdroid.threadEnd(armctl);
+        
+        des.grabber.out();
+        Timer.delay(1);
+        des.grabber.stop();
+        Timer.delay(1);
+
+        // Back up at the end
+        goSpeed(-.5);
+        Timer.delay(1);
+        goSpeed(0);
     }
 }
