@@ -2,7 +2,7 @@ package stuy;
 
 public interface Constants {
 
-    // Robot output configuration
+    // Robot output configuration channels
     final int CHANNEL_FRONT_LEFT             = 7;
     final int CHANNEL_FRONT_RIGHT            = 9;
     final int CHANNEL_REAR_LEFT              = 8;
@@ -38,9 +38,6 @@ public interface Constants {
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
 
     final int TUBE_ACQUIRED_LIGHT            = 1;
-
-
-    final int GYRO_CHANNEL                   = 4;
 
     // Analog input for arm potentiometer
     final int ARM_POT_CHANNEL                = 1;
@@ -102,9 +99,6 @@ public interface Constants {
     final int GROUND_LEVEL_LIGHT               = 6;
     final int EXTRA_BUTTON_LIGHT               = 8;
 
-    //Arm Constants
-
-
     // Speed control
     final double SPEED_P                       = 0.00365;
     final double SPEED_I                       = 0.00;
@@ -115,12 +109,7 @@ public interface Constants {
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
     final double STRAIGHT_PROFILE[]     = {.3, .3, .2, .2};
 
-
     final double ENCODER_CODES_PER_REV          = 250.0;
-
-
-
-    // "disntance" per pulse, to make the Encoder class return getRate() in RPM
     final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
-
+    // "distance" per pulse, to make the Encoder class return getRate() in RPM
 }
