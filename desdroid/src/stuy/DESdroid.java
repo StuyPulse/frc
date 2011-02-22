@@ -27,6 +27,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
 
+    Relay acquiredLight;
+
     // Driver controls
     Joystick leftStick;
     Joystick rightStick;
@@ -54,6 +56,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         arm = new Arm(this);
         grabber = new Grabber();
         minibot = new Minibot();
+
+        acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
@@ -183,6 +187,14 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             updateButtonLights();
+
+            // Turn on light when tube is in the grabber
+            if (grabber.getLimitSwitch()) {
+                acquiredLight.set(Relay.Value.kOn);
+            }
+            else {
+                acquiredLight.set(Relay.Value.kOff);
+            }
 
             if (leftStick.getTrigger()) {
                 System.out.println(getAvgDistance());
