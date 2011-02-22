@@ -20,44 +20,44 @@ Autonomous.java
     Default method deploys wrist
 
 DriveTrain.java
-[x] Stop importing edu.wpi.first.wpilibj.can.*;
-[x] Fix indentation in constructor
-[x] In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
-[x] In tankDrive3:  Improve comment to make clear that this is a gag
+    Stop importing edu.wpi.first.wpilibj.can.*;
+    Fix indentation in constructor
+    In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
+    In tankDrive3:  Improve comment to make clear that this is a gag
 
-OperatorInterface:
-[X]In constructor:  In catch:  turn stuff's broken LED on
-[X]In setStuffsBroken:  Clarify comment
-   Error LED blinks when in DEBUG MODE
-[X]in binary:  Return -1 in catch
-[X]redundancy in getting voltage
-[X]In getTrimAmount:  comment on magic number potVoltage
+OperatorInterface
+    In constructor:  In catch:  turn stuff's broken LED on
+    In setStuffsBroken:  Clarify comment
+    Error LED blinks when in DEBUG MODE
+    In binary:  Return -1 in catch
+    Fix redundancy in getting voltage
+    In getTrimAmount:  comment on magic number potVoltage
 
 FileIO.java
     Remove logging code >>> Off-Season Project Proposals
     Create DEBUG MODE 
 
 ArmController.java
-[x] In constructor:  Fix indentation
-[x] In run:  don't set stuffs broken LED
+    In constructor:  Fix indentation
+    In run:  don't set stuffs broken LED
 
 Minibot.java
-    Refactor 'deploy' to 'debroy'
-    Fix deploy routine
+    [x]Refactor 'deploy' to 'debroy'
+    [x]Fix deploy routine
 
 VictorSpeed.java
-[x] Get rid of DigitalInput fields
-[x] In constructors:  Clarify where & why we are lying
-[x] Remove commented code
-[x] Remove deprecated set method that uses syncGroup
+    Get rid of DigitalInput fields
+    In constructors:  Clarify where & why we are lying
+    Remove commented code
+    Remove deprecated set method that uses syncGroup
 
 Constants.java
-    Remove line 105
-    Remove deprecated fields
-    $$$$ Fix organization
+    [x]Remove line 105
+    [?]Remove deprecated fields
+    [x]$$$$ Fix organization
 
 Grabber.java 
-[x] Code light sensors for acquiring
+    Code light sensors for acquiring
 
 TASKS:
     Blake:  DriveTrain.java, VictorSpeed.java 
