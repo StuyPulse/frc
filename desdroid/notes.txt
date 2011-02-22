@@ -25,13 +25,13 @@ DriveTrain.java
 [x] In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
 [x] In tankDrive3:  Improve comment to make clear that this is a gag
 
-OperatorInterface
-    In constructor:  In catch:  turn stuff's broken LED on
-    In setStuffsBroken:  Clarify comment
-    Error LED blinks when in DEBUG MODE
-    In binary:  Return -1 in catch
-    Fix redundancy in getting voltage
-    In getTrimAmount:  comment on magic number potVoltage
+OperatorInterface:
+[X]In constructor:  In catch:  turn stuff's broken LED on
+[X]In setStuffsBroken:  Clarify comment
+   Error LED blinks when in DEBUG MODE
+[X]in binary:  Return -1 in catch
+[X]redundancy in getting voltage
+[X]In getTrimAmount:  comment on magic number potVoltage
 
 FileIO.java
     Remove logging code >>> Off-Season Project Proposals
