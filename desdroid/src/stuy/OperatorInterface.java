@@ -39,7 +39,6 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(OI_EXTRA_BUTTON_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         }
         catch (EnhancedIOException e) {
-
             FileIO.reportError("OI", e, "Failed to initialize operator interface");
 
         }
@@ -53,7 +52,7 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalOutput(ERROR_LED, !val);
         }
         catch (EnhancedIOException e) {
-            //setStuffsBrokenLED(true); //RECURSION
+            
             FileIO.reportError("OI", e, "Failed to set stuffs broken LED");
         }
     }
@@ -173,7 +172,7 @@ public class OperatorInterface implements Constants {
             potVoltage = enhancedIO.getAnalogIn(OI_TRIM_POT_PORT);
         }
         catch (EnhancedIOException e) {
-            potVoltage = 1.65;
+            potVoltage = 1.65;  // Magic number obtained through guessing.
             FileIO.reportError("OI", e, "Failed to read trim pot");
             setStuffsBrokenLED(true);
         }
