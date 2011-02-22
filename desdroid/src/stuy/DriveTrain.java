@@ -59,8 +59,9 @@ public class DriveTrain extends RobotDrive {
     }
 
     /**
-     * Drive the left and right sides like tank drive, plus horizontal strafing
-     * from a third input.
+     * This is a joke method, do not use :P
+     * Three joystick drive! Drive the left and right sides like tank drive,
+     * plus horizontal strafing from a third input.
      */
     public void tankDrive3(double left, double right, double strafe) {
         if (scaleInput(strafe) == 0) {

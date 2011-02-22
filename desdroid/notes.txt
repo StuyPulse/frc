@@ -23,7 +23,7 @@ DriveTrain.java
 [x] Stop importing edu.wpi.first.wpilibj.can.*;
 [x] Fix indentation in constructor
 [x] In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
-    In tankDrive3:  Improve comment to make clear that this is a gag
+[x] In tankDrive3:  Improve comment to make clear that this is a gag
 
 OperatorInterface
     In constructor:  In catch:  turn stuff's broken LED on
