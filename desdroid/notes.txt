@@ -38,8 +38,8 @@ FileIO.java
     Create DEBUG MODE 
 
 ArmController.java
-    In constructor:  Fix indentation
-    In run:  don't set stuffs broken LED
+[x] In constructor:  Fix indentation
+[x] In run:  don't set stuffs broken LED
 
 Minibot.java
     Refactor 'deploy' to 'debroy'
@@ -57,7 +57,7 @@ Constants.java
     $$$$ Fix organization
 
 Grabber.java 
-    Code light sensors for acquiring
+[x] Code light sensors for acquiring
 
 TASKS:
     Blake:  DriveTrain.java, VictorSpeed.java 
