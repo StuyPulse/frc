@@ -15,7 +15,7 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 170;  // set these
+    final double CENTER_UPPER_LINE_DIST = 175;  // set these
     final double CENTER_MIDDLE_LINE_DIST = 180; // set these
 
     /**
