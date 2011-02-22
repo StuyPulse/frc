@@ -137,7 +137,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                     leftStick.getY(), // Y translation (straight forward)
                     rightStick.getX(), // rotation (clockwise?)
                     0, // use gyro for field-oriented drive
-                    true);
+                    true);            // deadband the inputs?
 
             // Wrist servo
             if (armStick.getRawButton(6)) {

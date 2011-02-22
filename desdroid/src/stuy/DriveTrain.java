@@ -10,7 +10,7 @@ public class DriveTrain extends RobotDrive {
     int kFrontRight_val = 1;
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
-    static int kMaxRPM = 700;
+    static int kMaxRPM = 600;
 
     double[] weightGains = {1, 1, 1.05, 1.05}; // 4 weight gains
 

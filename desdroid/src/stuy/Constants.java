@@ -108,9 +108,9 @@ public interface Constants {
 
 
     // Speed control
-    final double SPEED_P                       = 0.0037;
+    final double SPEED_P                       = 0.00365;
     final double SPEED_I                       = 0.00;
-    final double SPEED_D                       = 0.000004;
+    final double SPEED_D                       = 0.000012;
 
     // Line Tracking
     final double DEFAULT_STEERING_GAIN  = 0.2;
