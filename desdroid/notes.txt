@@ -9,6 +9,7 @@ DESdroid.java
     Remove FileIO.writeLog()
     in getAvgDistance():  Comment on magic numbers
     Implement ThreeLaws
+    Allow slingshot to work w/o wing deployment
 
 Autonomous.java
     In auton1: fix isAutonomous && isEnabled
@@ -55,6 +56,10 @@ Constants.java
     Remove line 105
     Remove deprecated fields
     $$$$ Fix organization
+
+Grabber.java 
+    Code light sensors for acquiring
+
 
 TASKS:
     Blake:  DriveTrain.java, VictorSpeed.java, ArmController.java
