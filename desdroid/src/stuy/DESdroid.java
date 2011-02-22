@@ -54,6 +54,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         minibot = new Minibot();
 
         acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
+        acquiredLight.setDirection(Relay.Direction.kForward);
 
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
