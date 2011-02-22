@@ -73,6 +73,11 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
+        driveFrontLeft.c.disable();
+        driveFrontRight.c.disable();
+        driveRearLeft.c.disable();
+        driveRearRight.c.disable();
+
         driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
         driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
         driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
