@@ -15,17 +15,18 @@ public class VictorSpeed implements SpeedController, Constants {
     Encoder e;
     Victor v;
     PIDController c;
-    DigitalInput A, B;
     
     double lastTime;
 
+    /**
+     * Make an actual speed controller complete with a Victor, Encoder and PIDController
+     * @param victorChannel
+     * @param encoderAChannel
+     * @param encoderBChannel
+     * @param reverse
+     */
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
         v = new Victor(victorChannel);
-//        A= new DigitalInput(encoderAChannel);
-//        B= new DigitalInput(encoderBChannel);
-        /*
-         * ALL LIES WE ARE LYING TO U CRIO!
-         */
         
         e= new Encoder(4,encoderAChannel,4,encoderBChannel,reverse,CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
@@ -35,41 +36,38 @@ public class VictorSpeed implements SpeedController, Constants {
         c = new PIDController(SPEED_P, SPEED_I, SPEED_D, e, this);
         c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
         c.setOutputRange(-1, 1);
-         c.enable();
+        c.enable();
     }
 
+    /**
+     * Make a FAKE one just to construct dummy encoders.  Only the first, third,
+     * fifth and eighth encoders to be constructed will work properly when we
+     * call getRate(); this is an acknowledged bug in the NI software and requires
+     * us to make fake Encoders on a different slot.
+     * @param encoderAChannel
+     * @param encoderBChannel
+     * @param reverse
+     */
     public VictorSpeed(int encoderAChannel, int encoderBChannel, boolean reverse) {
         e = new Encoder(6,encoderAChannel, 6,encoderBChannel, reverse, CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
     }
-/*
-        c = new PIDController(PDRIVE, IDRIVE, DDRIVE, e, this);
-        c.setInputRange(-DriveTrain.kMaxRPM, DriveTrain.kMaxRPM);
-        c.setOutputRange(-1, 1);
-        c.enable();
-    }*/
     
     public void pidWrite(double output) {
         v.set(output);
     }
-    //public void free(){
-      //  e.free();
-    //}
-
-
-//    public double getRate() {
-//        boolean itsMyFirstTimeBeGentle;
-//        double timeDifference = Timer.getFPGATimestamp() - lastTime;
-//        lastTime = Timer.getFPGATimestamp();
-//        return timeDifference;
-//    }
 
     public void set(double speedRPM) {
         c.setSetpoint(speedRPM);
     }
 
+    /**
+     * Never call this method.  We need to have one in order to implement the
+     * SpeedController interface and pass this class into a DriveTrain, etc.,
+     * but we are using Victors which do not use syncGroups.
+     */
     public void set(double speed, byte syncGroup) {
         set(speed);
     }

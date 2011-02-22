@@ -20,10 +20,10 @@ Autonomous.java
     Default method deploys wrist
 
 DriveTrain.java
-    Stop importing edu.wpi.first.wpilibj.can.*;
-    Fix indentation in constructor
-    In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
-    In tankDrive3:  Improve comment to make clear that this is a gag
+[x] Stop importing edu.wpi.first.wpilibj.can.*;
+[x] Fix indentation in constructor
+[x] In mecanumDriveCartesian: Remove sycGroup set, remove syncGroup parameter in the set method
+[x] In tankDrive3:  Improve comment to make clear that this is a gag
 
 OperatorInterface:
 [X]In constructor:  In catch:  turn stuff's broken LED on
@@ -46,10 +46,10 @@ Minibot.java
     Fix deploy routine
 
 VictorSpeed.java
-    Get rid of DigitalInput fields
-    In constructors:  Clarify where & why we are lying
-    Remove commented code
-    Remove deprecated set method that uses syncGroup
+[x] Get rid of DigitalInput fields
+[x] In constructors:  Clarify where & why we are lying
+[x] Remove commented code
+[x] Remove deprecated set method that uses syncGroup
 
 Constants.java
     Remove line 105
