@@ -16,7 +16,7 @@ public class Autonomous implements Constants {
     DESdroid des;
     int leftValue, middleValue, rightValue;
 
-    final double CENTER_UPPER_LINE_DIST = 200;  // set these
+    final double CENTER_UPPER_LINE_DIST = 180;  // set these
     final double CENTER_MIDDLE_LINE_DIST = 180; // set these
 
     /**
@@ -72,15 +72,17 @@ public class Autonomous implements Constants {
         des.grabber.stop();
         double time = Timer.getFPGATimestamp();
 
-        while (!des.arm.setHeight(Arm.POT_MIDDLE_MIDDLE) && Timer.getFPGATimestamp() - time < 2
-                && des.isAutonomous() && des.isEnabled()) {
-        }
+        ArmController armctl = new ArmController(des, CENTER_UPPER_BUTTON, 0);
+        armctl.start();
+
         if (des.isAutonomous() && des.isEnabled()) {
             lineTrack(true, false, CENTER_MIDDLE_LINE_DIST);
         }
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
+
+        DESdroid.threadEnd(armctl);
 
         // Back up at the end
         goSpeed(-.5);
@@ -113,6 +115,7 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
+        Timer.delay(1);
 
         // Back up at the end
         goSpeed(-.5);
@@ -153,6 +156,8 @@ public class Autonomous implements Constants {
      * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
      */
     public void lineTrack(boolean straightLine, boolean goLeft, double distance) {
+
+        des.resetEncoders();
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors

@@ -110,8 +110,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void autonomous() {
         getWatchdog().setEnabled(false);
 
-//        auton.run(oi.getAutonSetting());
-        auton.run(1);
+        auton.run(oi.getAutonSetting());
+//        auton.run(1);
     }
 
     /**
@@ -119,11 +119,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
-        driveFrontLeft.e.reset();
-        driveFrontRight.e.reset();
-        driveRearLeft.e.reset();
-        driveRearRight.e.reset();
+        resetEncoders();
         
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
@@ -195,7 +191,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         FileIO.writeLog();  //Save the log string
     }
 
-    public void threadEnd(ArmController elliot) {
+    public void resetEncoders() {
+        driveFrontLeft.e.reset();
+        driveFrontRight.e.reset();
+        driveRearLeft.e.reset();
+        driveRearRight.e.reset();
+    }
+
+    public static void threadEnd(ArmController elliot) {
         if(elliot != null)
             elliot.end();
     }

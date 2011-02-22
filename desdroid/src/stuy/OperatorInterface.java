@@ -89,12 +89,12 @@ public class OperatorInterface implements Constants {
                 switchNum = 4; // that getAutonSetting() doesn't return a nonexistent switchNum
             }
 
-            return switchNum;
+            return switchNum + 1; // Because January is 1, not 0
         }
         catch (EnhancedIOException e) {
             setStuffsBrokenLED(true);
             FileIO.reportError("OI", e, "Failed to read from auton switch");
-            return 4; // Do nothing in case of failure
+            return -1; // Do nothing in case of failure
         }
     }
 
