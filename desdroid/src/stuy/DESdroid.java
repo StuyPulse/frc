@@ -40,10 +40,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     // Autonomous class
     Autonomous auton;
     
-    double[] positions;
-    boolean isTargeting = false;
-    boolean isOn = false;
-    boolean wasEnabledOnce = false;
     boolean wasArmControlled = false;
     ArmController positionController;
 
@@ -135,17 +131,10 @@ public class DESdroid extends SimpleRobot implements Constants {
             drive.mecanumDrive_Cartesian(
                     leftStick.getX(), // X translation (horizontal strafe)
                     leftStick.getY(), // Y translation (straight forward)
-                    rightStick.getX(), // rotation (clockwise?)
+                    rightStick.getX(), // rotation (getX() > 0 is clockwise)
                     0, // use gyro for field-oriented drive
                     true);            // deadband the inputs?
 
-            // Wrist servo
-            if (armStick.getRawButton(6)) {
-                arm.wrist.set(0); // Close latch
-            }
-            else if (armStick.getRawButton(7)) {
-                arm.wrist.set(1); // Open latch
-            }
 
             // Arm control by OI
             if (oi.isHeightButtonPressed()) {
@@ -196,9 +185,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 acquiredLight.set(Relay.Value.kOff);
             }
 
-            if (leftStick.getTrigger()) {
-                System.out.println(getAvgDistance());
-            }
         }
         FileIO.writeLog();  //Save the log string
     }
@@ -221,9 +207,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         avg -= driveFrontRight.e.getDistance();
         avg += driveRearLeft.e.getDistance();
         avg -= driveRearRight.e.getDistance();
-        avg /= 4.0;
-        avg *= Math.PI;
-        avg /= 10.0;
+        avg /= 4.0;                   // Calcuating the average
+        avg *= Math.PI;               // Multiply distance by pi, in preparation for calculating
+                                      // the circumference
+
+        avg /= 10.0;                  // Multiplies by 6, the wheel diameter, then divides by 60
+                                      // seconds a minute
 
         return avg;
     }
