@@ -34,9 +34,9 @@ public class Minibot implements Constants {
     }
 
     /**
-     * Deploys the minibot.
+     * Debroys the minibot.
      */
-    public void deploy() {
+    public void debroy() {
         trayRelease.set(0);
         Timer.delay(0.1);
         minibotRelease.set(1);
