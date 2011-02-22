@@ -36,8 +36,6 @@ public interface Constants {
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
-    final int HALOGEN_CHANNEL_A              = 4;
-    final int HALOGEN_CHANNEL_B              = 5;
 
     final int TUBE_ACQUIRED_LIGHT            = 1;
 
