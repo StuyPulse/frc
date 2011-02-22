@@ -108,7 +108,7 @@ public interface Constants {
 
 
     // Speed control
-    final double SPEED_P                       = 0.00375;
+    final double SPEED_P                       = 0.0037;
     final double SPEED_I                       = 0.00;
     final double SPEED_D                       = 0.000004;
 
