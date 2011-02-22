@@ -77,6 +77,9 @@ public class Autonomous implements Constants {
      * Drop ubertube
      */
     private void auton3() {
+        des.arm.wrist.set(1);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
@@ -85,13 +88,8 @@ public class Autonomous implements Constants {
     /**
      * Prints the values of the line tracking sensors.
      */
-    private void printLineStatus() {
-        /*   System.out.println("L: [" + (leftValue == 1 ? "1" : " ") + "] "
-        + "M: [" + (middleValue == 1 ? "1" : " ") + "] "
-        + "R: [" + (rightValue == 1 ? "1" : " ") + "]"); */
-    }
 
-    private int binaryValue(boolean goLeft) {
+    private int getBinaryValue(boolean goLeft) {
         if (goLeft) {
             return leftValue * 4 + middleValue * 2 + rightValue;
         }
@@ -128,13 +126,16 @@ public class Autonomous implements Constants {
         // loop until robot reaches "T" at end or passes the full distance
         while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
                 && Timer.getFPGATimestamp() - startTime < 5) {
-
             int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
+            
+            if (distanceInterval >= powerProfile.length) {
+                distanceInterval = powerProfile.length - 1;
+            }
             updateSensorValues();
-            binaryValue = binaryValue(goLeft);
+            binaryValue = getBinaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
 
-            // get the default speed and turn rate at this time
+            // get the default speed and turn rate at this time      
             speed = powerProfile[distanceInterval];
             turn = 0;
 
@@ -159,11 +160,6 @@ public class Autonomous implements Constants {
                 default:  // all other cases
                     turn = -steeringGain;
             }
-            // print current status for debugging
-            if (binaryValue != previousValue) {
-                printLineStatus();
-            }
-
             // set the robot speed and direction
 //            des.drive.arcadeDrive(-speed, -turn);
             des.drive.mecanumDrive_Cartesian(-turn, -speed, 0, 0, false);
@@ -202,12 +198,11 @@ public class Autonomous implements Constants {
         ArmController armctl = new ArmController(des, armButtonNum, 0);
         armctl.start();
 
-        if (des.isAutonomous() && des.isEnabled()) {
-            lineTrack(true, false, dist);
-        }
+        lineTrack(true, false, dist);
+
 
         DESdroid.threadEnd(armctl);
-        
+
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();

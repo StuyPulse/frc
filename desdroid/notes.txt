@@ -1,23 +1,24 @@
 ****THINGS TO FIX****
 DESdroid.java 
-    instance variables
-    disabled() method 
-    autonomous() - getting auton switch
-    in mecanumDrive call:  fix comment in rightstick.getX()
-    In while enabled: Remove debugging code for wrist servo
-    Fix SOPping in op control
+[x] instance variables
+[?] disabled() method 
+[x] autonomous() - getting auton switch
+[x] in mecanumDrive call:  fix comment in rightstick.getX()
+[x] In while enabled: Remove debugging code for wrist servo
+[x] Fix SOPping in op control
+[x] in getAvgDistance():  Comment on magic numbers
+[x] Implement ThreeLaws
+[x] Allow slingshot to work w/o wing deployment
+
     Remove FileIO.writeLog()
-    in getAvgDistance():  Comment on magic numbers
-    Implement ThreeLaws
-    Allow slingshot to work w/o wing deployment
 
 Autonomous.java
-    In auton1: fix isAutonomous && isEnabled
-    In lineTrack: if avgDist - dist === 1, set ind to length-1
-    refactor method name
-    Remove deprecated printLineStatus method
-    Make method for grabber & arm articulation in autonomous
-    Default method deploys wrist
+[x] In auton1: fix isAutonomous && isEnabled
+[x] In lineTrack: if avgDist / dist == 1, set ind to length-1
+[x] Refactor method name
+[x] Remove deprecated printLineStatus method
+[x] Make method for grabber & arm articulation in autonomous
+[x] Default method deploys wrist
 
 DriveTrain.java
     Stop importing edu.wpi.first.wpilibj.can.*;
