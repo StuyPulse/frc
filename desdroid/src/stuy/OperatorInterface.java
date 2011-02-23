@@ -16,7 +16,7 @@ public class OperatorInterface implements Constants {
     DriverStationEnhancedIO enhancedIO;
     
     /**
-     * Operator interface constructor, setting digital inputs pulled down.
+     * Operator interface constructor, setting digital inputs pulled up.
      */
     public OperatorInterface() {
         enhancedIO = DriverStation.getInstance().getEnhancedIO();  //get driverstation IO instance
@@ -57,7 +57,7 @@ public class OperatorInterface implements Constants {
         }
     }
     /**
-     * Use a thumbwheel switch to set the autonomous mode setting.
+     * Use a thumbwheel switch to set the autonomous mode setting. Because the switch begins at 0 (January), 1 is added to the switch value to get the auton setting number.
      * @return Autonomous setting to run.
      */
     public int getAutonSetting() {
@@ -97,21 +97,23 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    /**
+     * Determines which height button is pressed. All eleven (8 logically because
+     * side buttons are wired together) arm height buttons are wired by means of
+     * resistors to one analog input. Depending on the button that is pressed, a
+     * different voltage is read by the analog input. Each resistor reduces the
+     * voltage by about 1/8 the maximum voltage.
+     *
+     * @return An integer value representing the height button that was pressed.
+     */
     public int getHeightButton() {
-        double analogVoltage;
-        try {
-            analogVoltage = enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
-        }
-        catch (EnhancedIOException e) {
-            setStuffsBrokenLED(true);
-            FileIO.reportError("OI", e, "Failed to get height button");
-            analogVoltage = 0;
-        }
-//        int buttonNum = (int) ((analogVoltage / (2.26 / 8)) + .5);
-        int buttonNum = (int) ((analogVoltage / (getMaxVoltage() / 8)) + .5);
-        return buttonNum;
+        return (int) ((getRawAnalogVoltage() / (getMaxVoltage() / 8)) + .5);
     }
 
+    /**
+     * Gets the voltage read by the arm height button analog input.
+     * @return The voltage of the arm height button analog input.
+     */
     public double getRawAnalogVoltage() {
         try {
             return enhancedIO.getAnalogIn(OI_BUTTON_ANALOG_PORT);
@@ -123,10 +125,18 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    /**
+     * Check if a height button is being pressed.
+     * @return True if a height button is being pressed.
+     */
     public boolean isHeightButtonPressed() {
         return getHeightButton() != 0;
     }
 
+    /**
+     * Checks the state of the minibot switch.
+     * @return True if pressed.
+     */
     public boolean getMinibotSwitch() {
         boolean value;
         try {
@@ -140,6 +150,10 @@ public class OperatorInterface implements Constants {
         return value;
     }
 
+    /**
+     * Checks the state of the wing switch.
+     * @return True if pressed.
+     */
     public boolean getWingSwitch() {
         boolean value;
         try {
@@ -153,6 +167,10 @@ public class OperatorInterface implements Constants {
         return value;
     }
 
+    /**
+     * Checks the state of the extra button.
+     * @return True if pressed.
+     */
     public boolean getExtraButton() {
         boolean value;
         try {
@@ -166,6 +184,13 @@ public class OperatorInterface implements Constants {
         return value;
     }
 
+    /**
+     * Maps the position of the trim potentiometer to a range between -maxTrim
+     * and maxTrim for adjusting the arm position control setpoint.
+     * 
+     * @param maxTrim The range of arm pot voltage that the trim pot affects.
+     * @return 0 if the trim pot is in the center position. Otherwise, -maxTrim to maxTrim.
+     */
     public double getTrimAmount(double maxTrim) {
         double potVoltage;
         try {
@@ -180,6 +205,13 @@ public class OperatorInterface implements Constants {
         return trimAmount;
     }
 
+    /**
+     * Sets the button light to turn on. Button lights on the OI are controlled
+     * by 5 digital outputs; four for binary, and one to enable/disable the
+     * lights. These light numbers are defined in Constants.
+     *
+     * @param lightNum The number of the light to turn on.
+     */
     public void setLight(int lightNum) {
         String binaryString = DECIMAL_BINARY_TABLE[lightNum];
         boolean[] binaryOutputs = new boolean[4];
@@ -200,6 +232,9 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    /**
+     * Outputs high on the disable bit to turn off all button lights.
+     */
     public void lightsOff() {
         try {
             enhancedIO.setDigitalOutput(LIGHT_DISABLE_CHANNEL, true);
@@ -210,6 +245,13 @@ public class OperatorInterface implements Constants {
         }
     }
 
+    /**
+     * Reads the value of an analog input wired directly from the 3.3v pin.
+     * This is effectively the voltage read by the Cypress board which is being
+     * sent out of the 3.3v pin. Math is done on this voltage to determine
+     * height buttons and the trim pot mapping.
+     * @return The voltage of the Cypress board.
+     */
     public double getMaxVoltage() {
         try {
             return enhancedIO.getAnalogIn(OI_MAX_VOLTAGE_INPUT);
