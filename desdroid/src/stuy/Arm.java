@@ -55,68 +55,6 @@ public class Arm implements Constants {
         }
     }
 
-    /**
-     * Move the arm to a specific position.
-     * @param potVal The potentiometer value to set the arm to.
-     */
-    public boolean setHeight(double potVal) {
-        double currentVal = getPosition();
-        if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
-            armMotor.set(1);
-        }
-        else if (currentVal - potVal < -0.01 && currentVal < UPPER_ARM_POT_LIM) {
-            armMotor.set(-1);
-        }
-        else {
-            armMotor.set(0);
-            return true;
-        }
-        double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
-        Timer.delay(delayVal); //TODO:  Protect from /0 !
-        armMotor.set(0);
-        try {
-        delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
-        } catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-            FileIO.reportError("ARM", e, "Divided by zero in setHeight()");
-        }
-        Timer.delay(delayVal); //TODO:  Protect from /0 !
-        return false;
-    }
-
-    /**
-     * Move the arm to a specific position based on an OI height button.
-     * @param butonNum The OI height button number pressed.
-     */
-    public void setHeight(int buttonNum, double trimAmount) {
-        switch (buttonNum) {
-            case SIDE_UPPER_BUTTON:
-                setHeight(POT_SIDE_TOP + trimAmount);
-                break;
-            case SIDE_MIDDLE_BUTTON:
-                setHeight(POT_SIDE_MIDDLE + trimAmount);
-                break;
-            case SIDE_LOWER_BUTTON:
-                setHeight(POT_SIDE_BOTTOM + trimAmount);
-                break;
-            case CENTER_UPPER_BUTTON:
-                setHeight(POT_MIDDLE_TOP + trimAmount);
-                break;
-            case CENTER_MIDDLE_BUTTON:
-                setHeight(POT_MIDDLE_MIDDLE + trimAmount);
-                break;
-            case CENTER_LOWER_BUTTON:
-                setHeight(POT_MIDDLE_BOTTOM + trimAmount);
-                break;
-            case FEEDER_LEVEL_BUTTON:
-                setHeight(POT_FEEDER_LEVEL + trimAmount);
-                break;
-            case GROUND_LEVEL_BUTTON:
-                setHeight(POT_GROUND_LEVEL + trimAmount);
-                break;
-        }
-    }
-
     public double getPosition() {
         return potentiometer.getVoltage();
     }
