@@ -7,11 +7,13 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the DESdroid arm elbow. Note that the Fisher Price motor that powers the arm must be run at full speed or it will stall.
+ * Controls the DESdroid arm shoulder. Note that the Fisher Price motor that powers the arm must be run at low speeds or it will stall.
+ * Also note that position control is in ArmController.java
+ *
  * @author blake
  */
 public class Arm implements Constants {
-    static final double LOWER_ARM_POT_LIM           = 1.85;
+    static final double LOWER_ARM_POT_LIM           = 1.85; //UNUSED
     static final double UPPER_ARM_POT_LIM           = 4.7;
     static final double POT_SIDE_BOTTOM             = 3.54;
     static final double POT_SIDE_MIDDLE             = 3.01;

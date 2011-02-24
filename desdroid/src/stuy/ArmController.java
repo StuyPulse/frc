@@ -7,7 +7,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- *
+ * Arm position control class.  Runs in its own thread.    
  * @author Ginkgo
  */
 public class ArmController extends Thread implements Constants {
@@ -56,9 +56,9 @@ public class ArmController extends Thread implements Constants {
     public void run() {
         while (active) {
             double currentVal = des.arm.getPosition();
-            if (currentVal - setpoint > 0.005 && currentVal > Arm.LOWER_ARM_POT_LIM) {
+            if (currentVal - setpoint > 0.005) {       // Intentionally does not depend on a software limit, because there is a physical limit.
                 des.arm.armMotor.set(1);
-            } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {
+            } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {  
                 des.arm.armMotor.set(-1);
             } else {
                 des.arm.armMotor.set(0);
@@ -72,7 +72,7 @@ public class ArmController extends Thread implements Constants {
             } catch (Exception e) {
                 FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
-            Timer.delay(delayVal); //TODO:  Protect from /0 !
+            Timer.delay(delayVal); 
         }
 
     }
