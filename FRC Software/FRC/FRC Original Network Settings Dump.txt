@@ -1,0 +1,15 @@
+
+
+# ----------------------------------
+# IPv4 Configuration
+# ----------------------------------
+pushd interface ipv4
+
+reset
+set global icmpredirects=enabled
+
+
+popd
+# End of IPv4 configuration
+
+
