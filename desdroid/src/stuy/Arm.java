@@ -7,11 +7,13 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the DESdroid arm elbow. Note that the Fisher Price motor that powers the arm must be run at full speed or it will stall.
+ * Controls the DESdroid arm shoulder. Note that the Fisher Price motor that powers the arm must NOT be run at low speeds or it will stall.
+ * Also note that position control is in ArmController.java
+ *
  * @author blake
  */
 public class Arm implements Constants {
-    static final double LOWER_ARM_POT_LIM           = 1.85;
+    static final double LOWER_ARM_POT_LIM           = 1.85; //UNUSED
     static final double UPPER_ARM_POT_LIM           = 4.7;
     static final double POT_SIDE_BOTTOM             = 3.54;
     static final double POT_SIDE_MIDDLE             = 3.01;
@@ -52,68 +54,6 @@ public class Arm implements Constants {
         }
         else {
             armMotor.set(0);
-        }
-    }
-
-    /**
-     * Move the arm to a specific position.
-     * @param potVal The potentiometer value to set the arm to.
-     */
-    public boolean setHeight(double potVal) {
-        double currentVal = getPosition();
-        if (currentVal - potVal > 0.005 && currentVal > LOWER_ARM_POT_LIM) {
-            armMotor.set(1);
-        }
-        else if (currentVal - potVal < -0.01 && currentVal < UPPER_ARM_POT_LIM) {
-            armMotor.set(-1);
-        }
-        else {
-            armMotor.set(0);
-            return true;
-        }
-        double delayVal = MAX_ARM_DELAY * Math.abs(getPosition() - potVal);
-        Timer.delay(delayVal); //TODO:  Protect from /0 !
-        armMotor.set(0);
-        try {
-        delayVal = MAX_ARM_DELAY / Math.abs(getPosition() - potVal);
-        } catch (Exception e) {
-            des.oi.setStuffsBrokenLED(true);
-            FileIO.reportError("ARM", e, "Divided by zero in setHeight()");
-        }
-        Timer.delay(delayVal); //TODO:  Protect from /0 !
-        return false;
-    }
-
-    /**
-     * Move the arm to a specific position based on an OI height button.
-     * @param butonNum The OI height button number pressed.
-     */
-    public void setHeight(int buttonNum, double trimAmount) {
-        switch (buttonNum) {
-            case SIDE_UPPER_BUTTON:
-                setHeight(POT_SIDE_TOP + trimAmount);
-                break;
-            case SIDE_MIDDLE_BUTTON:
-                setHeight(POT_SIDE_MIDDLE + trimAmount);
-                break;
-            case SIDE_LOWER_BUTTON:
-                setHeight(POT_SIDE_BOTTOM + trimAmount);
-                break;
-            case CENTER_UPPER_BUTTON:
-                setHeight(POT_MIDDLE_TOP + trimAmount);
-                break;
-            case CENTER_MIDDLE_BUTTON:
-                setHeight(POT_MIDDLE_MIDDLE + trimAmount);
-                break;
-            case CENTER_LOWER_BUTTON:
-                setHeight(POT_MIDDLE_BOTTOM + trimAmount);
-                break;
-            case FEEDER_LEVEL_BUTTON:
-                setHeight(POT_FEEDER_LEVEL + trimAmount);
-                break;
-            case GROUND_LEVEL_BUTTON:
-                setHeight(POT_GROUND_LEVEL + trimAmount);
-                break;
         }
     }
 
