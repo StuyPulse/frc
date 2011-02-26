@@ -7,7 +7,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the DESdroid arm shoulder. Note that the Fisher Price motor that powers the arm must NOT be run at low speeds or it will stall.
+ * Controls the DESdroid arm shoulder. Note that the Fisher Price motor that powers the arm must "not" be run at low speeds or it will burn out.
  * Also note that position control is in ArmController.java
  *
  * @author blake
