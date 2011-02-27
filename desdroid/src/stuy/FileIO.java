@@ -76,11 +76,15 @@ public class FileIO {
     }
 
     public static void reportError(String context, Exception e, String customMessage) {
-        String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
-        log.append(message);
+        try {
+            String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
+            log.append(message);
 
-        if (DESdroid.DEBUG_MODE) {
-            e.printStackTrace();
+            if (DESdroid.DEBUG_MODE) {
+                e.printStackTrace();
+            }
+        } catch (Exception ex) {
+            // Do nothing
         }
     }
 
@@ -91,7 +95,7 @@ public class FileIO {
             OutputStreamWriter writer = new OutputStreamWriter(c.openOutputStream());
             writer.write(log.toString());
             c.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             //Do nothing
         }
     }

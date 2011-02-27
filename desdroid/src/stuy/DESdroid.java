@@ -51,148 +51,163 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface();
+        try {
+            oi = new OperatorInterface();
 
-        arm = new Arm(this);
-        grabber = new Grabber();
-        minibot = new Minibot();
+            arm = new Arm(this);
+            grabber = new Grabber();
+            minibot = new Minibot();
 
-        acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
-        acquiredLight.setDirection(Relay.Direction.kForward);
+            acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
+            acquiredLight.setDirection(Relay.Direction.kForward);
 
-        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+            leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+            middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+            rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        // Do NOT change the order of these constructors!
-        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+            // Do NOT change the order of these constructors!
+            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+            dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+            dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+            dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+            dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
-        armStick = new Joystick(PORT_ARM_STICK);
+            leftStick = new Joystick(PORT_LEFT_STICK);
+            rightStick = new Joystick(PORT_RIGHT_STICK);
+            armStick = new Joystick(PORT_ARM_STICK);
 
-        driveFrontLeft.c.disable();
-        driveFrontRight.c.disable();
-        driveRearLeft.c.disable();
-        driveRearRight.c.disable();
+            driveFrontLeft.c.disable();
+            driveFrontRight.c.disable();
+            driveRearLeft.c.disable();
+            driveRearRight.c.disable();
 
-        driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+            driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+            driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+            driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+            driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
 
-        driveFrontLeft.c.enable();
-        driveFrontRight.c.enable();
-        driveRearLeft.c.enable();
-        driveRearRight.c.enable();
+            driveFrontLeft.c.enable();
+            driveFrontRight.c.enable();
+            driveRearLeft.c.enable();
+            driveRearRight.c.enable();
 
-        drive = new DriveTrain(driveFrontLeft,
-                driveRearLeft,
-                driveFrontRight,
-                driveRearRight);
+            drive = new DriveTrain(driveFrontLeft,
+                    driveRearLeft,
+                    driveFrontRight,
+                    driveRearRight);
 
-        auton = new Autonomous(this);
+            auton = new Autonomous(this);
+        } catch (Exception e) {
+            FileIO.reportError("CONSTRUCTOR", e, "Uncaught exception in DESdroid constructor.");
+        }
     }
 
     /**
      * Turns off OI lights when the robot is disabled.
      */
     public void disabled() {
-        oi.lightsOff();
-        oi.setStuffsBrokenLED(false);
+        try {
+            oi.lightsOff();
+            oi.setStuffsBrokenLED(false);
+        } catch (Exception e) {
+            FileIO.reportError("DISABLED", e, "Uncaught exception in DESdroid disabled() method.");
+        }
     }
 
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        getWatchdog().setEnabled(false);
+        try {
+            getWatchdog().setEnabled(false);
 
-        auton.run(oi.getAutonSetting());
-//        auton.run(1);
+            auton.run(oi.getAutonSetting());
+        } catch (Exception e) {
+            FileIO.reportError("AUTON", e, "Uncaught exception in DESdroid autonomous() method.");
+        }
     }
 
     /**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        getWatchdog().setEnabled(false);
-        resetEncoders();
-        
-        oi.lightsOff();
-        oi.setStuffsBrokenLED(false);
+        try {
+            getWatchdog().setEnabled(false);
+            resetEncoders();
 
-        boolean isMinibotDeployed = false;
-        minibot.reset();
+            oi.lightsOff();
+            oi.setStuffsBrokenLED(false);
 
-        while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
-                    leftStick.getX(), // X translation (horizontal strafe)
-                    leftStick.getY(), // Y translation (straight forward)
-                    rightStick.getX(), // rotation (getX() > 0 is clockwise)
-                    0, // use gyro for field-oriented drive
-                    true);            // deadband the inputs?
+            boolean isMinibotDeployed = false;
+            minibot.reset();
+
+            while (isEnabled() && isOperatorControl()) {
+                drive.mecanumDrive_Cartesian(
+                        leftStick.getX(), // X translation (horizontal strafe)
+                        leftStick.getY(), // Y translation (straight forward)
+                        rightStick.getX(), // rotation (getX() > 0 is clockwise)
+                        0, // use gyro for field-oriented drive
+                        true);            // deadband the inputs?
 
 
-            // Arm control by OI
-            if (oi.isHeightButtonPressed()) {
-                if (!wasArmControlled) {
-                    threadEnd(positionController);
-                    positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
-                    positionController.start();
-                    wasArmControlled = true;
+                // Arm control by OI
+                if (oi.isHeightButtonPressed()) {
+                    if (!wasArmControlled) {
+                        threadEnd(positionController);
+                        positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
+                        positionController.start();
+                        wasArmControlled = true;
+                    }
+                } else {
+                    arm.rotate(armStick.getY());
+                    wasArmControlled = false;
                 }
-            }
-            else {
-                arm.rotate(armStick.getY());
-                wasArmControlled = false;
-            }
-            
-            // Grabber control
-            if (armStick.getTrigger())
-                grabber.in();
-            else if (armStick.getRawButton(2))
-                grabber.out();
-            else if (armStick.getRawButton(4))
-                grabber.rotateUp();
-            else if (armStick.getRawButton(5))
-                grabber.rotateDown();
-            else
-                grabber.stop();
 
-            if (oi.getWingSwitch()) {
-                minibot.spreadWings();
-            }
+                // Grabber control
+                if (armStick.getTrigger()) {
+                    grabber.in();
+                } else if (armStick.getRawButton(2)) {
+                    grabber.out();
+                } else if (armStick.getRawButton(4)) {
+                    grabber.rotateUp();
+                } else if (armStick.getRawButton(5)) {
+                    grabber.rotateDown();
+                } else {
+                    grabber.stop();
+                }
 
-            if (oi.getMinibotSwitch()) {
-                minibot.debroy();
-                isMinibotDeployed = true;
-            }
+                if (oi.getWingSwitch()) {
+                    minibot.spreadWings();
+                }
 
-            if (isMinibotDeployed) {
-                minibot.checkSwitch();
-            }
+                if (oi.getMinibotSwitch()) {
+                    minibot.debroy();
+                    isMinibotDeployed = true;
+                }
 
-            updateButtonLights();
+                if (isMinibotDeployed) {
+                    minibot.checkSwitch();
+                }
 
-            // Turn on light when tube is in the grabber
-            if (grabber.getLimitSwitch()) {
-                acquiredLight.set(Relay.Value.kOn);
-            }
-            else {
-                acquiredLight.set(Relay.Value.kOff);
-            }
+                updateButtonLights();
 
+                // Turn on light when tube is in the grabber
+                if (grabber.getLimitSwitch()) {
+                    acquiredLight.set(Relay.Value.kOn);
+                } else {
+                    acquiredLight.set(Relay.Value.kOff);
+                }
+
+            }
+            FileIO.writeLog();  //Save the log string
+        } catch (Exception e) {
+            FileIO.reportError("TELEOP", e, "Uncaught exception in DESdroid operatorControl() method.");
         }
-        FileIO.writeLog();  //Save the log string
     }
+
 
     public void resetEncoders() {
         driveFrontLeft.e.reset();
