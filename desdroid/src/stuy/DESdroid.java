@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.*;
  */
 public class DESdroid extends SimpleRobot implements Constants {
 
+    // Set to true when debugging; it will print out exception stack traces
+    // Set to false for competition: log exceptions to a file on the cRIO
+    static final boolean DEBUG_MODE = false;
+
     // Robot hardware
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;

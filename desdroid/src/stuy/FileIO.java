@@ -78,6 +78,10 @@ public class FileIO {
     public static void reportError(String context, Exception e, String customMessage) {
         String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
         log.append(message);
+
+        if (DESdroid.DEBUG_MODE) {
+            e.printStackTrace();
+        }
     }
 
     public static void writeLog() {
