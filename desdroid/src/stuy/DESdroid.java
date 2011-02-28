@@ -101,7 +101,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             auton = new Autonomous(this);
         } catch (Exception e) {
-            FileIO.reportError("CONSTRUCTOR", e, "Uncaught exception in DESdroid constructor.");
+            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid constructor.");
         }
     }
 
@@ -113,7 +113,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             oi.lightsOff();
             oi.setStuffsBrokenLED(false);
         } catch (Exception e) {
-            FileIO.reportError("DISABLED", e, "Uncaught exception in DESdroid disabled() method.");
+            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid disabled() method.");
         }
     }
 
@@ -126,7 +126,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             auton.run(oi.getAutonSetting());
         } catch (Exception e) {
-            FileIO.reportError("AUTON", e, "Uncaught exception in DESdroid autonomous() method.");
+            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid autonomous() method.");
         }
     }
 
@@ -204,7 +204,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
             FileIO.writeLog();  //Save the log string
         } catch (Exception e) {
-            FileIO.reportError("TELEOP", e, "Uncaught exception in DESdroid operatorControl() method.");
+            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid operatorControl() method.");
         }
     }
 
