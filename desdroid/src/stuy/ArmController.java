@@ -47,12 +47,6 @@ public class ArmController extends Thread implements Constants {
         }
     }
 
-    public ArmController(double setpoint, DESdroid that) {
-        active = true;
-        this.setpoint = setpoint;
-        this.des = that;
-    }
-
     public void run() {
         while (active) {
             double currentVal = des.arm.getPosition();
