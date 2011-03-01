@@ -65,7 +65,11 @@ public class Grabber implements Constants {
         lowerRoller.set(0);
     }
 
+    /**
+     * Checks if the grabber tube contact sensor is pressed.
+     * @return True if limit switch is pressed.
+     */
     public boolean getLimitSwitch() {
-        return limitSwitch.get();
+        return !limitSwitch.get();
     }
 }
