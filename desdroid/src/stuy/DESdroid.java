@@ -209,6 +209,9 @@ public class DESdroid extends SimpleRobot implements Constants {
     }
 
 
+    /**
+     * Resets the values of the drive encoders to zero.
+     */
     public void resetEncoders() {
         driveFrontLeft.e.reset();
         driveFrontRight.e.reset();
@@ -216,11 +219,18 @@ public class DESdroid extends SimpleRobot implements Constants {
         driveRearRight.e.reset();
     }
 
+    /**
+     * Ends the thread.
+     * @param elliot Arm controller instance to end.
+     */
     public static void threadEnd(ArmController elliot) {
         if(elliot != null)
             elliot.end();
     }
-
+/**
+ * Gets the average distance frtom the encoders.
+ * @return Returns the average distance from the encoders.
+ */
     public double getAvgDistance() {
         double avg = 0;
         avg += driveFrontLeft.e.getDistance();

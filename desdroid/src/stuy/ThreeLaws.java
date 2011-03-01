@@ -6,7 +6,7 @@
 package stuy;
 
 /**
- *
+ *For shits and giggles.
  * @author Isaac Asimov
  */
 public interface ThreeLaws {
