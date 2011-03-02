@@ -189,7 +189,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 }
 
                 if (isMinibotDeployed) {
-                    minibot.checkSwitch();
+                    minibot.runMinibotIfReady();
                 }
 
                 updateButtonLights();

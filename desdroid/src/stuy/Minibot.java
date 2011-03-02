@@ -19,16 +19,21 @@ public class Minibot implements Constants {
     DigitalInput minibotSwitch;
 
     /**
-     * Minibot constructor. Deployment of the minibot is controlled by a servo.
+     * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.  
      */
     public Minibot() {
+
         wingServo = new Servo(WING_SERVO);
-        trayRelease = new Servo(6, TRAY_RELEASE_SERVO);
-        minibotRelease = new Servo(6, MINIBOT_RELEASE_SERVO);
-        motorToggle = new Servo(6, MOTOR_TOGGLE_SERVO);
-        minibotSwitch = new DigitalInput(6, MINIBOT_SWITCH_PORT);
+
+        trayRelease = new Servo(SECOND_SIDECAR_SLOT, TRAY_RELEASE_SERVO);
+        minibotRelease = new Servo(SECOND_SIDECAR_SLOT, MINIBOT_RELEASE_SERVO);
+        motorToggle = new Servo(SECOND_SIDECAR_SLOT, MOTOR_TOGGLE_SERVO);
+        minibotSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, MINIBOT_SWITCH_PORT);
     }
 
+    /**
+     * Deploys wings.  
+     */
     public void spreadWings() {
         wingServo.set(0);
     }
@@ -42,12 +47,18 @@ public class Minibot implements Constants {
         minibotRelease.set(1);
     }
 
-    public void checkSwitch() {
+    /**
+     * If minibot is pressed against pole, throw motor switch on.
+     */
+    public void runMinibotIfReady() {
         if (minibotSwitch.get()) {
             motorToggle.set(1);
         }
     }
 
+    /**
+     * Resets all minibot deployment servos.
+     */
     public void reset() {
         wingServo.set(1);
         trayRelease.set(1);

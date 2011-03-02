@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.*;
  * Controls the DESdroid arm shoulder. Note that the Fisher Price motor that powers the arm must "not" be run at low speeds or it will burn out.
  * Also note that position control is in ArmController.java
  *
- * @author blake
+ * @author blaky
  */
 public class Arm implements Constants {
+    //Upper & lower arm limits
     static final double LOWER_ARM_POT_LIM           = 1.85; //UNUSED
     static final double UPPER_ARM_POT_LIM           = 4.7;
+
+    //Arm potentiometer values 
     static final double POT_SIDE_BOTTOM             = 3.54;
     static final double POT_SIDE_MIDDLE             = 3.01;
     static final double POT_SIDE_TOP                = 2.38;
@@ -23,6 +26,8 @@ public class Arm implements Constants {
     static final double POT_MIDDLE_TOP              = 2.0;
     static final double POT_FEEDER_LEVEL            = 3.52;
     static final double POT_GROUND_LEVEL            = 4.44;
+
+    //Arm delay multiplier.  Used in ArmController. 
     static final double MAX_ARM_DELAY               = .4;
 
     Victor armMotor;
@@ -57,7 +62,10 @@ public class Arm implements Constants {
         }
     }
 
-    public double getPosition() {
-        return potentiometer.getVoltage();
+    /** 
+     * Returns position of arm potentiometer. 
+     */
+     public double getPosition() {
+       return potentiometer.getVoltage();
     }
 }

@@ -64,11 +64,11 @@ public class ArmController extends Thread implements Constants {
                 des.arm.armMotor.set(0);
                 this.end();
             }
-            double delayVal = Arm.MAX_ARM_DELAY * Math.abs(des.arm.getPosition() - setpoint);
+            double delayVal = Arm.ARM_PWM_MULT * Math.abs(des.arm.getPosition() - setpoint);
             Timer.delay(delayVal);
             des.arm.armMotor.set(0);
             try {
-                delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
+                delayVal = Arm.ARM_PWM_MULT / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
                 FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
