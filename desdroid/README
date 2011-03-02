@@ -1,1 +1,2 @@
-Make sure to copy the "FRC DS DATA Storage.ini" file to correctly configure the digital I/O on the driver station, floating vs. pulled high vs. pulled low.this is incorrectly set, you may get a "Line not configured for output" error printed to the console.
+"FRC DS Data Storage.ini" contains the proper Driver Station configuration for controlling DESdroid. Most importantly, it contains the pin configurations (pulled high, output, etc.), as well as pin labels, for the DESdroid operator interface box.
+On the competition Driver Station, the existing configuration file should be overwritten with this one. On a Windows 7 Driver Station, it can be located at "C:\Users\Public\Public Documents\FRC".
