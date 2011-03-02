@@ -3,14 +3,29 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.RobotDrive.*;
 
+/**
+ * A custom drive train class for our mecanum wheels.  Uses PID based speed
+ * control on each of the four wheels.
+ */
 public class DriveTrain extends RobotDrive {
 
     int kFrontLeft_val = 0;
     int kFrontRight_val = 1;
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
+
+    /**
+     * The maximum number of RPM (revolutions per minute) to set as the setpoint
+     * speed on any of the wheels.
+     */
     static int kMaxRPM = 600;
+
+    /**
+     * Multiply each wheel speed by its relative multiplier. (indexed by
+     * kFrontLeft_val, kFrontRight_val, kRearLeft_val, kRearRight_val.
+     */
     double[] weightGains = {1, 1, 1.05, 1.05}; // 4 weight gains
+
     /**
      * Ignore joystick inputs that are less than this number in absolute value.
      * Scale the rest of the inputs to still allow for the full output range (-1 to 1)
@@ -24,6 +39,17 @@ public class DriveTrain extends RobotDrive {
         setInvertedMotor(MotorType.kRearRight, true);
     }
 
+    /**
+     * Call this method to drive the robot.
+     * @param x Horizontal component of the speed ("strafing")
+     * @param y Forward component of speed
+     * @param rotation Rotational speeds
+     * @param gyroAngle Gyro angle in order to do field-oriented drive (rotate
+     * speed vector by this angle to maintain constant orientation relative to
+     * the driver).  Measured in degrees.
+     * @param deadband Whether to apply deadband (scaleInput()) on the driver inputs.
+     * All speed values (x, y, rotation) are from -1 to 1.
+     */
     public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle, boolean deadband) {
         double xIn;
         double yIn;

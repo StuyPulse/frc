@@ -79,11 +79,11 @@ public class ArmController extends Thread implements Constants {
             // Pulse the motor on and off at different frequencies depending on
             // how far we have to move.  For big amounts of error, run the motor
             // longer than it is off, for small error run it less frequently.
-            double delayVal = Arm.MAX_ARM_DELAY * Math.abs(des.arm.getPosition() - setpoint);
+            double delayVal = Arm.ARM_PWM_MULT * Math.abs(des.arm.getPosition() - setpoint);
             Timer.delay(delayVal);
             des.arm.armMotor.set(0);
             try {
-                delayVal = Arm.MAX_ARM_DELAY / Math.abs(des.arm.getPosition() - setpoint);
+                delayVal = Arm.ARM_PWM_MULT / Math.abs(des.arm.getPosition() - setpoint);
             } catch (Exception e) {
                 FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
