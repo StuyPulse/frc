@@ -4,9 +4,9 @@ Blake
 [ ] VictorSpeed.java
 
 Kevin
-[ ] Autonomous.java
-[ ] Constants.java
-[ ] OperatorInterface.java
+[x] Autonomous.java
+[x] Constants.java
+[x] OperatorInterface.java
 
 Peter
 [ ] DESdroid.java

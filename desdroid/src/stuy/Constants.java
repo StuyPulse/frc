@@ -8,6 +8,7 @@ public interface Constants {
     final int CHANNEL_REAR_LEFT              = 8;
     final int CHANNEL_REAR_RIGHT             = 10;
 
+    // Drive encoder channels
     final int CHANNEL_FRONT_LEFT_ENC_A       = 1;
     final int CHANNEL_FRONT_LEFT_ENC_B       = 2;
     final int CHANNEL_REAR_LEFT_ENC_A        = 9; // 3 / 4 were bad
@@ -17,16 +18,20 @@ public interface Constants {
     final int CHANNEL_REAR_RIGHT_ENC_A       = 7;
     final int CHANNEL_REAR_RIGHT_ENC_B       = 8;
 
+    // Arm outputs
     final int ARM_MOTOR_CHANNEL              = 3;
+    final int WRIST_SERVO                    = 5;
 
+    // Grabber I/O
     final int GRABBER_UPPER_ROLLER_PORT      = 4;
     final int GRABBER_LOWER_ROLLER_PORT      = 1;
     final int GRABBER_LIMIT_SWITCH_PORT      = 11;
-
-    final int WRIST_SERVO                    = 5;
-    final int WING_SERVO                     = 6;
+    
+    // Light on top of robot; lights up when tube is in grabber
+    final int TUBE_ACQUIRED_LIGHT            = 1;
 
     // Minibot deployment
+    final int WING_SERVO                     = 6;
     final int TRAY_RELEASE_SERVO             = 3;
     final int MINIBOT_RELEASE_SERVO          = 2;
     final int MOTOR_TOGGLE_SERVO             = 1;
@@ -36,8 +41,6 @@ public interface Constants {
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
     final int LINE_SENSOR_RIGHT_CHANNEL      = 14;
-
-    final int TUBE_ACQUIRED_LIGHT            = 1;
 
     // Analog input for arm potentiometer
     final int ARM_POT_CHANNEL                = 1;
@@ -109,6 +112,7 @@ public interface Constants {
     final double FORK_PROFILE[]         = {.4, .3, .1, .1, .1, .3, .1, 0};
     final double STRAIGHT_PROFILE[]     = {.3, .3, .2, .2};
 
+    // Encoder constants
     final double ENCODER_CODES_PER_REV          = 250.0;
     final double ENCODER_RPM_PER_PULSE       = 60 / ENCODER_CODES_PER_REV;
     // "distance" per pulse, to make the Encoder class return getRate() in RPM

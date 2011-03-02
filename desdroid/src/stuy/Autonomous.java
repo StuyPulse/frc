@@ -88,7 +88,6 @@ public class Autonomous implements Constants {
     /**
      * Prints the values of the line tracking sensors.
      */
-
     private int getBinaryValue(boolean goLeft) {
         if (goLeft) {
             return leftValue * 4 + middleValue * 2 + rightValue;
@@ -100,6 +99,7 @@ public class Autonomous implements Constants {
      * Follow the line forward.
      * @param straightLine Set to true to go straight.
      * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
+     * @param distance Distance to track the line in inches.
      */
     public void lineTrack(boolean straightLine, boolean goLeft, double distance) {
 
@@ -175,7 +175,7 @@ public class Autonomous implements Constants {
     }
 
     /**
-     * Run the robot forward/backward
+     * Run the robot forward/backward.
      * @param speed -1 to 1, full forward = 1
      */
     private void goSpeed(double speed) {
@@ -184,16 +184,27 @@ public class Autonomous implements Constants {
         des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
     }
 
+    /**
+     * This is the main part of the autonomous method.
+     * 1. Intake tube while releasing wrist so the ubertube does not slip out of the grabber.
+     * 2. After 1 second (to allow time for the grabber to fall), rotate the tube upwards a bit.
+     * 3. After .2 seconds, stop the grabber rollers.
+     * 4. Rotate the arm upwards to the specified height.
+     * 5. Track the line to the specified distance, then stop.
+     * 6. Expectorate the tube onto the peg for one second.
+     * 7. Pause for a second, then back up at 1/2 speed for a second.
+     * 
+     * @param dist Distance in inches to track the line.
+     * @param armButtonNum OI height button number that refers to the desired arm height.
+     */
     private void score(double dist, int armButtonNum) {
         des.grabber.in();
         des.arm.wrist.set(1);
         Timer.delay(1);
-        des.arm.wrist.set(0);
-        des.grabber.stop();
         des.grabber.rotateUp();
         Timer.delay(.2);
         des.grabber.stop();
-        double time = Timer.getFPGATimestamp();
+        double time = Timer.getFPGATimestamp(); // NOTE: Unused variable
 
         ArmController armctl = new ArmController(des, armButtonNum, 0);
         armctl.start();
