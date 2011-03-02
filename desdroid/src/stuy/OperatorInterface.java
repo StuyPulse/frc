@@ -56,6 +56,7 @@ public class OperatorInterface implements Constants {
             FileIO.reportError("OI", e, "Failed to set stuffs broken LED");
         }
     }
+
     /**
      * Use a thumbwheel switch to set the autonomous mode setting. Because the switch begins at 0 (January), 1 is added to the switch value to get the auton setting number.
      * @return Autonomous setting to run.
