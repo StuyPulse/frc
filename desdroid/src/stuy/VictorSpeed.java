@@ -23,7 +23,7 @@ public class VictorSpeed implements SpeedController, Constants {
      * @param victorChannel The PWM chanel for the victor.
      * @param encoderAChannel Digital in for the encoder.
      * @param encoderBChannel Input for the other encoder.
-     * @param reverse Not used right.  Was for reversing encoder direction.
+     * @param reverse Not used.  Was for reversing encoder direction.
      */
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
         v = new Victor(victorChannel);

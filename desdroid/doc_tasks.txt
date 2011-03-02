@@ -1,7 +1,7 @@
 Blake
-[ ] ArmController.java
-[ ] DriveTrain.java
-[ ] VictorSpeed.java
+[x] ArmController.java
+[x] DriveTrain.java
+[x] VictorSpeed.java
 
 Kevin
 [x] Autonomous.java
