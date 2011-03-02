@@ -75,6 +75,13 @@ public class FileIO {
         return array;
     }
 
+    /**
+     * Reports errors giving information on which class the error was in
+     * along with an error message from the catch block.
+     * @param context States in which class the error has occured.
+     * @param e Name of the exception.
+     * @param customMessage Displays the custom message in the catch block.
+     */
     public static void reportError(String context, Exception e, String customMessage) {
         try {
             String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
@@ -87,7 +94,9 @@ public class FileIO {
             // Do nothing
         }
     }
-
+    /**
+     * Records a log of exceptions to competion.log.
+     */
     public static void writeLog() {
         String url = "file:///competition.log";
         try {
