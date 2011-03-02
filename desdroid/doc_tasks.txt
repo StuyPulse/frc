@@ -14,6 +14,6 @@ Peter
 [ ] ThreeLaws.java
 
 Alex
-[ ] Arm.java
-[ ] Minibot.java
-[ ] Grabber.java
+[x] Arm.java
+[x] Minibot.java
+[x] Grabber.java

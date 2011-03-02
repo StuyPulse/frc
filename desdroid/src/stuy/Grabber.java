@@ -7,7 +7,7 @@ package stuy;
 import edu.wpi.first.wpilibj.*;
 
 /**
- * Controls the end effector of the DESdroid arm.
+ * Controls the tube acquirer of the DESdroid arm, a.k.a. the end effector.
  * @author blake
  */
 public class Grabber implements Constants {
@@ -42,7 +42,7 @@ public class Grabber implements Constants {
     }
 
     /**
-     * Rotate the tube up.
+     * Rotate the tube upwards.
      */
     public void rotateUp() {
         upperRoller.set(-1);
@@ -50,7 +50,7 @@ public class Grabber implements Constants {
     }
 
     /**
-     * Rotate the tube down.
+     * Rotate the tube downwards.
      */
     public void rotateDown() {
         upperRoller.set(1);
