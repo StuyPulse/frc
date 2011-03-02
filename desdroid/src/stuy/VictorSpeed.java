@@ -20,10 +20,10 @@ public class VictorSpeed implements SpeedController, Constants {
 
     /**
      * Make an actual speed controller complete with a Victor, Encoder and PIDController
-     * @param victorChannel
-     * @param encoderAChannel
-     * @param encoderBChannel
-     * @param reverse
+     * @param victorChannel The PWM chanel for the victor.
+     * @param encoderAChannel Digital in for the encoder.
+     * @param encoderBChannel Input for the other encoder.
+     * @param reverse Not used right.  Was for reversing encoder direction.
      */
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
         v = new Victor(victorChannel);
@@ -59,6 +59,10 @@ public class VictorSpeed implements SpeedController, Constants {
         v.set(output);
     }
 
+    /**
+     * Set a wheel's speed setpoint.
+     * @param speedRPM The desired wheel speed in RPM (revolutions per minute).
+     */
     public void set(double speedRPM) {
         c.setSetpoint(speedRPM);
     }
