@@ -1,0 +1,1 @@
+Make sure to copy the "FRC DS DATA Storage.ini" file to correctly configure the digital I/O on the driver station, floating vs. pulled high vs. pulled low.this is incorrectly set, you may get a "Line not configured for output" error printed to the console.
