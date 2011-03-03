@@ -1,0 +1,33 @@
+694 Pre-Match Driver Station Checklist
+For DESdroid
+
+Joystick order
+    Setup tab on Driver Station software
+    When any button is pressed on a joystick, the corresponding line in the Joystick Setup list will light up.
+    Ensure that the joysticks are in the following order in the list:
+        1. Left drive joystick
+        2. Right drive joystick
+        3. Arm stick
+        4. Not Connected
+        
+Operator Interface (check for floating!)
+    I/O tab on Driver Station software
+    Click "Configure..."
+    Ensure that the pin configuration matches the following:
+        Ch 1: Input (pulled high)           Ch 9:  Output
+        Ch 2: Input (pulled high)           Ch 10: Output
+        Ch 3: Input (pulled high)           Ch 11: Output
+        Ch 4: Input (pulled high)           Ch 12: Output
+        Ch 5: Input (pulled high)           Ch 13: Output
+        Ch 6: Input (pulled high)           Ch 14: Doesn't matter
+        Ch 7: Input (pulled high)           Ch 15: Doesn't matter
+        Ch 8: Output                        Ch 16: Doesn't matter
+        [ ] Compatible (8 In, 8 Out)
+        [x] Enhanced (16 Configurable Pins + Advanced Functions)
+        
+When not using FMS (pit, off-season)
+    Network settings
+        IP address:     10.6.94.*** (some random number above 10)
+        Subnet mask:    255.0.0.0
+    If unable to connect to robot with Driver Station, but the robot can be pinged,
+    ensure that no other laptops on the network have the Driver Station open.
