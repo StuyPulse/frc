@@ -131,6 +131,9 @@ public class Autonomous implements Constants {
             if (distanceInterval >= powerProfile.length) {
                 distanceInterval = powerProfile.length - 1;
             }
+            if (distanceInterval < 0) {
+                distanceInterval = 0;
+            }
             updateSensorValues();
             binaryValue = getBinaryValue(goLeft);
             steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
