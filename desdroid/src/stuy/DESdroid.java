@@ -22,8 +22,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     static final boolean DEBUG_MODE = false;
 
     // Robot hardware
-    VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
+    
     DriveTrain drive;
 
     Arm arm;
@@ -64,39 +63,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        // Do NOT change the order of these constructors!
-        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        driveFrontLeft.c.disable();
-        driveFrontRight.c.disable();
-        driveRearLeft.c.disable();
-        driveRearRight.c.disable();
-
-        driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-        driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-
-        driveFrontLeft.c.enable();
-        driveFrontRight.c.enable();
-        driveRearLeft.c.enable();
-        driveRearRight.c.enable();
-
-        drive = new DriveTrain(driveFrontLeft,
-                driveRearLeft,
-                driveFrontRight,
-                driveRearRight);
+        drive = new DriveTrain(true);
 
         auton = new Autonomous(this);
     }
@@ -115,7 +87,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-        resetEncoders();
+        drive.resetEncoders();
 
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
@@ -186,17 +158,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         FileIO.writeLog();  //Save the log string
     }
 
-
-    /**
-     * Resets the values of the drive encoders to zero.
-     */
-    public void resetEncoders() {
-        driveFrontLeft.e.reset();
-        driveFrontRight.e.reset();
-        driveRearLeft.e.reset();
-        driveRearRight.e.reset();
-    }
-
     /**
      * Ends the thread.
      * @param elliot Arm controller instance to end.
@@ -204,25 +165,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     public static void threadEnd(ArmController elliot) {
         if(elliot != null)
             elliot.end();
-    }
-/**
- * Gets the average distance from the encoders.
- * @return Returns the average distance from the encoders.
- */
-    public double getAvgDistance() {
-        double avg = 0;
-        avg += driveFrontLeft.e.getDistance();
-        avg -= driveFrontRight.e.getDistance();
-        avg += driveRearLeft.e.getDistance();
-        avg -= driveRearRight.e.getDistance();
-        avg /= 4.0;                   // Calcuating the average
-        avg *= Math.PI;               // Multiply distance by pi, in preparation for calculating
-                                      // the circumference
-
-        avg /= 10.0;                  // Multiplies by 6, the wheel diameter, then divides by 60
-                                      // seconds a minute
-
-        return avg;
     }
 
     /**
