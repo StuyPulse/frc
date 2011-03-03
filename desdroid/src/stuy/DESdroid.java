@@ -51,7 +51,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-            oi = new OperatorInterface();
+        oi = new OperatorInterface();
 
         arm = new Arm(this);
         grabber = new Grabber();
@@ -105,93 +105,85 @@ public class DESdroid extends SimpleRobot implements Constants {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        try {
-            getWatchdog().setEnabled(false);
+        getWatchdog().setEnabled(false);
 
-            auton.run(oi.getAutonSetting());
-        } catch (Exception e) {
-            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid autonomous() method.");
-        }
+        auton.run(oi.getAutonSetting());
     }
 
     /**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        try {
-            getWatchdog().setEnabled(false);
-            resetEncoders();
+        getWatchdog().setEnabled(false);
+        resetEncoders();
 
-            oi.lightsOff();
-            oi.setStuffsBrokenLED(false);
+        oi.lightsOff();
+        oi.setStuffsBrokenLED(false);
 
-            boolean isMinibotDeployed = false;
-            minibot.reset();
+        boolean isMinibotDeployed = false;
+        minibot.reset();
 
-            while (isEnabled() && isOperatorControl()) {
-                drive.mecanumDrive_Cartesian(
-                        leftStick.getX(), // X translation (horizontal strafe)
-                        leftStick.getY(), // Y translation (straight forward)
-                        rightStick.getX(), // rotation (getX() > 0 is clockwise)
-                        0, // use gyro for field-oriented drive
-                        true);            // deadband the inputs?
+        while (isEnabled() && isOperatorControl()) {
+            drive.mecanumDrive_Cartesian(
+                    leftStick.getX(), // X translation (horizontal strafe)
+                    leftStick.getY(), // Y translation (straight forward)
+                    rightStick.getX(), // rotation (getX() > 0 is clockwise)
+                    0, // use gyro for field-oriented drive
+                    true);            // deadband the inputs?
 
 
-                // Arm control by OI
-                if (oi.isHeightButtonPressed()) {
-                    if (!wasArmControlled) {
-                        threadEnd(positionController);
-                        positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
-                        positionController.start();
-                        wasArmControlled = true;
-                    }
-                } else {
-                    arm.rotate(armStick.getY());
-                    wasArmControlled = false;
+            // Arm control by OI
+            if (oi.isHeightButtonPressed()) {
+                if (!wasArmControlled) {
+                    threadEnd(positionController);
+                    positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
+                    positionController.start();
+                    wasArmControlled = true;
                 }
-
-                // Grabber control
-                if (armStick.getTrigger()) {
-                    grabber.in();
-                } else if (armStick.getRawButton(2)) {
-                    grabber.out();
-                } else if (armStick.getRawButton(4)) {
-                    grabber.rotateUp();
-                } else if (armStick.getRawButton(5)) {
-                    grabber.rotateDown();
-                } else {
-                    grabber.stop();
-                }
-
-                if (oi.getWingSwitch()) {
-                    minibot.spreadWings();
-                }
-
-                if (oi.getMinibotSwitch()) {
-                    minibot.debroy();
-                    isMinibotDeployed = true;
-                }
-
-                if (isMinibotDeployed) {
-                    minibot.runMinibotIfReady();
-                }
-
-                updateButtonLights();
-
-                // Turn on light when tube is in the grabber
-                if (grabber.getLimitSwitch()) {
-                    acquiredLight.set(Relay.Value.kOn);
-                } else {
-                    acquiredLight.set(Relay.Value.kOff);
-                }
-
+            } else {
+                arm.rotate(armStick.getY());
+                wasArmControlled = false;
             }
-            oi.lightsOff();
-            oi.setStuffsBrokenLED(false);
-            FileIO.writeLog();  //Save the log string
-        } catch (Exception e) {
-            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid operatorControl() method.");
+
+            // Grabber control
+            if (armStick.getTrigger()) {
+                grabber.in();
+            } else if (armStick.getRawButton(2)) {
+                grabber.out();
+            } else if (armStick.getRawButton(4)) {
+                grabber.rotateUp();
+            } else if (armStick.getRawButton(5)) {
+                grabber.rotateDown();
+            } else {
+                grabber.stop();
+            }
+
+            if (oi.getWingSwitch()) {
+                minibot.spreadWings();
+            }
+
+            if (oi.getMinibotSwitch()) {
+                minibot.debroy();
+                isMinibotDeployed = true;
+            }
+
+            if (isMinibotDeployed) {
+                minibot.runMinibotIfReady();
+            }
+
+            updateButtonLights();
+
+            // Turn on light when tube is in the grabber
+            if (grabber.getLimitSwitch()) {
+                acquiredLight.set(Relay.Value.kOn);
+            } else {
+                acquiredLight.set(Relay.Value.kOff);
+            }
+
         }
+        oi.lightsOff();
+        oi.setStuffsBrokenLED(false);
+        FileIO.writeLog();  //Save the log string
     }
 
 
@@ -214,7 +206,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             elliot.end();
     }
 /**
- * Gets the average distance frtom the encoders.
+ * Gets the average distance from the encoders.
  * @return Returns the average distance from the encoders.
  */
     public double getAvgDistance() {
