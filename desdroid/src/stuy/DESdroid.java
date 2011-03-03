@@ -51,70 +51,54 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        try {
             oi = new OperatorInterface();
 
-            arm = new Arm(this);
-            grabber = new Grabber();
-            minibot = new Minibot();
+        arm = new Arm(this);
+        grabber = new Grabber();
+        minibot = new Minibot();
 
-            acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
-            acquiredLight.setDirection(Relay.Direction.kForward);
+        acquiredLight = new Relay(TUBE_ACQUIRED_LIGHT);
+        acquiredLight.setDirection(Relay.Direction.kForward);
 
-            leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
-            middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
-            rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
+        leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
+        middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
+        rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-            // Do NOT change the order of these constructors!
-            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-            dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-            dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-            dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-            dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        // Do NOT change the order of these constructors!
+        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
-            leftStick = new Joystick(PORT_LEFT_STICK);
-            rightStick = new Joystick(PORT_RIGHT_STICK);
-            armStick = new Joystick(PORT_ARM_STICK);
+        leftStick = new Joystick(PORT_LEFT_STICK);
+        rightStick = new Joystick(PORT_RIGHT_STICK);
+        armStick = new Joystick(PORT_ARM_STICK);
 
-            driveFrontLeft.c.disable();
-            driveFrontRight.c.disable();
-            driveRearLeft.c.disable();
-            driveRearRight.c.disable();
+        driveFrontLeft.c.disable();
+        driveFrontRight.c.disable();
+        driveRearLeft.c.disable();
+        driveRearRight.c.disable();
 
-            driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
+        driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
 
-            driveFrontLeft.c.enable();
-            driveFrontRight.c.enable();
-            driveRearLeft.c.enable();
-            driveRearRight.c.enable();
+        driveFrontLeft.c.enable();
+        driveFrontRight.c.enable();
+        driveRearLeft.c.enable();
+        driveRearRight.c.enable();
 
-            drive = new DriveTrain(driveFrontLeft,
-                    driveRearLeft,
-                    driveFrontRight,
-                    driveRearRight);
+        drive = new DriveTrain(driveFrontLeft,
+                driveRearLeft,
+                driveFrontRight,
+                driveRearRight);
 
-            auton = new Autonomous(this);
-        } catch (Exception e) {
-            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid constructor.");
-        }
-    }
-
-    /**
-     * Turns off OI lights when the robot is disabled.
-     */
-    public void disabled() {
-        try {
-            oi.lightsOff();
-            oi.setStuffsBrokenLED(false);
-        } catch (Exception e) {
-            FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid disabled() method.");
-        }
+        auton = new Autonomous(this);
     }
 
     /**
@@ -202,6 +186,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 }
 
             }
+            oi.lightsOff();
+            oi.setStuffsBrokenLED(false);
             FileIO.writeLog();  //Save the log string
         } catch (Exception e) {
             FileIO.reportError("DESDROID", e, "Uncaught exception in DESdroid operatorControl() method.");
