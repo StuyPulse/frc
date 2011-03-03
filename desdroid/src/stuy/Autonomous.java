@@ -103,7 +103,7 @@ public class Autonomous implements Constants {
      */
     public void lineTrack(boolean straightLine, boolean goLeft, double distance) {
 
-        des.resetEncoders();
+        des.drive.resetEncoders();
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -124,9 +124,9 @@ public class Autonomous implements Constants {
         double startTime = Timer.getFPGATimestamp();
 
         // loop until robot reaches "T" at end or passes the full distance
-        while (!atCross && (des.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
+        while (!atCross && (des.drive.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
                 && Timer.getFPGATimestamp() - startTime < 5) {
-            int distanceInterval = (int) (powerProfile.length * des.getAvgDistance() / distance);
+            int distanceInterval = (int) (powerProfile.length * des.drive.getAvgDistance() / distance);
             
             if (distanceInterval >= powerProfile.length) {
                 distanceInterval = powerProfile.length - 1;
