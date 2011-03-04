@@ -9,7 +9,7 @@ Joystick order
         2. Right drive joystick
         3. Arm stick
         4. Not Connected
-        
+
 Operator Interface (check for floating!)
     I/O tab on Driver Station software
     Click "Configure..."
@@ -24,10 +24,11 @@ Operator Interface (check for floating!)
         Ch 8: Output                        Ch 16: Doesn't matter
         [ ] Compatible (8 In, 8 Out)
         [x] Enhanced (16 Configurable Pins + Advanced Functions)
-        
-When not using FMS (pit, off-season)
-    Network settings
-        IP address:     10.6.94.*** (some random number above 10)
-        Subnet mask:    255.0.0.0
-    If unable to connect to robot with Driver Station, but the robot can be pinged,
-    ensure that no other laptops on the network have the Driver Station open.
+
+Network settings (doesn't really need to be checked every match)
+    IP address:     10.6.94.5
+    Subnet mask:    255.0.0.0
+
+When not on FMS: If unable to connect to robot with Driver Station, but
+the robot can be pinged, ensure that no other laptops on the network
+have the Driver Station open.
