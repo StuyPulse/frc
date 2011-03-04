@@ -144,10 +144,12 @@ public class DriveTrain extends RobotDrive implements Constants {
      * Resets the values of the drive encoders to zero.
      */
     public void resetEncoders() {
-        driveFrontLeft.e.reset();
-        driveFrontRight.e.reset();
-        driveRearLeft.e.reset();
-        driveRearRight.e.reset();
+        if (speedControl) {
+            driveFrontLeft.e.reset();
+            driveFrontRight.e.reset();
+            driveRearLeft.e.reset();
+            driveRearRight.e.reset();
+        }
     }
 
     /**
@@ -156,10 +158,12 @@ public class DriveTrain extends RobotDrive implements Constants {
      */
     public double getAvgDistance() {
         double avg = 0;
-        avg += driveFrontLeft.e.getDistance();
-        avg -= driveFrontRight.e.getDistance();
-        avg += driveRearLeft.e.getDistance();
-        avg -= driveRearRight.e.getDistance();
+        if (speedControl) {
+            avg += driveFrontLeft.e.getDistance();
+            avg -= driveFrontRight.e.getDistance();
+            avg += driveRearLeft.e.getDistance();
+            avg -= driveRearRight.e.getDistance();
+        }
         avg /= 4.0;                   // Calcuating the average
         avg *= Math.PI;               // Multiply distance by pi, in preparation for calculating
         // the circumference
