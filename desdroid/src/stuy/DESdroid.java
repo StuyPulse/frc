@@ -152,6 +152,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 acquiredLight.set(Relay.Value.kOff);
             }
 
+            // Continuously open wrist latch in case of failure during autonomous
+            arm.wrist.set(0);
         }
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
