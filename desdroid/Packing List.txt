@@ -1,0 +1,21 @@
+Programming Packing List
+
+Targus crate
+    Mark
+        Charger
+    No Reilly
+        Charger
+
+ASUS crate
+    ASUS
+        Charger
+
+Crossover cable(s)
+Straight-through cable(s)
+Inverter (car charger rig)
+Joysticks (3+)
+USB hub
+OI box
+Ethernet port saver (from KoP)
+Power strips
+Git repo CD
