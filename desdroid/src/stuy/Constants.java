@@ -61,7 +61,7 @@ public interface Constants {
     final int BIT_3_CHANNEL                  = 3;
     final int BIT_4_CHANNEL                  = 4; // Least significant bit
 
-    // Excpetion LED
+    // Exception LED
     final int ERROR_LED                      = 13;
 
     // OI analog inputs
