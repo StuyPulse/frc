@@ -10,15 +10,14 @@ ASUS crate
     Router
     Charger
 
-Crossover cable(s)
-    2, one with broken tabs on both ends
-Straight-through cable(s)
-    6, one with broken tab on one end
+Ethernet cables box
+    Crossover cable(s) (2, one with broken tabs on both ends)
+    Straight-through cable(s) (6, one with broken tab on one end)
+    Ethernet port saver (from KoP) (1)
 
 Inverter (car charger rig) (broken but fixed)
 Joysticks (Logitech Attack 3) (5)
 USB hub (1)
 OI box (1)
-Ethernet port saver (from KoP) (1)
-Power strips (1)
+Power strips (1, should find more)
 Git repo CD (9001.5)
