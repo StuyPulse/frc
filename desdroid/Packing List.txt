@@ -2,20 +2,23 @@ Programming Packing List
 
 Targus crate
     Mark
-        Charger
-    No Reilly
-        Charger
+    Charger
 
 ASUS crate
     ASUS
-        Charger
+    Charger
+    Router
+    Charger
 
 Crossover cable(s)
+    2, one with broken tabs on both ends
 Straight-through cable(s)
-Inverter (car charger rig)
-Joysticks (3+)
-USB hub
-OI box
-Ethernet port saver (from KoP)
-Power strips
-Git repo CD
+    6, one with broken tab on one end
+
+Inverter (car charger rig) (broken but fixed)
+Joysticks (Logitech Attack 3) (5)
+USB hub (1)
+OI box (1)
+Ethernet port saver (from KoP) (1)
+Power strips (1)
+Git repo CD (9001.5)
