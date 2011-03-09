@@ -2,6 +2,7 @@ Programming Packing List
 
 Targus crate
     Mark + charger (+ sleeve)
+    Mark second battery
     USB hub (1)
     Inverter (car charger rig) (1)
     Replacement fuses for inverter (5 plus a steel rod)
