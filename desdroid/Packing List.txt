@@ -18,6 +18,7 @@ Programming crate
         Crossover cable(s) (2, one with broken tabs on both ends)
         Straight-through cable(s) (6, one with broken tab on one end)
         Ethernet port saver (from KoP) (1)
+        USB to Ethernet adapter (1)
     Joysticks (Logitech Attack 3) (5)
     OI box (1)
     Power strips (2)
