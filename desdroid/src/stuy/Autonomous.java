@@ -50,6 +50,12 @@ public class Autonomous implements Constants {
             case 3:
                 auton3();
                 break;
+            case 4:
+                auton4();
+                break;
+            case 5:
+                auton5();
+                break;
             default:
                 break; // Do nothing.
         }
@@ -83,6 +89,22 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
+    }
+
+    /**
+     * Delay for 3 seconds, then line track and score center middle
+     */
+    private void auton4() {
+        Timer.delay(3);
+        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON);
+    }
+
+    /**
+     * Delay for 3 seconds, then line track and score center top.
+     */
+    private void auton5() {
+        Timer.delay(3);
+        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON);
     }
 
     /**
