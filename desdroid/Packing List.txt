@@ -1,24 +1,26 @@
 Programming Packing List
 
 Targus crate
-    Mark
-    Charger
+    Mark + charger (+ sleeve)
+    USB hub (1)
+    Inverter (car charger rig) (1)
+    Replacement fuses for inverter (5 plus a steel rod)
 
 ASUS crate
-    ASUS
-    Charger
-    Router
-    Charger
+    ASUS + charger
+    Router + charger
+    Git repo flash drive
+    Gamepad (1)
 
-Ethernet cables box
-    Crossover cable(s) (2, one with broken tabs on both ends)
-    Straight-through cable(s) (6, one with broken tab on one end)
-    Ethernet port saver (from KoP) (1)
-
-Inverter (car charger rig) (broken but fixed)
-Joysticks (Logitech Attack 3) (5)
-USB hub (1)
-OI box (1)
-Power strips (2)
-Extension cables (1)
-Git repo CD (9001.5)
+Programming crate
+    Ethernet cables box
+        Crossover cable(s) (2, one with broken tabs on both ends)
+        Straight-through cable(s) (6, one with broken tab on one end)
+        Ethernet port saver (from KoP) (1)
+    Joysticks (Logitech Attack 3) (5)
+    OI box (1)
+    Power strips (2)
+    Extension cables (1)
+    Gaffer's tape (1)
+    Masking tape (1)
+    Velcro (1)
