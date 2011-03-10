@@ -200,6 +200,91 @@ public class Autonomous implements Constants {
     }
 
     /**
+     * Follow the line forward or backward.
+     * @param straightLine Set to true to go straight.
+     * @param goLeft If straightLine is false, set to true to go left at the fork, and false to go right.
+     * @param distance Distance to track the line in inches.
+     * @param forward Go forward (for hanging a tube) or backward (for returning to the start position)
+     */
+    public void lineTrack(boolean straightLine, boolean goLeft, double distance, boolean forward) {
+
+        des.drive.resetEncoders();
+
+        int binaryValue; // a single binary value of the three line tracking
+        // sensors
+        int previousValue = 0; // the binary value from the previous loop
+        double steeringGain; // the amount of steering correction to apply
+
+        // the power profiles for the straight and forked robot path. They are
+        // different to let the robot drive more slowly as the robot approaches
+        // the fork on the forked line case.
+        double powerProfile[];   // the selected power profile
+        powerProfile = (straightLine) ? STRAIGHT_PROFILE : FORK_PROFILE;
+        double stopTime = (straightLine) ? 2.0 : 4.0; // when the robot should look for end
+
+        boolean atCross = false; // if robot has arrived at end
+
+
+        double speed, turn;
+        double startTime = Timer.getFPGATimestamp();
+
+        // loop until robot reaches "T" at end or passes the full distance
+        while (!atCross &&
+                forward ? (des.drive.getAvgDistance() < distance) :
+                          (des.drive.getAvgDistance() > -distance)   // going backwards makes encoders report negative values
+                && des.isAutonomous() && des.isEnabled()
+                && Timer.getFPGATimestamp() - startTime < 5) {
+            int distanceInterval = (int) (powerProfile.length * ((forward ? 1 : -1) * des.drive.getAvgDistance()) / distance);
+
+            if (distanceInterval >= powerProfile.length) {
+                distanceInterval = powerProfile.length - 1;
+            }
+            if (distanceInterval < 0) {
+                distanceInterval = 0;
+            }
+            updateSensorValues();
+            binaryValue = getBinaryValue(goLeft);
+            steeringGain = goLeft ? -DEFAULT_STEERING_GAIN : DEFAULT_STEERING_GAIN;
+
+            // get the default speed and turn rate at this time
+            speed = powerProfile[distanceInterval];
+            turn = 0;
+
+            // different cases for different line tracking sensor readings
+            switch (binaryValue) {
+                case 1:  // on line edge
+                    turn = 0;
+                    break;
+                case 7:  // all sensors on (maybe at cross)
+                    if (Timer.getFPGATimestamp() > stopTime) {
+                        atCross = true;
+                        speed = 0;
+                    }
+                    break;
+                case 0:  // all sensors off
+                    if (previousValue == 0 || previousValue == 1) {
+                        turn = steeringGain;
+                    } else {
+                        turn = -steeringGain;
+                    }
+                    break;
+                default:  // all other cases
+                    turn = -steeringGain;
+            }
+            // set the robot speed and direction
+            des.drive.mecanumDrive_Cartesian(-turn, forward ? -speed : speed, 0, 0, false);
+
+            if (binaryValue != 0) {
+                previousValue = binaryValue;
+            }
+
+            Timer.delay(0.01);
+        }
+        // Done with loop - stop the robot. Robot ought to be at the end of the line
+        des.drive.arcadeDrive(0, 0);
+    }
+    
+    /**
      * Run the robot forward/backward.
      * @param speed -1 to 1, full forward = 1
      */
