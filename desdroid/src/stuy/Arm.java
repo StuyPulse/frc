@@ -51,10 +51,10 @@ public class Arm implements Constants {
      */
     public void rotate(double stickVal) {
         double currentVal = getPosition();
-        if (stickVal >= 0.5 && currentVal < UPPER_ARM_POT_LIM) {
+        if (stickVal >= 0.5) {
             armMotor.set(1);
         }
-        else if (stickVal <= -0.5 && currentVal > LOWER_ARM_POT_LIM) {
+        else if (stickVal <= -0.5) {
             armMotor.set(-1);
         }
         else {
