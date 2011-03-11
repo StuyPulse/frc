@@ -48,7 +48,7 @@ public interface Constants {
     final int ARM_POT_CHANNEL                = 1;
 
     //Pulse width modulation multiplier for arm position controller.
-    final double ARM_PWM_MULT                = .4;
+    final double ARM_PWM_MULT                = .3;
 
     // User controls
     final int PORT_LEFT_STICK                = 1;

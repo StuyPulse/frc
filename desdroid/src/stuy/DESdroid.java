@@ -84,7 +84,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         drive = new DriveTrain(driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight);
 
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
         auton = new Autonomous(this);
     }
