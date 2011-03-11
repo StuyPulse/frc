@@ -81,9 +81,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
         driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
 
-
-
         drive = new DriveTrain(driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight);
+
+        drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 
         auton = new Autonomous(this);
     }
