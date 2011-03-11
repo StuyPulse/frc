@@ -169,7 +169,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Continuously open wrist latch in case of failure during autonomous
-            arm.wrist.set(0);
+            arm.wrist.set(1);
 
 
             if (leftStick.getTrigger() && DEBUG_MODE) {
