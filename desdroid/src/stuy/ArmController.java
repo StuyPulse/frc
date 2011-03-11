@@ -67,7 +67,7 @@ public class ArmController extends Thread implements Constants {
             if (currentVal - setpoint > 0.005) {       // Intentionally does not depend on a software limit, because there is a physical limit
                 // Move up
                 des.arm.armMotor.set(1);
-            } else if (currentVal - setpoint < -0.005 && currentVal < Arm.UPPER_ARM_POT_LIM) {
+            } else if (currentVal - setpoint < -0.005) {
                 // Move down
                 des.arm.armMotor.set(-1);
             } else {
