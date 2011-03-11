@@ -20,7 +20,7 @@ public class Arm implements Constants {
     //Arm potentiometer values 
     static final double POT_SIDE_BOTTOM             = 3.75;
     static final double POT_SIDE_MIDDLE             = 3.12;
-    static final double POT_SIDE_TOP                = 3.28;
+    static final double POT_SIDE_TOP                = 2.38;
     static final double POT_MIDDLE_BOTTOM           = 3.67;
     static final double POT_MIDDLE_MIDDLE           = 2.99;
     static final double POT_MIDDLE_TOP              = 2.28;
