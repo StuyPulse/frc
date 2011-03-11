@@ -175,6 +175,14 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (leftStick.getTrigger() && DEBUG_MODE) {
                 System.out.println(arm.getPosition());
             }
+
+            if (rightStick.getTrigger() && DEBUG_MODE) {
+                System.out.println(drive.getAvgDistance());
+            }
+
+            if (rightStick.getRawButton(2) && DEBUG_MODE) {
+                drive.resetEncoders();
+            }
         }
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);

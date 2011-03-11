@@ -15,8 +15,8 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 173;  // this works on our practice field
-    final double CENTER_MIDDLE_LINE_DIST = 180; // not tuned, probably too much
+    final double CENTER_UPPER_LINE_DIST = 209;  // this works on our practice field
+    final double CENTER_MIDDLE_LINE_DIST = 216; // not tuned, probably too much
 
     /**
      * Autonomous constructor.
@@ -147,7 +147,7 @@ public class Autonomous implements Constants {
 
         // loop until robot reaches "T" at end or passes the full distance
         while (!atCross && (des.drive.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
-                && Timer.getFPGATimestamp() - startTime < 5) {
+                && Timer.getFPGATimestamp() - startTime < 6) {
             int distanceInterval = (int) (powerProfile.length * des.drive.getAvgDistance() / distance);
             
             if (distanceInterval >= powerProfile.length) {
