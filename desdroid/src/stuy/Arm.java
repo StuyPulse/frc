@@ -28,7 +28,7 @@ public class Arm implements Constants {
     static final double POT_GROUND_LEVEL            = 4.37;
 
     //Arm delay multiplier.  Used in ArmController. 
-    static final double MAX_ARM_DELAY               = .4;
+    static final double MAX_ARM_DELAY               = .2;
 
     Victor armMotor;
     AnalogChannel potentiometer;
