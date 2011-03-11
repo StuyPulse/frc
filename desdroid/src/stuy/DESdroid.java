@@ -19,7 +19,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Set to true when debugging; it will print out exception stack traces
     // Set to false for competition: log exceptions to a file on the cRIO
-    static final boolean DEBUG_MODE = false;
+    static final boolean DEBUG_MODE = true;
 
     // Robot hardware
     
@@ -29,6 +29,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     Grabber grabber;
     Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
+    VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
+
 
     Relay acquiredLight;
 
@@ -68,7 +70,20 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-        drive = new DriveTrain(true);
+
+        // Do NOT change the order of these constructors!
+        driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
+        driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
+        driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
+        dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+        driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
+
+
+
+        drive = new DriveTrain(driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight);
 
         auton = new Autonomous(this);
     }
@@ -154,6 +169,11 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             // Continuously open wrist latch in case of failure during autonomous
             arm.wrist.set(0);
+
+
+            if (leftStick.getTrigger() && DEBUG_MODE) {
+                System.out.println(arm.getPosition());
+            }
         }
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);

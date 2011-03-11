@@ -40,61 +40,6 @@ public class DriveTrain extends RobotDrive implements Constants {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
     }
 
-    public DriveTrain(boolean speedControl) {
-        super(null, null, null, null);
-        this.speedControl = speedControl;
-
-        if (speedControl) {
-            kMaxRPM = 600;
-
-            // Do NOT change the order of these constructors!
-            driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-            dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
-            driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-            dummyFRight = new VictorSpeed(CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
-            driveRearLeft = new VictorSpeed(CHANNEL_REAR_LEFT, CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-            dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
-            dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-            driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-
-            m_frontLeftMotor = driveFrontLeft;
-            m_frontRightMotor = driveFrontRight;
-            m_rearLeftMotor = driveRearLeft;
-            m_rearRightMotor = driveRearRight;
-
-
-            driveFrontLeft.c.disable();
-            driveFrontRight.c.disable();
-            driveRearLeft.c.disable();
-            driveRearRight.c.disable();
-
-            driveFrontLeft.c.setInputRange(-kMaxRPM, kMaxRPM);
-            driveFrontRight.c.setInputRange(-kMaxRPM, kMaxRPM);
-            driveRearLeft.c.setInputRange(-kMaxRPM, kMaxRPM);
-            driveRearRight.c.setInputRange(-kMaxRPM, kMaxRPM);
-
-            driveFrontLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveFrontRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveRearLeft.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-            driveRearRight.c.setPID(SPEED_P, SPEED_I, SPEED_D);
-
-            driveFrontLeft.c.enable();
-            driveFrontRight.c.enable();
-            driveRearLeft.c.enable();
-            driveRearRight.c.enable();
-        } else {
-            kMaxRPM = 1;
-
-            m_frontLeftMotor = new Victor(CHANNEL_FRONT_LEFT);
-            m_frontRightMotor = new Victor(CHANNEL_FRONT_RIGHT);
-            m_rearLeftMotor = new Victor(CHANNEL_REAR_LEFT);
-            m_rearRightMotor = new Victor(CHANNEL_REAR_RIGHT);
-        }
-
-        setInvertedMotor(MotorType.kFrontRight, true);
-        setInvertedMotor(MotorType.kRearRight, true);
-    }
-
     /**
      * Call this method to drive the robot.
      * @param x Horizontal component of the speed ("strafing")
