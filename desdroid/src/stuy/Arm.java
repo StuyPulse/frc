@@ -18,14 +18,14 @@ public class Arm implements Constants {
     static final double UPPER_ARM_POT_LIM           = 4.7;
 
     //Arm potentiometer values 
-    static final double POT_SIDE_BOTTOM             = 3.54;
-    static final double POT_SIDE_MIDDLE             = 3.01;
-    static final double POT_SIDE_TOP                = 2.38;
-    static final double POT_MIDDLE_BOTTOM           = 3.47;
-    static final double POT_MIDDLE_MIDDLE           = 2.67;
-    static final double POT_MIDDLE_TOP              = 2.0;
-    static final double POT_FEEDER_LEVEL            = 3.52;
-    static final double POT_GROUND_LEVEL            = 4.44;
+    static final double POT_SIDE_BOTTOM             = 3.75;
+    static final double POT_SIDE_MIDDLE             = 3.12;
+    static final double POT_SIDE_TOP                = 3.28;
+    static final double POT_MIDDLE_BOTTOM           = 3.67;
+    static final double POT_MIDDLE_MIDDLE           = 2.99;
+    static final double POT_MIDDLE_TOP              = 2.28;
+    static final double POT_FEEDER_LEVEL            = 3.63;
+    static final double POT_GROUND_LEVEL            = 4.37;
 
     //Arm delay multiplier.  Used in ArmController. 
     static final double MAX_ARM_DELAY               = .4;
