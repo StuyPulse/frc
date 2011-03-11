@@ -310,7 +310,7 @@ public class Autonomous implements Constants {
     private void score(double dist, int armButtonNum) {
         des.grabber.in();
         des.arm.wrist.set(1);
-        Timer.delay(1);
+        Timer.delay(2);
         des.grabber.rotateUp();
         Timer.delay(.2);
         des.grabber.stop();
