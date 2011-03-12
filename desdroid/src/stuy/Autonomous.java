@@ -84,8 +84,7 @@ public class Autonomous implements Constants {
      */
     private void auton3() {
         des.arm.wrist.set(1);
-        Timer.delay(1);
-        des.arm.wrist.set(0);
+        Timer.delay(2);
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
