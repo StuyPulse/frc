@@ -52,7 +52,9 @@ public class Minibot implements Constants {
      */
     public void runMinibotIfReady() {
         if (minibotSwitch.get()) {
-            motorToggle.set(1);
+            if (DESdroid.DEBUG_MODE)
+                System.out.println("Pole switch thrown, motor toggle set.");
+            motorToggle.set(0);
         }
     }
 
@@ -63,6 +65,6 @@ public class Minibot implements Constants {
         wingServo.set(1);
         trayRelease.set(1);
         minibotRelease.set(0);
-        motorToggle.set(0);
+        motorToggle.set(1);
     }
 }
