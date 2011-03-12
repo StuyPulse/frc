@@ -309,10 +309,11 @@ public class Autonomous implements Constants {
     private void score(double dist, int armButtonNum) {
         des.grabber.in();
         des.arm.wrist.set(1);
-        Timer.delay(2);
+        Timer.delay(2.5);
         des.grabber.rotateUp();
         Timer.delay(.2);
         des.grabber.stop();
+        Timer.delay(2);
         double time = Timer.getFPGATimestamp(); // NOTE: Unused variable
 
         ArmController armctl = new ArmController(des, armButtonNum, 0);
@@ -323,21 +324,23 @@ public class Autonomous implements Constants {
 
         DESdroid.threadEnd(armctl);
 
-        des.grabber.out();
+ //       des.grabber.out();
         Timer.delay(1);
-        des.grabber.stop();
+//        des.grabber.stop();
 
-        Timer.delay(0.5);
+//        Timer.delay(0.5);
 
         des.arm.rotate(-1.0);
-        Timer.delay(1);
+        Timer.delay(2);
         des.arm.rotate(0.0);
-
+//
 //        Timer.delay(1);
-
+//
 //        // Back up at the end
 //        goSpeed(-.5);
 //        Timer.delay(1);
 //        goSpeed(0);
+//
+//        des.grabber.stop();
     }
 }
