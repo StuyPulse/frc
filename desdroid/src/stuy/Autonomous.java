@@ -301,7 +301,7 @@ public class Autonomous implements Constants {
      * 4. Rotate the arm upwards to the specified height.
      * 5. Track the line to the specified distance, then stop.
      * 6. Expectorate the tube onto the peg for one second.
-     * 7. Pause for a second, then back up at 1/2 speed for a second.
+     * 7. Pause for half a second, then lower the arm.
      * 
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
@@ -326,11 +326,18 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(1);
         des.grabber.stop();
-        Timer.delay(1);
 
-        // Back up at the end
-        goSpeed(-.5);
+        Timer.delay(0.5);
+
+        des.arm.rotate(-1.0);
         Timer.delay(1);
-        goSpeed(0);
+        des.arm.rotate(0.0);
+
+//        Timer.delay(1);
+
+//        // Back up at the end
+//        goSpeed(-.5);
+//        Timer.delay(1);
+//        goSpeed(0);
     }
 }
