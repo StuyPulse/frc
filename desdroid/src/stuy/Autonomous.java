@@ -15,8 +15,14 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 201;  // this works on our practice field
+    final double CENTER_UPPER_LINE_DIST = 206;  // this works on our practice field
+    final double CENTER_UPPER_LINE_DIST_LESS = 203;   // these might work if 206 is too much
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 201;
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 196;
+
     final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
+
+
 
     /**
      * Autonomous constructor.
@@ -56,6 +62,24 @@ public class Autonomous implements Constants {
             case 5:
                 auton5();
                 break;
+            case 6:
+                auton6();
+                break;
+            case 7:
+                auton7();
+                break;
+            case 8:
+                auton8();
+                break;
+            case 9:
+                auton9();
+                break;
+            case 10:
+                auton10();
+                break;
+            case 11:
+                auton11();
+                break;
             default:
                 break; // Do nothing.
         }
@@ -67,7 +91,7 @@ public class Autonomous implements Constants {
      * Score center/middle
      */
     private void auton1() {
-        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON);
+        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON, true);
     }
 
     /**
@@ -76,7 +100,7 @@ public class Autonomous implements Constants {
      * Score top
      */
     private void auton2() {
-        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON);
+        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON, true);
     }
 
     /**
@@ -91,12 +115,10 @@ public class Autonomous implements Constants {
         des.grabber.stop();
     }
 
-    /**
-     * Delay for 3 seconds, then line track and score center middle
-     */
+
     private void auton4() {
         Timer.delay(3);
-        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON);
+        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON, true);
     }
 
     /**
@@ -104,7 +126,32 @@ public class Autonomous implements Constants {
      */
     private void auton5() {
         Timer.delay(3);
-        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON);
+        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON, true);
+    }
+
+    private void auton6() {
+        score(CENTER_UPPER_LINE_DIST_LESS, CENTER_UPPER_BUTTON, true);
+    }
+
+    private void auton7() {
+        score(CENTER_UPPER_LINE_DIST_LESS_LESS, CENTER_UPPER_BUTTON, true);
+    }
+
+    private void auton8() {
+        score(CENTER_UPPER_LINE_DIST_LESS_LESS_LESS, CENTER_UPPER_BUTTON, true);
+    }
+
+
+    private void auton9() {
+        score(CENTER_UPPER_LINE_DIST_LESS, CENTER_UPPER_BUTTON, false);
+    }
+
+    private void auton10() {
+        score(CENTER_UPPER_LINE_DIST_LESS_LESS, CENTER_UPPER_BUTTON, false);
+    }
+
+    private void auton11() {
+        score(CENTER_UPPER_LINE_DIST_LESS_LESS_LESS, CENTER_UPPER_BUTTON, false);
     }
 
     /**
@@ -307,7 +354,7 @@ public class Autonomous implements Constants {
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
      */
-    private void score(double dist, int armButtonNum) {
+    private void score(double dist, int armButtonNum, boolean back) {
         des.grabber.in();
         des.arm.wrist.set(1);
         Timer.delay(2);
@@ -327,10 +374,12 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(.5);
 
-        // Back up at the end
-        goSpeed(-.5);
-        Timer.delay(2);
-        goSpeed(0);
+        if (back) {
+            // Back up at the end
+            goSpeed(-.5);
+            Timer.delay(2);
+            goSpeed(0);
+        }
 
         des.grabber.stop();
     }
