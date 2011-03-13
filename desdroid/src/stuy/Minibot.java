@@ -43,8 +43,6 @@ public class Minibot implements Constants {
      */
     public void debroy() {
         trayRelease.set(0);
-        Timer.delay(0.1);
-        minibotRelease.set(1);
     }
 
     /**
@@ -54,6 +52,7 @@ public class Minibot implements Constants {
         if (minibotSwitch.get()) {
             if (DESdroid.DEBUG_MODE)
                 System.out.println("Pole switch thrown, motor toggle set.");
+            minibotRelease.set(1);
             motorToggle.set(0);
         }
     }

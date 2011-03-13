@@ -15,8 +15,8 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 209;  // this works on our practice field
-    final double CENTER_MIDDLE_LINE_DIST = 216; // not tuned, probably too much
+    final double CENTER_UPPER_LINE_DIST = 206;  // this works on our practice field
+    final double CENTER_MIDDLE_LINE_DIST = 213; // not tuned, probably too much
 
     /**
      * Autonomous constructor.
@@ -84,7 +84,8 @@ public class Autonomous implements Constants {
      */
     private void auton3() {
         des.arm.wrist.set(1);
-        Timer.delay(2);
+        Timer.delay(1);
+        des.arm.wrist.set(0);
         des.grabber.out();
         Timer.delay(2);
         des.grabber.stop();
@@ -301,7 +302,7 @@ public class Autonomous implements Constants {
      * 4. Rotate the arm upwards to the specified height.
      * 5. Track the line to the specified distance, then stop.
      * 6. Expectorate the tube onto the peg for one second.
-     * 7. Pause for half a second, then lower the arm.
+     * 7. Pause for a second, then back up at 1/2 speed for a second.
      * 
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
@@ -309,11 +310,10 @@ public class Autonomous implements Constants {
     private void score(double dist, int armButtonNum) {
         des.grabber.in();
         des.arm.wrist.set(1);
-        Timer.delay(2.5);
+        Timer.delay(2);
         des.grabber.rotateUp();
         Timer.delay(.2);
         des.grabber.stop();
-        Timer.delay(2);
         double time = Timer.getFPGATimestamp(); // NOTE: Unused variable
 
         ArmController armctl = new ArmController(des, armButtonNum, 0);
@@ -324,23 +324,14 @@ public class Autonomous implements Constants {
 
         DESdroid.threadEnd(armctl);
 
- //       des.grabber.out();
-        Timer.delay(1);
-//        des.grabber.stop();
+        des.grabber.out();
+        Timer.delay(.5);
 
-//        Timer.delay(0.5);
-
-        des.arm.rotate(-1.0);
+        // Back up at the end
+        goSpeed(-.5);
         Timer.delay(2);
-        des.arm.rotate(0.0);
-//
-//        Timer.delay(1);
-//
-//        // Back up at the end
-//        goSpeed(-.5);
-//        Timer.delay(1);
-//        goSpeed(0);
-//
-//        des.grabber.stop();
+        goSpeed(0);
+
+        des.grabber.stop();
     }
 }

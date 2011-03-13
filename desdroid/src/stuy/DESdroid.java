@@ -19,7 +19,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Set to true when debugging; it will print out exception stack traces
     // Set to false for competition: log exceptions to a file on the cRIO
-    static final boolean DEBUG_MODE = true;
+    static final boolean DEBUG_MODE = false;
 
     // Robot hardware
     
@@ -96,7 +96,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         minibot.reset();
-        auton.run(oi.getAutonSetting());
+        if (DEBUG_MODE) {
+            auton.run(oi.getAutonSetting());
+        }
+        else {
+            auton.run(2);
+        }
     }
 
     /**
