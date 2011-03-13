@@ -15,8 +15,8 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 206;  // this works on our practice field
-    final double CENTER_MIDDLE_LINE_DIST = 213; // not tuned, probably too much
+    final double CENTER_UPPER_LINE_DIST = 201;  // this works on our practice field
+    final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
 
     /**
      * Autonomous constructor.
