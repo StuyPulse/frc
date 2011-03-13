@@ -96,12 +96,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         minibot.reset();
-        if (DEBUG_MODE) {
+        //if (DEBUG_MODE) {
             auton.run(oi.getAutonSetting());
-        }
-        else {
-            auton.run(2);
-        }
+        //}
+        //else {
+        //    auton.run(2);
+        //}
     }
 
     /**
