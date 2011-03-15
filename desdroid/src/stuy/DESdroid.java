@@ -183,11 +183,23 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             updateButtonLights();
 
-            // Turn on light when tube is in the grabber
-            if (grabber.getLimitSwitch()) {
-                acquiredLight.set(Relay.Value.kOn);
-            } else {
-                acquiredLight.set(Relay.Value.kOff);
+            if (minibotMode) {
+                // Turn on light when minibot switch contacts pole
+                if (minibot.minibotSwitch.get()) {
+                    acquiredLight.set(Relay.Value.kOn);
+                }
+                else {
+                    acquiredLight.set(Relay.Value.kOff);
+                }
+            }
+            else {
+                // Turn on light when tube is in the grabber
+                if (grabber.getLimitSwitch()) {
+                    acquiredLight.set(Relay.Value.kOn);
+                }
+                else {
+                    acquiredLight.set(Relay.Value.kOff);
+                }
             }
 
             // Continuously open wrist latch in case of failure during autonomous
