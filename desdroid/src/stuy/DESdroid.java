@@ -7,6 +7,7 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,6 +42,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
     // Operator interface
     OperatorInterface oi;
+
+    AxisCamera cam;
 
     // Autonomous class
     Autonomous auton;
@@ -85,6 +88,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+
+        cam = AxisCamera.getInstance();
+        cam.writeResolution(AxisCamera.ResolutionT.k320x240);
 
         auton = new Autonomous(this);
     }
