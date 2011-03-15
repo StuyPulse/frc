@@ -117,13 +117,27 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean isMinibotDeployed = false;
         minibot.reset();
 
+        boolean minibotMode = false;
+
         while (isEnabled() && isOperatorControl()) {
-            drive.mecanumDrive_Cartesian(
-                    leftStick.getX(), // X translation (horizontal strafe)
-                    leftStick.getY(), // Y translation (straight forward)
-                    rightStick.getX(), // rotation (getX() > 0 is clockwise)
-                    0, // use gyro for field-oriented drive
-                    true);            // deadband the inputs?
+            minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
+
+            if (minibotMode) {
+                drive.mecanumDrive_Cartesian(
+                        -leftStick.getX() * 0.25, // X translation (horizontal strafe)
+                        -leftStick.getY() * 0.25, // Y translation (straight forward)
+                        rightStick.getX() * 0.25, // rotation (getX() > 0 is clockwise)
+                        0, // use gyro for field-oriented drive
+                        true);            // deadband the inputs?
+            }
+            else {
+                drive.mecanumDrive_Cartesian(
+                        leftStick.getX(), // X translation (horizontal strafe)
+                        leftStick.getY(), // Y translation (straight forward)
+                        rightStick.getX(), // rotation (getX() > 0 is clockwise)
+                        0, // use gyro for field-oriented drive
+                        true);            // deadband the inputs?
+            }
 
 
             // Arm control by OI
