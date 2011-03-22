@@ -125,6 +125,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         boolean minibotMode = false;
 
+        double minibotTimer = 0;
+
         while (isEnabled() && isOperatorControl()) {
             minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
 
@@ -179,34 +181,31 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (oi.getMinibotSwitch()) {
                 if (DEBUG_MODE)
                     System.out.println("Got OI minibot switch.");
-                minibot.runTrayMotor();
+                minibot.deploy();
                 isMinibotDeployed = true;
             }
 
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
-                minibot.runMinibotIfReady();
+                if (oi.getExtraButton()) {
+                    minibotTimer = Timer.getFPGATimestamp();
+                    minibot.runTrayMotor(-1);
+                }
+            }
+
+            if (minibotTimer > 0 && Timer.getFPGATimestamp() - minibotTimer > .5) {
+                minibot.stopTrayMotor();
+                minibotTimer = 0;
             }
 
             updateButtonLights();
 
-            if (minibotMode) {
-                // Turn on light when minibot switch contacts pole
-                if (minibot.minibotSwitch.get()) {
-                    acquiredLight.set(Relay.Value.kOn);
-                }
-                else {
-                    acquiredLight.set(Relay.Value.kOff);
-                }
+            // Turn on light when tube is in the grabber
+            if (grabber.getLimitSwitch()) {
+                acquiredLight.set(Relay.Value.kOn);
             }
             else {
-                // Turn on light when tube is in the grabber
-                if (grabber.getLimitSwitch()) {
-                    acquiredLight.set(Relay.Value.kOn);
-                }
-                else {
-                    acquiredLight.set(Relay.Value.kOff);
-                }
+                acquiredLight.set(Relay.Value.kOff);
             }
 
             // Continuously open wrist latch in case of failure during autonomous

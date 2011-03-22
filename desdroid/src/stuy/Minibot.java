@@ -16,7 +16,7 @@ public class Minibot implements Constants {
     Victor trayMotor;
     Servo minibotRelease;
     Servo motorToggle;
-    DigitalInput minibotSwitch;
+    DigitalInput poleContactSwitch;
     DigitalInput trayLimitSwitch;
 
     /**
@@ -30,7 +30,7 @@ public class Minibot implements Constants {
 
         minibotRelease = new Servo(SECOND_SIDECAR_SLOT, MINIBOT_RELEASE_SERVO);
         motorToggle = new Servo(SECOND_SIDECAR_SLOT, MOTOR_TOGGLE_SERVO);
-        minibotSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, MINIBOT_SWITCH_PORT);
+        poleContactSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, POLE_CONTACT_SWITCH_PORT);
     }
 
     /**
@@ -43,8 +43,8 @@ public class Minibot implements Constants {
     /**
      * Extends the minibot deployer.
      */
-    public void runTrayMotor() {
-        trayMotor.set(1);
+    public void runTrayMotor(double speed) {
+        trayMotor.set(speed);
     }
 
     /**
@@ -58,21 +58,15 @@ public class Minibot implements Constants {
      * Checks the tray limit switch and stops the tray motor if it is pressed.
      */
     public void checkTrayLimitSwitch() {
-        if (!trayLimitSwitch.get()) {
+        if (!trayLimitSwitch.get() || !poleContactSwitch.get()) {
             stopTrayMotor();
         }
     }
 
-    /**
-     * If minibot is pressed against pole, throw motor switch on.
-     */
-    public void runMinibotIfReady() {
-        if (minibotSwitch.get()) {
-            if (DESdroid.DEBUG_MODE)
-                System.out.println("Pole switch thrown, motor toggle set.");
-            minibotRelease.set(1);
-            motorToggle.set(0);
-        }
+    public void deploy() {
+        motorToggle.set(0);
+        minibotRelease.set(1);
+        runTrayMotor(1);
     }
 
     /**

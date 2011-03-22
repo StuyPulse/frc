@@ -38,7 +38,7 @@ public interface Constants {
     final int TRAY_LIMIT_SWITCH_PORT         = 9002;
     final int MINIBOT_RELEASE_SERVO          = 2;
     final int MOTOR_TOGGLE_SERVO             = 1;
-    final int MINIBOT_SWITCH_PORT            = 3;
+    final int POLE_CONTACT_SWITCH_PORT       = 3;
 
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
