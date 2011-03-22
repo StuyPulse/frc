@@ -4,7 +4,7 @@ public interface Constants {
 
     // Robot output configuration channels
 
-    final int SECOND_SIDECAR_SLOT            = 6;                     
+    final int SECOND_SIDECAR_SLOT            = 6;
     final int CHANNEL_FRONT_LEFT             = 7;
     final int CHANNEL_FRONT_RIGHT            = 9;
     final int CHANNEL_REAR_LEFT              = 8;
@@ -28,13 +28,14 @@ public interface Constants {
     final int GRABBER_UPPER_ROLLER_PORT      = 4;
     final int GRABBER_LOWER_ROLLER_PORT      = 1;
     final int GRABBER_LIMIT_SWITCH_PORT      = 11;
-    
+
     // Light on top of robot; lights up when tube is in grabber
     final int TUBE_ACQUIRED_LIGHT            = 1;
 
     // Minibot deployment
     final int WING_SERVO                     = 6;
-    final int TRAY_RELEASE_SERVO             = 3;
+    final int TRAY_RELEASE_MOTOR_PORT        = 9001;
+    final int TRAY_LIMIT_SWITCH_PORT         = 9002;
     final int MINIBOT_RELEASE_SERVO          = 2;
     final int MOTOR_TOGGLE_SERVO             = 1;
     final int MINIBOT_SWITCH_PORT            = 3;

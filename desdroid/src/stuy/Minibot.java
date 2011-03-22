@@ -13,36 +13,54 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Minibot implements Constants {
     Servo wingServo;
-    Servo trayRelease;
+    Victor trayMotor;
     Servo minibotRelease;
     Servo motorToggle;
     DigitalInput minibotSwitch;
+    DigitalInput trayLimitSwitch;
 
     /**
-     * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.  
+     * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.
      */
     public Minibot() {
-
         wingServo = new Servo(WING_SERVO);
 
-        trayRelease = new Servo(SECOND_SIDECAR_SLOT, TRAY_RELEASE_SERVO);
+        trayMotor = new Victor(TRAY_RELEASE_MOTOR_PORT);
+        trayLimitSwitch = new DigitalInput(TRAY_LIMIT_SWITCH_PORT);
+
         minibotRelease = new Servo(SECOND_SIDECAR_SLOT, MINIBOT_RELEASE_SERVO);
         motorToggle = new Servo(SECOND_SIDECAR_SLOT, MOTOR_TOGGLE_SERVO);
         minibotSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, MINIBOT_SWITCH_PORT);
     }
 
     /**
-     * Deploys wings.  
+     * Deploys wings.
      */
     public void spreadWings() {
         wingServo.set(0);
     }
 
     /**
-     * Debroys the minibot.
+     * Extends the minibot deployer.
      */
-    public void debroy() {
-        trayRelease.set(0);
+    public void runTrayMotor() {
+        trayMotor.set(1);
+    }
+
+    /**
+     * Stops extending the minibot deployer.
+     */
+    public void stopTrayMotor() {
+        trayMotor.set(0);
+    }
+
+    /**
+     * Checks the tray limit switch and stops the tray motor if it is pressed.
+     */
+    public void checkTrayLimitSwitch() {
+        if (!trayLimitSwitch.get()) {
+            stopTrayMotor();
+        }
     }
 
     /**
@@ -62,7 +80,6 @@ public class Minibot implements Constants {
      */
     public void reset() {
         wingServo.set(1);
-        trayRelease.set(1);
         minibotRelease.set(0);
         motorToggle.set(1);
     }

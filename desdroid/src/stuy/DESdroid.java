@@ -178,12 +178,13 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (oi.getMinibotSwitch()) {
                 if (DEBUG_MODE)
-                    System.out.println("Got minibot switch.");
-                minibot.debroy();
+                    System.out.println("Got OI minibot switch.");
+                minibot.runTrayMotor();
                 isMinibotDeployed = true;
             }
 
             if (isMinibotDeployed) {
+                minibot.checkTrayLimitSwitch();
                 minibot.runMinibotIfReady();
             }
 
