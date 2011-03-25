@@ -186,6 +186,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 isMinibotDeployed = true;
             }
 
+            System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
+
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
                 if (oi.getExtraButton() && !isRetracting) {
