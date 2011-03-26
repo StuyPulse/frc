@@ -361,7 +361,6 @@ public class Autonomous implements Constants {
         des.grabber.rotateUp(true);
         Timer.delay(.2);
         des.grabber.stop();
-        double time = Timer.getFPGATimestamp(); // NOTE: Unused variable
 
         ArmController armctl = new ArmController(des, armButtonNum, 0);
         armctl.start();
