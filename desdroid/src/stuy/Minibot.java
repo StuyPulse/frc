@@ -39,6 +39,9 @@ public class Minibot implements Constants {
      */
     public void spreadWings() {
         wingServo.set(0);
+        motorToggle.set(1);
+        Timer.delay(1);
+        motorToggle.set(0);
     }
 
     /**
@@ -59,13 +62,12 @@ public class Minibot implements Constants {
      * Checks the tray limit switch and stops the tray motor if it is pressed.
      */
     public void checkTrayLimitSwitch() {
-        if (trayLimitSwitch.get() || !poleContactSwitch.get()) {
+        if (!poleContactSwitch.get()) {
             stopTrayMotor();
         }
     }
 
     public void deploy() {
-        motorToggle.set(1);
         minibotRelease.set(1);
         runTrayMotor(1);
     }

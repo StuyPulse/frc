@@ -123,6 +123,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean isMinibotDeployed = false;
         minibot.reset();
 
+        boolean wingsSpread = false;
         boolean minibotMode = false;
         boolean isRetracting = false;
 
@@ -177,16 +178,19 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (oi.getWingSwitch()) {
                 minibot.spreadWings();
+                wingsSpread = true;
             }
 
-            if (oi.getMinibotSwitch()) {
+            if (oi.getMinibotSwitch() && wingsSpread) {
                 if (DEBUG_MODE)
                     System.out.println("Got OI minibot switch.");
                 minibot.deploy();
                 isMinibotDeployed = true;
             }
 
-            System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
+            //System.out.println("Tray limit switch: " + minibot.trayLimitSwitch.get() + " " + minibot.poleContactSwitch.get());
+
+            //System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
 
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
