@@ -168,9 +168,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             } else if (armStick.getRawButton(2)) {
                 grabber.out();
             } else if (armStick.getRawButton(4)) {
-                grabber.rotateUp();
+                grabber.rotateUp(false);
             } else if (armStick.getRawButton(5)) {
-                grabber.rotateDown();
+                grabber.rotateDown(false);
             } else {
                 grabber.stop();
             }
