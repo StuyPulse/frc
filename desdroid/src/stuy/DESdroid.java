@@ -163,7 +163,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Grabber control
-            if (armStick.getTrigger()) {
+            if (armStick.getTrigger() && !grabber.getLimitSwitch()) {
                 grabber.in();
             } else if (armStick.getRawButton(2)) {
                 grabber.out();
