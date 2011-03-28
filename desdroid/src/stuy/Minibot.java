@@ -18,6 +18,7 @@ public class Minibot implements Constants {
     Servo motorToggle;
     DigitalInput poleContactSwitch;
     DigitalInput trayLimitSwitch;
+    DigitalInput drawbridgeSwitch;
 
     /**
      * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.
@@ -32,6 +33,7 @@ public class Minibot implements Constants {
 
         trayLimitSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, TRAY_LIMIT_SWITCH_PORT);
         poleContactSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, POLE_CONTACT_SWITCH_PORT);
+        drawbridgeSwitch = new DigitalInput(SECOND_SIDECAR_SLOT, DRAWBRIDGE_LIMIT_SWITCH_PORT);
     }
 
     /**
@@ -62,7 +64,7 @@ public class Minibot implements Constants {
      * Checks the tray limit switch and stops the tray motor if it is pressed.
      */
     public void checkTrayLimitSwitch() {
-        if (!poleContactSwitch.get()) {
+        if (!poleContactSwitch.get() || !trayLimitSwitch.get()) {
             stopTrayMotor();
         }
     }
