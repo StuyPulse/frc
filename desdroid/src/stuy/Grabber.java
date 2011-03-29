@@ -37,24 +37,36 @@ public class Grabber implements Constants {
      * Eject the tube.
      */
     public void out() {
-        upperRoller.set(1);
-        lowerRoller.set(-1);
+        upperRoller.set(.5);
+        lowerRoller.set(-.5);
     }
 
     /**
      * Rotate the tube upwards.
      */
-    public void rotateUp() {
-        upperRoller.set(-1);
-        lowerRoller.set(-1);
+    public void rotateUp(boolean slow) {
+        if (slow) {
+            upperRoller.set(-.5);
+            lowerRoller.set(-.5);
+        }
+        else {
+            upperRoller.set(-1);
+            lowerRoller.set(-1);
+        }
     }
 
     /**
      * Rotate the tube downwards.
      */
-    public void rotateDown() {
-        upperRoller.set(1);
-        lowerRoller.set(1);
+    public void rotateDown(boolean slow) {
+        if (slow) {
+            upperRoller.set(.5);
+            lowerRoller.set(.5);
+        }
+        else {
+            upperRoller.set(1);
+            lowerRoller.set(1);
+        }
     }
 
     /**

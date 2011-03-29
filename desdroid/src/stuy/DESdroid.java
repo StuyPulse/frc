@@ -32,7 +32,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     DigitalInput leftSensor, middleSensor, rightSensor;
     VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
 
-
     Relay acquiredLight;
 
     // Driver controls
@@ -51,6 +50,8 @@ public class DESdroid extends SimpleRobot implements Constants {
     boolean wasArmControlled = false;
     ArmController positionController;
 
+//    DashboardUpdater dashboard;
+
     /**
      * DESdroid constructor.
      */
@@ -67,7 +68,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
@@ -93,6 +93,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         cam.writeResolution(AxisCamera.ResolutionT.k320x240);
 
         auton = new Autonomous(this);
+
+//        dashboard = new DashboardUpdater(this);
     }
 
     /**
@@ -123,6 +125,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean isMinibotDeployed = false;
         minibot.reset();
 
+        boolean wingsSpread = false;
         boolean minibotMode = false;
         boolean isRetracting = false;
 
@@ -133,9 +136,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (minibotMode) {
                 drive.mecanumDrive_Cartesian(
-                        -leftStick.getX() * 0.25, // X translation (horizontal strafe)
-                        -leftStick.getY() * 0.25, // Y translation (straight forward)
-                        rightStick.getX() * 0.25, // rotation (getX() > 0 is clockwise)
+                        -leftStick.getX() * 0.375, // X translation (horizontal strafe)
+                        -leftStick.getY() * 0.375, // Y translation (straight forward)
+                        rightStick.getX() * 0.375, // rotation (getX() > 0 is clockwise)
                         0, // use gyro for field-oriented drive
                         true);            // deadband the inputs?
             }
@@ -163,28 +166,33 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Grabber control
-            if (armStick.getTrigger()) {
+            if (armStick.getTrigger() && !grabber.getLimitSwitch()) {
                 grabber.in();
             } else if (armStick.getRawButton(2)) {
                 grabber.out();
             } else if (armStick.getRawButton(4)) {
-                grabber.rotateUp();
+                grabber.rotateUp(false);
             } else if (armStick.getRawButton(5)) {
-                grabber.rotateDown();
+                grabber.rotateDown(false);
             } else {
                 grabber.stop();
             }
 
             if (oi.getWingSwitch()) {
                 minibot.spreadWings();
+                wingsSpread = true;
             }
 
-            if (oi.getMinibotSwitch()) {
+            if (oi.getMinibotSwitch() && wingsSpread) {
                 if (DEBUG_MODE)
                     System.out.println("Got OI minibot switch.");
                 minibot.deploy();
                 isMinibotDeployed = true;
             }
+
+            //System.out.println("Tray limit switch: " + minibot.trayLimitSwitch.get() + " " + minibot.poleContactSwitch.get());
+
+            //System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
 
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
@@ -204,7 +212,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             updateButtonLights();
 
             // Turn on light when tube is in the grabber
-            if (grabber.getLimitSwitch()) {
+            if (grabber.getLimitSwitch() || !minibot.drawbridgeSwitch.get()) {
                 acquiredLight.set(Relay.Value.kOn);
             }
             else {

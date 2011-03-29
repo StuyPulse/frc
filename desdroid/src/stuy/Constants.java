@@ -34,8 +34,9 @@ public interface Constants {
 
     // Minibot deployment
     final int WING_SERVO                     = 6;
-    final int TRAY_RELEASE_MOTOR_PORT        = 9001;
-    final int TRAY_LIMIT_SWITCH_PORT         = 9002;
+    final int DRAWBRIDGE_LIMIT_SWITCH_PORT   = 13;
+    final int TRAY_RELEASE_MOTOR_PORT        = 10;
+    final int TRAY_LIMIT_SWITCH_PORT         = 14;
     final int MINIBOT_RELEASE_SERVO          = 2;
     final int MOTOR_TOGGLE_SERVO             = 1;
     final int POLE_CONTACT_SWITCH_PORT       = 3;
