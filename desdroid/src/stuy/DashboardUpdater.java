@@ -28,7 +28,7 @@ public class DashboardUpdater {
             public void run() {
                 updateDashboard();
             }
-        }, 0, 20);
+        }, 0, 100);
     }
 
     void updateDashboard() {
