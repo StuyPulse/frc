@@ -22,8 +22,6 @@ public class Autonomous implements Constants {
 
     final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
 
-    final static int GYRO_PORT = 2;
-
     /**
      * Autonomous constructor.
      * @param d DESdroid instance to control robot components.

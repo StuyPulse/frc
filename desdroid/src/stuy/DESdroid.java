@@ -32,8 +32,6 @@ public class DESdroid extends SimpleRobot implements Constants {
     DigitalInput leftSensor, middleSensor, rightSensor;
     VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
 
-    Gyro gyro;
-
     Relay acquiredLight;
 
     // Driver controls
@@ -52,7 +50,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     boolean wasArmControlled = false;
     ArmController positionController;
 
-    DashboardUpdater dashboard;
+//    DashboardUpdater dashboard;
 
     /**
      * DESdroid constructor.
@@ -70,8 +68,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftSensor = new DigitalInput(LINE_SENSOR_LEFT_CHANNEL);
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
-
-        gyro = new Gyro(Autonomous.GYRO_PORT);
 
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
@@ -98,7 +94,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
-        dashboard = new DashboardUpdater(this);
+//        dashboard = new DashboardUpdater(this);
     }
 
     /**
@@ -128,8 +124,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         boolean isMinibotDeployed = false;
         minibot.reset();
-
-        gyro.reset();
 
         boolean wingsSpread = false;
         boolean minibotMode = false;

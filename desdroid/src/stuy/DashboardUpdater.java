@@ -102,7 +102,6 @@ public class DashboardUpdater {
             lowDashData.finalizeCluster();
 
             lowDashData.addByte((byte) 0);
-            lowDashData.addDouble(des.gyro.getAngle());
         }
         lowDashData.finalizeCluster();
         lowDashData.commit();
