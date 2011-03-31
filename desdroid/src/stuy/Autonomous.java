@@ -17,8 +17,8 @@ public class Autonomous implements Constants {
     int leftValue, middleValue, rightValue;
     final double CENTER_UPPER_LINE_DIST = 206;  // this works on our practice field
     final double CENTER_UPPER_LINE_DIST_LESS = 203;   // these might work if 206 is too much
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 201;
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 196;
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 193;
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 190;
 
     final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
 
@@ -354,10 +354,7 @@ public class Autonomous implements Constants {
      */
     private void score(double dist, int armButtonNum, boolean back) {
         des.arm.wrist.set(1);
-        Timer.delay(2);
-        des.grabber.rotateUp(true);
-        Timer.delay(.2);
-        des.grabber.stop();
+        Timer.delay(1.5);
 
         ArmController armctl = new ArmController(des, armButtonNum, 0);
         armctl.start();
