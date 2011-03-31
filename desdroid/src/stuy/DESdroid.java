@@ -132,9 +132,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (minibotMode) {
                 drive.mecanumDrive_Cartesian(
-                        -leftStick.getX() * 0.25, // X translation (horizontal strafe)
-                        -leftStick.getY() * 0.25, // Y translation (straight forward)
-                        rightStick.getX() * 0.25, // rotation (getX() > 0 is clockwise)
+                        -leftStick.getX() * 0.3125, // X translation (horizontal strafe)
+                        -leftStick.getY() * 0.3125, // Y translation (straight forward)
+                        rightStick.getX() * 0.3125, // rotation (getX() > 0 is clockwise)
                         0, // use gyro for field-oriented drive
                         true);            // deadband the inputs?
             }
