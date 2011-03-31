@@ -353,7 +353,6 @@ public class Autonomous implements Constants {
      * @param armButtonNum OI height button number that refers to the desired arm height.
      */
     private void score(double dist, int armButtonNum, boolean back) {
-        des.grabber.in();
         des.arm.wrist.set(1);
         Timer.delay(2);
         des.grabber.rotateUp(true);
