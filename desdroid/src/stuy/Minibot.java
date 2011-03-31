@@ -81,5 +81,6 @@ public class Minibot implements Constants {
         wingServo.set(1);
         minibotRelease.set(0);
         motorToggle.set(0);
+        stopTrayMotor();
     }
 }
