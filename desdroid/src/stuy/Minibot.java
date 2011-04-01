@@ -41,9 +41,6 @@ public class Minibot implements Constants {
      */
     public void spreadWings() {
         wingServo.set(0);
-        motorToggle.set(1);
-        Timer.delay(1);
-        motorToggle.set(0);
     }
 
     /**

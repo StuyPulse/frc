@@ -125,6 +125,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean minibotMode = false;
         boolean isRetracting = false;
 
+        double drawbridgeTimer = 0;
         double minibotTimer = 0;
 
         while (isEnabled() && isOperatorControl()) {
@@ -175,9 +176,16 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             }
 
-            if (oi.getWingSwitch()) {
+            if (!wingsSpread && oi.getWingSwitch()) {
                 minibot.spreadWings();
+                drawbridgeTimer = Timer.getFPGATimestamp();
+                minibot.motorToggle.set(1);
                 wingsSpread = true;
+            }
+
+            if (wingsSpread && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
+                minibot.motorToggle.set(0);
+                drawbridgeTimer = 0;
             }
 
             if (oi.getMinibotSwitch() && wingsSpread) {
@@ -230,6 +238,10 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (rightStick.getRawButton(2) && DEBUG_MODE) {
                 drive.resetEncoders();
+            }
+
+            if (leftStick.getRawButton(2) && DEBUG_MODE) {
+                System.out.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }
         }
         oi.lightsOff();

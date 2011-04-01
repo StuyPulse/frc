@@ -16,9 +16,9 @@ public class Autonomous implements Constants {
     DESdroid des;
     int leftValue, middleValue, rightValue;
     final double CENTER_UPPER_LINE_DIST = 206;  // this works on our practice field
-    final double CENTER_UPPER_LINE_DIST_LESS = 203;   // these might work if 206 is too much
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 193;
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 190;
+    final double CENTER_UPPER_LINE_DIST_LESS = 190;   // these might work if 206 is too much
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 185;
+    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 180;
 
     final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
 
