@@ -24,7 +24,7 @@ public class Minibot implements Constants {
      * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.
      */
     public Minibot() {
-        wingServo = new Servo(WING_SERVO);
+        wingServo = new Servo(SECOND_SIDECAR_SLOT, WING_SERVO);
 
         trayMotor = new Victor(SECOND_SIDECAR_SLOT, TRAY_RELEASE_MOTOR_PORT);
 
