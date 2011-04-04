@@ -16,10 +16,6 @@ public class DriveTrain extends RobotDrive implements Constants {
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
     VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     /**
-     * Whether the robot is driven with speed control.  False = voltage control.
-     */
-    boolean speedControl;
-    /**
      * The maximum number of RPM (revolutions per minute) to set as the setpoint
      * speed on any of the wheels.  1 if in voltage mode.
      */
@@ -89,12 +85,10 @@ public class DriveTrain extends RobotDrive implements Constants {
      * Resets the values of the drive encoders to zero.
      */
     public void resetEncoders() {
-        if (speedControl) {
-            driveFrontLeft.e.reset();
-            driveFrontRight.e.reset();
-            driveRearLeft.e.reset();
-            driveRearRight.e.reset();
-        }
+        driveFrontLeft.e.reset();
+        driveFrontRight.e.reset();
+        driveRearLeft.e.reset();
+        driveRearRight.e.reset();
     }
 
     /**
@@ -103,12 +97,10 @@ public class DriveTrain extends RobotDrive implements Constants {
      */
     public double getAvgDistance() {
         double avg = 0;
-        if (speedControl) {
-            avg += driveFrontLeft.e.getDistance();
-            avg -= driveFrontRight.e.getDistance();
-            avg += driveRearLeft.e.getDistance();
-            avg -= driveRearRight.e.getDistance();
-        }
+        avg += driveFrontLeft.e.getDistance();
+        avg -= driveFrontRight.e.getDistance();
+        avg += driveRearLeft.e.getDistance();
+        avg -= driveRearRight.e.getDistance();
         avg /= 4.0;                   // Calcuating the average
         avg *= Math.PI;               // Multiply distance by pi, in preparation for calculating
         // the circumference
