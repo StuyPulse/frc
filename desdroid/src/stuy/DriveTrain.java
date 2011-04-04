@@ -31,9 +31,13 @@ public class DriveTrain extends RobotDrive implements Constants {
      */
     static double minJoystickValue = 0.1;
 
-    public DriveTrain(SpeedController frontLeftMotor, SpeedController rearLeftMotor,
-            SpeedController frontRightMotor, SpeedController rearRightMotor) {
+    public DriveTrain(VictorSpeed frontLeftMotor, VictorSpeed rearLeftMotor,
+            VictorSpeed frontRightMotor, VictorSpeed rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+	driveFrontLeft = frontLeftMotor;
+	driveRearLeft = rearLeftMotor;
+	driveFrontRight = frontRightMotor;
+	driveRearRight = rearRightMotor;
     }
 
     /**
