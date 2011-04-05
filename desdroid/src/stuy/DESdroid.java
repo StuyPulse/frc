@@ -18,40 +18,27 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  */
 public class DESdroid extends SimpleRobot implements Constants {
 
-    // Set to true when debugging; it will print out exception stack traces
-    // Set to false for competition: log exceptions to a file on the cRIO
-    static final boolean DEBUG_MODE = false;
-
     // Robot hardware
-    
     DriveTrain drive;
-
     Arm arm;
     Grabber grabber;
     Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
     VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
-
     Relay acquiredLight;
-
     // Driver controls
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
-
     // Operator interface
     OperatorInterface oi;
-
     AxisCamera cam;
-
     // Autonomous class
     Autonomous auton;
-    
     boolean wasArmControlled = false;
     ArmController positionController;
 
 //    DashboardUpdater dashboard;
-
     /**
      * DESdroid constructor.
      */
@@ -94,6 +81,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
+
+
 //        dashboard = new DashboardUpdater(this);
     }
 
@@ -104,7 +93,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         minibot.reset();
-            auton.run(oi.getAutonSetting());
+        auton.run(oi.getAutonSetting());
 
     }
 
@@ -138,8 +127,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                         rightStick.getX() * 0.3125, // rotation (getX() > 0 is clockwise)
                         0, // use gyro for field-oriented drive
                         true);            // deadband the inputs?
-            }
-            else {
+            } else {
                 drive.mecanumDrive_Cartesian(
                         leftStick.getX(), // X translation (horizontal strafe)
                         leftStick.getY(), // Y translation (straight forward)
@@ -177,7 +165,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             if (!wingsSpread && oi.getWingSwitch()) {
-                minibot.spreadWings();
+                minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
                 wingsSpread = true;
@@ -189,8 +177,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             if (oi.getMinibotSwitch() && wingsSpread) {
-                if (DEBUG_MODE)
-                    System.out.println("Got OI minibot switch.");
+                Debug.println("Got OI minibot switch.");
                 minibot.deploy();
                 isMinibotDeployed = true;
             }
@@ -219,8 +206,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Turn on light when tube is in the grabber
             if (grabber.getLimitSwitch() || !minibot.drawbridgeSwitch.get()) {
                 acquiredLight.set(Relay.Value.kOn);
-            }
-            else {
+            } else {
                 acquiredLight.set(Relay.Value.kOff);
             }
 
@@ -228,19 +214,20 @@ public class DESdroid extends SimpleRobot implements Constants {
             arm.wrist.set(1);
 
 
-            if (leftStick.getTrigger() && DEBUG_MODE) {
-                System.out.println(arm.getPosition());
+            if (leftStick.getTrigger()) {
+                Debug.println(arm.getPosition());
             }
 
-            if (rightStick.getTrigger() && DEBUG_MODE) {
-                System.out.println(drive.getAvgDistance());
+            if (rightStick.getTrigger()) {
+                Debug.println(drive.getAvgDistance());
             }
 
-            if (rightStick.getRawButton(2) && DEBUG_MODE) {
+
+            if (rightStick.getRawButton(2) && Debug.DEBUG_MODE) {
                 drive.resetEncoders();
             }
 
-            if (leftStick.getRawButton(2) && DEBUG_MODE) {
+            if (leftStick.getRawButton(2) && Debug.DEBUG_MODE) {
                 System.out.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }
         }
@@ -254,8 +241,9 @@ public class DESdroid extends SimpleRobot implements Constants {
      * @param elliot Arm controller instance to end.
      */
     public static void threadEnd(ArmController elliot) {
-        if(elliot != null)
+        if (elliot != null) {
             elliot.end();
+        }
     }
 
     /**
@@ -263,24 +251,25 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void updateButtonLights() {
         double currentPosition = arm.getPosition();
-        
-        if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1)
+
+        if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1) {
             oi.setLight(SIDE_LOWER_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1) {
             oi.setLight(SIDE_MIDDLE_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_SIDE_TOP) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_SIDE_TOP) < 0.1) {
             oi.setLight(SIDE_UPPER_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_BOTTOM) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_BOTTOM) < 0.1) {
             oi.setLight(CENTER_LOWER_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_MIDDLE) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_MIDDLE) < 0.1) {
             oi.setLight(CENTER_MIDDLE_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_MIDDLE_TOP) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_TOP) < 0.1) {
             oi.setLight(CENTER_UPPER_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_FEEDER_LEVEL) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_FEEDER_LEVEL) < 0.1) {
             oi.setLight(FEEDER_LEVEL_LIGHT);
-        else if(Math.abs(currentPosition - Arm.POT_GROUND_LEVEL) < 0.1)
+        } else if (Math.abs(currentPosition - Arm.POT_GROUND_LEVEL) < 0.1) {
             oi.setLight(GROUND_LEVEL_LIGHT);
-        else
+        } else {
             oi.lightsOff();
+        }
     }
 }

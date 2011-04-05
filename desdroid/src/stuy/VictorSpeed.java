@@ -28,7 +28,7 @@ public class VictorSpeed implements SpeedController, Constants {
     public VictorSpeed(int victorChannel, int encoderAChannel, int encoderBChannel, boolean reverse) {
         v = new Victor(victorChannel);
         
-        e= new Encoder(4,encoderAChannel,4,encoderBChannel,reverse,CounterBase.EncodingType.k2X);
+        e= new Encoder(encoderAChannel,encoderBChannel,reverse,CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();
@@ -48,7 +48,7 @@ public class VictorSpeed implements SpeedController, Constants {
      * @param reverse
      */
     public VictorSpeed(int encoderAChannel, int encoderBChannel, boolean reverse) {
-        e = new Encoder(6,encoderAChannel, 6,encoderBChannel, reverse, CounterBase.EncodingType.k2X);
+        e = new Encoder(SECOND_SIDECAR_SLOT,encoderAChannel, SECOND_SIDECAR_SLOT,encoderBChannel, reverse, CounterBase.EncodingType.k2X);
         e.setDistancePerPulse(ENCODER_RPM_PER_PULSE);
         e.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate); // use e.getRate() for feedback
         e.start();

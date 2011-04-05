@@ -37,9 +37,9 @@ public class Minibot implements Constants {
     }
 
     /**
-     * Deploys wings.
+     * Deploys drawbridge.
      */
-    public void spreadWings() {
+    public void deployDrawbridge() {
         wingServo.set(0);
     }
 

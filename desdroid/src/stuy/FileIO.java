@@ -87,7 +87,7 @@ public class FileIO {
             String message = System.currentTimeMillis() + " [" + context + "] " + e.getMessage() + ": " + customMessage + "\n";
             log.append(message);
 
-            if (DESdroid.DEBUG_MODE) {
+            if (Debug.DEBUG_MODE) {
                 e.printStackTrace();
             }
         } catch (Exception ex) {
