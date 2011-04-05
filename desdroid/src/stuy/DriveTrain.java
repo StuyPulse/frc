@@ -14,7 +14,6 @@ public class DriveTrain extends RobotDrive implements Constants {
     int kRearLeft_val = 2;
     int kRearRight_val = 3;
     VictorSpeed driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight;
-    VictorSpeed dummyFLeft, dummyRLeft, dummyFRight, dummyRRight;
     /**
      * The maximum number of RPM (revolutions per minute) to set as the setpoint
      * speed on any of the wheels.  1 if in voltage mode.
