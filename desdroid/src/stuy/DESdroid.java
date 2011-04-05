@@ -73,7 +73,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-
         // Do NOT change the order of these constructors! The construction of these dummy encoders is a hack to fix
         // an issue in which only the first, third, fifth, and eighth encoders constructed can getDistance() successfuly.
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
@@ -152,7 +151,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Arm control by OI
             if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
-//                    threadEnd(positionController);
                     positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
                     positionController.start();
                     wasArmControlled = true;
@@ -195,10 +193,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 isMinibotDeployed = true;
             }
 
-            //System.out.println("Tray limit switch: " + minibot.trayLimitSwitch.get() + " " + minibot.poleContactSwitch.get());
-
-            //System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
-
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
                 if (oi.getExtraButton() && !isRetracting) {
@@ -226,7 +220,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             // Continuously open wrist latch in case of failure during autonomous
             arm.wrist.set(1);
-
 
             if (leftStick.getTrigger() && DEBUG_MODE) {
                 System.out.println(arm.getPosition());
