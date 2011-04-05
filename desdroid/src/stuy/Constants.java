@@ -41,6 +41,8 @@ public interface Constants {
     final int MOTOR_TOGGLE_SERVO             = 1;
     final int POLE_CONTACT_SWITCH_PORT       = 3;
 
+    final double MINIBOT_MODE_SPEED          = 0.3125;
+
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
