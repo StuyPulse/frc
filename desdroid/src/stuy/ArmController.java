@@ -87,7 +87,7 @@ public class ArmController extends Thread implements Constants {
             } catch (Exception e) {
                 FileIO.reportError("ARMCONTROLLER", e, "Divided by zero in setHeight()");
             }
-            Timer.delay(delayVal); 
+            Timer.delay(delayVal);
         }
 
     }

@@ -60,8 +60,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
 
-
-        // Do NOT change the order of these constructors!
+        // Do NOT change the order of these constructors! The construction of these dummy encoders is a hack to fix
+        // an issue in which only the first, third, fifth, and eighth encoders constructed can getDistance() successfuly.
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
         dummyFLeft = new VictorSpeed(CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
         driveFrontRight = new VictorSpeed(CHANNEL_FRONT_RIGHT, CHANNEL_FRONT_RIGHT_ENC_A, CHANNEL_FRONT_RIGHT_ENC_B, false);
@@ -94,7 +94,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         minibot.reset();
         auton.run(oi.getAutonSetting());
-
     }
 
     /**
@@ -122,9 +121,9 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (minibotMode) {
                 drive.mecanumDrive_Cartesian(
-                        -leftStick.getX() * 0.3125, // X translation (horizontal strafe)
-                        -leftStick.getY() * 0.3125, // Y translation (straight forward)
-                        rightStick.getX() * 0.3125, // rotation (getX() > 0 is clockwise)
+                        -leftStick.getX() * MINIBOT_MODE_SPEED, // X translation (horizontal strafe)
+                        -leftStick.getY() * MINIBOT_MODE_SPEED, // Y translation (straight forward)
+                        rightStick.getX() * MINIBOT_MODE_SPEED, // rotation (getX() > 0 is clockwise)
                         0, // use gyro for field-oriented drive
                         true);            // deadband the inputs?
             } else {
@@ -140,7 +139,6 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Arm control by OI
             if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
-//                    threadEnd(positionController);
                     positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
                     positionController.start();
                     wasArmControlled = true;
@@ -182,10 +180,6 @@ public class DESdroid extends SimpleRobot implements Constants {
                 isMinibotDeployed = true;
             }
 
-            //System.out.println("Tray limit switch: " + minibot.trayLimitSwitch.get() + " " + minibot.poleContactSwitch.get());
-
-            //System.out.println(!minibot.trayLimitSwitch.get() + " " + !minibot.poleContactSwitch.get());
-
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
                 if (oi.getExtraButton() && !isRetracting) {
@@ -212,7 +206,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             // Continuously open wrist latch in case of failure during autonomous
             arm.wrist.set(1);
-
 
             if (leftStick.getTrigger()) {
                 Debug.println(arm.getPosition());
@@ -241,9 +234,8 @@ public class DESdroid extends SimpleRobot implements Constants {
      * @param elliot Arm controller instance to end.
      */
     public static void threadEnd(ArmController elliot) {
-        if (elliot != null) {
+        if (elliot != null)
             elliot.end();
-        }
     }
 
     /**
@@ -252,24 +244,23 @@ public class DESdroid extends SimpleRobot implements Constants {
     public void updateButtonLights() {
         double currentPosition = arm.getPosition();
 
-        if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1) {
+        if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1)
             oi.setLight(SIDE_LOWER_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1)
             oi.setLight(SIDE_MIDDLE_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_SIDE_TOP) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_SIDE_TOP) < 0.1)
             oi.setLight(SIDE_UPPER_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_BOTTOM) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_MIDDLE_BOTTOM) < 0.1)
             oi.setLight(CENTER_LOWER_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_MIDDLE) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_MIDDLE_MIDDLE) < 0.1)
             oi.setLight(CENTER_MIDDLE_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_MIDDLE_TOP) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_MIDDLE_TOP) < 0.1)
             oi.setLight(CENTER_UPPER_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_FEEDER_LEVEL) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_FEEDER_LEVEL) < 0.1)
             oi.setLight(FEEDER_LEVEL_LIGHT);
-        } else if (Math.abs(currentPosition - Arm.POT_GROUND_LEVEL) < 0.1) {
+        else if (Math.abs(currentPosition - Arm.POT_GROUND_LEVEL) < 0.1)
             oi.setLight(GROUND_LEVEL_LIGHT);
-        } else {
+        else
             oi.lightsOff();
-        }
     }
 }

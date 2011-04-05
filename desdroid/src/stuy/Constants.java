@@ -41,6 +41,8 @@ public interface Constants {
     final int MOTOR_TOGGLE_SERVO             = 1;
     final int POLE_CONTACT_SWITCH_PORT       = 3;
 
+    final double MINIBOT_MODE_SPEED          = 0.3125;
+
     // Robot digital I/O
     final int LINE_SENSOR_LEFT_CHANNEL       = 12;
     final int LINE_SENSOR_MIDDLE_CHANNEL     = 13;
@@ -75,7 +77,7 @@ public interface Constants {
     final int OI_WING_SWITCH_PORT            = 5;
     final int OI_EXTRA_BUTTON_PORT           = 7;
 
-    // Height buton light binary pins
+    // Height button light binary pins
     final int LIGHT_BIT_D_CHANNEL            = 11;
     final int LIGHT_BIT_C_CHANNEL            = 10;
     final int LIGHT_BIT_B_CHANNEL            = 9;
