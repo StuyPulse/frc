@@ -77,7 +77,7 @@ public interface Constants {
     final int OI_WING_SWITCH_PORT            = 5;
     final int OI_EXTRA_BUTTON_PORT           = 7;
 
-    // Height buton light binary pins
+    // Height button light binary pins
     final int LIGHT_BIT_D_CHANNEL            = 11;
     final int LIGHT_BIT_C_CHANNEL            = 10;
     final int LIGHT_BIT_B_CHANNEL            = 9;
