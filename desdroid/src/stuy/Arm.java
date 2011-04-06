@@ -55,7 +55,7 @@ public class Arm implements Constants {
         }
         else {
             armMotor.set(0);
-        } 
+        }
     }
 
     /** 
