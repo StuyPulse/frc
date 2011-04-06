@@ -109,7 +109,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean isMinibotDeployed = false;
         minibot.reset();
 
-        boolean wingsSpread = false;
+        boolean drawbridgeDeployed = false;
         boolean minibotMode = false;
         boolean isRetracting = false;
 
@@ -137,7 +137,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
             // Arm control by OI
-            if (oi.isHeightButtonPressed() || oi.getWingSwitch()) {
+            if (oi.isHeightButtonPressed() || oi.getDrawbridgeSwitch()) {
                 if (!wasArmControlled) {
                     positionController = new ArmController(this, oi.isHeightButtonPressed() ? oi.getHeightButton() : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
                     positionController.start();
@@ -162,19 +162,19 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             }
 
-            if (!wingsSpread && oi.getWingSwitch()) {
+            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch()) {
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
-                wingsSpread = true;
+                drawbridgeDeployed = true;
             }
 
-            if (wingsSpread && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
+            if (drawbridgeDeployed && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
                 minibot.motorToggle.set(0);
                 drawbridgeTimer = 0;
             }
 
-            if (oi.getMinibotSwitch() && wingsSpread) {
+            if (oi.getMinibotSwitch() && drawbridgeDeployed) {
                 Debug.println("Got OI minibot switch.");
                 minibot.deploy();
                 isMinibotDeployed = true;

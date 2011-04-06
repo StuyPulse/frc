@@ -33,7 +33,7 @@ public interface Constants {
     final int TUBE_ACQUIRED_LIGHT            = 1;
 
     // Minibot deployment
-    final int WING_SERVO                     = 6;
+    final int DRAWBRIDGE_SERVO               = 6;
     final int DRAWBRIDGE_LIMIT_SWITCH_PORT   = 13;
     final int TRAY_RELEASE_MOTOR_PORT        = 10;
     final int TRAY_LIMIT_SWITCH_PORT         = 14;
@@ -74,7 +74,7 @@ public interface Constants {
 
     // OI digital inputs
     final int OI_MINIBOT_SWITCH_PORT         = 6;
-    final int OI_WING_SWITCH_PORT            = 5;
+    final int OI_DRAWBRIDGE_SWITCH_PORT      = 5;
     final int OI_EXTRA_BUTTON_PORT           = 7;
 
     // Height button light binary pins
