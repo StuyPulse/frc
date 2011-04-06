@@ -111,10 +111,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         boolean drawbridgeDeployed = false;
         boolean minibotMode = false;
-        boolean isRetracting = false;
 
         double drawbridgeTimer = 0;
-        double minibotTimer = 0;
 
         while (isEnabled() && isOperatorControl()) {
             minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
@@ -182,17 +180,6 @@ public class DESdroid extends SimpleRobot implements Constants {
 
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
-                if (oi.getExtraButton() && !isRetracting) {
-                    minibotTimer = Timer.getFPGATimestamp();
-                    minibot.runTrayMotor(-1);
-                    isRetracting = true;
-                }
-            }
-
-            if (minibotTimer > 0 && Timer.getFPGATimestamp() - minibotTimer > .5) {
-                minibot.stopTrayMotor();
-                minibotTimer = 0;
-                isRetracting = false;
             }
 
             updateButtonLights();
