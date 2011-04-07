@@ -141,7 +141,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Arm control by OI
             if (oi.isHeightButtonPressed() || oi.getDrawbridgeSwitch()) {
                 if (!wasArmControlled) {
-                    positionController = new ArmController(this, oi.isHeightButtonPressed() ? oi.getHeightButton() : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
+                    positionController = new ArmController(this, 
+                            oi.isHeightButtonPressed() ? oi.getHeightButton() : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
+
                     positionController.start();
                     wasArmControlled = true;
                 }
@@ -179,10 +181,14 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
 
-            if (drawbridgeDeployed && ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()) || (oi.getMinibotSwitch()))) {
-                Debug.println("Got OI minibot switch.");
+            if (drawbridgeDeployed 
+                    && ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()) 
+                        || (oi.getMinibotSwitch()))) {
+
+                Debug.println(oi.getMinibotSwitch() ? "Got OI minibot switch." : "Got drawbridge pole contact switch, and is time to deploy" );
                 minibot.deploy();
                 isMinibotDeployed = true;
+
             }
 
             if (isMinibotDeployed) {
