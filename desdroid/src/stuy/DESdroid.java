@@ -113,6 +113,10 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean minibotMode = false;
 
         double drawbridgeTimer = 0;
+        
+        double deployTimerInit = Timer.getFPGATimestamp();
+
+
 
         while (isEnabled() && isOperatorControl()) {
             minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
@@ -141,7 +145,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                     positionController.start();
                     wasArmControlled = true;
                 }
-            } else {
+            } 
+            else {
                 threadEnd(positionController);
                 arm.rotate(armStick.getY());
                 wasArmControlled = false;
@@ -172,7 +177,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 drawbridgeTimer = 0;
             }
 
-            if (oi.getMinibotSwitch() && drawbridgeDeployed) {
+
+            if (drawbridgeDeployed && ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()) || (oi.getMinibotSwitch()))) {
                 Debug.println("Got OI minibot switch.");
                 minibot.deploy();
                 isMinibotDeployed = true;
