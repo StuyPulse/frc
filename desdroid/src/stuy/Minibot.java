@@ -80,4 +80,8 @@ public class Minibot implements Constants {
         motorToggle.set(0);
         stopTrayMotor();
     }
+
+    public boolean getDrawbridgePoleSwitch() {
+        return !poleContactSwitch.get();
+    }
 }
