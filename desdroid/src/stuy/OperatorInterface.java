@@ -35,7 +35,7 @@ public class OperatorInterface implements Constants {
             enhancedIO.setDigitalConfig(BIT_4_CHANNEL, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
 
             enhancedIO.setDigitalConfig(OI_MINIBOT_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
-            enhancedIO.setDigitalConfig(OI_WING_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
+            enhancedIO.setDigitalConfig(OI_DRAWBRIDGE_SWITCH_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
             enhancedIO.setDigitalConfig(OI_EXTRA_BUTTON_PORT, DriverStationEnhancedIO.tDigitalConfig.kInputPullUp);
         }
         catch (EnhancedIOException e) {
@@ -148,16 +148,16 @@ public class OperatorInterface implements Constants {
     }
 
     /**
-     * Checks the state of the wing switch.
+     * Checks the state of the drawbridge switch.
      * @return True if pressed.
      */
-    public boolean getWingSwitch() {
+    public boolean getDrawbridgeSwitch() {
         boolean value;
         try {
-            value = !enhancedIO.getDigital(OI_WING_SWITCH_PORT);
+            value = !enhancedIO.getDigital(OI_DRAWBRIDGE_SWITCH_PORT);
         }
         catch (EnhancedIOException e) {
-            FileIO.reportError("OI", e, "Failed to read wing switch");
+            FileIO.reportError("OI", e, "Failed to read drawbridge switch");
             setStuffsBrokenLED(true);
             value = false;
         }

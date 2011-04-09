@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.*;
  * @author Kevin Wang
  */
 public class Minibot implements Constants {
-    Servo wingServo;
+    Servo drawbridgeServo;
     Victor trayMotor;
     Servo minibotRelease;
     Servo motorToggle;
@@ -21,10 +21,10 @@ public class Minibot implements Constants {
     DigitalInput drawbridgeSwitch;
 
     /**
-     * Minibot constructor. Deployment of the minibot is controlled by three servos.  Wing deploment is controlled by one servo.
+     * Minibot constructor. Deployment of the minibot is controlled by three servos.  Drawbridge deploment is controlled by one servo.
      */
     public Minibot() {
-        wingServo = new Servo(SECOND_SIDECAR_SLOT, WING_SERVO);
+        drawbridgeServo = new Servo(SECOND_SIDECAR_SLOT, DRAWBRIDGE_SERVO);
 
         trayMotor = new Victor(SECOND_SIDECAR_SLOT, TRAY_RELEASE_MOTOR_PORT);
 
@@ -37,10 +37,10 @@ public class Minibot implements Constants {
     }
 
     /**
-     * Deploys wings.
+     * Deploys drawbridge.
      */
-    public void spreadWings() {
-        wingServo.set(0);
+    public void deployDrawbridge() {
+        drawbridgeServo.set(0);
     }
 
     /**
@@ -75,9 +75,13 @@ public class Minibot implements Constants {
      * Resets all minibot deployment servos.
      */
     public void reset() {
-        wingServo.set(1);
+        drawbridgeServo.set(1);
         minibotRelease.set(0);
         motorToggle.set(0);
         stopTrayMotor();
+    }
+
+    public boolean getDrawbridgePoleSwitch() {
+        return !poleContactSwitch.get();
     }
 }

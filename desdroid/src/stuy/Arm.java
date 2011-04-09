@@ -47,7 +47,6 @@ public class Arm implements Constants {
      * @param stickVal Driver's joystick value to rotate the arm. (-1.0 to 1.0)
      */
     public void rotate(double stickVal) {
-        double currentVal = getPosition();
         if (stickVal >= 0.5) {
             armMotor.set(1);
         }

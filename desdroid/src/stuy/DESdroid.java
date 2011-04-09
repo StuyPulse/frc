@@ -18,40 +18,27 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  */
 public class DESdroid extends SimpleRobot implements Constants {
 
-    // Set to true when debugging; it will print out exception stack traces
-    // Set to false for competition: log exceptions to a file on the cRIO
-    static final boolean DEBUG_MODE = false;
-
     // Robot hardware
-    
     DriveTrain drive;
-
     Arm arm;
     Grabber grabber;
     Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
     VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
-
     Relay acquiredLight;
-
     // Driver controls
     Joystick leftStick;
     Joystick rightStick;
     Joystick armStick;
-
     // Operator interface
     OperatorInterface oi;
-
     AxisCamera cam;
-
     // Autonomous class
     Autonomous auton;
-    
     boolean wasArmControlled = false;
     ArmController positionController;
 
 //    DashboardUpdater dashboard;
-
     /**
      * DESdroid constructor.
      */
@@ -94,6 +81,8 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
+
+
 //        dashboard = new DashboardUpdater(this);
     }
 
@@ -120,12 +109,14 @@ public class DESdroid extends SimpleRobot implements Constants {
         boolean isMinibotDeployed = false;
         minibot.reset();
 
-        boolean wingsSpread = false;
+        boolean drawbridgeDeployed = false;
         boolean minibotMode = false;
-        boolean isRetracting = false;
 
         double drawbridgeTimer = 0;
-        double minibotTimer = 0;
+        
+        double deployTimerInit = Timer.getFPGATimestamp();
+
+
 
         while (isEnabled() && isOperatorControl()) {
             minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
@@ -137,8 +128,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                         rightStick.getX() * MINIBOT_MODE_SPEED, // rotation (getX() > 0 is clockwise)
                         0, // use gyro for field-oriented drive
                         true);            // deadband the inputs?
-            }
-            else {
+            } else {
                 drive.mecanumDrive_Cartesian(
                         leftStick.getX(), // X translation (horizontal strafe)
                         leftStick.getY(), // Y translation (straight forward)
@@ -149,13 +139,16 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
             // Arm control by OI
-            if (oi.isHeightButtonPressed()) {
+            if (oi.isHeightButtonPressed() || oi.getDrawbridgeSwitch()) {
                 if (!wasArmControlled) {
-                    positionController = new ArmController(this, oi.getHeightButton(), oi.getTrimAmount(0.5));
+                    positionController = new ArmController(this, 
+                            oi.isHeightButtonPressed() ? oi.getHeightButton() : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
+
                     positionController.start();
                     wasArmControlled = true;
                 }
-            } else {
+            } 
+            else {
                 threadEnd(positionController);
                 arm.rotate(armStick.getY());
                 wasArmControlled = false;
@@ -174,38 +167,33 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             }
 
-            if (!wingsSpread && oi.getWingSwitch()) {
-                minibot.spreadWings();
+            // 2.4 refers to an arm position slightly below the middle top peg position
+            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() && arm.getPosition() < 2.4) {
+                minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
-                wingsSpread = true;
+                drawbridgeDeployed = true;
             }
 
-            if (wingsSpread && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
+            if (drawbridgeDeployed && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
                 minibot.motorToggle.set(0);
                 drawbridgeTimer = 0;
             }
 
-            if (oi.getMinibotSwitch() && wingsSpread) {
-                if (DEBUG_MODE)
-                    System.out.println("Got OI minibot switch.");
+
+            if (drawbridgeDeployed &&
+                    ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()
+                        && !isMinibotDeployed)
+                    || (oi.getMinibotSwitch()))) {
+
+                Debug.println(oi.getMinibotSwitch() ? "Got OI minibot switch." : "Got drawbridge pole contact switch, and is time to deploy" );
                 minibot.deploy();
                 isMinibotDeployed = true;
+
             }
 
             if (isMinibotDeployed) {
                 minibot.checkTrayLimitSwitch();
-                if (oi.getExtraButton() && !isRetracting) {
-                    minibotTimer = Timer.getFPGATimestamp();
-                    minibot.runTrayMotor(-1);
-                    isRetracting = true;
-                }
-            }
-
-            if (minibotTimer > 0 && Timer.getFPGATimestamp() - minibotTimer > .5) {
-                minibot.stopTrayMotor();
-                minibotTimer = 0;
-                isRetracting = false;
             }
 
             updateButtonLights();
@@ -213,27 +201,27 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Turn on light when tube is in the grabber
             if (grabber.getLimitSwitch() || !minibot.drawbridgeSwitch.get()) {
                 acquiredLight.set(Relay.Value.kOn);
-            }
-            else {
+            } else {
                 acquiredLight.set(Relay.Value.kOff);
             }
 
             // Continuously open wrist latch in case of failure during autonomous
             arm.wrist.set(1);
 
-            if (leftStick.getTrigger() && DEBUG_MODE) {
-                System.out.println(arm.getPosition());
+            if (leftStick.getTrigger()) {
+                Debug.println(arm.getPosition());
             }
 
-            if (rightStick.getTrigger() && DEBUG_MODE) {
-                System.out.println(drive.getAvgDistance());
+            if (rightStick.getTrigger()) {
+                Debug.println(drive.getAvgDistance());
             }
 
-            if (rightStick.getRawButton(2) && DEBUG_MODE) {
+
+            if (rightStick.getRawButton(2) && Debug.DEBUG_MODE) {
                 drive.resetEncoders();
             }
 
-            if (leftStick.getRawButton(2) && DEBUG_MODE) {
+            if (leftStick.getRawButton(2) && Debug.DEBUG_MODE) {
                 System.out.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }
         }
@@ -256,7 +244,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void updateButtonLights() {
         double currentPosition = arm.getPosition();
-        
+
         if (Math.abs(currentPosition - Arm.POT_SIDE_BOTTOM) < 0.1)
             oi.setLight(SIDE_LOWER_LIGHT);
         else if (Math.abs(currentPosition - Arm.POT_SIDE_MIDDLE) < 0.1)
