@@ -181,9 +181,10 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
 
-            if (drawbridgeDeployed 
-                    && ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()) 
-                        || (oi.getMinibotSwitch()))) {
+            if (drawbridgeDeployed &&
+                    ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()
+                        && !isMinibotDeployed)
+                    || (oi.getMinibotSwitch()))) {
 
                 Debug.println(oi.getMinibotSwitch() ? "Got OI minibot switch." : "Got drawbridge pole contact switch, and is time to deploy" );
                 minibot.deploy();
