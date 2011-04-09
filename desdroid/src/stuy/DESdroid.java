@@ -168,16 +168,16 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // 2.4 refers to an arm position slightly below the middle top peg position
-            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() && arm.getPosition() < 2.4) {
+            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() &&
+                    (arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())) {
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
                 drawbridgeDeployed = true;
             }
 
-            if (drawbridgeDeployed && drawbridgeTimer > 0 && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
+            if (drawbridgeDeployed && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
                 minibot.motorToggle.set(0);
-                drawbridgeTimer = 0;
             }
 
 
@@ -221,8 +221,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 drive.resetEncoders();
             }
 
-            if (leftStick.getRawButton(2) && Debug.DEBUG_MODE) {
-                System.out.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
+            if (leftStick.getRawButton(2)) {
+                Debug.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }
         }
         oi.lightsOff();

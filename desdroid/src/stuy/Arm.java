@@ -13,9 +13,10 @@ import edu.wpi.first.wpilibj.*;
  * @author blaky
  */
 public class Arm implements Constants {
-    //Upper & lower arm limits
-    static final double LOWER_ARM_POT_LIM           = 1.85; //UNUSED
-    static final double UPPER_ARM_POT_LIM           = 4.7;
+
+
+    //Drawbridge
+    static final double DRAWBRIDGE_POT_MIN          = 2.4;
 
     //Arm potentiometer values 
     static final double POT_SIDE_BOTTOM             = 3.75;
