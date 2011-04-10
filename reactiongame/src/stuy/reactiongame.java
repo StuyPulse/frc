@@ -8,15 +8,14 @@
 package stuy;
 import edu.wpi.first.wpilibj.*;
 import java.util.Random;
-
+ 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SimpleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * A game designed to improve the reaction time of a person deploying
+ * the minibot. The goal of this game is to pull the Minibot release
+ * switch at the same time the tube acquired light on the robot goes on.
+ * @author Peter Jasko
  */
-public class reactiongame extends SimpleRobot implements Constants {
+public class Reactiongame extends SimpleRobot implements Constants {
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
@@ -25,37 +24,35 @@ public class reactiongame extends SimpleRobot implements Constants {
     Relay acquiredlight;
     OperatorInterface oi;
 
-
-
-    public void autonomous() {
+  public void autonomous() {
         
     }
 
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
     public void operatorControl()   {
+        getWatchdog().setEnabled(false);
         gameTime = new Timer();
         random = new Random();
         acquiredlight = new Relay(TUBE_ACQUIRED_LIGHT);
 
         int score = 0;
+        int total_flashes = 0;
         double onTime;
         double initTime;
         initTime = gameTime.getFPGATimestamp();
-
+ while (isEnabled() && isOperatorControl()) {
         while(gameTime.getFPGATimestamp() - initTime < 60) {
             gameTime.delay( 2 * random.nextDouble() + 1);
             acquiredlight.set(Relay.Value.kOn);
+            total_flashes++;
             onTime = gameTime.getFPGATimestamp();
             while (gameTime.getFPGATimestamp() - onTime < .2  ){
                 if(oi.getMinibotSwitch()){
                     score++;
                     break;}
             }
-            
-          acquiredlight.set(Relay.Value.kOff);
+            acquiredlight.set(Relay.Value.kOff);
         }
-    System.out.print(score);
+    System.out.print(score + "out of" + total_flashes);
     }
+ }
 }
