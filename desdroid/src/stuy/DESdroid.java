@@ -162,7 +162,8 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             }
 
-            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch()) {
+            // 2.4 refers to an arm position slightly below the middle top peg position
+            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() && arm.getPosition() < 2.4) {
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
