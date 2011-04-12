@@ -15,12 +15,13 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double CENTER_UPPER_LINE_DIST = 190;  // this works on our practice field
-    final double CENTER_UPPER_LINE_DIST_LESS = 185;   // these might work if 206 is too much
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS = 180;
-    final double CENTER_UPPER_LINE_DIST_LESS_LESS_LESS = 175;
-
-    final double CENTER_MIDDLE_LINE_DIST = 208; // not tuned, probably too much
+    final double[] LINE_DIST = {201,
+                                198,
+                                192,
+                                189,
+                                186,
+                                183,
+                                181};
 
     /**
      * Autonomous constructor.
@@ -69,87 +70,41 @@ public class Autonomous implements Constants {
             case 8:
                 auton8();
                 break;
-            case 9:
-                auton9();
-                break;
-            case 10:
-                auton10();
-                break;
-            case 11:
-                auton11();
-                break;
             default:
                 break; // Do nothing.
         }
     }
 
-    /**
-     * Raise arm
-     * Follow line straight
-     * Score center/middle
-     */
     private void auton1() {
-        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON, true);
+        score(LINE_DIST[0], CENTER_MIDDLE_BUTTON);
     }
 
-    /**
-     * Raise arm
-     * Follow line straight
-     * Score top
-     */
     private void auton2() {
-        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON, true);
+        score(LINE_DIST[1], CENTER_UPPER_BUTTON);
     }
 
-    /**
-     * Drop ubertube
-     */
     private void auton3() {
-        des.arm.wrist.set(1);
-        Timer.delay(1);
-        des.arm.wrist.set(0);
-        des.grabber.out();
-        Timer.delay(2);
-        des.grabber.stop();
+        score(LINE_DIST[2], CENTER_MIDDLE_BUTTON);
     }
-
 
     private void auton4() {
-        Timer.delay(3);
-        score(CENTER_MIDDLE_LINE_DIST, CENTER_MIDDLE_BUTTON, true);
+        score(LINE_DIST[3], CENTER_UPPER_BUTTON);
     }
 
-    /**
-     * Delay for 3 seconds, then line track and score center top.
-     */
     private void auton5() {
-        Timer.delay(3);
-        score(CENTER_UPPER_LINE_DIST, CENTER_UPPER_BUTTON, true);
+        score(LINE_DIST[4], CENTER_UPPER_BUTTON);
     }
 
     private void auton6() {
-        score(CENTER_UPPER_LINE_DIST_LESS, CENTER_UPPER_BUTTON, true);
+        score(LINE_DIST[5], CENTER_UPPER_BUTTON);
     }
 
     private void auton7() {
-        score(CENTER_UPPER_LINE_DIST_LESS_LESS, CENTER_UPPER_BUTTON, true);
+        score(LINE_DIST[6], CENTER_UPPER_BUTTON);
     }
 
     private void auton8() {
-        score(CENTER_UPPER_LINE_DIST_LESS_LESS_LESS, CENTER_UPPER_BUTTON, true);
-    }
-
-
-    private void auton9() {
-        score(CENTER_UPPER_LINE_DIST_LESS, CENTER_UPPER_BUTTON, false);
-    }
-
-    private void auton10() {
-        score(CENTER_UPPER_LINE_DIST_LESS_LESS, CENTER_UPPER_BUTTON, false);
-    }
-
-    private void auton11() {
-        score(CENTER_UPPER_LINE_DIST_LESS_LESS_LESS, CENTER_UPPER_BUTTON, false);
+        score(LINE_DIST[7], CENTER_UPPER_BUTTON);
     }
 
     /**
@@ -264,7 +219,7 @@ public class Autonomous implements Constants {
      * @param armButtonNum OI height button number that refers to the desired arm height.
      * @param back Whether or not to back up after scoring the ubertube.
      */
-    private void score(double dist, int armButtonNum, boolean back) {
+    private void score(double dist, int armButtonNum) {
         des.arm.wrist.set(1);
         Timer.delay(1.5);
 
@@ -277,13 +232,6 @@ public class Autonomous implements Constants {
 
         des.grabber.out();
         Timer.delay(.5);
-
-        if (back) {
-            // Back up at the end
-            goSpeed(-.5);
-            Timer.delay(2);
-            goSpeed(0);
-        }
 
         des.grabber.stop();
     }
