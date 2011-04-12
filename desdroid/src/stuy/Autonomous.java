@@ -76,7 +76,7 @@ public class Autonomous implements Constants {
     }
 
     private void auton1() {
-        score(LINE_DIST[0], CENTER_MIDDLE_BUTTON);
+        score(LINE_DIST[0], CENTER_UPPER_BUTTON);
     }
 
     private void auton2() {
@@ -84,7 +84,7 @@ public class Autonomous implements Constants {
     }
 
     private void auton3() {
-        score(LINE_DIST[2], CENTER_MIDDLE_BUTTON);
+        score(LINE_DIST[2], CENTER_UPPER_BUTTON);
     }
 
     private void auton4() {
