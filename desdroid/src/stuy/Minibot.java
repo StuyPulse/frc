@@ -82,6 +82,6 @@ public class Minibot implements Constants {
     }
 
     public boolean getDrawbridgePoleSwitch() {
-        return !poleContactSwitch.get();
+        return !drawbridgeSwitch.get();
     }
 }
