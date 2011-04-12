@@ -167,7 +167,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.stop();
             }
 
-            // 2.4 refers to an arm position slightly below the middle top peg position
+            // Deploys minibot only if arm is above DRAWBRIDGE_POT_MIN or if override button is depressed.  
             if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() &&
                     (arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())) {
                 minibot.deployDrawbridge();
@@ -199,7 +199,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             updateButtonLights();
 
             // Turn on light when tube is in the grabber
-            if (grabber.getLimitSwitch() || !minibot.drawbridgeSwitch.get()) {
+            if (grabber.getLimitSwitch() || minibot.getDrawbridgePoleSwitch()) {
                 acquiredLight.set(Relay.Value.kOn);
             } else {
                 acquiredLight.set(Relay.Value.kOff);
