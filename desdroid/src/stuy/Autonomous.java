@@ -17,6 +17,7 @@ public class Autonomous implements Constants {
     int leftValue, middleValue, rightValue;
     final double[] LINE_DIST = {201,
                                 198,
+                                195,
                                 192,
                                 189,
                                 186,
