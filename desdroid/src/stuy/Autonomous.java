@@ -76,7 +76,7 @@ public class Autonomous implements Constants {
     }
 
     private void auton1() {
-        score(LINE_DIST[0], CENTER_MIDDLE_BUTTON);
+        score(LINE_DIST[0], CENTER_UPPER_BUTTON);
     }
 
     private void auton2() {
@@ -84,7 +84,7 @@ public class Autonomous implements Constants {
     }
 
     private void auton3() {
-        score(LINE_DIST[2], CENTER_MIDDLE_BUTTON);
+        score(LINE_DIST[2], CENTER_UPPER_BUTTON);
     }
 
     private void auton4() {
@@ -217,7 +217,6 @@ public class Autonomous implements Constants {
      * 
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
-     * @param back Whether or not to back up after scoring the ubertube.
      */
     private void score(double dist, int armButtonNum) {
         des.arm.wrist.set(1);
@@ -234,5 +233,10 @@ public class Autonomous implements Constants {
         Timer.delay(.5);
 
         des.grabber.stop();
+
+        // Back up at the end
+        goSpeed(-.5);
+        Timer.delay(2);
+        goSpeed(0);
     }
 }
