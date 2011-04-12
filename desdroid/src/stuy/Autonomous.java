@@ -217,7 +217,6 @@ public class Autonomous implements Constants {
      * 
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
-     * @param back Whether or not to back up after scoring the ubertube.
      */
     private void score(double dist, int armButtonNum) {
         des.arm.wrist.set(1);
