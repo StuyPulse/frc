@@ -24,7 +24,7 @@ public class Arm implements Constants {
     static final double POT_SIDE_TOP                = 2.38;
     static final double POT_MIDDLE_BOTTOM           = 3.67;
     static final double POT_MIDDLE_MIDDLE           = 2.99;
-    static final double POT_MIDDLE_TOP              = 2.28;
+    static final double POT_MIDDLE_TOP              = 2.45;
     static final double POT_FEEDER_LEVEL            = 3.63;
     static final double POT_GROUND_LEVEL            = 4.37;
 
