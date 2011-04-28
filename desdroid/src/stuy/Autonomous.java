@@ -15,14 +15,9 @@ public class Autonomous implements Constants {
 
     DESdroid des;
     int leftValue, middleValue, rightValue;
-    final double[] LINE_DIST = {201,
-                                198,
-                                195,
+    final double[] LINE_DIST = {195,
                                 192,
-                                189,
-                                186,
-                                183,
-                                181};
+                                189};
 
     /**
      * Autonomous constructor.
@@ -65,47 +60,33 @@ public class Autonomous implements Constants {
             case 6:
                 auton6();
                 break;
-            case 7:
-                auton7();
-                break;
-            case 8:
-                auton8();
-                break;
             default:
                 break; // Do nothing.
         }
     }
 
     private void auton1() {
-        score(LINE_DIST[0], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[0], CENTER_UPPER_BUTTON, true);
     }
 
     private void auton2() {
-        score(LINE_DIST[1], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[1], CENTER_UPPER_BUTTON, true);
     }
 
     private void auton3() {
-        score(LINE_DIST[2], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[2], CENTER_UPPER_BUTTON, true);
     }
 
     private void auton4() {
-        score(LINE_DIST[3], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[0], CENTER_UPPER_BUTTON, false);
     }
 
     private void auton5() {
-        score(LINE_DIST[4], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[1], CENTER_UPPER_BUTTON, false);
     }
 
     private void auton6() {
-        score(LINE_DIST[5], CENTER_UPPER_BUTTON);
-    }
-
-    private void auton7() {
-        score(LINE_DIST[6], CENTER_UPPER_BUTTON);
-    }
-
-    private void auton8() {
-        score(LINE_DIST[7], CENTER_UPPER_BUTTON);
+        score(LINE_DIST[2], CENTER_UPPER_BUTTON, false);
     }
 
     /**
@@ -219,7 +200,7 @@ public class Autonomous implements Constants {
      * @param dist Distance in inches to track the line.
      * @param armButtonNum OI height button number that refers to the desired arm height.
      */
-    private void score(double dist, int armButtonNum) {
+    private void score(double dist, int armButtonNum, boolean backUp) {
         des.arm.wrist.set(1);
         Timer.delay(1.5);
 
@@ -236,8 +217,10 @@ public class Autonomous implements Constants {
         des.grabber.stop();
 
         // Back up at the end
-        goSpeed(-.5);
-        Timer.delay(2);
-        goSpeed(0);
+        if (backUp) {
+            goSpeed(-.5);
+            Timer.delay(2);
+            goSpeed(0);
+        }
     }
 }
