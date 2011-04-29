@@ -214,13 +214,16 @@ public class Autonomous implements Constants {
         des.grabber.out();
         Timer.delay(.5);
 
-        des.grabber.stop();
-
         // Back up at the end
         if (backUp) {
             goSpeed(-.5);
             Timer.delay(2);
             goSpeed(0);
         }
+        else {
+            Timer.delay(0.75);
+        }
+
+        des.grabber.stop();
     }
 }
