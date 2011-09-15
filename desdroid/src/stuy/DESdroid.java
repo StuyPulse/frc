@@ -139,10 +139,10 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
             // Arm control by OI
-            if (oi.isHeightButtonPressed() || oi.getDrawbridgeSwitch()) {
+            if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
                     positionController = new ArmController(this, 
-                            oi.isHeightButtonPressed() ? oi.getHeightButton() : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
+                            /* oi.isHeightButtonPressed() ? */ oi.getHeightButton() /* : CENTER_UPPER_BUTTON*/, oi.getTrimAmount(0.5));
 
                     positionController.start();
                     wasArmControlled = true;
@@ -168,8 +168,8 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Deploys minibot only if arm is above DRAWBRIDGE_POT_MIN or if override button is depressed.  
-            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() &&
-                    (arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())) {
+            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() // &&
+                    /*(arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())*/) {
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
