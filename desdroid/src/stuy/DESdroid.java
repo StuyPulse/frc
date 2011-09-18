@@ -19,12 +19,13 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
 public class DESdroid extends SimpleRobot implements Constants {
 
     // Robot hardware
-    DriveTrain drive;
+    //DriveTrain drive;
+    RobotDrive drive;
     Arm arm;
     Grabber grabber;
     Minibot minibot;
     DigitalInput leftSensor, middleSensor, rightSensor;
-    VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
+    //VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
     Relay acquiredLight;
     // Driver controls
     Joystick leftStick;
@@ -59,7 +60,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         leftStick = new Joystick(PORT_LEFT_STICK);
         rightStick = new Joystick(PORT_RIGHT_STICK);
         armStick = new Joystick(PORT_ARM_STICK);
-
+/*
         // Do NOT change the order of these constructors! The construction of these dummy encoders is a hack to fix
         // an issue in which only the first, third, fifth, and eighth encoders constructed can getDistance() successfuly.
         driveFrontLeft = new VictorSpeed(CHANNEL_FRONT_LEFT, CHANNEL_FRONT_LEFT_ENC_A, CHANNEL_FRONT_LEFT_ENC_B, true);
@@ -70,8 +71,9 @@ public class DESdroid extends SimpleRobot implements Constants {
         dummyRLeft = new VictorSpeed(CHANNEL_REAR_LEFT_ENC_A, CHANNEL_REAR_LEFT_ENC_B, true);
         dummyRRight = new VictorSpeed(CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
         driveRearRight = new VictorSpeed(CHANNEL_REAR_RIGHT, CHANNEL_REAR_RIGHT_ENC_A, CHANNEL_REAR_RIGHT_ENC_B, true);
-
-        drive = new DriveTrain(driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight);
+*/
+        //drive = new DriveTrain(driveFrontLeft, driveRearLeft, driveFrontRight, driveRearRight);
+        drive = new RobotDrive(CHANNEL_FRONT_LEFT,CHANNEL_REAR_LEFT,CHANNEL_FRONT_RIGHT,CHANNEL_REAR_RIGHT);
 
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
@@ -101,7 +103,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-        drive.resetEncoders();
+       // drive.resetEncoders();
 
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
@@ -126,15 +128,15 @@ public class DESdroid extends SimpleRobot implements Constants {
                         -leftStick.getX() * MINIBOT_MODE_SPEED, // X translation (horizontal strafe)
                         -leftStick.getY() * MINIBOT_MODE_SPEED, // Y translation (straight forward)
                         rightStick.getX() * MINIBOT_MODE_SPEED, // rotation (getX() > 0 is clockwise)
-                        0, // use gyro for field-oriented drive
-                        true);            // deadband the inputs?
+                        0//,  //use gyro for field-oriented drive
+                       /* true*/);            // deadband the inputs?
             } else {
                 drive.mecanumDrive_Cartesian(
                         leftStick.getX(), // X translation (horizontal strafe)
                         leftStick.getY(), // Y translation (straight forward)
                         rightStick.getX(), // rotation (getX() > 0 is clockwise)
-                        0, // use gyro for field-oriented drive
-                        true);            // deadband the inputs?
+                        0//, // use gyro for field-oriented drive
+                        /*true*/);            // deadband the inputs?
             }
 
 
@@ -211,7 +213,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (leftStick.getTrigger()) {
                 Debug.println(arm.getPosition());
             }
-
+/*
             if (rightStick.getTrigger()) {
                 Debug.println(drive.getAvgDistance());
             }
@@ -220,7 +222,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (rightStick.getRawButton(2) && Debug.DEBUG_MODE) {
                 drive.resetEncoders();
             }
-
+*/
             if (leftStick.getRawButton(2)) {
                 Debug.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }

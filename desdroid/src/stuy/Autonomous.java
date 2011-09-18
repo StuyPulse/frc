@@ -106,7 +106,7 @@ public class Autonomous implements Constants {
      * @param distance Distance to track the line in inches.
      */
     public void lineTrack(boolean straightLine, boolean goLeft, double distance) {
-        des.drive.resetEncoders();
+      //  des.drive.resetEncoders();
 
         int binaryValue; // a single binary value of the three line tracking
         // sensors
@@ -126,6 +126,7 @@ public class Autonomous implements Constants {
         double startTime = Timer.getFPGATimestamp();
 
         // loop until robot reaches "T" at end or passes the full distance
+        /*
         while (!atCross && (des.drive.getAvgDistance() < distance) && des.isAutonomous() && des.isEnabled()
                 && Timer.getFPGATimestamp() - startTime < 6) {
             int distanceInterval = (int) (powerProfile.length * des.drive.getAvgDistance() / distance);
@@ -176,17 +177,20 @@ public class Autonomous implements Constants {
             Timer.delay(0.01);
         }
         // Done with loop - stop the robot. Robot ought to be at the end of the line
-        des.drive.arcadeDrive(0, 0);
-    }
+        des.drive.arcadeDrive(0, 0); */
+    } 
 
     /**
      * Run the robot forward/backward.
      * @param speed -1 to 1, full forward = 1
      */
-    private void goSpeed(double speed) {
+        
+   /* private void goSpeed(double speed) {
         // mecanumDrive expects a negative joystick value for forward motion
         des.drive.mecanumDrive_Cartesian(0, -speed, 0, 0, false);
-    }
+    } */
+         
+         
 
     /**
      * This is the main part of the autonomous method.
@@ -216,9 +220,9 @@ public class Autonomous implements Constants {
 
         // Back up at the end
         if (backUp) {
-            goSpeed(-.5);
+            //goSpeed(-.5);
             Timer.delay(2);
-            goSpeed(0);
+            //goSpeed(0);
         }
         else {
             Timer.delay(0.75);
