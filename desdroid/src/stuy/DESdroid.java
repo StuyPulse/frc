@@ -159,9 +159,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                 grabber.in();
             } else if (armStick.getRawButton(2)) {
                 grabber.out();
-            } else if (armStick.getRawButton(4)) {
-                grabber.rotateUp(false);
             } else if (armStick.getRawButton(5)) {
+                grabber.rotateUp(false);
+            } else if (armStick.getRawButton(4)) {
                 grabber.rotateDown(false);
             } else {
                 grabber.stop();
@@ -170,6 +170,7 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Deploys minibot only if arm is above DRAWBRIDGE_POT_MIN or if override button is depressed.  
             if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() &&
                     (arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())) {
+                Debug.println("Drzawbrie get siggnal!");
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
