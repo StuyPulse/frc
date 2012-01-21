@@ -4,7 +4,7 @@ public interface Constants {
 
     // Robot output configuration channels
 
-    final int SECOND_SIDECAR_SLOT            = 6;
+    final int SECOND_SIDECAR_SLOT            = 2;
     final int CHANNEL_FRONT_LEFT             = 7;
     final int CHANNEL_FRONT_RIGHT            = 9;
     final int CHANNEL_REAR_LEFT              = 8;

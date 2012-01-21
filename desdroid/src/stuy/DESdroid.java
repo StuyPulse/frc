@@ -83,7 +83,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
-
+        SmartDashboard.init();
 
 //        dashboard = new DashboardUpdater(this);
     }
