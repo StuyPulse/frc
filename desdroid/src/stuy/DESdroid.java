@@ -7,7 +7,6 @@ package stuy;
 /*----------------------------------------------------------------------------*/
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,8 +31,7 @@ public class DESdroid extends SimpleRobot implements Constants {
     Joystick rightStick;
     Joystick armStick;
     // Operator interface
-    OperatorInterface oi;
-    AxisCamera cam;
+    //OperatorInterface oi;
     // Autonomous class
     Autonomous auton;
     boolean wasArmControlled = false;
@@ -44,7 +42,7 @@ public class DESdroid extends SimpleRobot implements Constants {
      * DESdroid constructor.
      */
     public DESdroid() {
-        oi = new OperatorInterface();
+        //oi = new OperatorInterface();
 
         arm = new Arm(this);
         grabber = new Grabber();
@@ -78,8 +76,6 @@ public class DESdroid extends SimpleRobot implements Constants {
         drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
-        cam = AxisCamera.getInstance();
-        cam.writeResolution(AxisCamera.ResolutionT.k320x240);
 
         auton = new Autonomous(this);
 
@@ -95,7 +91,7 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
 
         minibot.reset();
-        auton.run(oi.getAutonSetting());
+        //auton.run(oi.getAutonSetting());
     }
 
     /**
@@ -105,8 +101,8 @@ public class DESdroid extends SimpleRobot implements Constants {
         getWatchdog().setEnabled(false);
        // drive.resetEncoders();
 
-        oi.lightsOff();
-        oi.setStuffsBrokenLED(false);
+        //oi.lightsOff();
+        //oi.setStuffsBrokenLED(false);
 
         boolean isMinibotDeployed = false;
         minibot.reset();
@@ -141,17 +137,18 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
             // Arm control by OI
+            /*
             if (oi.isHeightButtonPressed()) {
                 if (!wasArmControlled) {
                     positionController = new ArmController(this, 
-                            /* oi.isHeightButtonPressed() ? */ oi.getHeightButton() /* : CENTER_UPPER_BUTTON*/, oi.getTrimAmount(0.5));
+                            oi.isHeightButtonPressed() ?  oi.getHeightButton()  : CENTER_UPPER_BUTTON, oi.getTrimAmount(0.5));
 
                     positionController.start();
                     wasArmControlled = true;
                 }
             } 
-            else {
-                threadEnd(positionController);
+            else {*/
+                //threadEnd(positionController);
                 arm.rotate(armStick.getY());
                 wasArmControlled = false;
             }
@@ -170,13 +167,13 @@ public class DESdroid extends SimpleRobot implements Constants {
             }
 
             // Deploys minibot only if arm is above DRAWBRIDGE_POT_MIN or if override button is depressed.  
-            if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() // &&
-                    /*(arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())*/) {
+           /* if (!drawbridgeDeployed && oi.getDrawbridgeSwitch() // &&
+                    (arm.getPosition() < Arm.DRAWBRIDGE_POT_MIN || oi.getExtraButton())) {
                 minibot.deployDrawbridge();
                 drawbridgeTimer = Timer.getFPGATimestamp();
                 minibot.motorToggle.set(1);
                 drawbridgeDeployed = true;
-            }
+            }*/
 
             if (drawbridgeDeployed && Timer.getFPGATimestamp() - drawbridgeTimer > 1) {
                 minibot.motorToggle.set(0);
@@ -186,9 +183,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (drawbridgeDeployed &&
                     ((Timer.getFPGATimestamp() - deployTimerInit > 110.0 && minibot.getDrawbridgePoleSwitch()
                         && !isMinibotDeployed)
-                    || (oi.getMinibotSwitch()))) {
+                   /* || (oi.getMinibotSwitch()))*/)) {
 
-                Debug.println(oi.getMinibotSwitch() ? "Got OI minibot switch." : "Got drawbridge pole contact switch, and is time to deploy" );
+//                Debug.println(oi.getMinibotSwitch() ? "Got OI minibot switch." : "Got drawbridge pole contact switch, and is time to deploy" );
                 minibot.deploy();
                 isMinibotDeployed = true;
 
@@ -198,7 +195,7 @@ public class DESdroid extends SimpleRobot implements Constants {
                 minibot.checkTrayLimitSwitch();
             }
 
-            updateButtonLights();
+            //updateButtonLights();
 
             // Turn on light when tube is in the grabber
             if (grabber.getLimitSwitch() || minibot.getDrawbridgePoleSwitch()) {
@@ -226,24 +223,25 @@ public class DESdroid extends SimpleRobot implements Constants {
             if (leftStick.getRawButton(2)) {
                 Debug.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
             }
-        }
+        }/*
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
-        FileIO.writeLog();  //Save the log string
+        FileIO.writeLog();  //Save the log string */
     }
 
     /**
      * Ends the thread.
      * @param elliot Arm controller instance to end.
      */
-    public static void threadEnd(ArmController elliot) {
+   /* public static void threadEnd(ArmController elliot) {
         if (elliot != null)
             elliot.end();
-    }
+    } */
 
     /**
      * Lights a height button on the OI depending on the proximity of the arm to a height position.
      */
+/*
     public void updateButtonLights() {
         double currentPosition = arm.getPosition();
 
@@ -265,5 +263,4 @@ public class DESdroid extends SimpleRobot implements Constants {
             oi.setLight(GROUND_LEVEL_LIGHT);
         else
             oi.lightsOff();
-    }
-}
+    } */

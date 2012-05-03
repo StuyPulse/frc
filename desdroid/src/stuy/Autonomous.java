@@ -213,7 +213,7 @@ public class Autonomous implements Constants {
 
         lineTrack(true, false, dist);
 
-        DESdroid.threadEnd(armctl);
+       // DESdroid.threadEnd(armctl);
 
         des.grabber.out();
         Timer.delay(.5);

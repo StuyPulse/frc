@@ -104,7 +104,7 @@ public class DonTrackerDashboard {
             }
             lowDashData.finalizeCluster();
 
-            lowDashData.addByte(Solenoid.getAll());
+           // lowDashData.addByte(Solenoid.getAll());
             lowDashData.addBoolean(!donnie.kicker.getCockStatus());
             lowDashData.addBoolean(donnie.dt.getGear());
         }

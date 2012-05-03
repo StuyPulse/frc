@@ -95,7 +95,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
      */
     public void operatorControl() {
         getWatchdog().setEnabled(false);
-
+        dt.setSafetyEnabled(false);
         lastTop = false;
         kicker.cock();
         int c = 0;
