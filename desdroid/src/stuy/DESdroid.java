@@ -27,9 +27,11 @@ public class DESdroid extends SimpleRobot implements Constants {
     //VictorSpeed driveFrontLeft, dummyFLeft, driveFrontRight, dummyFRight, driveRearLeft, dummyRLeft, dummyRRight, driveRearRight;
     Relay acquiredLight;
     // Driver controls
-    Joystick leftStick;
-    Joystick rightStick;
-    Joystick armStick;
+//    Joystick leftStick;
+//    Joystick rightStick;
+//    Joystick armStick;
+    Joystick driverPad;
+    Joystick operatorPad;
     // Operator interface
     //OperatorInterface oi;
     // Autonomous class
@@ -55,9 +57,12 @@ public class DESdroid extends SimpleRobot implements Constants {
         middleSensor = new DigitalInput(LINE_SENSOR_MIDDLE_CHANNEL);
         rightSensor = new DigitalInput(LINE_SENSOR_RIGHT_CHANNEL);
 
-        leftStick = new Joystick(PORT_LEFT_STICK);
-        rightStick = new Joystick(PORT_RIGHT_STICK);
-        armStick = new Joystick(PORT_ARM_STICK);
+        driverPad = new Joystick(PORT_LEFT_STICK);
+        operatorPad = new Joystick(PORT_RIGHT_STICK);
+
+//        leftStick = new Joystick(PORT_LEFT_STICK);
+//        rightStick = new Joystick(PORT_RIGHT_STICK);
+//        armStick = new Joystick(PORT_ARM_STICK);
 /*
         // Do NOT change the order of these constructors! The construction of these dummy encoders is a hack to fix
         // an issue in which only the first, third, fifth, and eighth encoders constructed can getDistance() successfuly.
@@ -79,7 +84,7 @@ public class DESdroid extends SimpleRobot implements Constants {
 
         auton = new Autonomous(this);
 
-        SmartDashboard.init();
+        //SmartDashboard.init();
 
 //        dashboard = new DashboardUpdater(this);
     }
@@ -116,24 +121,24 @@ public class DESdroid extends SimpleRobot implements Constants {
 
 
 
-        while (isEnabled() && isOperatorControl()) {
-            minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
+//        while (isEnabled() && isOperatorControl()) {
+//            minibotMode = leftStick.getTrigger() && rightStick.getTrigger();
 
-            if (minibotMode) {
+//            if (minibotMode) {
+//                drive.mecanumDrive_Cartesian(
+//                        -leftStick.getX() * MINIBOT_MODE_SPEED, // X translation (horizontal strafe)
+//                        -leftStick.getY() * MINIBOT_MODE_SPEED, // Y translation (straight forward)
+//                        rightStick.getX() * MINIBOT_MODE_SPEED, // rotation (getX() > 0 is clockwise)
+//                        0//,  //use gyro for field-oriented drive
+//                       /* true*/);            // deadband the inputs?
+//            } else {
                 drive.mecanumDrive_Cartesian(
-                        -leftStick.getX() * MINIBOT_MODE_SPEED, // X translation (horizontal strafe)
-                        -leftStick.getY() * MINIBOT_MODE_SPEED, // Y translation (straight forward)
-                        rightStick.getX() * MINIBOT_MODE_SPEED, // rotation (getX() > 0 is clockwise)
-                        0//,  //use gyro for field-oriented drive
-                       /* true*/);            // deadband the inputs?
-            } else {
-                drive.mecanumDrive_Cartesian(
-                        leftStick.getX(), // X translation (horizontal strafe)
-                        leftStick.getY(), // Y translation (straight forward)
-                        rightStick.getX(), // rotation (getX() > 0 is clockwise)
+                        driverPad.getRawAxis(1), // X translation (horizontal strafe)
+                        -driverPad.getRawAxis(2), // Y translation (straight forward)
+                        driverPad.getRawAxis(3), // rotation (getX() > 0 is clockwise)
                         0//, // use gyro for field-oriented drive
                         /*true*/);            // deadband the inputs?
-            }
+//            }
 
 
             // Arm control by OI
@@ -149,18 +154,18 @@ public class DESdroid extends SimpleRobot implements Constants {
             } 
             else {*/
                 //threadEnd(positionController);
-                arm.rotate(armStick.getY());
-                wasArmControlled = false;
-            }
+                arm.rotate(-operatorPad.getRawAxis(4));
+//                wasArmControlled = false;
+//            }
 
             // Grabber control
-            if (armStick.getTrigger() && !grabber.getLimitSwitch()) {
+            if (operatorPad.getRawButton(7) && !grabber.getLimitSwitch()) {
                 grabber.in();
-            } else if (armStick.getRawButton(2)) {
+            } else if (operatorPad.getRawButton(8)) {
                 grabber.out();
-            } else if (armStick.getRawButton(4)) {
+            } else if (-operatorPad.getRawAxis(6) > .9) {
                 grabber.rotateUp(false);
-            } else if (armStick.getRawButton(5)) {
+            } else if (-operatorPad.getRawAxis(6) < -.9) {
                 grabber.rotateDown(false);
             } else {
                 grabber.stop();
@@ -207,9 +212,9 @@ public class DESdroid extends SimpleRobot implements Constants {
             // Continuously open wrist latch in case of failure during autonomous
             arm.wrist.set(1);
 
-            if (leftStick.getTrigger()) {
-                Debug.println(arm.getPosition());
-            }
+//            if (leftStick.getTrigger()) {
+//                Debug.println(arm.getPosition());
+//            }
 /*
             if (rightStick.getTrigger()) {
                 Debug.println(drive.getAvgDistance());
@@ -220,9 +225,9 @@ public class DESdroid extends SimpleRobot implements Constants {
                 drive.resetEncoders();
             }
 */
-            if (leftStick.getRawButton(2)) {
-                Debug.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
-            }
+//            if (leftStick.getRawButton(2)) {
+//                Debug.println(leftSensor.get() + " " + middleSensor.get() + " " + rightSensor.get());
+//            }
         }/*
         oi.lightsOff();
         oi.setStuffsBrokenLED(false);
