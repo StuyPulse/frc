@@ -87,7 +87,7 @@ public class Michael1 extends SimpleRobot {
         boolean intake_status = false;
 
         while (isOperatorControl() && isEnabled()) {
-            if (USE_GAMEPAD == true) {
+            if (USE_GAMEPAD) {
                 drivetrain.tankDrive(gamepad, 2, gamepad, 4);
             }
             else {
@@ -102,7 +102,7 @@ public class Michael1 extends SimpleRobot {
             }
             else {
                 shooter_status = false;
-                if (intake_status == false) {
+                if (!intake_status) {
                     shooter.set(0);
                     intake.set(0);
                 }
@@ -120,7 +120,7 @@ public class Michael1 extends SimpleRobot {
             }
             else {
                 intake_status = false;
-                if (shooter_status == false) {
+                if (!shooter_status) {
                     intake.set(0);
                     shooter.set(0);
                 }
