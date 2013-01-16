@@ -22,7 +22,8 @@ public class Michael1 extends SimpleRobot {
     Joystick left_stick;
     Joystick right_stick;
     Joystick shooter_stick;
-    Joystick gamepad;
+    Joystick driver_gamepad;
+    Joystick operator_gamepad;
     RobotDrive drivetrain;
     Victor intake;
     Victor shooter;
@@ -32,7 +33,8 @@ public class Michael1 extends SimpleRobot {
     final int LEFT_STICK_PORT = 1;
     final int RIGHT_STICK_PORT = 2;
     final int SHOOTER_STICK_PORT = 3;
-    final int GAMEPAD_PORT = 4;
+    final int DRIVER_GAMEPAD_PORT = 4;
+    final int OPERATOR_GAMEPAD_PORT = 5;
 
     /* PWM OUT */
     final int LEFT_DRIVE_CHANNEL = 1;
@@ -49,7 +51,8 @@ public class Michael1 extends SimpleRobot {
         left_stick = new Joystick(LEFT_STICK_PORT);
         right_stick = new Joystick(RIGHT_STICK_PORT);
         shooter_stick = new Joystick(SHOOTER_STICK_PORT);
-        gamepad = new Joystick(GAMEPAD_PORT);
+        driver_gamepad = new Joystick(DRIVER_GAMEPAD_PORT);
+        operator_gamepad = new Joystick (OPERATOR_GAMEPAD_PORT);
 
         drivetrain = new RobotDrive(LEFT_DRIVE_CHANNEL, RIGHT_DRIVE_CHANNEL);
         shooter = new Victor(SHOOTER_CHANNEL);
@@ -88,14 +91,14 @@ public class Michael1 extends SimpleRobot {
 
         while (isOperatorControl() && isEnabled()) {
             if (USE_GAMEPAD) {
-                drivetrain.tankDrive(gamepad, 2, gamepad, 4);
+                drivetrain.tankDrive(driver_gamepad, 2, driver_gamepad, 4);
             }
             else {
                 drivetrain.tankDrive(left_stick, right_stick);
             }
 
             /* Shooter control */
-            if (shooter_stick.getTrigger() || gamepad.getRawButton(8)) {
+            if (shooter_stick.getTrigger() || operator_gamepad.getRawButton(8)) {
                 shooter_status = true;
                 shooter.set(-0.75);
                 intake.set(1);
@@ -109,12 +112,12 @@ public class Michael1 extends SimpleRobot {
             }
 
             /* Intake control */
-            if (shooter_stick.getRawButton(2) || gamepad.getRawButton(7)) {
+            if (shooter_stick.getRawButton(2) || operator_gamepad.getRawButton(7)) {
                 intake_status = true;
                 intake.set(1);
                 shooter.set(0.75);
             }
-            else if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || gamepad.getRawButton(5)) {
+            else if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || operator_gamepad.getRawButton(5)) {
                 intake_status = true;
                 intake.set(-1);
             }
@@ -127,7 +130,7 @@ public class Michael1 extends SimpleRobot {
             }
 
             /* Paddle control */
-            if (shooter_stick.getRawButton(7) || shooter_stick.getRawButton(10) || gamepad.getRawButton(2)) {
+            if (shooter_stick.getRawButton(7) || shooter_stick.getRawButton(10) || operator_gamepad.getRawButton(2)) {
                 paddle.set(0);
             }
             else {
