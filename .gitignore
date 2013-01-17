@@ -3,4 +3,4 @@ j2meclasses/
 build/
 suite/
 .DS_STORE
-
+netbeans/private/
