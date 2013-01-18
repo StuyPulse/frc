@@ -19,9 +19,7 @@ import edu.wpi.first.wpilibj.DriverStationEnhancedIO.*;
 public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
     boolean lastTop;
-    Joystick lstick;
-    Joystick rstick;
-    Joystick shootStick;
+    Gamepad gamepad;
     DonovanDriveTrain dt;
     Acquirer roller;
     Kicker kicker;
@@ -34,9 +32,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
     public Donovan() {
-        lstick = new Joystick(LSTICK_PORT); //usb port
-        rstick = new Joystick(RSTICK_PORT); //usb port
-        shootStick = new Joystick(SHOOTSTICK_PORT); //usb port
+        gamepad = new Gamepad(LSTICK_PORT);
         gyro = new Gyro(GYRO_CHANNEL);
         gyro.setSensitivity(-0.007); //this is also done in DonCircleTracker
         dt = new DonovanDriveTrain(DRIVE_1_CHANNEL, DRIVE_2_CHANNEL, DRIVE_3_CHANNEL, DRIVE_4_CHANNEL, this); //digital channelss
@@ -109,7 +105,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
 
             /************ Driver Controls **************/
-            dt.tankDrive(lstick, rstick);
+            dt.tankDrive(gamepad.getLeftY(), gamepad.getRightY());
 
             /*
             if(c%100 == 0){
@@ -119,21 +115,21 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             c++;
              */
 
-            if (lstick.getTrigger()) {
+            if (gamepad.getLeftBumper() || gamepad.getRightBumper()) {
                 dt.setLow(); // to low gear
             }
-            if (rstick.getTrigger()) {
+            if (gamepad.getLeftTrigger() || gamepad.getRightTrigger()) {
                 dt.setHigh(); //to high gear
             }
 
 
-            if (!lstick.getRawButton(3) && !rstick.getRawButton(3)) {
+            if (!gamepad.getRawButton(1) && !gamepad.getRawButton(3)) {
                 if (lastTop) {
                     tracker.stopAligning();
                     oi.resetLEDs();
                 }
                 lastTop = false;
-                dt.tankDrive(lstick, rstick);
+                dt.tankDrive(gamepad.getLeftY(), gamepad.getRightY());
             } else {
                 tracker.doCamera();
                 if (!lastTop) {
@@ -166,10 +162,10 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
 
             /************ Shooter Controls **************/
             //Acquirer listed under Panel Controls
-            if (shootStick.getRawButton(4)) {
+            if (gamepad.getDPadX() > 0) {
 
                 hanger.startWinch();
-            } else if (shootStick.getRawButton(5)) {
+            } else if (gamepad.getDPadX() < 0) {
 
                 hanger.reverseWinch();
             } else {
@@ -177,25 +173,25 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
                 hanger.stopWinch();
             }
 
-            if (shootStick.getTrigger()) {
+            if (gamepad.getDPadY() > 0) {
                 kicker.shoot();
             } else if (kicker.limSwitchBroken) {
                 kicker.stop();
             }
 
 
-            if (shootStick.getRawButton(2)) {
+            if (gamepad.getDPadY() < 0) {
                 hanger.deployAFrame();
             }
 
 
-            if (shootStick.getRawButton(10)) { //|| shootStick.getRawButton(11)){
+            if (gamepad.getRawButton(10)) { //|| shootStick.getRawButton(11)){
                 //System.out.println("switching to manual control");
                 kicker.limSwitchBroken = true; //switch to manual control
                 kicker.stop();
             }
 
-            if (shootStick.getRawButton(11)) { //|| shootStick.getRawButton(11)){
+            if (gamepad.getRawButton(11)) { //|| shootStick.getRawButton(11)){
                 //System.out.println("switching back to auto control");
                 kicker.limSwitchBroken = false; //switch to manual control
             }
@@ -234,7 +230,7 @@ public class Donovan extends SimpleRobot implements Ports, ThreeLaws {
             } else if (oi.getAcquirerReverse()) {
                 //System.out.println("acquirer in reverse!");
                 roller.startReverse();
-            } else if (shootStick.getRawButton(3)) {
+            } else if (gamepad.getRawButton(2)) {
                 //System.out.println("jstk aquire fwd");
                 roller.start();
             } else {
