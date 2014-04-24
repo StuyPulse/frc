@@ -95,7 +95,7 @@ public class Michael1 extends SimpleRobot {
             }
 
             /* Shooter control */
-            if (shooter_stick.getTrigger() || gamepad.getRawButton(8)) {
+            if (shooter_stick.getTrigger() || gamepad.getRawButton(1)) {
                 shooter_status = true;
                 shooter.set(-0.75);
                 intake.set(1);
@@ -109,12 +109,12 @@ public class Michael1 extends SimpleRobot {
             }
 
             /* Intake control */
-            if (shooter_stick.getRawButton(2) || gamepad.getRawButton(7)) {
+            if (shooter_stick.getRawButton(2) || gamepad.getRawButton(2)) {
                 intake_status = true;
                 intake.set(1);
                 shooter.set(0.75);
             }
-            else if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || gamepad.getRawButton(5)) {
+            else if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || gamepad.getRawButton(3)) {
                 intake_status = true;
                 intake.set(-1);
             }
@@ -127,7 +127,7 @@ public class Michael1 extends SimpleRobot {
             }
 
             /* Paddle control */
-            if (shooter_stick.getRawButton(7) || shooter_stick.getRawButton(10) || gamepad.getRawButton(2)) {
+            if (shooter_stick.getRawButton(7) || shooter_stick.getRawButton(10) || gamepad.getRawButton(4)) {
                 paddle.set(0);
             }
             else {
