@@ -83,22 +83,22 @@ public class Michael1 extends SimpleRobot {
     public void operatorControl() {
         getWatchdog().setEnabled(false);
 
-        boolean shooter_status = false;
-        boolean intake_status = false;
+        //boolean shooter_status = false;
+        //boolean intake_status = false;
 
         while (isOperatorControl() && isEnabled()) {
             if (USE_GAMEPAD) {
                 drivetrain.tankDrive(gamepad, 2, gamepad, 4);
             }
-            else {
+            /* else {
                 drivetrain.tankDrive(left_stick, right_stick);
-            }
+            } */
 
-            /* Shooter control */
-            if (shooter_stick.getTrigger() || gamepad.getRawButton(8)) {
+            // Shooter control right trigger
+            /*if (shooter_stick.getTrigger() || gamepad.getRawButton(8)) {
                 shooter_status = true;
                 shooter.set(-0.75);
-                intake.set(1);
+                intake.set(-1);
             }
             else {
                 shooter_status = false;
@@ -107,16 +107,38 @@ public class Michael1 extends SimpleRobot {
                     intake.set(0);
                 }
             }
+            
+            // right bumper
+            if (gamepad.getRawButton(6)) {
+               /* shooter_status = true;
+               ; shooter.set(0.75);
+                intake.set(1);
+            } else {
+               ; shooter_status = false;
+                if (!intake_status) {
+                    intake.set(0);
+                    shooter.set(0);
+                }
+            } 
 
-            /* Intake control */
+            // Intake control left bumper*
             if (shooter_stick.getRawButton(2) || gamepad.getRawButton(5)) {
                 intake_status = true;
-                intake.set(1);
                 shooter.set(0.75);
+                intake.set(1);
+            } else {
+                intake_status = false;
+                if (!shooter_status) {
+                    intake.set(0);
+                    shooter.set(0);
+                }
             }
-            else if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || gamepad.getRawButton(7)) {
+            
+            // left trigger
+            if (shooter_stick.getRawButton(8) || shooter_stick.getRawButton(11) || gamepad.getRawButton(7)) {
                 intake_status = true;
-                intake.set(-1);
+                shooter.set(-0.75);
+                intake.set(1);
             }
             else {
                 intake_status = false;
@@ -124,10 +146,45 @@ public class Michael1 extends SimpleRobot {
                     intake.set(0);
                     shooter.set(0);
                 }
+            } */
+            
+            //left bumper - shooter = in/not shooting, intake/acquirer = in
+            while (gamepad.getRawButton(5)) {
+                shooter.set(0.75);
+                intake.set(1);
             }
-
-            /* Paddle control */
-            if (shooter_stick.getRawButton(7) || shooter_stick.getRawButton(10) || gamepad.getRawButton(4)) {
+            
+            //right bumper - shooter = in (not shooting), intake = out
+            while (gamepad.getRawButton(6)){
+                shooter.set(0.75);
+                intake.set(-1);
+            }
+            
+            //left trigger - shooter = out, intake = in 
+            while (gamepad.getRawButton(7)) {
+                shooter.set(-0.75);
+                intake.set(1);
+            }
+            
+            //right trigger - shooter = out, intake = out
+            while (gamepad.getRawButton(8)) {
+                shooter.set(-0.75);
+                intake.set(-1);
+            }
+            intake.set(0);
+            shooter.set(0);
+            
+        
+            
+            //Right Trigger
+            /*if (gamepad.getRawButton(6)) {
+               paddle.set(1);
+            } else {
+                paddle.set(0);
+            }*/
+            
+            /* Paddle control top button*/
+            if (gamepad.getRawButton(4)) {
                 paddle.set(0);
             }
             else {
